@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import logo from '@/assets/logo.png';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -13,8 +14,11 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-2">
             <div className="mb-4">
-              <span className="text-2xl font-bold tracking-tight">LADEROS BAGS</span>
-              <span className="block text-sm text-brand-light italic">Syskevasies</span>
+              <img 
+                src={logo} 
+                alt="Laderos Bags" 
+                className="h-14 w-auto brightness-0 invert"
+              />
             </div>
             <p className="text-primary-foreground/80 max-w-sm">
               {t('footer.description')}
