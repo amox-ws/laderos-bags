@@ -43,6 +43,7 @@ const translations: Record<Language, Record<string, string>> = {
     'products.custom.title': 'Custom Λύσεις',
     'products.custom.desc': 'Εξατομικευμένες συσκευασίες με το λογότυπό σας',
     'products.viewall': 'Δείτε όλα τα προϊόντα',
+    'products.explore': 'Εξερευνήστε',
     
     // About Page
     'about.title': 'Η Εταιρεία μας',
@@ -128,6 +129,7 @@ const translations: Record<Language, Record<string, string>> = {
     'products.custom.title': 'Custom Solutions',
     'products.custom.desc': 'Personalized packaging with your logo',
     'products.viewall': 'View All Products',
+    'products.explore': 'Explore',
     
     // About Page
     'about.title': 'About Us',
