@@ -46,7 +46,7 @@ const HomePage = () => {
     if (!canvas || !context) return;
 
     // --- 1. SETUP EIKONWN ---
-    const frameCount = 130; 
+    const frameCount = 120; 
     const currentFrame = (index: number) => 
       `/bags/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
 
