@@ -2,23 +2,18 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/logo.png';
-
 const Footer = () => {
-  const { t } = useLanguage();
+  const {
+    t
+  } = useLanguage();
   const currentYear = new Date().getFullYear();
-
-  return (
-    <footer className="bg-primary text-primary-foreground">
+  return <footer className="bg-primary text-primary-foreground">
       <div className="container-page py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Logo & Description */}
           <div className="lg:col-span-2">
             <div className="mb-4">
-              <img 
-                src={logo} 
-                alt="Laderos Bags" 
-                className="h-14 w-auto brightness-0 invert"
-              />
+              <img src={logo} alt="Laderos Bags" className="h-14 w-auto brightness-0 invert" />
             </div>
             <p className="text-primary-foreground/80 max-w-sm">
               {t('footer.description')}
@@ -66,7 +61,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3 text-primary-foreground/80">
                 <Mail className="h-5 w-5 flex-shrink-0" />
-                <span>info@laderosbags.gr</span>
+                <span>laderosbags@gmail.gr</span>
               </li>
             </ul>
           </div>
@@ -79,8 +74,6 @@ const Footer = () => {
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
