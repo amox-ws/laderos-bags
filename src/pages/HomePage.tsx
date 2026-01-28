@@ -33,7 +33,7 @@ const HomePage = () => {
     if (!canvas || !context) return;
 
     // --- 1. SETUP FRAMES ---
-    const frameCount = 100; 
+    const frameCount = 191; 
     const currentFrame = (index: number) => 
       `/bags/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
 
@@ -58,22 +58,27 @@ const HomePage = () => {
 
       context.clearRect(0, 0, canvas.width, canvas.height);
       
+      // --- ΡΥΘΜΙΣΕΙΣ ΘΕΣΗΣ & ΜΕΓΕΘΟΥΣ ---
+      const zoomFactor = 1.0; // Επαναφορά στο κανονικό (όχι zoomed out)
+      const yOffset = 80;    // Μετακίνηση 100px προς τα κάτω
+
       const canvasRatio = canvas.width / canvas.height;
       const imgRatio = img.width / img.height;
       
       let renderWidth, renderHeight, offsetX, offsetY;
 
+      // Υπολογισμός διαστάσεων (Object fit: cover)
       if (canvasRatio > imgRatio) {
-        renderWidth = canvas.width;
-        renderHeight = img.height * (canvas.width / img.width);
-        offsetX = 0;
-        offsetY = (canvas.height - renderHeight) / 2;
+        renderWidth = canvas.width * zoomFactor;
+        renderHeight = (img.height * (canvas.width / img.width)) * zoomFactor;
       } else {
-        renderWidth = img.width * (canvas.height / img.height);
-        renderHeight = canvas.height;
-        offsetX = (canvas.width - renderWidth) / 2;
-        offsetY = 0;
+        renderWidth = (img.width * (canvas.height / img.height)) * zoomFactor;
+        renderHeight = canvas.height * zoomFactor;
       }
+
+      // Κεντράρισμα + Μετακίνηση (Offset)
+      offsetX = (canvas.width - renderWidth) / 2;
+      offsetY = ((canvas.height - renderHeight) / 2) + yOffset;
 
       context.drawImage(img, 0, 0, img.width, img.height, offsetX, offsetY, renderWidth, renderHeight);
     };
@@ -115,7 +120,7 @@ const HomePage = () => {
 
     // Phase B: Zoom In
     tl.to(canvas, {
-      scale: 50, 
+      scale: 60, 
       ease: "power2.in",
       duration: 5
     }, ">-1");
@@ -150,11 +155,7 @@ const HomePage = () => {
 
   return (
     <Layout>
-      {/* SECTION 1: PINNED WRAPPER 
-          ΠΡΟΣΟΧΗ: Προστέθηκε το "-mt-16 md:-mt-20".
-          Αυτό τραβάει το div προς τα πάνω (πίσω από το header) για να καλύψει το κενό
-          και να ξεκινάει το scroll ΑΜΕΣΩΣ.
-      */}
+      {/* SECTION 1: PINNED WRAPPER */}
       <div 
         ref={pinnedSectionRef} 
         className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
