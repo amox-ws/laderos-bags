@@ -38,22 +38,18 @@ const ProductsPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 gradient-subtle" />
-        <div className="container-page relative z-10">
+      {/* Page Title Section - Simple, No Hero */}
+      <section className="py-16 md:py-20">
+        <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              {t('products.page.title')}
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide">
+              {t('products.page.heroTitle')}
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
-              {t('products.page.subtitle')}
-            </p>
           </motion.div>
         </div>
       </section>
@@ -164,7 +160,7 @@ const ProductsPage = () => {
               {t('cta.subtitle')}
             </p>
             <Button variant="heroOutline" size="xl" asChild>
-              <Link to="/contact">
+              <Link to="/contact#quote">
                 {t('cta.button')}
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>

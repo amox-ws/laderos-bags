@@ -204,8 +204,8 @@ const AboutPage = () => {
               {t('cta.subtitle')}
             </p>
             <Button asChild variant="heroOutline" size="lg">
-              <Link to="/contact" className="inline-flex items-center gap-2">
-                {t('about.cta.button')}
+              <Link to="/contact#quote" className="inline-flex items-center gap-2">
+                {t('cta.button')}
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>

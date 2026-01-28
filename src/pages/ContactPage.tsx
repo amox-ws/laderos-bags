@@ -110,7 +110,7 @@ const ContactPage = () => {
       </section>
 
       {/* Quote Request Section */}
-      <section className="section-padding bg-muted/30">
+      <section id="quote" className="section-padding bg-muted/30 scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
             <ContactQuoteForm />
