@@ -46,7 +46,7 @@ const HomePage = () => {
     if (!canvas || !context) return;
 
     // --- 1. SETUP FRAMES ---
-    const frameCount = 90; 
+    const frameCount = 100; 
     const currentFrame = (index: number) => 
       `/bags/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
 
