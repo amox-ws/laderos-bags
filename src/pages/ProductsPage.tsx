@@ -1,3 +1,4 @@
+// Products Page - Laderos Bags
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
