@@ -74,6 +74,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Bebas Neue', 'Impact', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {
