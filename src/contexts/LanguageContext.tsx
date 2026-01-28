@@ -1,3 +1,4 @@
+// Language Context - Laderos Bags i18n
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type Language = 'el' | 'en';
