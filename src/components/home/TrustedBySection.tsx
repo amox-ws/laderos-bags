@@ -14,11 +14,11 @@ const TrustedBySection = () => {
     { name: 'Partner 6', logo: '/logos/status_logo.png' },
     { name: 'Partner 7', logo: '/logos/fikos_logo.png' },
     { name: 'Partner 8', logo: '/logos/optolux_logo.jpeg' },
+    { name: 'Partner 9', logo: '/logos/galifianakis_logo.jpg' }
   ];
 
   // --- CONFIGURATION: BOTTOM ROW ---
   const bottomPartners = [
-    { name: 'Partner 9', logo: '/logos/redbull_logo.png' },
     { name: 'Partner 10', logo: '/logos/morris_logo.png' },
     { name: 'Partner 11', logo: '/logos/cashew_logo.png' },
     { name: 'Partner 12', logo: '/logos/ragazzi_logo.png' },
@@ -26,6 +26,8 @@ const TrustedBySection = () => {
     { name: 'Partner 14', logo: '/logos/dionisos_logo.png' },
     { name: 'Partner 15', logo: '/logos/sagiakos_logo.png' },
     { name: 'Partner 16', logo: '/logos/casba_logo.jpeg' },
+    { name: 'Partner 17', logo: '/logos/hondou_logo.jpg' },
+    { name: 'Partner 18', logo: '/logos/redbull_logo.png' }
   ];
 
   const duplicatedTop = [...topPartners, ...topPartners];
