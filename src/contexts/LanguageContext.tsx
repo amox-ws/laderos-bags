@@ -113,6 +113,11 @@ const translations: Record<Language, Record<string, string>> = {
     'aboutPreview.text': 'Με περισσότερα από 30 χρόνια εμπειρίας, η Laderos Bags δραστηριοποιείται δυναμικά στον χώρο της παραγωγής χάρτινων και πλαστικών σακουλών. Επενδύουμε διαχρονικά στην ποιότητα, τη συνέπεια και τις σύγχρονες μεθόδους παραγωγής, προσφέροντας αξιόπιστες λύσεις συσκευασίας για κάθε επιχείρηση.',
     'aboutPreview.button': 'Μάθετε Περισσότερα',
 
+    // Where to Find Us Section
+    'whereToFindUs.title': 'Πού Βρισκόμαστε',
+    'whereToFindUs.text': 'Θα μας βρείτε στις εγκαταστάσεις μας στην Ελασσώνος 13, Αχαρνές 136 72. Είμαστε στη διάθεσή σας Δευτέρα έως Παρασκευή, από 8:00 π.μ. έως 5:00 μ.μ., για οποιαδήποτε πληροφορία ή συνεργασία.',
+    'whereToFindUs.button': 'Επικοινωνήστε μαζί μας',
+
     // Paper Bags Page
     'paperBags.backToProducts': 'Πίσω στα Προϊόντα',
     'paperBags.title': 'Χάρτινες Σακούλες',
@@ -253,6 +258,11 @@ const translations: Record<Language, Record<string, string>> = {
     'aboutPreview.title': '30 Years of Experience & Quality',
     'aboutPreview.text': 'With over 30 years of experience, Laderos Bags has been actively operating in the production of paper and plastic bags. We consistently invest in quality, reliability, and modern manufacturing methods, delivering trusted packaging solutions for businesses.',
     'aboutPreview.button': 'Learn More',
+
+    // Where to Find Us Section
+    'whereToFindUs.title': 'Where to Find Us',
+    'whereToFindUs.text': 'You can find us at our facilities at Elassonos 13, Acharnes 136 72, Greece. We are available Monday to Friday, from 8:00 AM to 5:00 PM, for any information or collaboration.',
+    'whereToFindUs.button': 'Contact Us',
 
     // Paper Bags Page
     'paperBags.backToProducts': 'Back to Products',
