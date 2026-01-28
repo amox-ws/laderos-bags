@@ -15,13 +15,13 @@ const TrustedBySection = () => {
     { name: 'Partner 6', logo: '/logos/status_logo.png' },
     { name: 'Partner 7', logo: '/logos/ragazzi_logo.png' },
     { name: 'Partner 8', logo: '/logos/fikos_logo.png' },
-    { name: 'Partner 9', logo: '/logos/logo9.png' },
+    { name: 'Partner 9', logo: '/logos/optolux_logo.jpeg' },
     { name: 'Partner 10', logo: '/logos/logo10.png' },
   ];
 
   // --- CONFIGURATION: BOTTOM ROW ---
   const bottomPartners = [
-    { name: 'Partner 11', logo: '/logos/logo11.png' },
+    { name: 'Partner 11', logo: '/logos/redbull_logo.png' },
     { name: 'Partner 12', logo: '/logos/logo12.png' },
     { name: 'Partner 13', logo: '/logos/logo13.png' },
     { name: 'Partner 14', logo: '/logos/logo14.png' },
