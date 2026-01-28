@@ -15,7 +15,7 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Main App Component - Laderos Bags Website v3
+// Main App Component - Laderos Bags Website v4 - rebuild
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
