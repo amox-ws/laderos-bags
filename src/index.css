@@ -122,6 +122,16 @@
     @apply font-bold text-foreground uppercase;
     font-family: 'Bebas Neue', 'Impact', sans-serif;
     letter-spacing: 0.05em;
+    font-weight: 400; /* Bebas Neue only has one weight, this ensures consistency */
+  }
+  
+  /* Ensure consistent font weight for body text in both languages */
+  body, p, span, a, li, label, input, textarea, button {
+    font-weight: 400;
+  }
+  
+  strong, b {
+    font-weight: 600;
   }
   
   h1 {

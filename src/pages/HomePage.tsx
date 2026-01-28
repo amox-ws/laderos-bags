@@ -8,6 +8,7 @@ import Layout from '@/components/layout/Layout';
 import ProductsSection from '@/components/home/ProductsSection';
 import TrustedBySection from '@/components/home/TrustedBySection';
 import AboutPreviewSection from '@/components/home/AboutPreviewSection';
+import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
 import heroBags from '@/assets/hero-bags.jpg';
 
 // GSAP Imports
@@ -208,6 +209,9 @@ const HomePage = () => {
 
         {/* About Us Preview Section */}
         <AboutPreviewSection />
+
+        {/* Animated Stats Section */}
+        <AnimatedStatsSection />
 
         {/* CTA Section */}
         <section className="section-padding gradient-hero">
