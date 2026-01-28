@@ -11,9 +11,16 @@ import { useToast } from '@/hooks/use-toast';
 
 type BagType = 'paper' | 'plastic';
 
+interface CustomSize {
+  height: string;
+  width: string;
+  gusset: string;
+}
+
 interface FormData {
   bagType: BagType;
   size: string;
+  customSize: CustomSize;
   handle: string;
   finishing: string[];
   printing: string;
@@ -101,6 +108,16 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
     summary.forEach(item => {
       submissionData.append(item.label, item.value);
     });
+    
+    // Add custom size details if custom size was selected
+    if (formData.size === 'custom' && formData.customSize) {
+      const { height, width, gusset } = formData.customSize;
+      if (height || width || gusset) {
+        submissionData.append('Custom Height (cm)', height || 'N/A');
+        submissionData.append('Custom Width (cm)', width || 'N/A');
+        submissionData.append('Custom Gusset (cm)', gusset || 'N/A');
+      }
+    }
 
     try {
       const response = await fetch('https://formspree.io/f/xwvoybjj', {

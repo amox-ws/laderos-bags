@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import QuoteRequestModal from './QuoteRequestModal';
 
@@ -65,9 +67,16 @@ const extraProcessing = [
   { id: 'roundHole', el: 'Στρογγυλή τρύπα', en: 'Round hole' },
 ];
 
+interface CustomSize {
+  height: string;
+  width: string;
+  gusset: string;
+}
+
 interface FormData {
   bagType: BagType;
   size: string;
+  customSize: CustomSize;
   handle: string;
   finishing: string[];
   printing: string;
@@ -81,6 +90,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
   const [formData, setFormData] = useState<FormData>({
     bagType,
     size: '',
+    customSize: { height: '', width: '', gusset: '' },
     handle: '',
     finishing: [],
     printing: '',
@@ -90,7 +100,21 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
   const handles = bagType === 'paper' ? paperHandles : plasticHandles;
 
   const handleSizeSelect = (size: string) => {
-    setFormData(prev => ({ ...prev, size }));
+    setFormData(prev => ({ 
+      ...prev, 
+      size,
+      // Reset custom size when selecting a predefined size
+      customSize: size !== 'custom' ? { height: '', width: '', gusset: '' } : prev.customSize
+    }));
+  };
+
+  const handleCustomSizeChange = (field: keyof CustomSize, value: string) => {
+    // Only allow numeric values
+    const numericValue = value.replace(/[^0-9]/g, '');
+    setFormData(prev => ({
+      ...prev,
+      customSize: { ...prev.customSize, [field]: numericValue }
+    }));
   };
 
   const handleHandleSelect = (handle: string) => {
@@ -127,10 +151,21 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
     const summary: { label: string; value: string }[] = [];
     
     if (formData.size) {
-      summary.push({
-        label: t('quoteForm.size'),
-        value: formData.size === 'custom' ? t('quoteForm.customSize') : formData.size,
-      });
+      if (formData.size === 'custom') {
+        const { height, width, gusset } = formData.customSize;
+        const customValue = height && width && gusset 
+          ? `${height} x ${width} x ${gusset} (${t('quoteForm.customSize')})`
+          : t('quoteForm.customSize');
+        summary.push({
+          label: t('quoteForm.size'),
+          value: customValue,
+        });
+      } else {
+        summary.push({
+          label: t('quoteForm.size'),
+          value: formData.size,
+        });
+      }
     }
     
     if (formData.handle) {
@@ -221,6 +256,77 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
                 </button>
               ))}
             </div>
+
+            {/* Custom Size Inputs */}
+            {formData.size === 'custom' && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className="mt-6 p-4 bg-muted/50 rounded-lg border border-border"
+              >
+                <p className="text-sm text-muted-foreground mb-4">
+                  {t('quoteForm.customSizeHint')}
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div>
+                    <Label 
+                      htmlFor="customHeight" 
+                      className="text-xs font-semibold text-foreground uppercase tracking-wider"
+                    >
+                      {t('quoteForm.height')} (cm)
+                    </Label>
+                    <Input
+                      id="customHeight"
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={formData.customSize.height}
+                      onChange={(e) => handleCustomSizeChange('height', e.target.value)}
+                      placeholder="0"
+                      className="mt-2"
+                    />
+                  </div>
+                  <div>
+                    <Label 
+                      htmlFor="customWidth" 
+                      className="text-xs font-semibold text-foreground uppercase tracking-wider"
+                    >
+                      {t('quoteForm.width')} (cm)
+                    </Label>
+                    <Input
+                      id="customWidth"
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={formData.customSize.width}
+                      onChange={(e) => handleCustomSizeChange('width', e.target.value)}
+                      placeholder="0"
+                      className="mt-2"
+                    />
+                  </div>
+                  <div>
+                    <Label 
+                      htmlFor="customGusset" 
+                      className="text-xs font-semibold text-foreground uppercase tracking-wider"
+                    >
+                      {t('quoteForm.gusset')} (cm)
+                    </Label>
+                    <Input
+                      id="customGusset"
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      value={formData.customSize.gusset}
+                      onChange={(e) => handleCustomSizeChange('gusset', e.target.value)}
+                      placeholder="0"
+                      className="mt-2"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </motion.div>
 
           {/* Handles Selection */}
