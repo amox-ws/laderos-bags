@@ -33,6 +33,7 @@ const ProductsSection = () => {
             <ProductCarousel 
               title={t('products.paper.title')} 
               images={paperBagImages}
+              linkTo="/products/paper-bags"
             />
           </AnimatedSection>
           
@@ -40,6 +41,7 @@ const ProductsSection = () => {
             <ProductCarousel 
               title={t('products.plastic.title')} 
               images={plasticBagImages}
+              linkTo="/products/plastic-bags"
             />
           </AnimatedSection>
         </div>

@@ -1,35 +1,71 @@
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect, useCallback, TouchEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 interface ProductCarouselProps {
   title: string;
   images: string[];
+  linkTo: string;
 }
 
-const ProductCarousel = ({ title, images }: ProductCarouselProps) => {
+const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  // Autoplay - advances every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  // Swipe handlers
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  const onTouchMove = (e: TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
   };
+
+  const onTouchEnd = useCallback(() => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }
+    if (isRightSwipe) {
+      setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    }
+  }, [touchStart, touchEnd, images.length]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
 
   return (
-    <div className="group bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-300">
+    <Link 
+      to={linkTo}
+      className="group block bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer"
+    >
       {/* Carousel Container */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+      <div 
+        className="relative aspect-[4/3] overflow-hidden bg-muted"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         {/* Images */}
         <div 
-          className="flex h-full transition-transform duration-500 ease-out"
+          className="flex h-full transition-transform duration-700 ease-out"
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
         >
           {images.map((image, index) => (
@@ -41,11 +77,11 @@ const ProductCarousel = ({ title, images }: ProductCarouselProps) => {
                 <img
                   src={image}
                   alt={`${title} ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center">
+                <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center group-hover:from-muted-foreground/5 transition-colors duration-300">
                   <div className="text-center text-muted-foreground">
                     <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 rounded-full bg-muted-foreground/20 flex items-center justify-center">
                       <span className="text-2xl md:text-3xl font-bold">{index + 1}</span>
@@ -58,32 +94,16 @@ const ProductCarousel = ({ title, images }: ProductCarouselProps) => {
           ))}
         </div>
 
-        {/* Navigation Arrows */}
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={goToPrevious}
-          className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-10 w-10 md:h-12 md:w-12 rounded-full"
-          aria-label="Previous image"
-        >
-          <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={goToNext}
-          className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 bg-background/80 hover:bg-background shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 h-10 w-10 md:h-12 md:w-12 rounded-full"
-          aria-label="Next image"
-        >
-          <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
-        </Button>
-
         {/* Dots Indicator */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
           {images.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                goToSlide(index);
+              }}
               className={cn(
                 "w-2.5 h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300",
                 index === currentIndex 
@@ -97,12 +117,12 @@ const ProductCarousel = ({ title, images }: ProductCarouselProps) => {
       </div>
 
       {/* Title */}
-      <div className="p-5 md:p-6 lg:p-8 bg-card group-hover:bg-brand-pale transition-colors duration-300">
+      <div className="p-5 md:p-6 lg:p-8 bg-card group-hover:bg-secondary transition-colors duration-300">
         <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground text-center">
           {title}
         </h3>
       </div>
-    </div>
+    </Link>
   );
 };
 
