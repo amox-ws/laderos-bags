@@ -8,6 +8,7 @@ interface LanguageContextType {
   t: (key: string) => string;
 }
 
+
 const translations: Record<Language, Record<string, string>> = {
   el: {
     // Navigation
