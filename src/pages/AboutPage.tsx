@@ -1,3 +1,4 @@
+// About Page - Laderos Bags
 import { motion } from 'framer-motion';
 import { Factory, Package, Award, Users, Play, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
