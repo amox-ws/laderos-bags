@@ -89,6 +89,7 @@ const translations: Record<Language, Record<string, string>> = {
     'products.custom.full.desc': 'Σχεδιάζουμε και κατασκευάζουμε σακούλες με το λογότυπο και τα χρώματα της επιχείρησής σας. Πλήρης εκτύπωση και branding.',
     'products.features': 'Χαρακτηριστικά',
     'products.request': 'Ζητήστε Προσφορά',
+    'products.viewMore': 'Δείτε Περισσότερα',
     
     // Contact Page
     'contact.title': 'Επικοινωνία',
@@ -251,6 +252,7 @@ const translations: Record<Language, Record<string, string>> = {
     'products.custom.full.desc': 'We design and manufacture bags with your logo and business colors. Full printing and branding services.',
     'products.features': 'Features',
     'products.request': 'Request Quote',
+    'products.viewMore': 'View More',
     
     // Contact Page
     'contact.title': 'Contact',

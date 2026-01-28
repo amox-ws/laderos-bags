@@ -5,26 +5,16 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
-import plasticBags from '@/assets/plastic-bags.jpg';
-import paperBags from '@/assets/paper-bags.jpg';
-import customBags from '@/assets/custom-bags.jpg';
+import TrustedBySection from '@/components/home/TrustedBySection';
 
 const ProductsPage = () => {
   const { t, language } = useLanguage();
 
+  // Paper Bags first, Plastic Bags second (Custom Solutions removed)
   const products = [
     {
-      id: 'plastic',
-      image: plasticBags,
-      title: t('products.plastic.full.title'),
-      description: t('products.plastic.full.desc'),
-      features: language === 'el' 
-        ? ['Πολλαπλά μεγέθη', 'Διαφορετικά πάχη', 'Χρωματικές επιλογές', 'Εκτύπωση λογοτύπου']
-        : ['Multiple sizes', 'Various thicknesses', 'Color options', 'Logo printing'],
-    },
-    {
       id: 'paper',
-      image: paperBags,
+      linkTo: '/products/paper-bags',
       title: t('products.paper.full.title'),
       description: t('products.paper.full.desc'),
       features: language === 'el'
@@ -32,15 +22,18 @@ const ProductsPage = () => {
         : ['Recycled materials', 'High durability', 'Eco-friendly', 'Handles included'],
     },
     {
-      id: 'custom',
-      image: customBags,
-      title: t('products.custom.full.title'),
-      description: t('products.custom.full.desc'),
-      features: language === 'el'
-        ? ['Πλήρης εκτύπωση', 'Εταιρικά χρώματα', 'Ειδικές διαστάσεις', 'Branding']
-        : ['Full printing', 'Corporate colors', 'Custom dimensions', 'Branding'],
+      id: 'plastic',
+      linkTo: '/products/plastic-bags',
+      title: t('products.plastic.full.title'),
+      description: t('products.plastic.full.desc'),
+      features: language === 'el' 
+        ? ['Πολλαπλά μεγέθη', 'Διαφορετικά πάχη', 'Χρωματικές επιλογές', 'Εκτύπωση λογοτύπου']
+        : ['Multiple sizes', 'Various thicknesses', 'Color options', 'Logo printing'],
     },
   ];
+
+  // Gallery placeholders (9 images - 3x3 grid)
+  const galleryImages = Array(9).fill(null);
 
   return (
     <Layout>
@@ -75,16 +68,28 @@ const ProductsPage = () => {
                     index % 2 === 1 ? 'lg:flex-row-reverse' : ''
                   }`}
                 >
+                  {/* Image Placeholder - Clickable with hover zoom effect */}
                   <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
-                    <div className="rounded-2xl overflow-hidden shadow-elevated">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-full aspect-square object-cover"
-                      />
-                    </div>
+                    <Link 
+                      to={product.linkTo}
+                      className="block rounded-2xl overflow-hidden shadow-elevated group cursor-pointer"
+                    >
+                      <div className="relative aspect-square bg-gradient-to-br from-muted to-muted-foreground/10 overflow-hidden">
+                        <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
+                          <div className="text-center text-muted-foreground">
+                            <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 rounded-full bg-muted-foreground/20 flex items-center justify-center">
+                              <span className="text-3xl md:text-4xl font-bold">{index + 1}</span>
+                            </div>
+                            <p className="text-base md:text-lg">
+                              {language === 'el' ? 'Εικόνα σύντομα' : 'Image Coming Soon'}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
                   </div>
 
+                  {/* Content */}
                   <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                       {product.title}
@@ -108,8 +113,8 @@ const ProductsPage = () => {
                     </div>
 
                     <Button variant="brand" size="lg" asChild>
-                      <Link to="/contact">
-                        {t('products.request')}
+                      <Link to={product.linkTo}>
+                        {t('products.viewMore')}
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </Link>
                     </Button>
@@ -119,6 +124,32 @@ const ProductsPage = () => {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Who Trusts Us Section */}
+      <TrustedBySection />
+
+      {/* Gallery Section - Full Width */}
+      <section className="py-12 md:py-16 lg:py-20">
+        <AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
+            {galleryImages.map((_, index) => (
+              <div 
+                key={index}
+                className="aspect-square bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center group cursor-pointer overflow-hidden"
+              >
+                <div className="text-center text-muted-foreground transition-transform duration-500 ease-out group-hover:scale-110">
+                  <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 rounded-full bg-muted-foreground/20 flex items-center justify-center">
+                    <span className="text-xl md:text-2xl font-bold">{index + 1}</span>
+                  </div>
+                  <p className="text-sm md:text-base">
+                    {language === 'el' ? 'Εικόνα' : 'Image'} {index + 1}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
       </section>
 
       {/* CTA Section */}
