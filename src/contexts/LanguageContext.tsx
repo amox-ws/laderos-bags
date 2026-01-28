@@ -155,6 +155,24 @@ const translations: Record<Language, Record<string, string>> = {
     'paperBags.applicationsText': 'Οι χάρτινες σακούλες μας εξυπηρετούν επιχειρήσεις από διάφορους κλάδους, προσφέροντας επαγγελματική εικόνα και περιβαλλοντική υπευθυνότητα.',
     'paperBags.industries': 'Λιανεμπόριο, Κοσμήματα, Ρούχα, Εστιατόρια, Ξενοδοχεία, Φαρμακεία',
 
+    // Quote Request Form
+    'quoteForm.title': 'Ζητήστε Προσφορά',
+    'quoteForm.subtitle': 'Επιλέξτε τις προδιαγραφές που σας ενδιαφέρουν',
+    'quoteForm.size': 'Μέγεθος',
+    'quoteForm.customSize': 'Προσαρμοσμένο',
+    'quoteForm.handles': 'Λαβές',
+    'quoteForm.finishing': 'Φινίρισμα',
+    'quoteForm.printing': 'Εκτύπωση',
+    'quoteForm.extraProcessing': 'Επιπλέον Επεξεργασία',
+    'quoteForm.submit': 'Υποβολή',
+    'quoteForm.modal.title': 'Αίτημα Προσφοράς',
+    'quoteForm.modal.fullName': 'Ονοματεπώνυμο',
+    'quoteForm.modal.email': 'E-Mail',
+    'quoteForm.modal.phone': 'Τηλέφωνο Επικοινωνίας',
+    'quoteForm.modal.message': 'Μήνυμα',
+    'quoteForm.modal.submit': 'Λάβετε Προσφορά',
+    'quoteForm.modal.modify': 'Τροποποίηση',
+
     // Plastic Bags Page
     'plasticBags.backToProducts': 'Πίσω στα Προϊόντα',
     'plasticBags.title': 'Πλαστικές Σακούλες',
@@ -317,6 +335,24 @@ const translations: Record<Language, Record<string, string>> = {
     'paperBags.applicationsTitle': 'Perfect for Every Industry',
     'paperBags.applicationsText': 'Our paper bags serve businesses across various industries, offering professional image and environmental responsibility.',
     'paperBags.industries': 'Retail, Jewelry, Clothing, Restaurants, Hotels, Pharmacies',
+
+    // Quote Request Form
+    'quoteForm.title': 'Request a Quote',
+    'quoteForm.subtitle': 'Select the specifications that interest you',
+    'quoteForm.size': 'Size',
+    'quoteForm.customSize': 'Custom',
+    'quoteForm.handles': 'Handles',
+    'quoteForm.finishing': 'Finishing',
+    'quoteForm.printing': 'Printing',
+    'quoteForm.extraProcessing': 'Extra Processing',
+    'quoteForm.submit': 'Submit',
+    'quoteForm.modal.title': 'Quote Request',
+    'quoteForm.modal.fullName': 'Full Name',
+    'quoteForm.modal.email': 'E-Mail',
+    'quoteForm.modal.phone': 'Contact Phone',
+    'quoteForm.modal.message': 'Message',
+    'quoteForm.modal.submit': 'Get Quote',
+    'quoteForm.modal.modify': 'Modify',
 
     // Plastic Bags Page
     'plasticBags.backToProducts': 'Back to Products',
