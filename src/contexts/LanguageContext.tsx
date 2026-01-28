@@ -36,6 +36,9 @@ const translations: Record<Language, Record<string, string>> = {
     // Products Preview
     'products.title': 'Τα Προϊόντα μας',
     'products.subtitle': 'Ολοκληρωμένες λύσεις συσκευασίας για κάθε επιχειρηματική ανάγκη',
+    'products.section.title': 'Χάρτινες & Πλαστικές Σακούλες Φτιαγμένες στα Μέτρα σας',
+    'products.section.text1': 'Στη Laderos Bags, αντιμετωπίζουμε τη συσκευασία ως έναν ουσιαστικό τρόπο να αναδείξετε την ταυτότητα της επιχείρησής σας. Κατασκευάζουμε χάρτινες και πλαστικές σακούλες υψηλής ποιότητας, σχεδιασμένες αποκλειστικά σύμφωνα με τις ανάγκες σας.',
+    'products.section.text2': 'Από ανθεκτικές πλαστικές σακούλες έως κομψές χάρτινες λύσεις, προσφέρουμε εξατομικευμένη παραγωγή, που συνδυάζει λειτουργικότητα, αισθητική και επαγγελματική παρουσία. Δημιουργούμε συσκευασίες που ξεχωρίζουν και ενισχύουν το brand σας.',
     'products.plastic.title': 'Πλαστικές Σακούλες',
     'products.plastic.desc': 'Ανθεκτικές πλαστικές σακούλες σε διάφορα μεγέθη και σχέδια',
     'products.paper.title': 'Χάρτινες Σακούλες',
@@ -122,6 +125,9 @@ const translations: Record<Language, Record<string, string>> = {
     // Products Preview
     'products.title': 'Our Products',
     'products.subtitle': 'Complete packaging solutions for every business need',
+    'products.section.title': 'Paper & Plastic Bags Made to Your Measurements',
+    'products.section.text1': 'At Laderos Bags, we view packaging as a powerful way to express your brand identity. We manufacture high-quality paper and plastic bags, fully customized to meet your business needs.',
+    'products.section.text2': 'From durable plastic bags to elegant paper solutions, we provide tailor-made production that combines functionality, aesthetics, and professional presentation. We create packaging solutions that stand out and elevate your brand.',
     'products.plastic.title': 'Plastic Bags',
     'products.plastic.desc': 'Durable plastic bags in various sizes and designs',
     'products.paper.title': 'Paper Bags',
