@@ -19,9 +19,9 @@ const HomePage = () => {
   const { t } = useLanguage();
 
   // Refs
-  const pinnedSectionRef = useRef<HTMLDivElement>(null); // Το container που θα "καρφωθεί"
+  const pinnedSectionRef = useRef<HTMLDivElement>(null); 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const heroContentRef = useRef<HTMLDivElement>(null);   // Το περιεχόμενο του Hero
+  const heroContentRef = useRef<HTMLDivElement>(null);   
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   // Data
@@ -45,8 +45,8 @@ const HomePage = () => {
     const context = canvas?.getContext("2d");
     if (!canvas || !context) return;
 
-    // --- 1. SETUP EIKONWN ---
-    const frameCount = 120; 
+    // --- 1. SETUP FRAMES ---
+    const frameCount = 90; 
     const currentFrame = (index: number) => 
       `/bags/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
 
@@ -105,19 +105,19 @@ const HomePage = () => {
       }
     }
 
-    // --- 3. GSAP TIMELINE ΜΕ PINNING ---
+    // --- 3. GSAP TIMELINE ---
     
     let tl = gsap.timeline({
       scrollTrigger: {
-        trigger: pinnedSectionRef.current, // Καρφώνουμε αυτό το section
-        start: "top top",      // Όταν η κορυφή του section φτάσει στην κορυφή της οθόνης
-        end: "+=500%",         // Διάρκεια scroll (5 φορές το ύψος της οθόνης)
-        pin: true,             // ΕΝΕΡΓΟΠΟΙΗΣΗ PINNING
-        scrub: 1,              // Smooth scroll
+        trigger: pinnedSectionRef.current,
+        start: "top top",      
+        end: "+=500%",         
+        pin: true,             
+        scrub: 1,              
       }
     });
 
-    // Phase A: Σακούλα Ανοίγει
+    // Phase A: Open Bag
     tl.to(bag, {
       frame: frameCount - 1,
       snap: "frame",
@@ -133,27 +133,26 @@ const HomePage = () => {
       duration: 5
     }, ">-1");
 
-    // Phase C: Canvas Fade Out (Εξαφανίζεται η σακούλα)
+    // Phase C: Canvas Fade Out
     tl.to(canvas, {
       opacity: 0,
       duration: 1,
       ease: "none"
     }, "-=1");
 
-    // Phase D: Hero Appearance (Fade In + Slide Up)
-    // Αυτό συμβαίνει καθώς εξαφανίζεται η σακούλα
+    // Phase D: Hero Appearance
     tl.fromTo(heroContentRef.current, 
       {
         opacity: 0,
-        y: 100, // Ξεκινάει 100 pixels πιο κάτω
+        y: 100, 
       },
       {
         opacity: 1,
-        y: 0,   // Ανεβαίνει στη θέση του
+        y: 0,   
         duration: 2,
         ease: "power2.out"
       }, 
-      "-=1.5" // Ξεκινάει λίγο πριν τελειώσει τελείως το fade out της σακούλας
+      "-=1.5" 
     );
 
     return () => {
@@ -165,28 +164,27 @@ const HomePage = () => {
   return (
     <Layout>
       {/* SECTION 1: PINNED WRAPPER 
-        Αυτό το div περιέχει ΚΑΙ τον καμβά ΚΑΙ το Hero Section.
-        Θα μείνει καρφωμένο στην οθόνη μέχρι να τελειώσει το animation.
+          ΠΡΟΣΟΧΗ: Προστέθηκε το "-mt-16 md:-mt-20".
+          Αυτό τραβάει το div προς τα πάνω (πίσω από το header) για να καλύψει το κενό
+          και να ξεκινάει το scroll ΑΜΕΣΩΣ.
       */}
       <div 
         ref={pinnedSectionRef} 
-        className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background"
+        className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
       >
-        {/* Layer 1: Ο Καμβάς (Σακούλα) - Είναι από πάνω (z-20) */}
+        {/* Layer 1: Canvas */}
         <canvas 
           ref={canvasRef} 
           className="absolute inset-0 w-full h-full z-20 pointer-events-none"
         />
 
-        {/* Layer 2: Το Hero Section - Είναι από κάτω (z-10), αρχικά κρυμμένο */}
-        {/* Θα εμφανιστεί μέσα από τη σακούλα */}
+        {/* Layer 2: Hero Content */}
         <div ref={heroContentRef} className="relative z-10 w-full opacity-0"> 
-          {/* Background Image του Hero (αν θες να φαίνεται πίσω από τα γράμματα) */}
           <div className="absolute inset-0 z-0">
              <img
                src={heroBags}
                alt="Hero Background"
-               className="w-full h-full object-cover opacity-20" // Χαμηλό opacity για να ξεχωρίζουν τα γράμματα
+               className="w-full h-full object-cover opacity-20" 
              />
           </div>
 
@@ -214,9 +212,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* SECTION 2: REST OF THE CONTENT 
-        Αυτό εμφανίζεται φυσιολογικά ΜΕΤΑ το "ξεκάρφωμα" του από πάνω section.
-      */}
+      {/* SECTION 2: REST OF THE CONTENT */}
       <div className="relative z-30 bg-background">
         
         {/* Products Section */}
