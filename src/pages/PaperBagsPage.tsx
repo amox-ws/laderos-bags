@@ -4,6 +4,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
+import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 
 const PaperBagsPage = () => {
   const { t } = useLanguage();
@@ -138,6 +139,15 @@ const PaperBagsPage = () => {
                 </span>
               ))}
             </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* Quote Request Form Section */}
+      <section className="section-padding bg-background">
+        <div className="container-page">
+          <AnimatedSection>
+            <QuoteRequestForm bagType="paper" />
           </AnimatedSection>
         </div>
       </section>
