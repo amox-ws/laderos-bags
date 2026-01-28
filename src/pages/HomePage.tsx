@@ -5,9 +5,8 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
+import ProductsSection from '@/components/home/ProductsSection';
 import heroBags from '@/assets/hero-bags.jpg';
-import plasticBags from '@/assets/plastic-bags.jpg';
-import paperBags from '@/assets/paper-bags.jpg';
 
 // GSAP Imports
 import gsap from 'gsap';
@@ -23,22 +22,6 @@ const HomePage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);   
   const [imagesLoaded, setImagesLoaded] = useState(false);
-
-  // Data
-  const products = [
-    {
-      image: plasticBags,
-      title: t('products.plastic.title'),
-      description: t('products.plastic.desc'),
-      link: '/products',
-    },
-    {
-      image: paperBags,
-      title: t('products.paper.title'),
-      description: t('products.paper.desc'),
-      link: '/products',
-    },
-  ];
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -216,56 +199,7 @@ const HomePage = () => {
       <div className="relative z-30 bg-background">
         
         {/* Products Section */}
-        <section className="section-padding">
-          <div className="container-page">
-            <AnimatedSection className="text-center mb-12 md:mb-16">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-                {t('products.title')}
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-                {t('products.subtitle')}
-              </p>
-            </AnimatedSection>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 lg:gap-10">
-              {products.map((product, index) => (
-                <AnimatedSection key={index} delay={index * 0.15}>
-                  <Link 
-                    to={product.link}
-                    className="group block bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-300 active:scale-[0.98]"
-                  >
-                    <div className="aspect-[4/3] md:aspect-[3/2] overflow-hidden relative">
-                      <img
-                        src={product.image}
-                        alt={product.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-                      
-                      <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                        <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-2 md:mb-3">
-                          {product.title}
-                        </h3>
-                        <p className="text-white/90 text-base md:text-lg leading-relaxed line-clamp-2">
-                          {product.description}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    <div className="p-5 md:p-6 flex items-center justify-between bg-card group-hover:bg-brand-pale transition-colors duration-300">
-                      <span className="text-base md:text-lg font-semibold text-foreground group-hover:text-brand transition-colors">
-                        {t('products.explore')}
-                      </span>
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-brand/10 group-hover:bg-brand flex items-center justify-center transition-all duration-300">
-                        <ArrowRight className="h-5 w-5 md:h-6 md:w-6 text-brand group-hover:text-white transition-colors" />
-                      </div>
-                    </div>
-                  </Link>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
+        <ProductsSection />
 
         {/* CTA Section */}
         <section className="section-padding gradient-hero">
