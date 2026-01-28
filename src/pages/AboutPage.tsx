@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
+import TrustedBySection from '@/components/home/TrustedBySection';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 
@@ -115,6 +116,9 @@ const AboutPage = () => {
           </div>
         </div>
       </section>
+
+      {/* Who Trusts Us Section - Same as Home page */}
+      <TrustedBySection />
 
       {/* Video/Visual Section */}
       <section className="section-padding bg-background">
