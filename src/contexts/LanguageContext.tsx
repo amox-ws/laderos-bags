@@ -102,6 +102,12 @@ const translations: Record<Language, Record<string, string>> = {
     // Trusted By
     'trustedBy.title': 'Ποιοι μας Εμπιστεύονται',
 
+    // Stats Section
+    'stats.years': 'Χρόνια Εμπειρίας',
+    'stats.clients': 'Πελάτες',
+    'stats.bags': 'Σακούλες/Μήνα',
+    'stats.satisfaction': 'Ικανοποίηση',
+
     // About Preview Section
     'aboutPreview.title': '30 Χρόνια Εμπειρίας & Ποιότητας',
     'aboutPreview.text': 'Με περισσότερα από 30 χρόνια εμπειρίας, η Laderos Bags δραστηριοποιείται δυναμικά στον χώρο της παραγωγής χάρτινων και πλαστικών σακουλών. Επενδύουμε διαχρονικά στην ποιότητα, τη συνέπεια και τις σύγχρονες μεθόδους παραγωγής, προσφέροντας αξιόπιστες λύσεις συσκευασίας για κάθε επιχείρηση.',
@@ -236,6 +242,12 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Trusted By
     'trustedBy.title': 'Who Trusts Us',
+
+    // Stats Section
+    'stats.years': 'Years of Experience',
+    'stats.clients': 'Clients',
+    'stats.bags': 'Bags/Month',
+    'stats.satisfaction': 'Satisfaction',
 
     // About Preview Section
     'aboutPreview.title': '30 Years of Experience & Quality',
