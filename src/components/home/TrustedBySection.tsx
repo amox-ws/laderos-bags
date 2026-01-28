@@ -9,7 +9,7 @@ const TrustedBySection = () => {
     { name: 'Partner 1', logo: '/logos/NavyGreen_logo.png' },
     { name: 'Partner 2', logo: '/logos/bsb_logo.png' },
     { name: 'Partner 3', logo: '/logos/beneto_maretti_logo.png' },
-    { name: 'Partner 16', logo: '/logos/kostis_logo.jpg' },
+    { name: 'Partner 4', logo: '/logos/kostis_logo.jpg' },
     { name: 'Partner 5', logo: '/logos/asteras_tripolis_logo.png' },
     { name: 'Partner 6', logo: '/logos/status_logo.png' },
     { name: 'Partner 7', logo: '/logos/fikos_logo.png' },
@@ -18,15 +18,14 @@ const TrustedBySection = () => {
 
   // --- CONFIGURATION: BOTTOM ROW ---
   const bottomPartners = [
-    { name: 'Partner 10', logo: '/logos/redbull_logo.png' },
-    { name: 'Partner 11', logo: '/logos/morris_logo.png' },
-    { name: 'Partner 12', logo: '/logos/cashew_logo.png' },
-    { name: 'Partner 13', logo: '/logos/ragazzi_logo.png' },
-    { name: 'Partner 14', logo: '/logos/annas_secret_logo.jpg' },
-    { name: 'Partner 15', logo: '/logos/dionisos_logo.png' },
-    { name: 'Partner 4', logo: '/logos/sagiakos_logo.png' },
-    { name: 'Partner 17', logo: '/logos/logo18.png' },
-    { name: 'Partner 9', logo: '/logos/casba_logo.jpeg' },
+    { name: 'Partner 9', logo: '/logos/redbull_logo.png' },
+    { name: 'Partner 10', logo: '/logos/morris_logo.png' },
+    { name: 'Partner 11', logo: '/logos/cashew_logo.png' },
+    { name: 'Partner 12', logo: '/logos/ragazzi_logo.png' },
+    { name: 'Partner 13', logo: '/logos/annas_secret_logo.jpg' },
+    { name: 'Partner 14', logo: '/logos/dionisos_logo.png' },
+    { name: 'Partner 15', logo: '/logos/sagiakos_logo.png' },
+    { name: 'Partner 16', logo: '/logos/casba_logo.jpeg' },
   ];
 
   const duplicatedTop = [...topPartners, ...topPartners];
