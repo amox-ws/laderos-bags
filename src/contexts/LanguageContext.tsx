@@ -102,6 +102,11 @@ const translations: Record<Language, Record<string, string>> = {
     // Trusted By
     'trustedBy.title': 'Ποιοι μας Εμπιστεύονται',
 
+    // About Preview Section
+    'aboutPreview.title': '30 Χρόνια Εμπειρίας & Ποιότητας',
+    'aboutPreview.text': 'Με περισσότερα από 30 χρόνια εμπειρίας, η Laderos Bags δραστηριοποιείται δυναμικά στον χώρο της παραγωγής χάρτινων και πλαστικών σακουλών. Επενδύουμε διαχρονικά στην ποιότητα, τη συνέπεια και τις σύγχρονες μεθόδους παραγωγής, προσφέροντας αξιόπιστες λύσεις συσκευασίας για κάθε επιχείρηση.',
+    'aboutPreview.button': 'Μάθετε Περισσότερα',
+
     // Paper Bags Page
     'paperBags.backToProducts': 'Πίσω στα Προϊόντα',
     'paperBags.title': 'Χάρτινες Σακούλες',
@@ -231,6 +236,11 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Trusted By
     'trustedBy.title': 'Who Trusts Us',
+
+    // About Preview Section
+    'aboutPreview.title': '30 Years of Experience & Quality',
+    'aboutPreview.text': 'With over 30 years of experience, Laderos Bags has been actively operating in the production of paper and plastic bags. We consistently invest in quality, reliability, and modern manufacturing methods, delivering trusted packaging solutions for businesses.',
+    'aboutPreview.button': 'Learn More',
 
     // Paper Bags Page
     'paperBags.backToProducts': 'Back to Products',
