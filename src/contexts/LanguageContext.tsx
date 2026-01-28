@@ -158,6 +158,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Quote Request Form
     'quoteForm.title': 'Ζητήστε Προσφορά',
     'quoteForm.subtitle': 'Επιλέξτε τις προδιαγραφές που σας ενδιαφέρουν',
+    'quoteForm.bagType': 'Τύπος Σακούλας',
     'quoteForm.size': 'Μέγεθος',
     'quoteForm.customSize': 'Προσαρμοσμένο',
     'quoteForm.customSizeHint': 'Εισάγετε τις διαστάσεις της σακούλας σας:',
@@ -343,6 +344,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Quote Request Form
     'quoteForm.title': 'Request a Quote',
     'quoteForm.subtitle': 'Select the specifications that interest you',
+    'quoteForm.bagType': 'Bag Type',
     'quoteForm.size': 'Size',
     'quoteForm.customSize': 'Custom',
     'quoteForm.customSizeHint': 'Enter your bag dimensions:',

@@ -1,51 +1,29 @@
-import { useState } from 'react';
+// Contact Page - Laderos Bags
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
-import { useToast } from '@/hooks/use-toast';
+import ContactQuoteForm from '@/components/forms/ContactQuoteForm';
 
 const ContactPage = () => {
-  const { t } = useLanguage();
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: 'Μήνυμα Εστάλη!',
-      description: 'Θα επικοινωνήσουμε μαζί σας σύντομα.',
-    });
-    
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
-  };
+  const { t, language } = useLanguage();
 
   const contactInfo = [
     {
       icon: MapPin,
       label: t('contact.info.address'),
-      value: 'Λεωφ. Κηφισού 123, Αθήνα 10442',
+      value: 'Ελασσώνος 13, Αχαρνές 136 72',
     },
     {
       icon: Phone,
       label: t('contact.info.phone'),
-      value: '+30 210 1234567',
+      value: '697 266 1870',
     },
     {
       icon: Mail,
       label: t('contact.info.email'),
-      value: 'info@laderosbags.gr',
+      value: 'laderosbags@gmail.gr',
     },
     {
       icon: Clock,
@@ -56,17 +34,16 @@ const ContactPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 gradient-subtle" />
-        <div className="container-page relative z-10">
+      {/* Page Title Section - No Hero, Simple Title */}
+      <section className="py-16 md:py-20">
+        <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-3xl mx-auto text-center"
+            className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4">
               {t('contact.title')}
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground">
@@ -76,95 +53,18 @@ const ContactPage = () => {
         </div>
       </section>
 
-      {/* Contact Form & Info Section */}
-      <section className="section-padding">
+      {/* Contact Info & Map Section */}
+      <section className="section-padding pt-0">
         <div className="container-page">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            {/* Contact Form */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+            {/* Contact Information */}
             <AnimatedSection>
-              <div className="bg-card rounded-2xl p-8 shadow-card">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">{t('contact.form.name')}</Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        required
-                        placeholder="Ιωάννης Παπαδόπουλος"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="email">{t('contact.form.email')}</Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        placeholder="email@example.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="phone">{t('contact.form.phone')}</Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        placeholder="+30 210 1234567"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="company">{t('contact.form.company')}</Label>
-                      <Input
-                        id="company"
-                        name="company"
-                        placeholder="Η επιχείρησή σας"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">{t('contact.form.message')}</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={5}
-                      placeholder="Πώς μπορούμε να σας βοηθήσουμε;"
-                    />
-                  </div>
-
-                  <Button
-                    type="submit"
-                    variant="brand"
-                    size="lg"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      'Αποστολή...'
-                    ) : (
-                      <>
-                        {t('contact.form.submit')}
-                        <Send className="ml-2 h-5 w-5" />
-                      </>
-                    )}
-                  </Button>
-                </form>
-              </div>
-            </AnimatedSection>
-
-            {/* Contact Info */}
-            <AnimatedSection delay={0.2}>
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-8">
+              <div className="h-full">
+                <h2 className="text-2xl font-bold text-foreground uppercase tracking-wide mb-8">
                   {t('contact.info.title')}
                 </h2>
 
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {contactInfo.map((info, index) => (
                     <div
                       key={index}
@@ -182,23 +82,39 @@ const ContactPage = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+            </AnimatedSection>
 
-                {/* Map Placeholder */}
-                <div className="mt-8 rounded-xl overflow-hidden h-64 bg-muted">
+            {/* Map */}
+            <AnimatedSection delay={0.2}>
+              <div className="h-full flex flex-col">
+                <h2 className="text-2xl font-bold text-foreground uppercase tracking-wide mb-8 lg:invisible">
+                  {language === 'el' ? 'Χάρτης' : 'Map'}
+                </h2>
+                <div className="flex-1 rounded-xl overflow-hidden min-h-[350px] shadow-card">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50471.54744927897!2d23.68604!3d37.99083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bd1f067043f1%3A0x2736354576668ddd!2sAthens%2C%20Greece!5e0!3m2!1sen!2s!4v1706000000000!5m2!1sen!2s"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3141.8876844456196!2d23.7244!3d38.0846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1999c7c9c7c9d%3A0x7c9c7c9c7c9c7c9c!2sElassonos%2013%2C%20Acharnes%20136%2072%2C%20Greece!5e0!3m2!1sen!2s!4v1706000000000!5m2!1sen!2s"
                     width="100%"
                     height="100%"
-                    style={{ border: 0 }}
+                    style={{ border: 0, minHeight: '350px' }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Laderos Bags Location"
+                    title="Laderos Bags Location - Acharnes"
                   />
                 </div>
               </div>
             </AnimatedSection>
           </div>
+        </div>
+      </section>
+
+      {/* Quote Request Section */}
+      <section className="section-padding bg-muted/30">
+        <div className="container-page">
+          <AnimatedSection>
+            <ContactQuoteForm />
+          </AnimatedSection>
         </div>
       </section>
     </Layout>
