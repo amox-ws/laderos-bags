@@ -82,6 +82,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Products Page
     'products.page.title': 'Προϊόντα',
     'products.page.subtitle': 'Ανακαλύψτε τη γκάμα των προϊόντων μας',
+    'products.page.heroTitle': 'Ανακαλύψτε τη γκάμα των προϊόντων μας',
     'products.plastic.full.title': 'Πλαστικές Σακούλες',
     'products.plastic.full.desc': 'Ευρεία γκάμα πλαστικών σακουλών για λιανεμπόριο, σούπερ μάρκετ και βιομηχανική χρήση. Διαθέσιμες σε διάφορα μεγέθη, χρώματα και πάχη.',
     'products.paper.full.title': 'Χάρτινες Σακούλες',
@@ -268,6 +269,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Products Page
     'products.page.title': 'Products',
     'products.page.subtitle': 'Discover our product range',
+    'products.page.heroTitle': 'Discover Our Product Range',
     'products.plastic.full.title': 'Plastic Bags',
     'products.plastic.full.desc': 'Wide range of plastic bags for retail, supermarkets, and industrial use. Available in various sizes, colors, and thicknesses.',
     'products.paper.full.title': 'Paper Bags',

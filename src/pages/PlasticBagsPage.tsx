@@ -80,8 +80,15 @@ const PlasticBagsPage = () => {
 
               {/* CTA */}
               <div className="mt-10">
-                <Button variant="default" size="lg" asChild>
-                  <Link to="/contact">{t('plasticBags.cta')}</Link>
+                <Button 
+                  variant="default" 
+                  size="lg" 
+                  onClick={() => {
+                    const quoteSection = document.getElementById('quote-section');
+                    quoteSection?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  {t('plasticBags.cta')}
                 </Button>
               </div>
             </AnimatedSection>
@@ -144,7 +151,7 @@ const PlasticBagsPage = () => {
       </section>
 
       {/* Quote Request Form Section */}
-      <section className="section-padding bg-background">
+      <section id="quote-section" className="section-padding bg-background scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
             <QuoteRequestForm bagType="plastic" />

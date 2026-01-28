@@ -228,7 +228,7 @@ const HomePage = () => {
                 {t('cta.subtitle')}
               </p>
               <Button variant="heroOutline" size="xl" asChild>
-                <Link to="/contact">
+                <Link to="/contact#quote">
                   {t('cta.button')}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
