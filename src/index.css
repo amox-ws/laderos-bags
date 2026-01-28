@@ -171,6 +171,10 @@
     animation: scale-in 0.4s ease-out forwards;
   }
   
+  .animate-scroll-left {
+    animation: scroll-left 30s linear infinite;
+  }
+  
   @keyframes fade-up {
     from {
       opacity: 0;
@@ -199,6 +203,15 @@
     to {
       opacity: 1;
       transform: scale(1);
+    }
+  }
+  
+  @keyframes scroll-left {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
     }
   }
 }

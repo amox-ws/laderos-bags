@@ -99,6 +99,9 @@ const translations: Record<Language, Record<string, string>> = {
     'cta.subtitle': 'Επικοινωνήστε μαζί μας για να συζητήσουμε τις ανάγκες σας',
     'cta.button': 'Ξεκινήστε Τώρα',
 
+    // Trusted By
+    'trustedBy.title': 'Ποιοι μας Εμπιστεύονται',
+
     // Paper Bags Page
     'paperBags.backToProducts': 'Πίσω στα Προϊόντα',
     'paperBags.title': 'Χάρτινες Σακούλες',
@@ -225,6 +228,9 @@ const translations: Record<Language, Record<string, string>> = {
     'cta.title': 'Ready to Partner?',
     'cta.subtitle': 'Contact us to discuss your needs',
     'cta.button': 'Get Started',
+
+    // Trusted By
+    'trustedBy.title': 'Who Trusts Us',
 
     // Paper Bags Page
     'paperBags.backToProducts': 'Back to Products',
