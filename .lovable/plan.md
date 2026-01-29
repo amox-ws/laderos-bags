@@ -1,43 +1,70 @@
 
-# Scroll to Top on Navigation
+
+# Infinite Loop Carousel Implementation
 
 ## Overview
-When you click a button or link to navigate to a new page, the page will automatically scroll to the top. This improves user experience by ensuring visitors always see the beginning of each page.
+Update the ProductCarousel component so that when it reaches the last image, it seamlessly continues forward to the first image instead of visibly scrolling backwards.
 
-## What Will Be Done
+## Current Behavior
+- Carousel uses `translateX` to slide between images
+- When reaching the last slide, the index resets to 0
+- This causes a visible "rewind" animation scrolling all the way back
 
-### Create a ScrollToTop Component
-A new component will be created that:
-- Listens for route changes using React Router's `useLocation` hook
-- Automatically scrolls the window to the top (0, 0) whenever the route changes
-- Works instantly without any visible delay
+## Solution: Clone-Based Infinite Loop
 
-### Integrate with the App
-The component will be placed inside the `BrowserRouter` in `App.tsx` so it can detect all navigation events across the entire website.
+The standard technique for seamless infinite carousels:
+1. Clone the first slide and append it after the last slide
+2. When the carousel transitions to the cloned slide, wait for the animation to complete
+3. Instantly (with no animation) reset the position to the real first slide
+4. The user sees a continuous forward motion without any visible jump
 
-## Files to Change
+## Implementation Steps
 
-| File | Change |
-|------|--------|
-| `src/components/ScrollToTop.tsx` | New file - the scroll-to-top utility component |
-| `src/App.tsx` | Add the ScrollToTop component inside BrowserRouter |
+### Step 1: Extend the images array with a clone
+Add the first image at the end of the array for rendering purposes only.
+
+### Step 2: Update the autoplay and transition logic
+- When advancing from the last real slide to the cloned slide, allow the animation to complete
+- After the transition ends, instantly reset to index 0 without any transition duration
+
+### Step 3: Handle the transition reset
+Use a combination of:
+- State to track when we're in the "resetting" phase
+- Temporarily disable the CSS transition during the instant reset
+- Re-enable transition immediately after
+
+### Step 4: Update dot indicators
+Keep the dots showing only the real slides count (not the cloned one), and map the cloned slide indicator back to the first dot.
+
+---
 
 ## Technical Details
 
+**File to modify:** `src/components/home/ProductCarousel.tsx`
+
+**Key changes:**
+
 ```text
-+------------------+
-|   BrowserRouter  |
-|   +-----------+  |
-|   |ScrollToTop|  | <-- Listens to location changes
-|   +-----------+  |
-|   |  Routes   |  |
-|   +-----------+  |
-+------------------+
+1. Create extended images array:
+   const extendedImages = [...images, images[0]];
+
+2. Add state for transition control:
+   const [isTransitioning, setIsTransitioning] = useState(true);
+
+3. Update autoplay logic:
+   - When currentIndex reaches images.length (the clone), 
+     wait for transition to end, then reset to 0 instantly
+
+4. Handle transition end event:
+   - Listen for onTransitionEnd on the sliding container
+   - When we land on the cloned slide, disable transition and jump to index 0
+
+5. Update dot indicators:
+   - Use modulo to map currentIndex back to real slides
+   - Dots still show original images.length count
 ```
 
-The ScrollToTop component will use:
-- `useLocation()` from react-router-dom to detect route changes
-- `useEffect()` to trigger scroll when location changes
-- `window.scrollTo(0, 0)` to scroll to the top of the page
+**Swipe behavior:**
+- Forward swipe: same seamless loop behavior
+- Backward swipe from first slide: can optionally wrap to last (will handle this edge case)
 
-This is a standard React Router pattern that works reliably across all pages and navigation methods (links, buttons, browser back/forward).
