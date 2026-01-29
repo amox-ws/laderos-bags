@@ -405,8 +405,23 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
 export const useLanguage = (): LanguageContextType => {
   const context = useContext(LanguageContext);
+  // In rare cases (e.g. hot reload/refresh timing), components can briefly render
+  // before providers are fully re-mounted. Avoid a full blank-screen crash.
   if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    if (import.meta.env.DEV) {
+      // eslint-disable-next-line no-console
+      console.warn('useLanguage called outside LanguageProvider; using safe defaults.');
+    }
+
+    const fallbackLanguage: Language = 'el';
+    return {
+      language: fallbackLanguage,
+      setLanguage: () => {
+        /* no-op */
+      },
+      t: (key: string) => translations[fallbackLanguage][key] || key,
+    };
   }
+
   return context;
 };
