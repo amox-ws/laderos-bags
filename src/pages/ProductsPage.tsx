@@ -19,8 +19,8 @@ const ProductsPage = () => {
       title: t('products.paper.full.title'),
       description: t('products.paper.full.desc'),
       features: language === 'el'
-        ? ['Ανακυκλωμένα υλικά', 'Υψηλή αντοχή', 'Οικολογικές', 'Χειρολαβές']
-        : ['Recycled materials', 'High durability', 'Eco-friendly', 'Handles included'],
+        ? ['Εκτύπωση λογοτύπου', 'Ποιότητα κατασκευής', 'Υψηλή αντοχή', 'Χειρολαβές']
+        : ['Logo printing', 'Build quality', 'High durability', 'Handles included'],
     },
     {
       id: 'plastic',

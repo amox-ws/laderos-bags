@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Phone, MapPin } from 'lucide-react';
-import logo from '@/assets/logo.png';
+import footerLogo from '@/assets/footer-logo.png';
 const Footer = () => {
   const {
     t
@@ -13,7 +13,7 @@ const Footer = () => {
           {/* Logo & Description */}
           <div className="lg:col-span-2">
             <div className="mb-4">
-              <img src={logo} alt="Laderos Bags" className="h-14 w-auto brightness-0 invert" />
+              <img src={footerLogo} alt="Laderos Bags" className="h-16 md:h-20 w-auto" />
             </div>
             <p className="text-primary-foreground/80 max-w-sm">
               {t('footer.description')}
