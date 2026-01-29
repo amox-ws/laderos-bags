@@ -5,9 +5,20 @@ import ProductCarousel from './ProductCarousel';
 const ProductsSection = () => {
   const { t } = useLanguage();
 
-  // Placeholder images for carousels (empty strings = placeholder UI)
-  const paperBagImages = ['', '', '', ''];
-  const plasticBagImages = ['', '', '', ''];
+  // ΣΗΜΑΝΤΙΚΟ: Τα αρχεία που είναι στο φάκελο public/product_bags
+  // τα καλούμε με το path "/product_bags/onoma_eikonas.png"
+  
+  // Λίστα εικόνων για Χάρτινες Σακούλες
+  const paperBagImages = [
+    '/product_bags/navy_and_green.png', 
+    '/product_bags/pink.png', // Βάλε εδώ τα ονόματα των άλλων εικόνων σου
+    '/product_bags/redbull.png',
+    '/product_bags/cashew.png',
+  ];
+
+  // Λίστα εικόνων για Πλαστικές Σακούλες
+  const plasticBagImages = [
+  ];
 
   return (
     <section className="section-padding bg-background">
