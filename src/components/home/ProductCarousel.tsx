@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, TouchEvent } from 'react';
+import { useState, useEffect, useCallback, useRef, TouchEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
@@ -10,16 +10,42 @@ interface ProductCarouselProps {
 
 const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(true);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const sliderRef = useRef<HTMLDivElement>(null);
+
+  // Create extended array with first image cloned at the end
+  const extendedImages = [...images, images[0]];
+
+  // Handle transition end - reset to first slide instantly when on clone
+  const handleTransitionEnd = useCallback(() => {
+    if (currentIndex === images.length) {
+      // We're on the cloned slide, instantly reset to real first slide
+      setIsTransitioning(false);
+      setCurrentIndex(0);
+    }
+  }, [currentIndex, images.length]);
+
+  // Re-enable transitions after instant reset
+  useEffect(() => {
+    if (!isTransitioning && currentIndex === 0) {
+      // Use requestAnimationFrame to ensure the DOM has updated
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsTransitioning(true);
+        });
+      });
+    }
+  }, [isTransitioning, currentIndex]);
 
   // Autoplay - advances every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      setCurrentIndex((prev) => prev + 1);
     }, 4000);
     return () => clearInterval(interval);
-  }, [images.length]);
+  }, []);
 
   // Swipe handlers
   const minSwipeDistance = 50;
@@ -40,9 +66,11 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
     const isRightSwipe = distance < -minSwipeDistance;
 
     if (isLeftSwipe) {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
+      // Swipe left = next slide
+      setCurrentIndex((prev) => prev + 1);
     }
     if (isRightSwipe) {
+      // Swipe right = previous slide
       setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     }
   }, [touchStart, touchEnd, images.length]);
@@ -50,6 +78,9 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
+
+  // Calculate which dot should be active (map clone back to first)
+  const activeDotIndex = currentIndex >= images.length ? 0 : currentIndex;
 
   return (
     <Link 
@@ -65,10 +96,15 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
       >
         {/* Images */}
         <div 
-          className="flex h-full transition-transform duration-700 ease-out"
+          ref={sliderRef}
+          className={cn(
+            "flex h-full",
+            isTransitioning && "transition-transform duration-700 ease-out"
+          )}
           style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          onTransitionEnd={handleTransitionEnd}
         >
-          {images.map((image, index) => (
+          {extendedImages.map((image, index) => (
             <div 
               key={index} 
               className="min-w-full h-full flex items-center justify-center"
@@ -76,7 +112,7 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
               {image ? (
                 <img
                   src={image}
-                  alt={`${title} ${index + 1}`}
+                  alt={`${title} ${(index % images.length) + 1}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
@@ -84,7 +120,7 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
                 <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center group-hover:from-muted-foreground/5 transition-colors duration-300">
                   <div className="text-center text-muted-foreground">
                     <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 rounded-full bg-muted-foreground/20 flex items-center justify-center">
-                      <span className="text-2xl md:text-3xl font-bold">{index + 1}</span>
+                      <span className="text-2xl md:text-3xl font-bold">{(index % images.length) + 1}</span>
                     </div>
                     <p className="text-sm md:text-base">Image Coming Soon</p>
                   </div>
@@ -106,7 +142,7 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
               }}
               className={cn(
                 "w-2.5 h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300",
-                index === currentIndex 
+                index === activeDotIndex 
                   ? "bg-primary w-6 md:w-8" 
                   : "bg-background/60 hover:bg-background"
               )}
