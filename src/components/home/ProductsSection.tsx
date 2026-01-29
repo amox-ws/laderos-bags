@@ -18,6 +18,10 @@ const ProductsSection = () => {
 
   // Λίστα εικόνων για Πλαστικές Σακούλες
   const plasticBagImages = [
+    '/product_bags/black_pink.png', 
+    '/product_bags/ygeia.png', // Βάλε εδώ τα ονόματα των άλλων εικόνων σου
+    '/product_bags/oasisbnb.png',
+    '/product_bags/butcher.png',
   ];
 
   return (
