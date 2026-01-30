@@ -163,16 +163,9 @@ const PlasticBagsPage = () => {
                     <ImagePlaceholder id={14} className="w-full aspect-[16/10]" />
                   </div>
 
-                  {/* Row 9: Two smaller images */}
-                  <div className="flex gap-4">
-                    <ImagePlaceholder id={15} className="w-[45%] aspect-square" />
-                    <ImagePlaceholder id={16} className="w-[55%] aspect-[4/3]" />
-                  </div>
-
-                  {/* Row 10: Two images - small left, large right */}
-                  <div className="flex gap-4">
-                    <ImagePlaceholder id={17} className="w-[35%] aspect-[3/4]" />
-                    <ImagePlaceholder id={18} className="w-[65%] aspect-[4/3]" />
+                  {/* Row 9: Single image */}
+                  <div className="w-full">
+                    <ImagePlaceholder id={15} className="w-full aspect-[16/9]" />
                   </div>
 
                 </div>
