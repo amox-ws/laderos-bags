@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     // ΑΛΛΑΓΗ ΕΔΩ: Το z-index έγινε z-[100] για να είναι σίγουρα πάνω από το canvas (που είναι z-50)
-    <header className="fixed top-0 left-0 right-0 z-[100] bg-background/95 backdrop-blur-md border-b border-border">
+    <header className="fixed top-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur-md border-b border-gray-200">
       <div className="container-page">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
@@ -46,8 +46,8 @@ const Header = () => {
                 to={link.href}
                 className={`relative text-sm font-medium transition-colors duration-200 ${
                   isActive(link.href)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-primary'
+                    ? 'text-navy'
+                    : 'text-gray-600 hover:text-navy'
                 }`}
               >
                 {link.label}
@@ -68,7 +68,7 @@ const Header = () => {
               variant="ghost"
               size="sm"
               onClick={toggleLanguage}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-gray-600 hover:text-navy hover:bg-gray-100"
             >
               <Globe className="h-4 w-4" />
               <span className="text-sm font-medium">{language.toUpperCase()}</span>
@@ -78,7 +78,7 @@ const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="md:hidden"
+              className="md:hidden text-gray-600 hover:text-navy hover:bg-gray-100"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -94,7 +94,7 @@ const Header = () => {
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.2 }}
-              className="md:hidden border-t border-border overflow-hidden"
+              className="md:hidden border-t border-gray-200 overflow-hidden bg-white"
             >
               <div className="py-4 space-y-1">
                 {navLinks.map((link) => (
@@ -104,8 +104,8 @@ const Header = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className={`block py-3 px-4 rounded-lg transition-colors duration-200 ${
                       isActive(link.href)
-                        ? 'bg-secondary text-primary font-medium'
-                        : 'text-muted-foreground hover:bg-secondary hover:text-primary'
+                        ? 'bg-gray-100 text-navy font-medium'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-navy'
                     }`}
                   >
                     {link.label}
