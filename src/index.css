@@ -15,24 +15,24 @@
     --brand-blue-light: 217 50% 70%;
     --brand-blue-pale: 217 40% 20%;
     
-    /* Semantic tokens - Dark gray theme */
-    --background: 220 15% 13%;
-    --foreground: 0 0% 95%;
+    /* Semantic tokens - Refined lighter gray theme */
+    --background: 220 12% 18%;
+    --foreground: 0 0% 96%;
 
-    --card: 220 15% 16%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 12% 22%;
+    --card-foreground: 0 0% 96%;
 
-    --popover: 220 15% 16%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 12% 22%;
+    --popover-foreground: 0 0% 96%;
 
     --primary: 217 45% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 220 15% 20%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 220 12% 26%;
+    --secondary-foreground: 0 0% 92%;
 
-    --muted: 220 15% 18%;
-    --muted-foreground: 217 15% 65%;
+    --muted: 220 12% 24%;
+    --muted-foreground: 217 12% 70%;
 
     --accent: 217 45% 55%;
     --accent-foreground: 0 0% 100%;
@@ -40,8 +40,8 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 25%;
-    --input: 220 15% 20%;
+    --border: 220 12% 30%;
+    --input: 220 12% 26%;
     --ring: 217 45% 55%;
 
     --radius: 0.5rem;
