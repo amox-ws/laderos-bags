@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, ZoomIn } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -8,15 +8,33 @@ import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Component για την εμφάνιση της εικόνας
-const GalleryImage = ({ src, className = '', index }: { src: string; className?: string; index: number }) => (
+// Προσθέσαμε το prop "objectFit" για να ελέγχουμε αν η εικόνα θα κόβεται ή όχι
+const GalleryImage = ({ 
+  src, 
+  className = '', 
+  index, 
+  objectFit = 'cover' 
+}: { 
+  src: string; 
+  className?: string; 
+  index: number;
+  objectFit?: 'cover' | 'contain';
+}) => (
   <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
-    <div className="w-full h-full bg-muted">
+    {/* Αν είναι contain, βάζουμε λευκό φόντο για να φαίνεται ωραίο το κενό */}
+    <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
       <img 
         src={src} 
         alt={`Paper Bag Application ${index + 1}`}
-        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-110 ${
+          objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
+        }`}
         loading="lazy"
       />
+       {/* Overlay με εφέ στο hover */}
+       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 w-8 h-8" />
+      </div>
     </div>
   </div>
 );
@@ -26,24 +44,23 @@ const PaperBagsPage = () => {
   const isMobile = useIsMobile();
 
   // --- ΛΙΣΤΑ ΕΙΚΟΝΩΝ ---
-  // Αντικατέστησε τα ονόματα των αρχείων με τα δικά σου.
-  // Η σειρά αντιστοιχεί στη διάταξη του Grid (1 = η πρώτη μεγάλη επάνω, κλπ).
   const paperBagImages = [
-    '/paper_product/anastasia.PNG', // 1. Μεγάλη φαρδιά πάνω
-    '/paper_product/asteras_tripolis.PNG', // 2. Κάθετη αριστερά
-    '/paper_product/benetto.PNG', // 3. Τετράγωνη δεξιά
-    '/paper_product/bsb.PNG', // 4. Μικρή αριστερά
-    '/paper_product/casba.PNG', // 5. Κάθετη δεξιά
-    '/paper_product/di_mondo.PNG', // 6. Αριστερά (ίση)
-    '/paper_product/dionisos.PNG', // 7. Δεξιά (ίση)
-    '/paper_product/fikos_black.PNG', // 8. Μικρή σκοτεινή αριστερά
-    '/paper_product/illusions.PNG', // 9. Μεγάλη δεξιά
-    '/paper_product/kostis.PNG', // 10. Μεγάλη αριστερά
-    '/paper_product/morris.PNG', // 11. Μικρή δεξιά
-    '/paper_product/mts.PNG', // 12. Μεγάλη αριστερά
-    '/paper_product/navy_green.PNG', // 13. Μικρή δεξιά
-    '/paper_product/sagiakos.PNG', // 14. Μεγάλη φαρδιά
-    '/paper_product/wine.PNG', // 15. Τετράγωνη αριστερά
+    '/paper_product/navy_green.PNG',       // 0
+    '/paper_product/bsb.PNG',              // 1
+    '/paper_product/anastasia.PNG',        // 2
+    '/paper_product/asteras_tripolis.PNG', // 3
+    '/paper_product/benetto.PNG',          // 4
+    '/paper_product/mts.PNG', 
+               // 5
+    '/paper_product/di_mondo.PNG',  
+    '/paper_product/sagiakos.PNG',       // 6      // 7
+    '/paper_product/fikos_black.PNG',      // 8
+    '/paper_product/illusions.PNG',        // 9
+    '/paper_product/kostis.PNG',           // 10
+    '/paper_product/morris.PNG',           // 11
+    '/paper_product/wine.PNG',             // 12
+     '/paper_product/casba.PNG',           // 13
+     '/paper_product/dionisos.PNG',       // 14
   ];
 
   const features = [
@@ -138,9 +155,14 @@ const PaperBagsPage = () => {
               <AnimatedSection delay={0.2}>
                 <div className="flex flex-col gap-4">
                   
-                  {/* Row 1: Single wide image */}
+                  {/* Row 1: Navy Green - Χρησιμοποιούμε objectFit="contain" για να μην κόβεται */}
                   <div className="w-full">
-                    <GalleryImage src={paperBagImages[0]} index={0} className="w-full aspect-[16/9]" />
+                    <GalleryImage 
+                      src={paperBagImages[0]} 
+                      index={0} 
+                      className="w-full aspect-[16/9]" 
+                      objectFit="contain" // ZOOMED OUT
+                    />
                   </div>
 
                   {/* Row 2: Two images */}
@@ -179,15 +201,10 @@ const PaperBagsPage = () => {
                     <GalleryImage src={paperBagImages[12]} index={12} className="w-[40%] aspect-[3/5]" />
                   </div>
 
-                  {/* Row 8: Single full width */}
-                  <div className="w-full">
-                    <GalleryImage src={paperBagImages[13]} index={13} className="w-full aspect-[16/10]" />
-                  </div>
-
-                  {/* Row 9: Two smaller images */}
+                  {/* Row 8: MTS & Sagiakos - Τώρα σε δυάδα (κανονικό μέγεθος) */}
                   <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[14]} index={14} className="w-[45%] aspect-square" />
-                    <GalleryImage src={paperBagImages[15]} index={15} className="w-[55%] aspect-[4/3]" />
+                    <GalleryImage src={paperBagImages[13]} index={13} className="w-[50%] aspect-square" />
+                    <GalleryImage src={paperBagImages[14]} index={14} className="w-[50%] aspect-square" />
                   </div>
 
                 </div>
