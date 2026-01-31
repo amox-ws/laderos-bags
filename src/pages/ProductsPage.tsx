@@ -12,16 +12,19 @@ import TrustedBySection from '@/components/home/TrustedBySection';
 const paperThumbnail = '/paper_product/paper_thumbnail.jpeg';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.jpeg';
 
+// ΑΛΛΑΓΗ ΕΔΩ: Μετατροπή σε objects για να ελέγχουμε το focus της κάθε εικόνας
 const galleryImages = [
-  '/gallery/gallery9.jpeg',
-  '/gallery/gallery8.jpeg',
-  '/gallery/gallery3.jpeg',
-  '/gallery/gallery4.jpeg',
-  '/gallery/gallery2.jpeg',
-  '/gallery/gallery6.jpeg',
-  '/gallery/gallery7.jpeg',
-  '/gallery/gallery5.jpeg',
-  '/gallery/gallery1.jpeg'
+  // Το '30% center' σημαίνει: Πήγαινε στο 30% του πλάτους (πιο αριστερά)
+  // Το 'center' είναι το προεπιλεγμένο (50%)
+  { src: '/gallery/gallery9.png', position: '60% center' }, 
+  { src: '/gallery/gallery8.png', position: '60% center' },
+  { src: '/gallery/gallery3.jpeg', position: 'center' },
+  { src: '/gallery/gallery4.jpeg', position: 'center' },
+  { src: '/gallery/gallery2.jpeg', position: 'center' },
+  { src: '/gallery/gallery6.png', position: 'center' },
+  { src: '/gallery/gallery7.jpeg', position: 'center' },
+  { src: '/gallery/gallery5.jpeg', position: 'center' },
+  { src: '/gallery/gallery1.jpeg', position: 'center' }
 ];
 
 const ProductsPage = () => {
@@ -34,7 +37,7 @@ const ProductsPage = () => {
       linkTo: '/products/paper-bags',
       title: t('products.paper.full.title'),
       description: t('products.paper.full.desc'),
-      image: paperThumbnail, // Use real image here
+      image: paperThumbnail,
       features: language === 'el'
         ? ['Εκτύπωση λογοτύπου', 'Ποιότητα κατασκευής', 'Υψηλή αντοχή', 'Χειρολαβές']
         : ['Logo printing', 'Build quality', 'High durability', 'Handles included'],
@@ -44,7 +47,7 @@ const ProductsPage = () => {
       linkTo: '/products/plastic-bags',
       title: t('products.plastic.full.title'),
       description: t('products.plastic.full.desc'),
-      image: plasticThumbnail, // Use real image here
+      image: plasticThumbnail,
       features: language === 'el' 
         ? ['Πολλαπλά μεγέθη', 'Διαφορετικά πάχη', 'Χρωματικές επιλογές', 'Εκτύπωση λογοτύπου']
         : ['Multiple sizes', 'Various thicknesses', 'Color options', 'Logo printing'],
@@ -148,14 +151,16 @@ const ProductsPage = () => {
       <section className="py-12 md:py-16 lg:py-20">
         <AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
-            {galleryImages.map((imgSrc, index) => (
+            {galleryImages.map((item, index) => (
               <div 
                 key={index}
                 className="aspect-square bg-muted group cursor-pointer overflow-hidden relative"
               >
                 <img 
-                  src={imgSrc} 
+                  src={item.src} 
                   alt={`Gallery image ${index + 1}`}
+                  // ΑΛΛΑΓΗ: Προσθέσαμε το style={{ objectPosition }}
+                  style={{ objectPosition: item.position }}
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   loading="lazy"
                 />
