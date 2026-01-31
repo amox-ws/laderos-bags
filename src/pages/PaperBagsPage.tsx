@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, ZoomIn } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -7,15 +7,19 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Image placeholder component
-const ImagePlaceholder = ({ id, className = '' }: { id: number; className?: string }) => (
-  <div className={`rounded-xl overflow-hidden bg-muted shadow-card hover:shadow-elevated transition-all duration-300 hover:scale-[1.02] ${className}`}>
-    <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center">
-      <div className="text-center text-muted-foreground">
-        <div className="w-12 h-12 md:w-14 md:h-14 mx-auto mb-2 rounded-full bg-muted-foreground/20 flex items-center justify-center">
-          <span className="text-lg md:text-xl font-bold">{id}</span>
-        </div>
-        <p className="text-xs text-muted-foreground/70">Paper Bag {id}</p>
+// Component για την εμφάνιση της εικόνας
+const GalleryImage = ({ src, className = '', index }: { src: string; className?: string; index: number }) => (
+  <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
+    <div className="w-full h-full bg-muted">
+      <img 
+        src={src} 
+        alt={`Paper Bag Application ${index + 1}`}
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        loading="lazy"
+      />
+      {/* Overlay με εφέ στο hover */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 w-8 h-8" />
       </div>
     </div>
   </div>
@@ -24,6 +28,27 @@ const ImagePlaceholder = ({ id, className = '' }: { id: number; className?: stri
 const PaperBagsPage = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+
+  // --- ΛΙΣΤΑ ΕΙΚΟΝΩΝ ---
+  // Αντικατέστησε τα ονόματα των αρχείων με τα δικά σου.
+  // Η σειρά αντιστοιχεί στη διάταξη του Grid (1 = η πρώτη μεγάλη επάνω, κλπ).
+  const paperBagImages = [
+    '/paper_product/anastasia.PNG', // 1. Μεγάλη φαρδιά πάνω
+    '/paper_product/asteras_tripolis.PNG', // 2. Κάθετη αριστερά
+    '/paper_product/benetto.PNG', // 3. Τετράγωνη δεξιά
+    '/paper_product/bsb.PNG', // 4. Μικρή αριστερά
+    '/paper_product/casba.PNG', // 5. Κάθετη δεξιά
+    '/paper_product/di_mondo.PNG', // 6. Αριστερά (ίση)
+    '/paper_product/dionisos.PNG', // 7. Δεξιά (ίση)
+    '/paper_product/fikos_black.PNG', // 8. Μικρή σκοτεινή αριστερά
+    '/paper_product/illusions.PNG', // 9. Μεγάλη δεξιά
+    '/paper_product/kostis.PNG', // 10. Μεγάλη αριστερά
+    '/paper_product/morris.PNG', // 11. Μικρή δεξιά
+    '/paper_product/mts.PNG', // 12. Μεγάλη αριστερά
+    '/paper_product/navy_green.PNG', // 13. Μικρή δεξιά
+    '/paper_product/sagiakos.PNG', // 14. Μεγάλη φαρδιά
+    '/paper_product/wine.PNG', // 15. Τετράγωνη αριστερά
+  ];
 
   const features = [
     t('paperBags.feature1'),
@@ -112,67 +137,61 @@ const PaperBagsPage = () => {
               </div>
             </div>
 
-            {/* Right Column - Structured Image Grid (matching screenshot exactly) */}
+            {/* Right Column - Gallery Grid */}
             <div className="w-full lg:w-[55%] xl:w-[60%]">
               <AnimatedSection delay={0.2}>
                 <div className="flex flex-col gap-4">
                   
                   {/* Row 1: Single wide image */}
                   <div className="w-full">
-                    <ImagePlaceholder id={1} className="w-full aspect-[16/9]" />
+                    <GalleryImage src={paperBagImages[0]} index={0} className="w-full aspect-[16/9]" />
                   </div>
 
-                  {/* Row 2: Two images - left larger portrait, right smaller */}
+                  {/* Row 2: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={2} className="w-[55%] aspect-[3/4]" />
-                    <ImagePlaceholder id={3} className="w-[45%] aspect-square" />
+                    <GalleryImage src={paperBagImages[1]} index={1} className="w-[55%] aspect-[3/4]" />
+                    <GalleryImage src={paperBagImages[2]} index={2} className="w-[45%] aspect-square" />
                   </div>
 
-                  {/* Row 3: Two images - left smaller, right portrait */}
+                  {/* Row 3: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={4} className="w-[45%] aspect-[4/5]" />
-                    <ImagePlaceholder id={5} className="w-[55%] aspect-[3/4]" />
+                    <GalleryImage src={paperBagImages[3]} index={3} className="w-[45%] aspect-[4/5]" />
+                    <GalleryImage src={paperBagImages[4]} index={4} className="w-[55%] aspect-[3/4]" />
                   </div>
 
-                  {/* Row 4: Two images - equal size */}
+                  {/* Row 4: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={6} className="w-1/2 aspect-[4/5]" />
-                    <ImagePlaceholder id={7} className="w-1/2 aspect-[4/5]" />
+                    <GalleryImage src={paperBagImages[5]} index={5} className="w-1/2 aspect-[4/5]" />
+                    <GalleryImage src={paperBagImages[6]} index={6} className="w-1/2 aspect-[4/5]" />
                   </div>
 
-                  {/* Row 5: Two images - left small dark, right large */}
+                  {/* Row 5: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={8} className="w-[40%] aspect-[3/4]" />
-                    <ImagePlaceholder id={9} className="w-[60%] aspect-[4/5]" />
+                    <GalleryImage src={paperBagImages[7]} index={7} className="w-[40%] aspect-[3/4]" />
+                    <GalleryImage src={paperBagImages[8]} index={8} className="w-[60%] aspect-[4/5]" />
                   </div>
 
-                  {/* Row 6: Two images - both larger */}
+                  {/* Row 6: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={10} className="w-[55%] aspect-[3/4]" />
-                    <ImagePlaceholder id={11} className="w-[45%] aspect-[3/4]" />
+                    <GalleryImage src={paperBagImages[9]} index={9} className="w-[55%] aspect-[3/4]" />
+                    <GalleryImage src={paperBagImages[10]} index={10} className="w-[45%] aspect-[3/4]" />
                   </div>
 
                   {/* Row 7: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={12} className="w-[60%] aspect-[4/5]" />
-                    <ImagePlaceholder id={13} className="w-[40%] aspect-[3/5]" />
+                    <GalleryImage src={paperBagImages[11]} index={11} className="w-[60%] aspect-[4/5]" />
+                    <GalleryImage src={paperBagImages[12]} index={12} className="w-[40%] aspect-[3/5]" />
                   </div>
 
                   {/* Row 8: Single full width */}
                   <div className="w-full">
-                    <ImagePlaceholder id={14} className="w-full aspect-[16/10]" />
+                    <GalleryImage src={paperBagImages[13]} index={13} className="w-full aspect-[16/10]" />
                   </div>
 
                   {/* Row 9: Two smaller images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={15} className="w-[45%] aspect-square" />
-                    <ImagePlaceholder id={16} className="w-[55%] aspect-[4/3]" />
-                  </div>
-
-                  {/* Row 10: Two images - small left, large right */}
-                  <div className="flex gap-4">
-                    <ImagePlaceholder id={17} className="w-[35%] aspect-[3/4]" />
-                    <ImagePlaceholder id={18} className="w-[65%] aspect-[4/3]" />
+                    <GalleryImage src={paperBagImages[14]} index={14} className="w-[45%] aspect-square" />
+                    <GalleryImage src={paperBagImages[15]} index={15} className="w-[55%] aspect-[4/3]" />
                   </div>
 
                 </div>
