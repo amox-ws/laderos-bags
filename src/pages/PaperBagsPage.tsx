@@ -152,12 +152,7 @@ const PaperBagsPage = () => {
                   
                   {/* Row 1: Navy Green - Χρησιμοποιούμε objectFit="contain" για να μην κόβεται */}
                   <div className="w-full">
-                    <GalleryImage 
-                      src={paperBagImages[0]} 
-                      index={0} 
-                      className="w-full aspect-[16/9]" 
-                      objectFit="contain" // ZOOMED OUT
-                    />
+                    <GalleryImage src={paperBagImages[0]} index={0} className="w-full aspect-[16/9]" />
                   </div>
 
                   {/* Row 2: Two images */}
