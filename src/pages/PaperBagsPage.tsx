@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Check, ZoomIn } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -21,7 +21,6 @@ const GalleryImage = ({
   objectFit?: 'cover' | 'contain';
 }) => (
   <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
-    {/* Αν είναι contain, βάζουμε λευκό φόντο για να φαίνεται ωραίο το κενό */}
     <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
       <img 
         src={src} 
@@ -31,10 +30,6 @@ const GalleryImage = ({
         }`}
         loading="lazy"
       />
-       {/* Overlay με εφέ στο hover */}
-       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 w-8 h-8" />
-      </div>
     </div>
   </div>
 );
