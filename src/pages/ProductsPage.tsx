@@ -56,8 +56,8 @@ const ProductsPage = () => {
 
   return (
     <Layout>
-      {/* Page Title Section - Simple, No Hero */}
-      <section className="py-16 md:py-20">
+      {/* Page Title Section - Level 1 (Lightest) */}
+      <section className="py-16 md:py-20 section-depth-1">
         <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -65,15 +65,15 @@ const ProductsPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide">
+            <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-wide">
               {t('products.page.heroTitle')}
             </h1>
           </motion.div>
         </div>
       </section>
 
-      {/* Products Section */}
-      <section className="section-padding">
+      {/* Products Section - Level 2 */}
+      <section className="section-padding section-depth-2">
         <div className="container-page">
           <div className="space-y-24">
             {products.map((product, index) => (
@@ -109,20 +109,20 @@ const ProductsPage = () => {
 
                   {/* Content */}
                   <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                    <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
                       {product.title}
                     </h2>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
+                    <p className="leading-relaxed mb-6 opacity-80">
                       {product.description}
                     </p>
 
                     <div className="mb-8">
-                      <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+                      <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
                         {t('products.features')}
                       </h3>
                       <ul className="grid grid-cols-2 gap-3">
                         {product.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-muted-foreground">
+                          <li key={i} className="flex items-center gap-2 opacity-80">
                             <CheckCircle2 className="h-5 w-5 text-brand flex-shrink-0" />
                             <span className="text-sm">{feature}</span>
                           </li>
@@ -144,11 +144,12 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      {/* Who Trusts Us Section */}
-      <TrustedBySection />
-
-      {/* Gallery Section - Full Width */}
-      <section className="py-12 md:py-16 lg:py-20">
+      {/* Who Trusts Us Section - Level 3 */}
+      <div className="section-depth-3">
+        <TrustedBySection />
+      </div>
+      {/* Gallery Section - Level 4 */}
+      <section className="py-12 md:py-16 lg:py-20 section-depth-4">
         <AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
             {galleryImages.map((item, index) => (
@@ -173,14 +174,14 @@ const ProductsPage = () => {
         </AnimatedSection>
       </section>
 
-      {/* CTA Section */}
-      <section className="section-padding gradient-hero">
+      {/* CTA Section - Level 6 (Darkest) */}
+      <section className="section-padding section-depth-6">
         <div className="container-page">
           <AnimatedSection className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {t('cta.title')}
             </h2>
-            <p className="text-lg text-primary-foreground/80 mb-8 max-w-xl mx-auto">
+            <p className="text-lg opacity-80 mb-8 max-w-xl mx-auto">
               {t('cta.subtitle')}
             </p>
             <Button variant="heroOutline" size="xl" asChild>

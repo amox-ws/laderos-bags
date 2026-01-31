@@ -34,8 +34,8 @@ const ContactPage = () => {
 
   return (
     <Layout>
-      {/* Page Title Section - No Hero, Simple Title */}
-      <section className="py-16 md:py-20">
+      {/* Page Title Section - Level 1 (Lightest) */}
+      <section className="py-16 md:py-20 section-depth-1">
         <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -43,24 +43,24 @@ const ContactPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground uppercase tracking-wide mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-wide mb-4">
               {t('contact.title')}
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground">
+            <p className="text-lg md:text-xl opacity-80">
               {t('contact.subtitle')}
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Info & Map Section */}
-      <section className="section-padding pt-0">
+      {/* Contact Info & Map Section - Level 2 */}
+      <section className="section-padding pt-0 section-depth-2">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Information */}
             <AnimatedSection>
               <div className="h-full">
-                <h2 className="text-2xl font-bold text-foreground uppercase tracking-wide mb-8">
+                <h2 className="text-2xl font-bold uppercase tracking-wide mb-8">
                   {t('contact.info.title')}
                 </h2>
 
@@ -68,16 +68,16 @@ const ContactPage = () => {
                   {contactInfo.map((info, index) => (
                     <div
                       key={index}
-                      className="flex items-start gap-4 p-4 bg-secondary rounded-xl"
+                      className="flex items-start gap-4 p-4 bg-white/10 rounded-xl"
                     >
-                      <div className="w-12 h-12 rounded-lg bg-brand/10 flex items-center justify-center flex-shrink-0">
-                        <info.icon className="h-6 w-6 text-brand" />
+                      <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
+                        <info.icon className="h-6 w-6" />
                       </div>
                       <div>
-                        <p className="text-sm text-muted-foreground mb-1">
+                        <p className="text-sm opacity-70 mb-1">
                           {info.label}
                         </p>
-                        <p className="font-medium text-foreground">{info.value}</p>
+                        <p className="font-medium">{info.value}</p>
                       </div>
                     </div>
                   ))}
@@ -88,7 +88,7 @@ const ContactPage = () => {
             {/* Map */}
             <AnimatedSection delay={0.2}>
               <div className="h-full flex flex-col">
-                <h2 className="text-2xl font-bold text-foreground uppercase tracking-wide mb-8 lg:invisible">
+                <h2 className="text-2xl font-bold uppercase tracking-wide mb-8 lg:invisible">
                   {language === 'el' ? 'Χάρτης' : 'Map'}
                 </h2>
                 <div className="flex-1 rounded-xl overflow-hidden min-h-[350px] shadow-card">
@@ -109,8 +109,8 @@ const ContactPage = () => {
         </div>
       </section>
 
-      {/* Quote Request Section */}
-      <section id="quote" className="section-padding bg-muted/30 scroll-mt-20">
+      {/* Quote Request Section - Level 4 */}
+      <section id="quote" className="section-padding section-depth-4 scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
             <ContactQuoteForm />

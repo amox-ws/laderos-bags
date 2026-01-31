@@ -25,7 +25,7 @@ const ProductsSection = () => {
   ];
 
   return (
-    <section className="section-padding bg-background">
+    <section className="section-padding">
       <div className="container-page">
         {/* Text Content */}
         <AnimatedSection className="max-w-4xl mx-auto text-center mb-12 md:mb-16 lg:mb-20">

@@ -5,31 +5,54 @@
 @tailwind utilities;
 
 
-/* Laderos Bags Design System - New Blue-Gray Palette */
+/* Laderos Bags Design System - Progressive Blue-Gray Palette */
 @layer base {
   :root {
-    /* Core brand colors - New Palette */
-    /* #1C282E - very dark blue-gray */
-    --color-darkest: 200 24% 15%;
-    /* #273F4B - dark blue-gray */
-    --color-dark: 200 30% 22%;
-    /* #2B4C5D - medium dark blue */
-    --color-medium-dark: 200 37% 27%;
-    /* #6A8595 - muted blue-gray */
-    --color-medium: 200 17% 50%;
-    /* #A1AFBA - light blue-gray */
-    --color-light: 206 15% 68%;
-    /* #CCD3D9 - very light gray-blue */
-    --color-lightest: 208 15% 83%;
+    /* ═══════════════════════════════════════════════════════════════
+       SECTION DEPTH COLORS (Light → Dark progression as user scrolls)
+       ═══════════════════════════════════════════════════════════════ */
     
-    /* Legacy aliases for compatibility */
+    /* Level 1 - Lightest (Top of page) #CCD3D9 */
+    --section-1: 208 15% 83%;
+    --section-1-foreground: 200 24% 15%;
+    --section-1-muted: 200 17% 50%;
+    
+    /* Level 2 - Light #A1AFBA */
+    --section-2: 206 15% 68%;
+    --section-2-foreground: 200 24% 15%;
+    --section-2-muted: 200 30% 22%;
+    
+    /* Level 3 - Medium #6A8595 */
+    --section-3: 200 17% 50%;
+    --section-3-foreground: 208 15% 90%;
+    --section-3-muted: 206 15% 75%;
+    
+    /* Level 4 - Medium Dark #2B4C5D */
+    --section-4: 200 37% 27%;
+    --section-4-foreground: 208 15% 90%;
+    --section-4-muted: 206 15% 68%;
+    
+    /* Level 5 - Dark #273F4B */
+    --section-5: 200 30% 22%;
+    --section-5-foreground: 208 15% 85%;
+    --section-5-muted: 206 15% 68%;
+    
+    /* Level 6 - Darkest (Bottom of page) #1C282E */
+    --section-6: 200 24% 15%;
+    --section-6-foreground: 208 15% 83%;
+    --section-6-muted: 206 15% 68%;
+    
+    /* ═══════════════════════════════════════════════════════════════
+       LEGACY SEMANTIC TOKENS (for compatibility)
+       ═══════════════════════════════════════════════════════════════ */
+    
     --navy: 200 24% 15%;
     --navy-light: 200 30% 22%;
     --brand-blue: 200 37% 27%;
     --brand-blue-light: 200 17% 50%;
     --brand-blue-pale: 200 24% 15%;
     
-    /* Semantic tokens */
+    /* Default semantic tokens - Dark theme base */
     --background: 200 24% 15%;
     --foreground: 208 15% 83%;
 
@@ -54,7 +77,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 37% 27%;
+    --border: 200 30% 30%;
     --input: 200 30% 22%;
     --ring: 200 17% 50%;
 
@@ -178,8 +201,90 @@
     @apply py-16 md:py-24 lg:py-32;
   }
   
+  /* ═══════════════════════════════════════════════════════════════
+     SECTION DEPTH CLASSES - Progressive Light → Dark Flow
+     Use these to create smooth visual scroll progression
+     ═══════════════════════════════════════════════════════════════ */
+  
+  /* Level 1 - Lightest (Use at top of pages) */
+  .section-depth-1 {
+    background-color: hsl(var(--section-1));
+    color: hsl(var(--section-1-foreground));
+  }
+  .section-depth-1 h1, .section-depth-1 h2, .section-depth-1 h3, .section-depth-1 h4 {
+    color: hsl(var(--section-1-foreground));
+  }
+  .section-depth-1 .text-muted-foreground, .section-depth-1 p:not([class]) {
+    color: hsl(var(--section-1-muted));
+  }
+  
+  /* Level 2 - Light */
+  .section-depth-2 {
+    background-color: hsl(var(--section-2));
+    color: hsl(var(--section-2-foreground));
+  }
+  .section-depth-2 h1, .section-depth-2 h2, .section-depth-2 h3, .section-depth-2 h4 {
+    color: hsl(var(--section-2-foreground));
+  }
+  .section-depth-2 .text-muted-foreground, .section-depth-2 p:not([class]) {
+    color: hsl(var(--section-2-muted));
+  }
+  
+  /* Level 3 - Medium (Transition point) */
+  .section-depth-3 {
+    background-color: hsl(var(--section-3));
+    color: hsl(var(--section-3-foreground));
+  }
+  .section-depth-3 h1, .section-depth-3 h2, .section-depth-3 h3, .section-depth-3 h4 {
+    color: hsl(var(--section-3-foreground));
+  }
+  .section-depth-3 .text-muted-foreground, .section-depth-3 p:not([class]) {
+    color: hsl(var(--section-3-muted));
+  }
+  
+  /* Level 4 - Medium Dark */
+  .section-depth-4 {
+    background-color: hsl(var(--section-4));
+    color: hsl(var(--section-4-foreground));
+  }
+  .section-depth-4 h1, .section-depth-4 h2, .section-depth-4 h3, .section-depth-4 h4 {
+    color: hsl(var(--section-4-foreground));
+  }
+  .section-depth-4 .text-muted-foreground, .section-depth-4 p:not([class]) {
+    color: hsl(var(--section-4-muted));
+  }
+  
+  /* Level 5 - Dark */
+  .section-depth-5 {
+    background-color: hsl(var(--section-5));
+    color: hsl(var(--section-5-foreground));
+  }
+  .section-depth-5 h1, .section-depth-5 h2, .section-depth-5 h3, .section-depth-5 h4 {
+    color: hsl(var(--section-5-foreground));
+  }
+  .section-depth-5 .text-muted-foreground, .section-depth-5 p:not([class]) {
+    color: hsl(var(--section-5-muted));
+  }
+  
+  /* Level 6 - Darkest (Use at bottom of pages) */
+  .section-depth-6 {
+    background-color: hsl(var(--section-6));
+    color: hsl(var(--section-6-foreground));
+  }
+  .section-depth-6 h1, .section-depth-6 h2, .section-depth-6 h3, .section-depth-6 h4 {
+    color: hsl(var(--section-6-foreground));
+  }
+  .section-depth-6 .text-muted-foreground, .section-depth-6 p:not([class]) {
+    color: hsl(var(--section-6-muted));
+  }
+  
+  /* Legacy gradient classes */
   .gradient-hero {
-    background: var(--gradient-hero);
+    background: linear-gradient(135deg, hsl(var(--section-6)) 0%, hsl(var(--section-5)) 100%);
+    color: hsl(var(--section-6-foreground));
+  }
+  .gradient-hero h1, .gradient-hero h2, .gradient-hero h3, .gradient-hero h4 {
+    color: hsl(var(--section-6-foreground));
   }
   
   .gradient-blue {
@@ -187,7 +292,11 @@
   }
   
   .gradient-subtle {
-    background: var(--gradient-subtle);
+    background: linear-gradient(180deg, hsl(var(--section-5)) 0%, hsl(var(--section-6)) 100%);
+    color: hsl(var(--section-5-foreground));
+  }
+  .gradient-subtle h1, .gradient-subtle h2, .gradient-subtle h3, .gradient-subtle h4 {
+    color: hsl(var(--section-5-foreground));
   }
   
   .shadow-card {

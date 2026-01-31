@@ -200,32 +200,42 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* SECTION 2: REST OF THE CONTENT */}
-      <div className="relative z-30 bg-background">
+      {/* SECTION 2: REST OF THE CONTENT - Progressive Light → Dark */}
+      <div className="relative z-30">
         
-        {/* Products Section */}
-        <ProductsSection />
+        {/* Products Section - Level 1 (Lightest) */}
+        <div className="section-depth-1">
+          <ProductsSection />
+        </div>
 
-        {/* Who Trusts Us Section */}
-        <TrustedBySection />
+        {/* Who Trusts Us Section - Level 2 */}
+        <div className="section-depth-2">
+          <TrustedBySection />
+        </div>
 
-        {/* About Us Preview Section */}
-        <AboutPreviewSection />
+        {/* About Us Preview Section - Level 3 */}
+        <div className="section-depth-3">
+          <AboutPreviewSection />
+        </div>
 
-        {/* Animated Stats Section */}
-        <AnimatedStatsSection />
+        {/* Animated Stats Section - Level 4 */}
+        <div className="section-depth-4">
+          <AnimatedStatsSection />
+        </div>
 
-        {/* Where to Find Us Section */}
-        <WhereToFindUsSection />
+        {/* Where to Find Us Section - Level 5 */}
+        <div className="section-depth-5">
+          <WhereToFindUsSection />
+        </div>
 
-        {/* CTA Section */}
-        <section className="section-padding gradient-hero">
+        {/* CTA Section - Level 6 (Darkest) */}
+        <section className="section-padding section-depth-6">
           <div className="container-page">
             <AnimatedSection className="text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 {t('cta.title')}
               </h2>
-              <p className="text-lg text-primary-foreground/80 mb-8 max-w-xl mx-auto">
+              <p className="text-lg opacity-80 mb-8 max-w-xl mx-auto">
                 {t('cta.subtitle')}
               </p>
               <Button variant="heroOutline" size="xl" asChild>

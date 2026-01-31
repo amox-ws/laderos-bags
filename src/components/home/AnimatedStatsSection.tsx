@@ -42,10 +42,10 @@ const StatItem = ({ endValue, suffix, label, isInView, duration = 2000 }: StatIt
 
   return (
     <div className="text-center">
-      <div className="text-4xl md:text-5xl font-bold text-primary-foreground mb-2">
+      <div className="text-4xl md:text-5xl font-bold mb-2">
         {count}{suffix}
       </div>
-      <div className="text-primary-foreground/70 text-sm">
+      <div className="opacity-70 text-sm">
         {label}
       </div>
     </div>
@@ -65,7 +65,7 @@ const AnimatedStatsSection = () => {
   ];
 
   return (
-    <section ref={ref} className="section-padding gradient-hero">
+    <section ref={ref} className="section-padding">
       <div className="container-page">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, index) => (
