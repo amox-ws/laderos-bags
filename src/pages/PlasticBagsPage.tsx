@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, ZoomIn } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -7,15 +7,19 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Image placeholder component
-const ImagePlaceholder = ({ id, className = '' }: { id: number; className?: string }) => (
-  <div className={`rounded-xl overflow-hidden bg-muted shadow-card hover:shadow-elevated transition-all duration-300 hover:scale-[1.02] ${className}`}>
-    <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center">
-      <div className="text-center text-muted-foreground">
-        <div className="w-12 h-12 md:w-14 md:h-14 mx-auto mb-2 rounded-full bg-muted-foreground/20 flex items-center justify-center">
-          <span className="text-lg md:text-xl font-bold">{id}</span>
-        </div>
-        <p className="text-xs text-muted-foreground/70">Plastic Bag {id}</p>
+// Component για την εμφάνιση της εικόνας
+const GalleryImage = ({ src, className = '', index }: { src: string; className?: string; index: number }) => (
+  <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
+    <div className="w-full h-full bg-muted">
+      <img 
+        src={src} 
+        alt={`Plastic Bag Application ${index + 1}`}
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        loading="lazy"
+      />
+      {/* Overlay με εφέ στο hover */}
+      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 w-8 h-8" />
       </div>
     </div>
   </div>
@@ -24,6 +28,26 @@ const ImagePlaceholder = ({ id, className = '' }: { id: number; className?: stri
 const PlasticBagsPage = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+
+  // --- ΛΙΣΤΑ ΕΙΚΟΝΩΝ ---
+  // Αντικατέστησε τα path με τα πραγματικά ονόματα των αρχείων σου στο φάκελο public/plastic_product/
+  const plasticBagImages = [
+    '/plastic_product/annas_secret.PNG', // 1. Μεγάλη φαρδιά πάνω
+    '/plastic_product/annette.PNG', // 2. Κάθετη αριστερά
+    '/plastic_product/b&b.PNG', // 3. Τετράγωνη δεξιά
+    '/plastic_product/beauty.PNG', // 4. Μικρή αριστερά
+    '/plastic_product/butchery.PNG', // 5. Κάθετη δεξιά
+    '/plastic_product/casba.PNG', // 6. Αριστερά (ίση)
+    '/plastic_product/lab35.PNG', // 7. Δεξιά (ίση)
+    '/plastic_product/navy_green.PNG', // 8. Μικρή σκοτεινή αριστερά
+    '/plastic_product/oasis.PNG', // 9. Μεγάλη δεξιά
+    '/plastic_product/oida.PNG', // 10. Μεγάλη αριστερά
+    '/plastic_product/plaza.PNG', // 11. Μικρή δεξιά
+    '/plastic_product/proton.PNG', // 12. Μεγάλη αριστερά
+    '/plastic_product/sport_jean.PNG', // 13. Μικρή δεξιά
+    '/plastic_product/sporthero.PNG', // 14. Μεγάλη φαρδιά
+    '/plastic_product/ugeia.PNG', // 15. Μεγάλη φαρδιά (τελευταία)
+  ];
 
   const features = [
     t('plasticBags.feature1'),
@@ -112,60 +136,60 @@ const PlasticBagsPage = () => {
               </div>
             </div>
 
-            {/* Right Column - Structured Image Grid (matching Paper Bags exactly) */}
+            {/* Right Column - Gallery Grid */}
             <div className="w-full lg:w-[55%] xl:w-[60%]">
               <AnimatedSection delay={0.2}>
                 <div className="flex flex-col gap-4">
                   
                   {/* Row 1: Single wide image */}
                   <div className="w-full">
-                    <ImagePlaceholder id={1} className="w-full aspect-[16/9]" />
+                    <GalleryImage src={plasticBagImages[0]} index={0} className="w-full aspect-[16/9]" />
                   </div>
 
-                  {/* Row 2: Two images - left larger portrait, right smaller */}
+                  {/* Row 2: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={2} className="w-[55%] aspect-[3/4]" />
-                    <ImagePlaceholder id={3} className="w-[45%] aspect-square" />
+                    <GalleryImage src={plasticBagImages[1]} index={1} className="w-[55%] aspect-[3/4]" />
+                    <GalleryImage src={plasticBagImages[2]} index={2} className="w-[45%] aspect-square" />
                   </div>
 
-                  {/* Row 3: Two images - left smaller, right portrait */}
+                  {/* Row 3: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={4} className="w-[45%] aspect-[4/5]" />
-                    <ImagePlaceholder id={5} className="w-[55%] aspect-[3/4]" />
+                    <GalleryImage src={plasticBagImages[3]} index={3} className="w-[45%] aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[4]} index={4} className="w-[55%] aspect-[3/4]" />
                   </div>
 
-                  {/* Row 4: Two images - equal size */}
+                  {/* Row 4: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={6} className="w-1/2 aspect-[4/5]" />
-                    <ImagePlaceholder id={7} className="w-1/2 aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[5]} index={5} className="w-1/2 aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[6]} index={6} className="w-1/2 aspect-[4/5]" />
                   </div>
 
-                  {/* Row 5: Two images - left small dark, right large */}
+                  {/* Row 5: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={8} className="w-[40%] aspect-[3/4]" />
-                    <ImagePlaceholder id={9} className="w-[60%] aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[7]} index={7} className="w-[40%] aspect-[3/4]" />
+                    <GalleryImage src={plasticBagImages[8]} index={8} className="w-[60%] aspect-[4/5]" />
                   </div>
 
-                  {/* Row 6: Two images - both larger */}
+                  {/* Row 6: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={10} className="w-[55%] aspect-[3/4]" />
-                    <ImagePlaceholder id={11} className="w-[45%] aspect-[3/4]" />
+                    <GalleryImage src={plasticBagImages[9]} index={9} className="w-[55%] aspect-[3/4]" />
+                    <GalleryImage src={plasticBagImages[10]} index={10} className="w-[45%] aspect-[3/4]" />
                   </div>
 
                   {/* Row 7: Two images */}
                   <div className="flex gap-4">
-                    <ImagePlaceholder id={12} className="w-[60%] aspect-[4/5]" />
-                    <ImagePlaceholder id={13} className="w-[40%] aspect-[3/5]" />
+                    <GalleryImage src={plasticBagImages[11]} index={11} className="w-[60%] aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[12]} index={12} className="w-[40%] aspect-[3/5]" />
                   </div>
 
                   {/* Row 8: Single full width */}
                   <div className="w-full">
-                    <ImagePlaceholder id={14} className="w-full aspect-[16/10]" />
+                    <GalleryImage src={plasticBagImages[13]} index={13} className="w-full aspect-[16/10]" />
                   </div>
 
-                  {/* Row 9: Single image */}
+                  {/* Row 9: Single full width (Unique to plastic bags page layout) */}
                   <div className="w-full">
-                    <ImagePlaceholder id={15} className="w-full aspect-[16/9]" />
+                    <GalleryImage src={plasticBagImages[14]} index={14} className="w-full aspect-[16/9]" />
                   </div>
 
                 </div>
