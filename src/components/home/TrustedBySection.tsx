@@ -34,18 +34,18 @@ const TrustedBySection = () => {
   const duplicatedBottom = [...bottomPartners, ...bottomPartners];
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 bg-background overflow-hidden">
+    <section className="py-12 md:py-16 lg:py-20 overflow-hidden">
       <div className="container-page mb-8 md:mb-10">
         <AnimatedSection className="text-center">
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
             {t('trustedBy.title')}
           </h2>
         </AnimatedSection>
       </div>
 
       <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-inherit to-transparent z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, inherit, transparent)' }} />
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-inherit to-transparent z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, inherit, transparent)' }} />
 
         {/* Top carousel */}
         <div className="relative w-full overflow-hidden mb-4 md:mb-6">

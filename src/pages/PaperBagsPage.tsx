@@ -69,29 +69,29 @@ const PaperBagsPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="section-padding gradient-hero">
+      {/* Hero Section - Level 1 (Lightest) */}
+      <section className="section-padding section-depth-1">
         <div className="container-page">
           <AnimatedSection className="text-center">
             <Link 
               to="/products" 
-              className="inline-flex items-center gap-2 text-primary-foreground/80 hover:text-primary-foreground mb-6 transition-colors"
+              className="inline-flex items-center gap-2 opacity-70 hover:opacity-100 mb-6 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               {t('paperBags.backToProducts')}
             </Link>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
               {t('paperBags.title')}
             </h1>
-            <p className="text-lg md:text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl opacity-80 max-w-3xl mx-auto">
               {t('paperBags.subtitle')}
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* Main Content with Sticky Text */}
-      <section className="bg-background">
+      {/* Main Content with Sticky Text - Level 2 */}
+      <section className="section-depth-2">
         <div className="container-page py-16 md:py-24 lg:py-32">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
             
@@ -99,10 +99,10 @@ const PaperBagsPage = () => {
             <div className="w-full lg:w-[45%] xl:w-[40%]">
               <div className={isMobile ? '' : 'lg:sticky lg:top-24 lg:self-start'}>
                 <AnimatedSection>
-                  <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
                     {t('paperBags.sectionTitle')}
                   </h2>
-                  <div className="space-y-4 text-muted-foreground">
+                  <div className="space-y-4 opacity-80">
                     <p className="text-base md:text-lg leading-relaxed">
                       {t('paperBags.description1')}
                     </p>
@@ -113,16 +113,16 @@ const PaperBagsPage = () => {
 
                   {/* Features List */}
                   <div className="mt-8">
-                    <h3 className="text-xl font-semibold text-foreground mb-4">
+                    <h3 className="text-xl font-semibold mb-4">
                       {t('paperBags.featuresTitle')}
                     </h3>
                     <ul className="space-y-3">
                       {features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-3">
-                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Check className="h-3 w-3 text-primary" />
+                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
+                            <Check className="h-3 w-3" />
                           </div>
-                          <span className="text-muted-foreground">{feature}</span>
+                          <span className="opacity-80">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -204,21 +204,21 @@ const PaperBagsPage = () => {
         </div>
       </section>
 
-      {/* Applications Section */}
-      <section className="section-padding gradient-subtle">
+      {/* Applications Section - Level 4 */}
+      <section className="section-padding section-depth-4">
         <div className="container-page">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
               {t('paperBags.applicationsTitle')}
             </h2>
-            <p className="text-lg text-muted-foreground mb-8">
+            <p className="text-lg opacity-80 mb-8">
               {t('paperBags.applicationsText')}
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               {t('paperBags.industries').split(',').map((industry, index) => (
                 <span 
                   key={index}
-                  className="px-4 py-2 bg-card rounded-full text-sm font-medium text-foreground shadow-sm"
+                  className="px-4 py-2 bg-white/10 rounded-full text-sm font-medium shadow-sm"
                 >
                   {industry.trim()}
                 </span>
@@ -228,8 +228,8 @@ const PaperBagsPage = () => {
         </div>
       </section>
 
-      {/* Quote Request Form Section */}
-      <section id="quote-section" className="section-padding bg-background scroll-mt-20">
+      {/* Quote Request Form Section - Level 5 */}
+      <section id="quote-section" className="section-padding section-depth-5 scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
             <QuoteRequestForm bagType="paper" />

@@ -11,7 +11,7 @@ const WhereToFindUsSection = () => {
   const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3140.8!2d23.7316!3d38.0847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1a2f8a8a8a8a8%3A0x0!2zRWxhc3Nvbm9zIDEzLCBBY2hhcm5lcyAxMzYgNzIsIEdyZWVjZQ!5e0!3m2!1sen!2sgr!4v1700000000000!5m2!1sen!2sgr";
 
   return (
-    <section className="section-padding bg-secondary/30">
+    <section className="section-padding">
       <div className="container-page">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Map Column */}
