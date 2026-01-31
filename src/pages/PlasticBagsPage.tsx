@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Check, ZoomIn } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -17,10 +17,6 @@ const GalleryImage = ({ src, className = '', index }: { src: string; className?:
         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
         loading="lazy"
       />
-      {/* Overlay με εφέ στο hover */}
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-         <ZoomIn className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-50 group-hover:scale-100 w-8 h-8" />
-      </div>
     </div>
   </div>
 );
