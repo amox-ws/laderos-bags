@@ -1,4 +1,3 @@
-// Products Page - Laderos Bags
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
@@ -8,16 +7,34 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
 
+// --- IMAGES ---
+// Thumbnail images for the main product categories
+const paperThumbnail = '/paper_product/paper_thumbnail.jpeg';
+const plasticThumbnail = '/plastic_product/plastic_thumbnail.jpeg';
+
+const galleryImages = [
+  '/gallery/gallery9.jpeg',
+  '/gallery/gallery8.jpeg',
+  '/gallery/gallery3.jpeg',
+  '/gallery/gallery4.jpeg',
+  '/gallery/gallery2.jpeg',
+  '/gallery/gallery6.jpeg',
+  '/gallery/gallery7.jpeg',
+  '/gallery/gallery5.jpeg',
+  '/gallery/gallery1.jpeg'
+];
+
 const ProductsPage = () => {
   const { t, language } = useLanguage();
 
-  // Paper Bags first, Plastic Bags second (Custom Solutions removed)
+  // Paper Bags first, Plastic Bags second
   const products = [
     {
       id: 'paper',
       linkTo: '/products/paper-bags',
       title: t('products.paper.full.title'),
       description: t('products.paper.full.desc'),
+      image: paperThumbnail, // Use real image here
       features: language === 'el'
         ? ['Εκτύπωση λογοτύπου', 'Ποιότητα κατασκευής', 'Υψηλή αντοχή', 'Χειρολαβές']
         : ['Logo printing', 'Build quality', 'High durability', 'Handles included'],
@@ -27,14 +44,12 @@ const ProductsPage = () => {
       linkTo: '/products/plastic-bags',
       title: t('products.plastic.full.title'),
       description: t('products.plastic.full.desc'),
+      image: plasticThumbnail, // Use real image here
       features: language === 'el' 
         ? ['Πολλαπλά μεγέθη', 'Διαφορετικά πάχη', 'Χρωματικές επιλογές', 'Εκτύπωση λογοτύπου']
         : ['Multiple sizes', 'Various thicknesses', 'Color options', 'Logo printing'],
     },
   ];
-
-  // Gallery placeholders (9 images - 3x3 grid)
-  const galleryImages = Array(9).fill(null);
 
   return (
     <Layout>
@@ -65,22 +80,25 @@ const ProductsPage = () => {
                     index % 2 === 1 ? 'lg:flex-row-reverse' : ''
                   }`}
                 >
-                  {/* Image Placeholder - Clickable with hover zoom effect */}
+                  {/* Product Image */}
                   <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
                     <Link 
                       to={product.linkTo}
                       className="block rounded-2xl overflow-hidden shadow-elevated group cursor-pointer"
                     >
-                      <div className="relative aspect-square bg-gradient-to-br from-muted to-muted-foreground/10 overflow-hidden">
-                        <div className="absolute inset-0 flex items-center justify-center transition-transform duration-500 ease-out group-hover:scale-110">
-                          <div className="text-center text-muted-foreground">
-                            <div className="w-20 h-20 md:w-24 md:h-24 mx-auto mb-4 rounded-full bg-muted-foreground/20 flex items-center justify-center">
-                              <span className="text-3xl md:text-4xl font-bold">{index + 1}</span>
+                      <div className="relative aspect-square overflow-hidden bg-muted">
+                        <img 
+                          src={product.image} 
+                          alt={product.title}
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                        />
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                                <span className="bg-white/90 text-black px-6 py-3 rounded-full font-medium flex items-center gap-2">
+                                    {t('products.viewMore')} <ArrowRight className="h-4 w-4" />
+                                </span>
                             </div>
-                            <p className="text-base md:text-lg">
-                              {language === 'el' ? 'Εικόνα σύντομα' : 'Image Coming Soon'}
-                            </p>
-                          </div>
                         </div>
                       </div>
                     </Link>
@@ -130,19 +148,20 @@ const ProductsPage = () => {
       <section className="py-12 md:py-16 lg:py-20">
         <AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
-            {galleryImages.map((_, index) => (
+            {galleryImages.map((imgSrc, index) => (
               <div 
                 key={index}
-                className="aspect-square bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center group cursor-pointer overflow-hidden"
+                className="aspect-square bg-muted group cursor-pointer overflow-hidden relative"
               >
-                <div className="text-center text-muted-foreground transition-transform duration-500 ease-out group-hover:scale-110">
-                  <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-3 rounded-full bg-muted-foreground/20 flex items-center justify-center">
-                    <span className="text-xl md:text-2xl font-bold">{index + 1}</span>
-                  </div>
-                  <p className="text-sm md:text-base">
-                    {language === 'el' ? 'Εικόνα' : 'Image'} {index + 1}
-                  </p>
-                </div>
+                <img 
+                  src={imgSrc} 
+                  alt={`Gallery image ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                  loading="lazy"
+                />
+                
+                {/* Simple Hover Overlay (No Icon) */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
               </div>
             ))}
           </div>
