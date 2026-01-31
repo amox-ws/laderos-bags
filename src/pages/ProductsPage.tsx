@@ -18,12 +18,12 @@ const galleryImages = [
   // Το 'center' είναι το προεπιλεγμένο (50%)
   { src: '/gallery/gallery9.png', position: '60% center' }, 
   { src: '/gallery/gallery8.png', position: '60% center' },
-  { src: '/gallery/gallery3.jpeg', position: 'center' },
+  { src: '/gallery/gallery3.png', position: 'center' },
   { src: '/gallery/gallery4.jpeg', position: 'center' },
   { src: '/gallery/gallery2.jpeg', position: 'center' },
   { src: '/gallery/gallery6.png', position: 'center' },
   { src: '/gallery/gallery7.jpeg', position: 'center' },
-  { src: '/gallery/gallery5.jpeg', position: 'center' },
+  { src: '/gallery/gallery5.png', position: 'center' },
   { src: '/gallery/gallery1.jpeg', position: 'center' }
 ];
 
