@@ -40,7 +40,7 @@ const PaperBagsPage = () => {
 
   // --- ΛΙΣΤΑ ΕΙΚΟΝΩΝ ---
   const paperBagImages = [
-    '/paper_product/navy_green.PNG',       // 0
+    '/paper_product/navy_green.png',       // 0
     '/paper_product/bsb.PNG',              // 1
     '/paper_product/anastasia.PNG',        // 2
     '/paper_product/asteras_tripolis.PNG', // 3
@@ -54,7 +54,7 @@ const PaperBagsPage = () => {
     '/paper_product/kostis.PNG',           // 10
     '/paper_product/morris.PNG',           // 11
     '/paper_product/wine.PNG',             // 12
-     '/paper_product/casba.PNG',           // 13
+     '/paper_product/casba.png',           // 13
      '/paper_product/dionisos.PNG',       // 14
   ];
 
