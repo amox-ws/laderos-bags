@@ -22,7 +22,6 @@ const HomePage = () => {
   // Refs
   const pinnedSectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  // This ref will control the "Next Section" (Products) to animate it like the hero
   const mainContentRef = useRef<HTMLDivElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -34,6 +33,25 @@ const HomePage = () => {
     const contentEl = mainContentRef.current;
 
     if (!canvas || !ctx || !pinnedEl || !contentEl) return;
+
+    // --- FIX: PRELOAD ΓΙΑ ΤΙΣ 8 ΕΙΚΟΝΕΣ ΤΟΥ CAROUSEL ---
+    // Τις κατεβάζουμε "κρυφά" τώρα, για να είναι έτοιμες μόλις εμφανιστεί το section
+    const productImages = [
+      '/product_bags/navy_and_green.png',
+      '/product_bags/pink.png',
+      '/product_bags/redbull.png',
+      '/product_bags/cashew.png',
+      '/product_bags/black_pink.png',
+      '/product_bags/ygeia.png',
+      '/product_bags/oasisbnb.png',
+      '/product_bags/butcher.png'
+    ];
+
+    productImages.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+    // ---------------------------------------------------
 
     // --- 1) FRAMES SETUP ---
     const frameCount = 140;
@@ -163,12 +181,11 @@ const HomePage = () => {
     });
 
     // C) NEXT SECTION (Products) Fades In & Slides Up
-    // This replicates the effect the hero text used to have
     tl.fromTo(
       contentEl,
       { opacity: 0, y: 100 },
       { opacity: 1, y: 0, duration: 1.5, ease: 'power2.out' },
-      "<" // Starts at the same time as the canvas fade
+      "<" 
     );
 
     // Start
@@ -206,7 +223,6 @@ const HomePage = () => {
       </div>
 
       {/* SECTION 2: MAIN CONTENT (Acts as new Hero) */}
-      {/* We use -mt to pull it up so it overlaps the space where the bag was */}
       <div 
         ref={mainContentRef} 
         className="relative z-30 -mt-40 md:-mt-60 opacity-0"
