@@ -12,10 +12,7 @@ import TrustedBySection from '@/components/home/TrustedBySection';
 const paperThumbnail = '/paper_product/paper_thumbnail.jpeg';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.jpeg';
 
-// ΑΛΛΑΓΗ ΕΔΩ: Μετατροπή σε objects για να ελέγχουμε το focus της κάθε εικόνας
 const galleryImages = [
-  // Το '30% center' σημαίνει: Πήγαινε στο 30% του πλάτους (πιο αριστερά)
-  // Το 'center' είναι το προεπιλεγμένο (50%)
   { src: '/gallery/gallery9.png', position: '60% center' }, 
   { src: '/gallery/gallery8.png', position: '60% center' },
   { src: '/gallery/gallery3.png', position: 'center' },
@@ -30,7 +27,6 @@ const galleryImages = [
 const ProductsPage = () => {
   const { t, language } = useLanguage();
 
-  // Paper Bags first, Plastic Bags second
   const products = [
     {
       id: 'paper',
@@ -148,6 +144,7 @@ const ProductsPage = () => {
       <div className="section-depth-3">
         <TrustedBySection />
       </div>
+
       {/* Gallery Section - Level 4 */}
       <section className="py-12 md:py-16 lg:py-20 section-depth-4">
         <AnimatedSection>
@@ -160,13 +157,10 @@ const ProductsPage = () => {
                 <img 
                   src={item.src} 
                   alt={`Gallery image ${index + 1}`}
-                  // ΑΛΛΑΓΗ: Προσθέσαμε το style={{ objectPosition }}
                   style={{ objectPosition: item.position }}
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                   loading="lazy"
                 />
-                
-                {/* Simple Hover Overlay (No Icon) */}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
               </div>
             ))}
@@ -175,9 +169,16 @@ const ProductsPage = () => {
       </section>
 
       {/* CTA Section - Level 6 (Darkest) */}
-      <section className="section-padding section-depth-6">
+      {/* ΕΦΑΡΜΟΓΗ ANIMATION: SLIDE UP (FROM BOTTOM) */}
+      <section className="section-padding section-depth-6 overflow-hidden">
         <div className="container-page">
-          <AnimatedSection className="text-center">
+          <motion.div
+            className="text-center"
+            initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
+            whileInView={{ y: 0, opacity: 1 }} // Πηγαίνει στο 0
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {t('cta.title')}
             </h2>
@@ -190,7 +191,7 @@ const ProductsPage = () => {
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
-          </AnimatedSection>
+          </motion.div>
         </div>
       </section>
     </Layout>

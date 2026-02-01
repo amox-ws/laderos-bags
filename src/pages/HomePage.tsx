@@ -13,6 +13,7 @@ import WhereToFindUsSection from '@/components/home/WhereToFindUsSection';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion'; // <--- ΠΡΟΣΘΗΚΗ IMPORT
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,7 +36,6 @@ const HomePage = () => {
     if (!canvas || !ctx || !pinnedEl || !contentEl) return;
 
     // --- FIX: PRELOAD ΓΙΑ ΤΙΣ 8 ΕΙΚΟΝΕΣ ΤΟΥ CAROUSEL ---
-    // Τις κατεβάζουμε "κρυφά" τώρα, για να είναι έτοιμες μόλις εμφανιστεί το section
     const productImages = [
       '/product_bags/navy_and_green.png',
       '/product_bags/pink.png',
@@ -247,9 +247,16 @@ const HomePage = () => {
           <WhereToFindUsSection />
         </div>
 
-        <section className="section-padding section-depth-6">
+        {/* ΤΕΛΕΥΤΑΙΟ SECTION ΜΕ ΤΟ CTA - ΕΡΧΕΤΑΙ ΑΠΟ ΚΑΤΩ */}
+        <section className="section-padding section-depth-6 overflow-hidden">
           <div className="container-page">
-            <AnimatedSection className="text-center">
+            <motion.div 
+              className="text-center"
+              initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
+              whileInView={{ y: 0, opacity: 1 }} // Πάει στο 0
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 {t('cta.title')}
               </h2>
@@ -262,7 +269,7 @@ const HomePage = () => {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-            </AnimatedSection>
+            </motion.div>
           </div>
         </section>
       </div>

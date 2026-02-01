@@ -193,9 +193,15 @@ const AboutPage = () => {
       </section>
 
       {/* CTA Section - Level 6 (Darkest) */}
-      <section className="section-padding section-depth-6">
+      {/* ΕΦΑΡΜΟΓΗ ΤΟΥ SLIDE UP ANIMATION ΕΔΩ */}
+      <section className="section-padding section-depth-6 overflow-hidden">
         <div className="container-page text-center">
-          <AnimatedSection>
+          <motion.div
+            initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
+            whileInView={{ y: 0, opacity: 1 }} // Πηγαίνει στο 0
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+          >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               {t('cta.title')}
             </h2>
@@ -208,7 +214,7 @@ const AboutPage = () => {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
-          </AnimatedSection>
+          </motion.div>
         </div>
       </section>
     </Layout>
