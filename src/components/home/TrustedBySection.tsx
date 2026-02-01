@@ -35,6 +35,27 @@ const TrustedBySection = () => {
 
   return (
     <section className="py-12 md:py-16 lg:py-20 overflow-hidden">
+      <style>{`
+        @keyframes infinite-scroll-left {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-33.33%); }
+        }
+        @keyframes infinite-scroll-right {
+          0% { transform: translateX(-33.33%); }
+          100% { transform: translateX(0); }
+        }
+        .animate-infinite-scroll-left {
+          animation: infinite-scroll-left 30s linear infinite;
+        }
+        .animate-infinite-scroll-right {
+          animation: infinite-scroll-right 30s linear infinite;
+        }
+        /* Ensure the width is wide enough to hold all items in a single line */
+        .scroll-track {
+          width: max-content;
+        }
+      `}</style>
+
       <div className="container-page mb-8 md:mb-10">
         <AnimatedSection className="text-center">
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
@@ -44,19 +65,18 @@ const TrustedBySection = () => {
       </div>
 
       <div className="relative">
-        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-inherit to-transparent z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, inherit, transparent)' }} />
-        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-inherit to-transparent z-10 pointer-events-none" style={{ background: 'linear-gradient(to left, inherit, transparent)' }} />
+        {/* Fades on the sides */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-inherit to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-inherit to-transparent z-10 pointer-events-none" />
 
-        {/* Top carousel */}
+        {/* Top carousel - moves LEFT */}
         <div className="relative w-full overflow-hidden mb-4 md:mb-6">
-          <div className="flex animate-scroll-left hover:pause">
+          <div className="flex scroll-track animate-infinite-scroll-left">
             {duplicatedTop.map((partner, index) => (
               <div
                 key={`top-${index}`}
-                // ΑΛΛΑΓΗ ΕΔΩ: Μειώσαμε το mx-4 σε mx-2 και το mx-6 σε mx-3
-                className="flex-shrink-0 mx-2 md:mx-3" 
+                className="flex-shrink-0 mx-2 md:mx-3"
               >
-                {/* Αν θέλεις να μικρύνεις και το κουτί που πιάνει το logo, μπορείς να αλλάξεις και τα w-24 σε w-20 κλπ */}
                 <div className="w-24 h-16 md:w-32 md:h-20 lg:w-40 lg:h-24 flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0">
                   <img
                     src={partner.logo}
@@ -70,13 +90,12 @@ const TrustedBySection = () => {
           </div>
         </div>
 
-        {/* Bottom carousel */}
+        {/* Bottom carousel - moves RIGHT */}
         <div className="relative w-full overflow-hidden">
-          <div className="flex animate-scroll-right hover:pause">
+          <div className="flex scroll-track animate-infinite-scroll-right">
             {duplicatedBottom.map((partner, index) => (
               <div
                 key={`bottom-${index}`}
-                // ΑΛΛΑΓΗ ΕΔΩ: Το ίδιο και για την κάτω σειρά
                 className="flex-shrink-0 mx-2 md:mx-3"
               >
                 <div className="w-24 h-16 md:w-32 md:h-20 lg:w-40 lg:h-24 flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0">
