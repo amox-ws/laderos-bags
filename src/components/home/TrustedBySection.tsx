@@ -30,8 +30,8 @@ const TrustedBySection = () => {
     { name: 'Partner 18', logo: '/logos/redbull_logo.png' }
   ];
 
-  const duplicatedTop = [...topPartners, ...topPartners];
-  const duplicatedBottom = [...bottomPartners, ...bottomPartners];
+  const duplicatedTop = [...topPartners, ...topPartners, ...topPartners];
+  const duplicatedBottom = [...bottomPartners, ...bottomPartners, ...bottomPartners];
 
   return (
     <section className="py-12 md:py-16 lg:py-20 overflow-hidden">
