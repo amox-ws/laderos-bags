@@ -12,7 +12,6 @@ import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
 import WhereToFindUsSection from '@/components/home/WhereToFindUsSection';
 import heroBags from '@/assets/hero-bags.jpg';
 
-// GSAP Imports
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -21,159 +20,211 @@ gsap.registerPlugin(ScrollTrigger);
 const HomePage = () => {
   const { t } = useLanguage();
 
-  // Refs
-  const pinnedSectionRef = useRef<HTMLDivElement>(null); 
+  const pinnedSectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const heroContentRef = useRef<HTMLDivElement>(null);   
+  const heroContentRef = useRef<HTMLDivElement>(null);
+
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (!canvas || !context) return;
+    const ctx = canvas?.getContext('2d', { alpha: true });
+    const pinnedEl = pinnedSectionRef.current;
+    const heroEl = heroContentRef.current;
 
-    // --- 1. SETUP FRAMES ---
-    const frameCount = 191; 
-    const currentFrame = (index: number) => 
-      `/bags/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`;
+    if (!canvas || !ctx || !pinnedEl || !heroEl) return;
 
-    const images: HTMLImageElement[] = [];
+    // --- 1) FRAMES SETUP ---
+    const frameCount = 140;
+    const frameSrc = (i: number) => `/bags/ezgif-frame-${String(i + 1).padStart(3, '0')}.png`;
+
+    const images: HTMLImageElement[] = new Array(frameCount);
     const bag = { frame: 0 };
     let loadedCount = 0;
 
-    for (let i = 0; i < frameCount; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === frameCount) setImagesLoaded(true);
-      };
-      images.push(img);
-    }
+    // Προαιρετικό: ξεκίνα animation μόλις φορτώσει το 1ο frame (και συνέχισε background)
+    // Αυτό δίνει πιο “snappy” αίσθηση στο user.
+    let firstFrameReady = false;
 
-    // --- 2. RENDER FUNCTION ---
-    const render = () => {
+    const preload = () => {
+      for (let i = 0; i < frameCount; i++) {
+        const img = new Image();
+        img.decoding = 'async';
+        img.loading = 'eager';
+        img.src = frameSrc(i);
+
+        img.onload = () => {
+          loadedCount++;
+          if (!firstFrameReady && i === 0) {
+            firstFrameReady = true;
+            resize();
+            render(0);
+          }
+          if (loadedCount === frameCount) setImagesLoaded(true);
+        };
+
+        images[i] = img;
+      }
+    };
+
+    // --- 2) CANVAS (RETINA) RESIZE ---
+    const resize = () => {
+      const dpr = window.devicePixelRatio || 1;
+
+      // Canvas internal pixels for crispness
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+
+      // CSS size stays in CSS pixels
+      canvas.style.width = '100%';
+      canvas.style.height = '100%';
+
+      // Draw in CSS pixels
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      render(st?.progress ?? 0);
+    };
+
+    window.addEventListener('resize', resize);
+
+    // --- 3) RENDER FUNCTION (cinematic zoom inside render) ---
+    // progress: 0..1 από το ScrollTrigger
+    const yOffset = 80;         // μικρό offset προς τα κάτω (όπως είχες)
+    const zoomMin = 1.0;        // ξεκινάει “normal”
+    const zoomMax = 1.22;       // μικρό cinematic zoom (όχι pixel-break)
+    const zoomEase = (p: number) => p * p; // ease-in (πιο “κινηματογραφικό”)
+
+    const render = (progress: number) => {
       const img = images[bag.frame];
-      if (!img) return;
+      if (!img || !img.complete || img.naturalWidth === 0) return;
 
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // --- ΡΥΘΜΙΣΕΙΣ ΘΕΣΗΣ & ΜΕΓΕΘΟΥΣ ---
-      const zoomFactor = 1.0; // Επαναφορά στο κανονικό (όχι zoomed out)
-      const yOffset = 80;    // Μετακίνηση 100px προς τα κάτω
+      const cw = window.innerWidth;
+      const ch = window.innerHeight;
 
-      const canvasRatio = canvas.width / canvas.height;
-      const imgRatio = img.width / img.height;
-      
-      let renderWidth, renderHeight, offsetX, offsetY;
+      ctx.clearRect(0, 0, cw, ch);
 
-      // Υπολογισμός διαστάσεων (Object fit: cover)
+      const eased = zoomEase(progress);
+      const zoom = zoomMin + (zoomMax - zoomMin) * eased;
+
+      const canvasRatio = cw / ch;
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+
+      let renderWidth: number;
+      let renderHeight: number;
+
+      // object-fit: cover + zoom
       if (canvasRatio > imgRatio) {
-        renderWidth = canvas.width * zoomFactor;
-        renderHeight = (img.height * (canvas.width / img.width)) * zoomFactor;
+        renderWidth = cw * zoom;
+        renderHeight = (img.naturalHeight * (cw / img.naturalWidth)) * zoom;
       } else {
-        renderWidth = (img.width * (canvas.height / img.height)) * zoomFactor;
-        renderHeight = canvas.height * zoomFactor;
+        renderWidth = (img.naturalWidth * (ch / img.naturalHeight)) * zoom;
+        renderHeight = ch * zoom;
       }
 
-      // Κεντράρισμα + Μετακίνηση (Offset)
-      offsetX = (canvas.width - renderWidth) / 2;
-      offsetY = ((canvas.height - renderHeight) / 2) + yOffset;
+      const offsetX = (cw - renderWidth) / 2;
+      const offsetY = (ch - renderHeight) / 2 + yOffset;
 
-      context.drawImage(img, 0, 0, img.width, img.height, offsetX, offsetY, renderWidth, renderHeight);
+      ctx.drawImage(
+        img,
+        0,
+        0,
+        img.naturalWidth,
+        img.naturalHeight,
+        offsetX,
+        offsetY,
+        renderWidth,
+        renderHeight
+      );
     };
 
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      render();
-    };
-    window.addEventListener('resize', handleResize);
+    // --- 4) GSAP TIMELINE (NO SCALE 60, smoother scrub, hold, clean handoff) ---
+    let st: ScrollTrigger | null = null;
 
-    if (images[0]) {
-      images[0].onload = () => {
-         handleResize();
-         render();
-      }
-    }
-
-    // --- 3. GSAP TIMELINE ---
-    
-    let tl = gsap.timeline({
+    const tl = gsap.timeline({
+      defaults: { ease: 'none' },
       scrollTrigger: {
-        trigger: pinnedSectionRef.current,
-        start: "top top",      
-        end: "+=500%",         
-        pin: true,             
-        scrub: 1,              
-      }
+        trigger: pinnedEl,
+        start: 'top top',
+        end: '+=450%',
+        pin: true,
+        scrub: 0.65,            // smoother από 1
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          // κρατάμε progress για zoom (render μέσα)
+          render(self.progress);
+        },
+      },
     });
 
-    // Phase A: Open Bag
+    st = tl.scrollTrigger ?? null;
+
+    // A) Frames playback
     tl.to(bag, {
       frame: frameCount - 1,
-      snap: "frame",
-      ease: "none",
-      duration: 5,
-      onUpdate: render
+      snap: 'frame',
+      duration: 6,
+      onUpdate: () => render(st?.progress ?? 0),
     });
 
-    // Phase B: Zoom In
-    tl.to(canvas, {
-      scale: 60, 
-      ease: "power2.in",
-      duration: 5
-    }, ">-1");
+    // B) HOLD λίγο στο τέλος (premium feeling)
+    tl.to({}, { duration: 0.9 }); // κρατάει το τελευταίο frame
 
-    // Phase C: Canvas Fade Out
-    tl.to(canvas, {
-      opacity: 0,
-      duration: 1,
-      ease: "none"
-    }, "-=1");
+    // C) Canvas fade out
+    tl.to(canvas, { opacity: 0, duration: 1.0, ease: 'power1.out' }, '>-0.2');
 
-    // Phase D: Hero Appearance
-    tl.fromTo(heroContentRef.current, 
-      {
-        opacity: 0,
-        y: 100, 
-      },
-      {
-        opacity: 1,
-        y: 0,   
-        duration: 2,
-        ease: "power2.out"
-      }, 
-      "-=1.5" 
+    // D) Hero in (λίγο πριν τελειώσει το fade)
+    tl.fromTo(
+      heroEl,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1.1, ease: 'power2.out' },
+      '>-0.8'
     );
 
+    // Start
+    preload();
+    resize();
+
     return () => {
-      window.removeEventListener('resize', handleResize);
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      window.removeEventListener('resize', resize);
+
+      // kill only what we created
+      tl.kill();
+      st?.kill();
     };
   }, []);
 
   return (
     <Layout>
       {/* SECTION 1: PINNED WRAPPER */}
-      <div 
-        ref={pinnedSectionRef} 
+      <div
+        ref={pinnedSectionRef}
         className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
       >
         {/* Layer 1: Canvas */}
-        <canvas 
-          ref={canvasRef} 
+        <canvas
+          ref={canvasRef}
           className="absolute inset-0 w-full h-full z-20 pointer-events-none"
         />
 
+        {/* Optional overlay για να “δέσει” με το brand και να κρύβει artifacts */}
+        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/20 via-transparent to-background/30" />
+
+        {/* Optional tiny hint (αν δεν θες, σβήστο) */}
+        {!imagesLoaded && (
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-sm text-muted-foreground">
+            Loading…
+          </div>
+        )}
+
         {/* Layer 2: Hero Content */}
-        <div ref={heroContentRef} className="relative z-10 w-full opacity-0"> 
+        <div ref={heroContentRef} className="relative z-10 w-full opacity-0">
           <div className="absolute inset-0 z-0">
-             <img
-               src={heroBags}
-               alt="Hero Background"
-               className="w-full h-full object-cover opacity-20" 
-             />
+            <img
+              src={heroBags}
+              alt="Hero Background"
+              className="w-full h-full object-cover opacity-20"
+            />
           </div>
 
           <div className="container-page relative z-10 py-20 text-center">
@@ -200,35 +251,28 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* SECTION 2: REST OF THE CONTENT - Progressive Light → Dark */}
+      {/* SECTION 2: REST OF THE CONTENT */}
       <div className="relative z-30">
-        
-        {/* Products Section - Level 1 (Lightest) */}
         <div className="section-depth-1">
           <ProductsSection />
         </div>
 
-        {/* Who Trusts Us Section - Level 2 */}
         <div className="section-depth-2">
           <TrustedBySection />
         </div>
 
-        {/* About Us Preview Section - Level 3 */}
         <div className="section-depth-3">
           <AboutPreviewSection />
         </div>
 
-        {/* Animated Stats Section - Level 4 */}
         <div className="section-depth-4">
           <AnimatedStatsSection />
         </div>
 
-        {/* Where to Find Us Section - Level 5 */}
         <div className="section-depth-5">
           <WhereToFindUsSection />
         </div>
 
-        {/* CTA Section - Level 6 (Darkest) */}
         <section className="section-padding section-depth-6">
           <div className="container-page">
             <AnimatedSection className="text-center">
@@ -247,7 +291,6 @@ const HomePage = () => {
             </AnimatedSection>
           </div>
         </section>
-
       </div>
     </Layout>
   );
