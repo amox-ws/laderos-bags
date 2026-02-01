@@ -34,8 +34,8 @@ const ContactPage = () => {
 
   return (
     <Layout>
-      {/* Page Title Section - Level 1 (Lightest) */}
-      <section className="py-16 md:py-20 section-depth-1">
+      {/* Page Title Section - Main Background */}
+      <section className="py-16 md:py-20 main-section">
         <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -53,8 +53,8 @@ const ContactPage = () => {
         </div>
       </section>
 
-      {/* Contact Info & Map Section - Level 2 */}
-      <section className="section-padding pt-0 section-depth-2">
+      {/* Contact Info & Map Section - Main Background */}
+      <section className="section-padding pt-0 main-section">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             {/* Contact Information */}
@@ -109,8 +109,8 @@ const ContactPage = () => {
         </div>
       </section>
 
-      {/* Quote Request Section - Level 4 */}
-      <section id="quote" className="section-padding section-depth-4 scroll-mt-20">
+      {/* Quote Request Section - Accent Background */}
+      <section id="quote" className="section-padding accent-section scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
             <ContactQuoteForm />

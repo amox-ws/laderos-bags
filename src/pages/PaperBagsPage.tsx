@@ -69,8 +69,8 @@ const PaperBagsPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section - Level 1 (Lightest) */}
-      <section className="section-padding section-depth-1">
+      {/* Hero Section - Main Background */}
+      <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center">
             <Link 
@@ -90,8 +90,8 @@ const PaperBagsPage = () => {
         </div>
       </section>
 
-      {/* Main Content with Sticky Text - Level 2 */}
-      <section className="section-depth-2">
+      {/* Main Content with Sticky Text - Main Background */}
+      <section className="main-section">
         <div className="container-page py-16 md:py-24 lg:py-32">
           <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
             
@@ -204,8 +204,8 @@ const PaperBagsPage = () => {
         </div>
       </section>
 
-      {/* Applications Section - Level 4 */}
-      <section className="section-padding section-depth-4">
+      {/* Applications Section - Main Background */}
+      <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -228,8 +228,8 @@ const PaperBagsPage = () => {
         </div>
       </section>
 
-      {/* Quote Request Form Section - Level 5 */}
-      <section id="quote-section" className="section-padding section-depth-5 scroll-mt-20">
+      {/* Quote Request Form Section - Accent Background */}
+      <section id="quote-section" className="section-padding accent-section scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
             <QuoteRequestForm bagType="paper" />
