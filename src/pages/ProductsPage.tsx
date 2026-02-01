@@ -52,8 +52,8 @@ const ProductsPage = () => {
 
   return (
     <Layout>
-      {/* Page Title Section - Level 1 (Lightest) */}
-      <section className="py-16 md:py-20 section-depth-1">
+      {/* Page Title Section - Main Background */}
+      <section className="py-16 md:py-20 main-section">
         <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -68,8 +68,8 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      {/* Products Section - Level 2 */}
-      <section className="section-padding section-depth-2">
+      {/* Products Section - Main Background */}
+      <section className="section-padding main-section">
         <div className="container-page">
           <div className="space-y-24">
             {products.map((product, index) => (
@@ -140,13 +140,13 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      {/* Who Trusts Us Section - Level 3 */}
-      <div className="section-depth-3">
+      {/* Who Trusts Us Section - Main Background */}
+      <div className="main-section">
         <TrustedBySection />
       </div>
 
-      {/* Gallery Section - Level 4 */}
-      <section className="py-12 md:py-16 lg:py-20 section-depth-4">
+      {/* Gallery Section - Main Background */}
+      <section className="py-12 md:py-16 lg:py-20 main-section">
         <AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
             {galleryImages.map((item, index) => (
@@ -168,14 +168,13 @@ const ProductsPage = () => {
         </AnimatedSection>
       </section>
 
-      {/* CTA Section - Level 6 (Darkest) */}
-      {/* ΕΦΑΡΜΟΓΗ ANIMATION: SLIDE UP (FROM BOTTOM) */}
-      <section className="section-padding section-depth-6 overflow-hidden">
+      {/* CTA Section - Accent Background #6A8595 */}
+      <section className="section-padding accent-section overflow-hidden">
         <div className="container-page">
           <motion.div
             className="text-center"
-            initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
-            whileInView={{ y: 0, opacity: 1 }} // Πηγαίνει στο 0
+            initial={{ y: 200, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >

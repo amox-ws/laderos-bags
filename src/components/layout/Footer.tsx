@@ -7,7 +7,7 @@ const Footer = () => {
     t
   } = useLanguage();
   const currentYear = new Date().getFullYear();
-  return <footer className="section-depth-6">
+  return <footer className="footer-section">
       <div className="container-page py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Logo & Description */}

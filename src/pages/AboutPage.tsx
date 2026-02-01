@@ -28,8 +28,8 @@ const AboutPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section - Level 1 (Lightest) */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden section-depth-1">
+      {/* Hero Section - Main Background */}
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden main-section">
         {/* Subtle Background Pattern */}
         <div className="absolute inset-0 opacity-10" style={{
           backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,0.03) 35px, rgba(0,0,0,0.03) 70px)'
@@ -52,9 +52,8 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Who We Are Section - Level 2 */}
-      {/* ΑΛΛΑΓΗ: Προσθήκη overflow-hidden και motion.div */}
-      <section className="section-padding section-depth-2 overflow-hidden">
+      {/* Who We Are Section - Main Background */}
+      <section className="section-padding main-section overflow-hidden">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
@@ -98,8 +97,8 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* What We Do Section - Level 3 */}
-      <section className="section-padding section-depth-3">
+      {/* What We Do Section - Main Background */}
+      <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -127,13 +126,13 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Who Trusts Us Section - Level 3 (continued) */}
-      <div className="section-depth-3">
+      {/* Who Trusts Us Section - Main Background */}
+      <div className="main-section">
         <TrustedBySection />
       </div>
 
-      {/* Video/Visual Section - Level 4 */}
-      <section className="section-padding section-depth-4">
+      {/* Video/Visual Section - Main Background */}
+      <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -159,13 +158,13 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Statistics Section - Level 4 (continued) */}
-      <div className="section-depth-4">
+      {/* Statistics Section - Accent Background #6A8595 */}
+      <div className="accent-section">
         <AnimatedStatsSection />
       </div>
 
-      {/* Why Work With Us Section - Level 5 */}
-      <section className="section-padding section-depth-5">
+      {/* Why Work With Us Section - Main Background */}
+      <section className="section-padding main-section">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <AnimatedSection>
@@ -207,8 +206,8 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* CTA Section - Level 6 (Darkest) */}
-      <section className="section-padding section-depth-6 overflow-hidden">
+      {/* CTA Section - Accent Background #6A8595 */}
+      <section className="section-padding accent-section overflow-hidden">
         <div className="container-page text-center">
           <motion.div
             initial={{ y: 200, opacity: 0 }}

@@ -227,33 +227,33 @@ const HomePage = () => {
         ref={mainContentRef} 
         className="relative z-30 -mt-40 md:-mt-60 opacity-0"
       >
-        <div className="section-depth-1 pt-12">
+        <div className="main-section pt-12">
           <ProductsSection />
         </div>
 
-        <div className="section-depth-2">
+        <div className="main-section">
           <TrustedBySection />
         </div>
 
-        <div className="section-depth-3">
+        <div className="main-section">
           <AboutPreviewSection />
         </div>
 
-        <div className="section-depth-4">
+        <div className="accent-section">
           <AnimatedStatsSection />
         </div>
 
-        <div className="section-depth-5">
+        <div className="main-section">
           <WhereToFindUsSection />
         </div>
 
-        {/* ΤΕΛΕΥΤΑΙΟ SECTION ΜΕ ΤΟ CTA - ΕΡΧΕΤΑΙ ΑΠΟ ΚΑΤΩ */}
-        <section className="section-padding section-depth-6 overflow-hidden">
+        {/* CTA Section - Accent Background #6A8595 */}
+        <section className="section-padding accent-section overflow-hidden">
           <div className="container-page">
             <motion.div 
               className="text-center"
-              initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
-              whileInView={{ y: 0, opacity: 1 }} // Πάει στο 0
+              initial={{ y: 200, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             >
