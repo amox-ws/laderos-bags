@@ -110,28 +110,40 @@ const Header = () => {
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
-              <button
-                onClick={() => setIsProductsOpen(!isProductsOpen)}
-                className={`relative flex items-center gap-1 text-sm font-medium transition-colors duration-200 ${
-                  isProductsActive
-                    ? 'text-navy'
-                    : 'text-gray-600 hover:text-navy'
-                }`}
-              >
-                {t('nav.products')}
-                <ChevronDown 
-                  className={`h-4 w-4 transition-transform duration-200 ${
-                    isProductsOpen ? 'rotate-180' : ''
-                  }`} 
-                />
-                {isProductsActive && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand rounded-full"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+              <div className="flex items-center gap-1">
+                <Link
+                  to="/products"
+                  className={`relative text-sm font-medium transition-colors duration-200 ${
+                    isProductsActive
+                      ? 'text-navy'
+                      : 'text-gray-600 hover:text-navy'
+                  }`}
+                >
+                  {t('nav.products')}
+                  {isProductsActive && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute -bottom-1 left-0 right-0 h-0.5 bg-brand rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </Link>
+                <button
+                  onClick={() => setIsProductsOpen(!isProductsOpen)}
+                  className={`p-1 rounded transition-colors duration-200 ${
+                    isProductsActive
+                      ? 'text-navy'
+                      : 'text-gray-600 hover:text-navy'
+                  }`}
+                  aria-label="Toggle products menu"
+                >
+                  <ChevronDown 
+                    className={`h-4 w-4 transition-transform duration-200 ${
+                      isProductsOpen ? 'rotate-180' : ''
+                    }`} 
                   />
-                )}
-              </button>
+                </button>
+              </div>
 
               <AnimatePresence>
                 {isProductsOpen && (
@@ -231,23 +243,36 @@ const Header = () => {
                   </Link>
                 ))}
 
-                {/* Mobile Products Dropdown */}
+                {/* Mobile Products with Dropdown */}
                 <div>
-                  <button
-                    onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
-                    className={`w-full flex items-center justify-between py-3 px-4 rounded-lg transition-colors duration-200 ${
-                      isProductsActive
-                        ? 'bg-gray-100 text-navy font-medium'
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-navy'
-                    }`}
-                  >
-                    {t('nav.products')}
-                    <ChevronDown 
-                      className={`h-4 w-4 transition-transform duration-200 ${
-                        isMobileProductsOpen ? 'rotate-180' : ''
-                      }`} 
-                    />
-                  </button>
+                  <div className="flex items-center">
+                    <Link
+                      to="/products"
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`flex-1 py-3 px-4 rounded-lg transition-colors duration-200 ${
+                        isActive('/products')
+                          ? 'bg-gray-100 text-navy font-medium'
+                          : 'text-gray-600 hover:bg-gray-100 hover:text-navy'
+                      }`}
+                    >
+                      {t('nav.products')}
+                    </Link>
+                    <button
+                      onClick={() => setIsMobileProductsOpen(!isMobileProductsOpen)}
+                      className={`p-3 rounded-lg transition-colors duration-200 ${
+                        isProductsActive
+                          ? 'text-navy'
+                          : 'text-gray-600 hover:bg-gray-100 hover:text-navy'
+                      }`}
+                      aria-label="Toggle products submenu"
+                    >
+                      <ChevronDown 
+                        className={`h-4 w-4 transition-transform duration-200 ${
+                          isMobileProductsOpen ? 'rotate-180' : ''
+                        }`} 
+                      />
+                    </button>
+                  </div>
                   
                   <AnimatePresence>
                     {isMobileProductsOpen && (
