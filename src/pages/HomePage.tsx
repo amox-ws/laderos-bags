@@ -168,7 +168,7 @@ const HomePage = () => {
     });
 
     // B) HOLD λίγο στο τέλος (premium feeling)
-    tl.to({}, { duration: 0.9 }); // κρατάει το τελευταίο frame
+    tl.to({}, { duration: 1.5 }); // κρατάει το τελευταίο frame
 
     // C) Canvas fade out
     tl.to(canvas, { opacity: 0, duration: 1.0, ease: 'power1.out' }, '>-0.2');
