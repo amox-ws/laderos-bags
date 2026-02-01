@@ -8,13 +8,17 @@ import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 // Component για την εμφάνιση της εικόνας
-const GalleryImage = ({ src, className = '', index }: { src: string; className?: string; index: number }) => (
+// Προσθέσαμε το prop "scale" για να κάνουμε zoom σε συγκεκριμένες εικόνες
+const GalleryImage = ({ src, className = '', index, scale = 1 }: { src: string; className?: string; index: number; scale?: number }) => (
   <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
-    <div className="w-full h-full bg-muted">
+    <div className="w-full h-full bg-muted overflow-hidden">
       <img 
         src={src} 
         alt={`Plastic Bag Application ${index + 1}`}
-        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+        // Εφαρμόζουμε το scale εδώ. Το 1.2 σημαίνει 20% μεγαλύτερη.
+        // Προσθέσαμε και το 'origin-center' για να μεγαλώνει από το κέντρο.
+        style={{ transform: `scale(${scale})` }}
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 origin-center"
         loading="lazy"
       />
     </div>
@@ -26,23 +30,22 @@ const PlasticBagsPage = () => {
   const isMobile = useIsMobile();
 
   // --- ΛΙΣΤΑ ΕΙΚΟΝΩΝ ---
-  // Αντικατέστησε τα path με τα πραγματικά ονόματα των αρχείων σου στο φάκελο public/plastic_product/
   const plasticBagImages = [
-    '/plastic_product/annas_secret.PNG', // 1. Μεγάλη φαρδιά πάνω
-    '/plastic_product/annette.PNG', // 2. Κάθετη αριστερά
-    '/plastic_product/b&b.PNG', // 3. Τετράγωνη δεξιά
-    '/plastic_product/beauty.PNG', // 4. Μικρή αριστερά
-    '/plastic_product/butchery.PNG', // 5. Κάθετη δεξιά
-    '/plastic_product/casba.PNG', // 6. Αριστερά (ίση)
-    '/plastic_product/lab35.PNG', // 7. Δεξιά (ίση)
-    '/plastic_product/navy_green.PNG', // 8. Μικρή σκοτεινή αριστερά
-    '/plastic_product/oasis.PNG', // 9. Μεγάλη δεξιά
-    '/plastic_product/oida.PNG', // 10. Μεγάλη αριστερά
-    '/plastic_product/plaza.PNG', // 11. Μικρή δεξιά
-    '/plastic_product/proton.PNG', // 12. Μεγάλη αριστερά
-    '/plastic_product/sport_jean.PNG', // 13. Μικρή δεξιά
-    '/plastic_product/sporthero.PNG', // 14. Μεγάλη φαρδιά
-    '/plastic_product/ugeia.PNG', // 15. Μεγάλη φαρδιά (τελευταία)
+    '/plastic_product/sporthero.PNG', // 0. Μεγάλη φαρδιά πάνω
+    '/plastic_product/annette.PNG', // 1. Κάθετη αριστερά
+    '/plastic_product/b&b.PNG', // 2. Τετράγωνη δεξιά
+    '/plastic_product/beauty.PNG', // 3. Μικρή αριστερά
+    '/plastic_product/butchery.PNG', // 4. Κάθετη δεξιά
+    '/plastic_product/casba.PNG', // 5. Αριστερά (ίση)
+    '/plastic_product/lab35.PNG', // 6. Δεξιά (ίση)
+    '/plastic_product/navy_green.PNG', // 7. Μικρή σκοτεινή αριστερά
+    '/plastic_product/oasis.PNG', // 8. Μεγάλη δεξιά
+    '/plastic_product/oida.PNG', // 9. Μεγάλη αριστερά
+    '/plastic_product/plaza.PNG', // 10. Μικρή δεξιά
+    '/plastic_product/proton.PNG', // 11. Μεγάλη αριστερά
+    '/plastic_product/sport_jean.PNG', // 12. Μικρή δεξιά
+    '/plastic_product/annas_secret.PNG', // 13.
+    '/plastic_product/ugeia.PNG', // 14. Μεγάλη φαρδιά (τελευταία)
   ];
 
   const features = [
@@ -137,9 +140,14 @@ const PlasticBagsPage = () => {
               <AnimatedSection delay={0.2}>
                 <div className="flex flex-col gap-4">
                   
-                  {/* Row 1: Single wide image */}
+                  {/* Row 1: Sporthero - Της δίνουμε scale={1.2} για να ζουμάρει */}
                   <div className="w-full">
-                    <GalleryImage src={plasticBagImages[0]} index={0} className="w-full aspect-[16/9]" />
+                    <GalleryImage 
+                      src={plasticBagImages[0]} 
+                      index={0} 
+                      className="w-full aspect-[16/9]" 
+                      scale={1.5} // ZOOM ΕΔΩ: Άλλαξε το 1.2 σε μεγαλύτερο αριθμό για περισσότερο ζουμ
+                    />
                   </div>
 
                   {/* Row 2: Two images */}
@@ -156,14 +164,14 @@ const PlasticBagsPage = () => {
 
                   {/* Row 4: Two images */}
                   <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[5]} index={5} className="w-1/2 aspect-[4/5]" />
-                    <GalleryImage src={plasticBagImages[6]} index={6} className="w-1/2 aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[5]} index={5} className="w-[45%] aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[6]} index={6} className="w-[55%] aspect-[4/5]" />
                   </div>
 
                   {/* Row 5: Two images */}
                   <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[7]} index={7} className="w-[40%] aspect-[3/4]" />
-                    <GalleryImage src={plasticBagImages[8]} index={8} className="w-[60%] aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[7]} index={7} className="w-[52%] aspect-[3/4]" />
+                    <GalleryImage src={plasticBagImages[8]} index={8} className="w-[48%] aspect-[4/5]" />
                   </div>
 
                   {/* Row 6: Two images */}
@@ -174,18 +182,14 @@ const PlasticBagsPage = () => {
 
                   {/* Row 7: Two images */}
                   <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[11]} index={11} className="w-[60%] aspect-[4/5]" />
-                    <GalleryImage src={plasticBagImages[12]} index={12} className="w-[40%] aspect-[3/5]" />
+                    <GalleryImage src={plasticBagImages[11]} index={11} className="w-[58%] aspect-[4/5]" />
+                    <GalleryImage src={plasticBagImages[12]} index={12} className="w-[42%] aspect-[3/5]" />
                   </div>
 
                   {/* Row 8: Single full width */}
-                  <div className="w-full">
-                    <GalleryImage src={plasticBagImages[13]} index={13} className="w-full aspect-[16/10]" />
-                  </div>
-
-                  {/* Row 9: Single full width (Unique to plastic bags page layout) */}
-                  <div className="w-full">
-                    <GalleryImage src={plasticBagImages[14]} index={14} className="w-full aspect-[16/9]" />
+                  <div className="flex gap-4">
+                    <GalleryImage src={plasticBagImages[13]} index={13} className="w-[45%] aspect-[3/5]" />
+                    <GalleryImage src={plasticBagImages[14]} index={14} className="w-[55%] aspect-[4/5]" />
                   </div>
 
                 </div>
