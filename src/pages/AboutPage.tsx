@@ -53,10 +53,18 @@ const AboutPage = () => {
       </section>
 
       {/* Who We Are Section - Level 2 */}
-      <section className="section-padding section-depth-2">
+      {/* ΑΛΛΑΓΗ: Προσθήκη overflow-hidden και motion.div */}
+      <section className="section-padding section-depth-2 overflow-hidden">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <AnimatedSection>
+            
+            {/* VIDEO BOX - ΕΡΧΕΤΑΙ ΑΠΟ ΑΡΙΣΤΕΡΑ (-300px) */}
+            <motion.div
+              initial={{ x: -300, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            >
               <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors duration-300">
@@ -67,9 +75,15 @@ const AboutPage = () => {
                   {t('about.videoPlaceholder')}
                 </div>
               </div>
-            </AnimatedSection>
+            </motion.div>
 
-            <AnimatedSection delay={0.2}>
+            {/* TEXT CONTENT - ΕΡΧΕΤΑΙ ΑΠΟ ΔΕΞΙΑ (300px) */}
+            <motion.div
+              initial={{ x: 300, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+            >
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-6">
                   {t('about.whoWeAre.title')}
@@ -78,7 +92,8 @@ const AboutPage = () => {
                   {t('about.whoWeAre.text')}
                 </p>
               </div>
-            </AnimatedSection>
+            </motion.div>
+
           </div>
         </div>
       </section>
@@ -193,12 +208,11 @@ const AboutPage = () => {
       </section>
 
       {/* CTA Section - Level 6 (Darkest) */}
-      {/* ΕΦΑΡΜΟΓΗ ΤΟΥ SLIDE UP ANIMATION ΕΔΩ */}
       <section className="section-padding section-depth-6 overflow-hidden">
         <div className="container-page text-center">
           <motion.div
-            initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
-            whileInView={{ y: 0, opacity: 1 }} // Πηγαίνει στο 0
+            initial={{ y: 200, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
