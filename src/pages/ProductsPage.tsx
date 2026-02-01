@@ -8,7 +8,6 @@ import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
 
 // --- IMAGES ---
-// Thumbnail images for the main product categories
 const paperThumbnail = '/paper_product/paper_thumbnail.jpeg';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.jpeg';
 
@@ -52,8 +51,8 @@ const ProductsPage = () => {
 
   return (
     <Layout>
-      {/* Page Title Section - Main Background */}
-      <section className="py-16 md:py-20 main-section">
+      {/* Page Title Section - Level 1 (Lightest) */}
+      <section className="py-16 md:py-20 section-depth-1">
         <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -68,19 +67,33 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      {/* Products Section - Main Background */}
-      <section className="section-padding main-section">
+      {/* Products Section - Level 2 */}
+      {/* Προσθήκη overflow-hidden για τα slide animations */}
+      <section className="section-padding section-depth-2 overflow-hidden">
         <div className="container-page">
           <div className="space-y-24">
-            {products.map((product, index) => (
-              <AnimatedSection key={product.id}>
+            {products.map((product, index) => {
+              // Λογική για το ποιος πάει αριστερά και ποιος δεξιά
+              // Index 0 (Paper): Εικόνα αριστερά, Κείμενο δεξιά
+              // Index 1 (Plastic): Εικόνα δεξιά (λόγω reverse), Κείμενο αριστερά
+              const isEven = index % 2 === 0;
+
+              return (
                 <div
+                  key={product.id}
                   className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${
-                    index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                    !isEven ? 'lg:flex-row-reverse' : ''
                   }`}
                 >
-                  {/* Product Image */}
-                  <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
+                  {/* Product Image Column */}
+                  {/* Αν είναι ζυγό (Paper) έρχεται από αριστερά (-300), αλλιώς από δεξιά (300) */}
+                  <motion.div 
+                    className={!isEven ? 'lg:order-2' : ''}
+                    initial={{ x: isEven ? -300 : 300, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                  >
                     <Link 
                       to={product.linkTo}
                       className="block rounded-2xl overflow-hidden shadow-elevated group cursor-pointer"
@@ -101,10 +114,17 @@ const ProductsPage = () => {
                         </div>
                       </div>
                     </Link>
-                  </div>
+                  </motion.div>
 
-                  {/* Content */}
-                  <div className={index % 2 === 1 ? 'lg:order-1' : ''}>
+                  {/* Content Column */}
+                  {/* Αν είναι ζυγό (Paper) έρχεται από δεξιά (300), αλλιώς από αριστερά (-300) */}
+                  <motion.div 
+                    className={!isEven ? 'lg:order-1' : ''}
+                    initial={{ x: isEven ? 300 : -300, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                  >
                     <h2 className="text-3xl md:text-4xl font-bold mb-4">
                       {product.title}
                     </h2>
@@ -132,21 +152,22 @@ const ProductsPage = () => {
                         <ArrowRight className="ml-2 h-5 w-5" />
                       </Link>
                     </Button>
-                  </div>
+                  </motion.div>
                 </div>
-              </AnimatedSection>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* Who Trusts Us Section - Main Background */}
-      <div className="main-section">
+      {/* Who Trusts Us Section - Level 3 */}
+      <div className="section-depth-3">
         <TrustedBySection />
       </div>
 
-      {/* Gallery Section - Main Background */}
-      <section className="py-12 md:py-16 lg:py-20 main-section">
+      {/* Gallery Section - Level 4 */}
+      {/* Αφαίρεσα το padding (py-12...) και το container για να πιάνει όλο το χώρο (w-full) */}
+      <section className="section-depth-4 w-full">
         <AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
             {galleryImages.map((item, index) => (
@@ -168,13 +189,13 @@ const ProductsPage = () => {
         </AnimatedSection>
       </section>
 
-      {/* CTA Section - Accent Background #6A8595 */}
-      <section className="section-padding accent-section overflow-hidden">
+      {/* CTA Section - Level 6 (Darkest) */}
+      <section className="section-padding section-depth-6 overflow-hidden">
         <div className="container-page">
           <motion.div
             className="text-center"
-            initial={{ y: 200, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
+            initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
+            whileInView={{ y: 0, opacity: 1 }} // Πηγαίνει στο 0
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
