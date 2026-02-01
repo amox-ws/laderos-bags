@@ -34,7 +34,7 @@ const TrustedBySection = () => {
   const duplicatedBottom = [...bottomPartners, ...bottomPartners, ...bottomPartners];
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 overflow-hidden">
+    <section className="py-12 md:py-16 lg:py-20 overflow-hidden bg-white">
       <style>{`
         @keyframes infinite-scroll-left {
           0% { transform: translateX(0); }
@@ -65,9 +65,9 @@ const TrustedBySection = () => {
       </div>
 
       <div className="relative">
-        {/* Fades on the sides */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-inherit to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-inherit to-transparent z-10 pointer-events-none" />
+        {/* Fades on the sides (kept white to match bg) */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 lg:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
         {/* Top carousel - moves LEFT */}
         <div className="relative w-full overflow-hidden mb-4 md:mb-6">
@@ -77,7 +77,8 @@ const TrustedBySection = () => {
                 key={`top-${index}`}
                 className="flex-shrink-0 mx-2 md:mx-3"
               >
-                <div className="w-24 h-16 md:w-32 md:h-20 lg:w-40 lg:h-24 flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0">
+                {/* ΑΛΛΑΓΗ ΕΔΩ: Αφαιρέθηκαν τα opacity-50, grayscale, hover effects */}
+                <div className="w-24 h-16 md:w-32 md:h-20 lg:w-40 lg:h-24 flex items-center justify-center">
                   <img
                     src={partner.logo}
                     alt={partner.name}
@@ -98,7 +99,8 @@ const TrustedBySection = () => {
                 key={`bottom-${index}`}
                 className="flex-shrink-0 mx-2 md:mx-3"
               >
-                <div className="w-24 h-16 md:w-32 md:h-20 lg:w-40 lg:h-24 flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity duration-300 grayscale hover:grayscale-0">
+                {/* ΑΛΛΑΓΗ ΕΔΩ: Αφαιρέθηκαν τα opacity-50, grayscale, hover effects */}
+                <div className="w-24 h-16 md:w-32 md:h-20 lg:w-40 lg:h-24 flex items-center justify-center">
                   <img
                     src={partner.logo}
                     alt={partner.name}
