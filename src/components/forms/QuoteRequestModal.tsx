@@ -178,13 +178,17 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
               className="relative w-full max-w-5xl bg-background rounded-xl shadow-2xl overflow-hidden my-8"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
+              {/* Close Button - Fixed on mobile for visibility */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted hover:bg-muted-foreground/20 transition-colors"
+                className="fixed md:absolute top-4 right-4 md:top-4 md:right-4 z-[60] p-3 md:p-2 rounded-full bg-white shadow-lg md:shadow-md hover:bg-gray-100 transition-colors"
+                style={{ 
+                  paddingTop: 'max(0.75rem, env(safe-area-inset-top))',
+                  paddingRight: 'max(0.75rem, env(safe-area-inset-right))'
+                }}
                 aria-label="Close"
               >
-                <X className="h-5 w-5 text-foreground" />
+                <X className="h-6 w-6 md:h-5 md:w-5 text-foreground" />
               </button>
 
               <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -310,6 +314,16 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                         ? (language === 'el' ? 'Υποβολή...' : 'Submitting...') 
                         : t('quoteForm.modal.submit')
                       }
+                    </Button>
+
+                    {/* Cancel button - visible on mobile as secondary close option */}
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={onClose}
+                      className="w-full md:hidden mt-3 py-5 text-base font-medium border-white/30 text-white hover:bg-white/10"
+                    >
+                      {language === 'el' ? 'Ακύρωση' : 'Cancel'}
                     </Button>
                   </form>
                 </div>
