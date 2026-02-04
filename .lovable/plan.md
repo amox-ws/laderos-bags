@@ -1,66 +1,74 @@
 
+# Fix: Mobile Quote Request Modal Close Button Visibility
 
-# Fix: Seamless Infinite Logo Carousel
+## Problem Summary
+On mobile devices, when the "Request a Quote" modal opens after selecting bag options, the X (close) button is not visible. Users cannot cancel or close the form, leading to a frustrating UX.
 
-## Problem Identified
-The "Who Trusts Us" logo carousel has a visible "jump" or "reset" moment when the animation loops. This happens because:
+## Root Cause Analysis
+Looking at `QuoteRequestModal.tsx` (lines 177-188):
 
-1. The logos are only duplicated once (2 sets)
-2. When the CSS animation completes and restarts, the position jumps back creating a noticeable glitch
+```text
++------------------------------------------+
+|  Modal Container (overflow-hidden)       |
+|  +------------------------------------+  |
+|  | Close Button (absolute top-4 right-4) |  <-- Gets cut off or hidden
+|  +------------------------------------+  |
+|  | Grid Content (stacked on mobile)   |  |
+|  | - Summary panel                    |  |
+|  | - Contact form                     |  |
+|  +------------------------------------+  |
++------------------------------------------+
+```
+
+The issues:
+1. **Close button positioned inside scrollable content** - It scrolls away when the user scrolls the form
+2. **overflow-hidden on container** - Can clip the button on smaller screens
+3. **No mobile-specific positioning** - The button uses the same `top-4 right-4` on all screen sizes
+4. **Background color blending** - The `bg-muted` background may not contrast well with the modal content
+
+---
 
 ## Solution
-Create a truly seamless infinite scroll by:
 
-1. **Duplicating logos more times** - Adding at least 3-4 copies ensures continuous coverage during the loop
-2. **Adjusting animation calculation** - The animation should move exactly the width of one complete set of logos, so when it loops, the visual position is identical
+### Changes to `src/components/forms/QuoteRequestModal.tsx`
 
----
+1. **Make close button "sticky" on mobile** - Position it in a fixed location relative to the viewport on small screens, so it never scrolls away
 
-## Technical Implementation
+2. **Increase z-index** - Ensure the button always appears above all modal content
 
-### Changes to `src/components/home/TrustedBySection.tsx`
+3. **Add mobile-safe positioning** - Use responsive positioning classes:
+   - On mobile: larger tap target, positioned in safe zone (considering notches)
+   - On desktop: keep current elegant positioning
 
-**Current approach:**
-- `duplicatedTop = [...topPartners, ...topPartners]` (2 copies)
-- Animation moves `-50%` of total width
+4. **Improve button visibility** - Add a stronger background/shadow to ensure visibility regardless of what's behind it
 
-**New approach:**
-- `duplicatedTop = [...topPartners, ...topPartners, ...topPartners]` (3+ copies)
-- Animation moves exactly one set width (e.g., `-33.33%` for 3 copies, or better: calculate based on item count)
+5. **Add alternative close option** - Include a visible "Cancel" button at the bottom of the form for mobile users (backup option)
 
-### Changes to `src/index.css`
+### Implementation Details
 
-**Current animation:**
-```css
-@keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-```
+**Close Button Improvements:**
+- Change from `absolute` to `fixed` on mobile only (using responsive classes)
+- Add `safe-area-inset` padding for devices with notches
+- Increase touch target size on mobile (minimum 44x44px)
+- Add stronger background contrast and shadow
 
-**New animation:**
-```css
-@keyframes scroll-left {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
-}
-```
-
-This ensures that when the animation completes and resets to 0%, the visual position is identical (seamless loop).
+**Mobile-Specific Layout:**
+- Ensure the close button is always visible at the top-right corner
+- Add proper spacing so content doesn't overlap the button
+- Consider adding a bottom "Cancel" button as a secondary option
 
 ---
 
-## Summary of Files to Modify
+## Files to Modify
 
-| File | Change |
-|------|--------|
-| `src/components/home/TrustedBySection.tsx` | Triple the logo arrays instead of doubling |
-| `src/index.css` | Update keyframe percentages from `-50%` to `-33.333%` |
+| File | Changes |
+|------|---------|
+| `src/components/forms/QuoteRequestModal.tsx` | Improve close button positioning, add responsive classes, increase visibility |
 
 ---
 
 ## Expected Result
-- Completely smooth, continuous scrolling
-- No visible pauses, jumps, or resets
-- Maintains existing speed, fade effects, and hover behavior
-
+- Close button (X) will be clearly visible on all mobile devices
+- Button will remain accessible regardless of scroll position
+- Users can easily close/cancel the modal on any screen size
+- Touch target will meet mobile accessibility guidelines (44x44px minimum)
