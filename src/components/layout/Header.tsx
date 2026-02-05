@@ -16,7 +16,7 @@ const Header = () => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const navLinks = [
-    { href: '/', label: t('nav.home') },
+    { href: '/#products-section', label: t('nav.home') },
     { href: '/about', label: t('nav.about') },
     { href: '/contact', label: t('nav.contact') },
   ];
@@ -30,7 +30,13 @@ const Header = () => {
     setLanguage(language === 'el' ? 'en' : 'el');
   };
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => {
+    // Handle home page special case with hash
+    if (path === '/#products-section') {
+      return location.pathname === '/';
+    }
+    return location.pathname === path;
+  };
   const isProductsActive = location.pathname.startsWith('/products');
 
   // Close dropdown when clicking outside

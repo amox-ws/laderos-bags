@@ -25,7 +25,7 @@ const ProductsSection = () => {
   return (
     // ΠΡΟΣΟΧΗ: Βάζουμε overflow-hidden για να μην "σπάσει" το πλάτος της σελίδας
     // όσο τα κουτιά έρχονται από τα πλάγια.
-    <section className="section-padding overflow-hidden">
+    <section id="products-section" className="section-padding overflow-hidden">
       <div className="container-page">
         
         {/* Text Content - Αυτό μένει όπως ήταν (Fade Up) */}
