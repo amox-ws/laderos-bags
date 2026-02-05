@@ -5,156 +5,191 @@
 @tailwind utilities;
 
 
-/* Laderos Bags Design System - Strict 3-Color Palette */
+/* Laderos Bags Design System - Logo-Based Color Palette */
 @layer base {
   :root {
     /* ═══════════════════════════════════════════════════════════════
-       STRICT 3-COLOR SYSTEM
-       - Main Background: #A1AFBA (entire site)
-       - CTA/Stats sections: #6A8595
-       - Footer: #1C282E
+       LADEROS BAGS LOGO COLOR SYSTEM
+       Extracted from official logo:
+       - Primary Blue: #3366A0 (main brand blue)
+       - Dark Navy: #1E3A5F (darker accent)
+       - Deep Navy: #152A45 (footer/dark sections)
+       - White: #FFFFFF (text on dark)
+       - Light Blue: #E8EEF4 (light backgrounds)
        ═══════════════════════════════════════════════════════════════ */
     
-    /* Main Background #A1AFBA - Used for all content sections */
-    --main-bg: 206 15% 68%;
-    --main-bg-foreground: 200 24% 15%;
-    --main-bg-muted: 200 30% 25%;
+    /* Primary Brand Blue #3366A0 - Main brand color */
+    --brand-primary: 212 52% 52%;
+    --brand-primary-foreground: 0 0% 100%;
     
-    /* Accent Background #6A8595 - Used for CTA and Stats sections */
-    --accent-bg: 200 17% 50%;
-    --accent-bg-foreground: 208 15% 90%;
-    --accent-bg-muted: 206 15% 75%;
+    /* Dark Navy #1E3A5F - Accent/CTA sections */
+    --brand-dark: 212 52% 25%;
+    --brand-dark-foreground: 0 0% 100%;
     
-    /* Footer Background #1C282E - Used only for footer */
-    --footer-bg: 200 24% 15%;
-    --footer-bg-foreground: 208 15% 83%;
-    --footer-bg-muted: 206 15% 68%;
+    /* Deep Navy #152A45 - Footer/Navigation */
+    --brand-deep: 212 55% 18%;
+    --brand-deep-foreground: 210 25% 90%;
     
-    /* Legacy section depths - all mapped to main-bg for consistency */
-    --section-1: 206 15% 68%;
-    --section-1-foreground: 200 24% 15%;
-    --section-1-muted: 200 30% 25%;
+    /* Light Blue #E8EEF4 - Light backgrounds */
+    --brand-light: 212 30% 93%;
+    --brand-light-foreground: 212 52% 18%;
     
-    --section-2: 206 15% 68%;
-    --section-2-foreground: 200 24% 15%;
-    --section-2-muted: 200 30% 25%;
-    
-    --section-3: 200 17% 50%;
-    --section-3-foreground: 208 15% 90%;
-    --section-3-muted: 206 15% 75%;
-    
-    --section-4: 200 17% 50%;
-    --section-4-foreground: 208 15% 90%;
-    --section-4-muted: 206 15% 75%;
-    
-    --section-5: 200 17% 50%;
-    --section-5-foreground: 208 15% 90%;
-    --section-5-muted: 206 15% 75%;
-    
-    --section-6: 200 24% 15%;
-    --section-6-foreground: 208 15% 83%;
-    --section-6-muted: 206 15% 68%;
+    /* Medium Light #D0DCE8 - Secondary light */
+    --brand-medium: 212 30% 86%;
+    --brand-medium-foreground: 212 52% 18%;
     
     /* ═══════════════════════════════════════════════════════════════
-       LEGACY SEMANTIC TOKENS (for compatibility)
+       SECTION SYSTEM
        ═══════════════════════════════════════════════════════════════ */
     
-    --navy: 200 24% 15%;
-    --navy-light: 200 30% 22%;
-    --brand-blue: 200 17% 50%;
-    --brand-blue-light: 206 15% 68%;
-    --brand-blue-pale: 200 24% 15%;
+    /* Main Background - Light blue-gray */
+    --main-bg: 212 30% 93%;
+    --main-bg-foreground: 212 52% 18%;
+    --main-bg-muted: 212 40% 35%;
     
-    /* Default semantic tokens - Main background base */
-    --background: 206 15% 68%;
-    --foreground: 200 24% 15%;
+    /* Accent Background - Primary blue */
+    --accent-bg: 212 52% 52%;
+    --accent-bg-foreground: 0 0% 100%;
+    --accent-bg-muted: 212 30% 85%;
+    
+    /* Dark Section - Dark navy */
+    --dark-bg: 212 52% 25%;
+    --dark-bg-foreground: 0 0% 100%;
+    --dark-bg-muted: 212 30% 75%;
+    
+    /* Footer Background - Deep navy */
+    --footer-bg: 212 55% 18%;
+    --footer-bg-foreground: 210 25% 90%;
+    --footer-bg-muted: 212 30% 70%;
+    
+    /* ═══════════════════════════════════════════════════════════════
+       LEGACY SECTION DEPTHS
+       ═══════════════════════════════════════════════════════════════ */
+    
+    --section-1: 212 30% 93%;
+    --section-1-foreground: 212 52% 18%;
+    --section-1-muted: 212 40% 35%;
+    
+    --section-2: 212 30% 89%;
+    --section-2-foreground: 212 52% 18%;
+    --section-2-muted: 212 40% 35%;
+    
+    --section-3: 212 52% 52%;
+    --section-3-foreground: 0 0% 100%;
+    --section-3-muted: 212 30% 85%;
+    
+    --section-4: 212 52% 45%;
+    --section-4-foreground: 0 0% 100%;
+    --section-4-muted: 212 30% 80%;
+    
+    --section-5: 212 52% 25%;
+    --section-5-foreground: 0 0% 100%;
+    --section-5-muted: 212 30% 75%;
+    
+    --section-6: 212 55% 18%;
+    --section-6-foreground: 210 25% 90%;
+    --section-6-muted: 212 30% 70%;
+    
+    /* ═══════════════════════════════════════════════════════════════
+       SEMANTIC TOKENS
+       ═══════════════════════════════════════════════════════════════ */
+    
+    --navy: 212 55% 18%;
+    --navy-light: 212 52% 25%;
+    --brand-blue: 212 52% 52%;
+    --brand-blue-light: 212 52% 62%;
+    --brand-blue-pale: 212 30% 93%;
+    
+    /* Default semantic tokens */
+    --background: 212 30% 93%;
+    --foreground: 212 55% 18%;
 
-    --card: 206 15% 60%;
-    --card-foreground: 200 24% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 212 55% 18%;
 
-    --popover: 206 15% 60%;
-    --popover-foreground: 200 24% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 212 55% 18%;
 
-    --primary: 200 24% 15%;
-    --primary-foreground: 208 15% 90%;
+    --primary: 212 52% 52%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 200 17% 50%;
-    --secondary-foreground: 208 15% 90%;
+    --secondary: 212 52% 25%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 206 15% 60%;
-    --muted-foreground: 200 30% 25%;
+    --muted: 212 30% 86%;
+    --muted-foreground: 212 40% 35%;
 
-    --accent: 200 17% 50%;
-    --accent-foreground: 208 15% 90%;
+    --accent: 212 52% 45%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 200 20% 55%;
-    --input: 206 15% 75%;
-    --ring: 200 17% 50%;
+    --border: 212 30% 75%;
+    --input: 212 30% 88%;
+    --ring: 212 52% 52%;
 
     --radius: 0.5rem;
 
-    /* Custom gradients - using the 3 colors */
-    --gradient-hero: linear-gradient(135deg, hsl(206 15% 68%) 0%, hsl(200 17% 50%) 100%);
-    --gradient-blue: linear-gradient(135deg, hsl(200 17% 50%) 0%, hsl(200 24% 15%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(206 15% 68%) 0%, hsl(200 17% 50%) 100%);
+    /* Custom gradients - using logo colors */
+    --gradient-hero: linear-gradient(135deg, hsl(212 30% 93%) 0%, hsl(212 52% 52%) 100%);
+    --gradient-blue: linear-gradient(135deg, hsl(212 52% 52%) 0%, hsl(212 55% 18%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(212 30% 93%) 0%, hsl(212 30% 86%) 100%);
     
     /* Shadows */
-    --shadow-sm: 0 2px 8px -2px hsl(200 24% 10% / 0.3);
-    --shadow-md: 0 8px 24px -8px hsl(200 24% 10% / 0.4);
-    --shadow-lg: 0 16px 48px -16px hsl(200 24% 10% / 0.5);
-    --shadow-card: 0 4px 20px -4px hsl(200 24% 10% / 0.3);
+    --shadow-sm: 0 2px 8px -2px hsl(212 55% 18% / 0.15);
+    --shadow-md: 0 8px 24px -8px hsl(212 55% 18% / 0.2);
+    --shadow-lg: 0 16px 48px -16px hsl(212 55% 18% / 0.25);
+    --shadow-card: 0 4px 20px -4px hsl(212 55% 18% / 0.15);
     
     /* Sidebar */
-    --sidebar-background: 200 24% 15%;
-    --sidebar-foreground: 208 15% 83%;
-    --sidebar-primary: 200 17% 50%;
-    --sidebar-primary-foreground: 208 15% 90%;
-    --sidebar-accent: 206 15% 68%;
-    --sidebar-accent-foreground: 200 24% 15%;
-    --sidebar-border: 200 17% 50%;
-    --sidebar-ring: 200 17% 50%;
+    --sidebar-background: 212 55% 18%;
+    --sidebar-foreground: 210 25% 90%;
+    --sidebar-primary: 212 52% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 212 52% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 212 52% 35%;
+    --sidebar-ring: 212 52% 52%;
   }
 
   .dark {
-    --background: 206 15% 68%;
-    --foreground: 200 24% 15%;
+    --background: 212 55% 18%;
+    --foreground: 210 25% 90%;
 
-    --card: 206 15% 60%;
-    --card-foreground: 200 24% 15%;
+    --card: 212 52% 22%;
+    --card-foreground: 210 25% 90%;
 
-    --popover: 206 15% 60%;
-    --popover-foreground: 200 24% 15%;
+    --popover: 212 52% 22%;
+    --popover-foreground: 210 25% 90%;
 
-    --primary: 200 24% 15%;
-    --primary-foreground: 208 15% 90%;
+    --primary: 212 52% 52%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 200 17% 50%;
-    --secondary-foreground: 208 15% 90%;
+    --secondary: 212 52% 35%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 206 15% 60%;
-    --muted-foreground: 200 30% 25%;
+    --muted: 212 52% 25%;
+    --muted-foreground: 212 30% 70%;
 
-    --accent: 200 17% 50%;
-    --accent-foreground: 208 15% 90%;
+    --accent: 212 52% 45%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 200 20% 55%;
-    --input: 206 15% 75%;
-    --ring: 200 17% 50%;
+    --border: 212 52% 30%;
+    --input: 212 52% 25%;
+    --ring: 212 52% 52%;
     
-    --sidebar-background: 200 24% 15%;
-    --sidebar-foreground: 208 15% 83%;
-    --sidebar-primary: 200 17% 50%;
-    --sidebar-primary-foreground: 208 15% 90%;
-    --sidebar-accent: 206 15% 68%;
-    --sidebar-accent-foreground: 200 24% 15%;
-    --sidebar-border: 200 17% 50%;
-    --sidebar-ring: 200 17% 50%;
+    --sidebar-background: 212 55% 12%;
+    --sidebar-foreground: 210 25% 90%;
+    --sidebar-primary: 212 52% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 212 52% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 212 52% 30%;
+    --sidebar-ring: 212 52% 52%;
   }
 }
 
@@ -169,10 +204,11 @@
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold text-foreground uppercase;
+    @apply font-bold uppercase;
+    color: hsl(var(--foreground));
     font-family: 'Bebas Neue', 'Impact', sans-serif;
     letter-spacing: 0.05em;
-    font-weight: 400; /* Bebas Neue only has one weight, this ensures consistency */
+    font-weight: 400;
   }
   
   /* Ensure consistent font weight for body text in both languages */
@@ -215,13 +251,10 @@
   }
   
   /* ═══════════════════════════════════════════════════════════════
-     STRICT 3-COLOR SECTION CLASSES
-     - main-section: #A1AFBA (default for all content)
-     - accent-section: #6A8595 (CTA and Stats)
-     - footer-section: #1C282E (footer only)
+     LADEROS BRAND SECTION CLASSES
      ═══════════════════════════════════════════════════════════════ */
   
-  /* Main Section - #A1AFBA (default background) */
+  /* Main Section - Light blue-gray background */
   .main-section {
     background-color: hsl(var(--main-bg));
     color: hsl(var(--main-bg-foreground));
@@ -233,7 +266,7 @@
     color: hsl(var(--main-bg-muted));
   }
   
-  /* Accent Section - #6A8595 (CTA and Stats) */
+  /* Accent Section - Primary blue */
   .accent-section {
     background-color: hsl(var(--accent-bg));
     color: hsl(var(--accent-bg-foreground));
@@ -245,7 +278,19 @@
     color: hsl(var(--accent-bg-muted));
   }
   
-  /* Footer Section - #1C282E */
+  /* Dark Section - Dark navy for CTAs */
+  .dark-section {
+    background-color: hsl(var(--dark-bg));
+    color: hsl(var(--dark-bg-foreground));
+  }
+  .dark-section h1, .dark-section h2, .dark-section h3, .dark-section h4 {
+    color: hsl(var(--dark-bg-foreground));
+  }
+  .dark-section .text-muted-foreground, .dark-section p:not([class]) {
+    color: hsl(var(--dark-bg-muted));
+  }
+  
+  /* Footer Section - Deep navy */
   .footer-section {
     background-color: hsl(var(--footer-bg));
     color: hsl(var(--footer-bg-foreground));
@@ -258,50 +303,69 @@
   }
   
   /* Legacy section-depth classes - mapped to new system */
-  .section-depth-1, .section-depth-2 {
-    background-color: hsl(var(--main-bg));
-    color: hsl(var(--main-bg-foreground));
+  .section-depth-1 {
+    background-color: hsl(var(--section-1));
+    color: hsl(var(--section-1-foreground));
   }
-  .section-depth-1 h1, .section-depth-1 h2, .section-depth-1 h3, .section-depth-1 h4,
-  .section-depth-2 h1, .section-depth-2 h2, .section-depth-2 h3, .section-depth-2 h4 {
-    color: hsl(var(--main-bg-foreground));
+  .section-depth-1 h1, .section-depth-1 h2, .section-depth-1 h3, .section-depth-1 h4 {
+    color: hsl(var(--section-1-foreground));
   }
-  .section-depth-1 .text-muted-foreground, .section-depth-1 p:not([class]),
-  .section-depth-2 .text-muted-foreground, .section-depth-2 p:not([class]) {
-    color: hsl(var(--main-bg-muted));
+  .section-depth-1 .text-muted-foreground, .section-depth-1 p:not([class]) {
+    color: hsl(var(--section-1-muted));
   }
   
-  /* Levels 3-5 map to accent */
-  .section-depth-3, .section-depth-4, .section-depth-5 {
-    background-color: hsl(var(--accent-bg));
-    color: hsl(var(--accent-bg-foreground));
+  .section-depth-2 {
+    background-color: hsl(var(--section-2));
+    color: hsl(var(--section-2-foreground));
+  }
+  .section-depth-2 h1, .section-depth-2 h2, .section-depth-2 h3, .section-depth-2 h4 {
+    color: hsl(var(--section-2-foreground));
+  }
+  .section-depth-2 .text-muted-foreground, .section-depth-2 p:not([class]) {
+    color: hsl(var(--section-2-muted));
+  }
+  
+  /* Levels 3-4 map to accent */
+  .section-depth-3, .section-depth-4 {
+    background-color: hsl(var(--section-3));
+    color: hsl(var(--section-3-foreground));
   }
   .section-depth-3 h1, .section-depth-3 h2, .section-depth-3 h3, .section-depth-3 h4,
-  .section-depth-4 h1, .section-depth-4 h2, .section-depth-4 h3, .section-depth-4 h4,
-  .section-depth-5 h1, .section-depth-5 h2, .section-depth-5 h3, .section-depth-5 h4 {
-    color: hsl(var(--accent-bg-foreground));
+  .section-depth-4 h1, .section-depth-4 h2, .section-depth-4 h3, .section-depth-4 h4 {
+    color: hsl(var(--section-3-foreground));
   }
   .section-depth-3 .text-muted-foreground, .section-depth-3 p:not([class]),
-  .section-depth-4 .text-muted-foreground, .section-depth-4 p:not([class]),
+  .section-depth-4 .text-muted-foreground, .section-depth-4 p:not([class]) {
+    color: hsl(var(--section-3-muted));
+  }
+  
+  /* Level 5 maps to dark */
+  .section-depth-5 {
+    background-color: hsl(var(--section-5));
+    color: hsl(var(--section-5-foreground));
+  }
+  .section-depth-5 h1, .section-depth-5 h2, .section-depth-5 h3, .section-depth-5 h4 {
+    color: hsl(var(--section-5-foreground));
+  }
   .section-depth-5 .text-muted-foreground, .section-depth-5 p:not([class]) {
-    color: hsl(var(--accent-bg-muted));
+    color: hsl(var(--section-5-muted));
   }
   
   /* Level 6 maps to footer */
   .section-depth-6 {
-    background-color: hsl(var(--footer-bg));
-    color: hsl(var(--footer-bg-foreground));
+    background-color: hsl(var(--section-6));
+    color: hsl(var(--section-6-foreground));
   }
   .section-depth-6 h1, .section-depth-6 h2, .section-depth-6 h3, .section-depth-6 h4 {
-    color: hsl(var(--footer-bg-foreground));
+    color: hsl(var(--section-6-foreground));
   }
   .section-depth-6 .text-muted-foreground, .section-depth-6 p:not([class]) {
-    color: hsl(var(--footer-bg-muted));
+    color: hsl(var(--section-6-muted));
   }
   
-  /* Legacy gradient classes */
+  /* Gradient classes */
   .gradient-hero {
-    background: linear-gradient(135deg, hsl(var(--main-bg)) 0%, hsl(var(--accent-bg)) 100%);
+    background: linear-gradient(135deg, hsl(var(--main-bg)) 0%, hsl(var(--brand-primary)) 100%);
     color: hsl(var(--main-bg-foreground));
   }
   .gradient-hero h1, .gradient-hero h2, .gradient-hero h3, .gradient-hero h4 {
@@ -309,11 +373,12 @@
   }
   
   .gradient-blue {
-    background: linear-gradient(135deg, hsl(var(--accent-bg)) 0%, hsl(var(--footer-bg)) 100%);
+    background: linear-gradient(135deg, hsl(var(--brand-primary)) 0%, hsl(var(--brand-deep)) 100%);
+    color: hsl(var(--brand-primary-foreground));
   }
   
   .gradient-subtle {
-    background: linear-gradient(180deg, hsl(var(--main-bg)) 0%, hsl(var(--accent-bg)) 100%);
+    background: linear-gradient(180deg, hsl(var(--main-bg)) 0%, hsl(var(--brand-medium)) 100%);
     color: hsl(var(--main-bg-foreground));
   }
   .gradient-subtle h1, .gradient-subtle h2, .gradient-subtle h3, .gradient-subtle h4 {
