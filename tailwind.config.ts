@@ -27,6 +27,9 @@ export default {
           DEFAULT: "hsl(var(--brand-blue))",
           light: "hsl(var(--brand-blue-light))",
           pale: "hsl(var(--brand-blue-pale))",
+          primary: "hsl(var(--brand-primary))",
+          dark: "hsl(var(--brand-dark))",
+          deep: "hsl(var(--brand-deep))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",
