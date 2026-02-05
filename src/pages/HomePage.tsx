@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -13,16 +13,12 @@ import WhereToFindUsSection from '@/components/home/WhereToFindUsSection';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion'; // <--- ΠΡΟΣΘΗΚΗ IMPORT
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HomePage = () => {
   const { t } = useLanguage();
-  const location = useLocation();
-  
-  // Skip animation when navigating via #products-section anchor
-  const skipAnimation = location.hash === '#products-section';
 
   // Refs
   const pinnedSectionRef = useRef<HTMLDivElement>(null);
@@ -32,9 +28,6 @@ const HomePage = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
-    // Skip GSAP setup entirely when animation is skipped
-    if (skipAnimation) return;
-    
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d', { alpha: true });
     const pinnedEl = pinnedSectionRef.current;
@@ -204,40 +197,35 @@ const HomePage = () => {
       tl.kill();
       st?.kill();
     };
-  }, [skipAnimation]);
+  }, []);
 
   return (
     <Layout>
-      {/* SECTION 1: ANIMATION WRAPPER - Only render when not skipping */}
-      {!skipAnimation && (
-        <div
-          ref={pinnedSectionRef}
-          className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
-        >
-          {/* Layer 1: Canvas */}
-          <canvas
-            ref={canvasRef}
-            className="absolute inset-0 w-full h-full z-20 pointer-events-none"
-          />
+      {/* SECTION 1: ANIMATION WRAPPER */}
+      <div
+        ref={pinnedSectionRef}
+        className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
+      >
+        {/* Layer 1: Canvas */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full z-20 pointer-events-none"
+        />
 
-          {/* Light Overlay */}
-          <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
+        {/* Light Overlay */}
+        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
 
-          {!imagesLoaded && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-sm text-muted-foreground">
-              Loading…
-            </div>
-          )}
-        </div>
-      )}
+        {!imagesLoaded && (
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-sm text-muted-foreground">
+            Loading…
+          </div>
+        )}
+      </div>
 
       {/* SECTION 2: MAIN CONTENT (Acts as new Hero) */}
       <div 
         ref={mainContentRef} 
-        className={skipAnimation 
-          ? "relative z-30" 
-          : "relative z-30 -mt-40 md:-mt-60 opacity-0"
-        }
+        className="relative z-30 -mt-40 md:-mt-60 opacity-0"
       >
         <div className="main-section pt-12">
           <ProductsSection />

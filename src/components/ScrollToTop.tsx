@@ -6,10 +6,18 @@ const ScrollToTop = () => {
   const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    // Handle home page with products-section anchor - instant positioning
+    // Handle home page with products-section anchor
     if (pathname === '/' && hash === '#products-section') {
-      // Instant scroll to top since animation section is skipped
-      window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+      // Wait for page to render and GSAP animation to set up
+      const scrollToProducts = () => {
+        const element = document.getElementById('products-section');
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+      
+      // Longer delay to ensure GSAP pinned section is ready
+      setTimeout(scrollToProducts, isInitialLoad.current ? 800 : 150);
       isInitialLoad.current = false;
       return;
     }
