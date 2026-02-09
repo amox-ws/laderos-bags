@@ -1,137 +1,63 @@
 
-# Fix: Instant Landing on Products Section for Home Navigation
 
-## Current Problem
+# Home Page: Animation on First Visit Only
 
-When navigating to the Home page via "Αρχική/Home" button:
-- The page loads at the top (showing the bag animation section)
-- Then smoothly scrolls down to the products section
-- This creates a visible scroll animation that the user doesn't want
+## What Changes
 
-The user expects the Home page to **load directly** at the Products section with no visible scroll or jump.
+The bag scroll animation will play only on the very first visit to the homepage during a browsing session. Any time you navigate back to the homepage (from About, Contact, etc.), you'll land directly on the "Paper and Plastic Bags" section -- no animation, no scroll, no delay.
 
-## Technical Challenge
+## How It Works
 
-The Home page uses a GSAP ScrollTrigger animation:
-- A "pinned" section with a bag animation controlled by scroll
-- The animation requires ~450% viewport height of scrolling to complete
-- The Products section appears after this animation completes
+1. **Track "animation seen"** using a session-level flag (sessionStorage). On the very first homepage load, the flag is unset, so the full bag animation plays. Once the animation section is passed, the flag is set.
 
-## Solution Strategy
+2. **When returning to Home** (flag is set):
+   - The bag animation section is completely hidden (not rendered)
+   - The Products section content is immediately visible (no opacity-0, no negative margin)
+   - The page starts at the top, which IS the Products section
+   - No GSAP setup runs, saving memory and load time
 
-We need to handle two different scenarios:
-
-1. **Direct URL Entry** (typing URL or refreshing): Show the full animation experience
-2. **Navigation from Another Page** (clicking Home): Skip animation and land directly on Products
-
-### Implementation Approach
-
-**1. Detect Navigation vs Fresh Load**
-
-Use a combination of React Router's `useLocation` and a navigation state to detect when the user is navigating FROM another page to home.
-
-**2. Conditional Rendering Strategy**
-
-When navigating from another page to `/#products-section`:
-- Skip rendering the GSAP animation section entirely (or render it hidden/minimal)
-- Set the main content to be visible immediately (not `opacity-0`)
-- Set initial scroll position to 0 (since animation section is skipped)
-- No scroll animation needed
-
-**3. Instant Scroll Positioning**
-
-In `ScrollToTop.tsx`:
-- Use `window.scrollTo(0, 0)` with `behavior: 'instant'` (not smooth)
-- Apply immediately without delay
-- Add CSS class to prevent any layout shift
-
----
+3. **Home nav link** stays as `/#products-section` so the routing logic knows to skip animation on return visits.
 
 ## Files to Modify
 
-| File | Changes |
-|------|---------|
-| `src/components/ScrollToTop.tsx` | Use instant scroll behavior, detect navigation context |
-| `src/pages/HomePage.tsx` | Conditionally skip animation section when navigating via anchor |
-
----
+| File | Change |
+|------|--------|
+| `src/pages/HomePage.tsx` | Read sessionStorage flag; conditionally skip animation section and show content immediately; set flag after animation completes |
+| `src/components/ScrollToTop.tsx` | For `/#products-section`, use instant scroll (`behavior: 'instant'`) with no delay |
 
 ## Detailed Changes
 
-### 1. `src/pages/HomePage.tsx`
+### HomePage.tsx
 
-Add state to detect if we're navigating to `#products-section`:
-- Read `location.hash` from React Router
-- If hash is `#products-section`, set a flag to skip the GSAP animation
-- When skipping:
-  - Don't render the pinned animation section (or render it with `display: none`)
-  - Set `mainContentRef` to start visible (`opacity: 1` instead of `opacity: 0`)
-  - Remove the negative margin that offsets for the animation
+- Import `useLocation` from react-router-dom
+- On mount, check `sessionStorage.getItem('laderos_animation_seen')`
+- If the hash is `#products-section` OR the flag is already set:
+  - Set `skipAnimation = true`
+  - Do NOT render the pinned animation `<div>` at all
+  - Render `mainContentRef` div without `opacity-0` and without negative margins
+  - Skip the entire GSAP useEffect (guard with `if (skipAnimation) return`)
+- If showing the animation:
+  - After the GSAP timeline completes (or on scroll past), set `sessionStorage.setItem('laderos_animation_seen', 'true')`
+- The flag resets naturally when the browser tab/session ends
 
-### 2. `src/components/ScrollToTop.tsx`
+### ScrollToTop.tsx
 
-For home navigation with products-section hash:
-- Use instant scroll: `window.scrollTo({ top: 0, behavior: 'instant' })`
-- No setTimeout delay needed since we're skipping the animation section
-
----
+- When `pathname === '/'` and `hash === '#products-section'`:
+  - Use `window.scrollTo({ top: 0, behavior: 'instant' })` instead of smooth scrollIntoView
+  - Remove the setTimeout delay entirely (no need to wait for GSAP since animation section won't exist)
 
 ## User Experience
 
-**Before Fix:**
-1. Click "Home" from Contact page
-2. See top of page (animation section) briefly
-3. Watch smooth scroll down to Products section
-4. Jarring experience with visible movement
+| Scenario | Behavior |
+|----------|----------|
+| First time opening the site | Full bag animation plays as you scroll |
+| Click "Home" from About page | Instantly see Products section, no animation |
+| Click "Home" from Contact page | Instantly see Products section, no animation |
+| Close tab and reopen site | Full bag animation plays again (new session) |
+| Refresh the homepage | Full bag animation plays again (depends on hash) |
 
-**After Fix:**
-1. Click "Home" from Contact page
-2. Products section appears immediately
-3. No visible scroll or animation
-4. Feels like Products IS the top of the page
+## Technical Notes
 
----
-
-## SEO Considerations
-
-- The full animation section remains accessible for:
-  - Direct URL visits without hash
-  - Search engine crawlers
-  - Users who type the URL directly
-- Only internal navigation skips the animation
-- All content remains in the DOM for indexing
-
----
-
-## Technical Details
-
-Key code changes:
-
-**HomePage.tsx - Conditional Animation Skipping:**
-```text
-const location = useLocation();
-const skipAnimation = location.hash === '#products-section';
-
-// In render:
-{!skipAnimation && (
-  <div ref={pinnedSectionRef}>
-    {/* Animation section */}
-  </div>
-)}
-
-<div 
-  ref={mainContentRef}
-  className={skipAnimation ? 'relative z-30' : 'relative z-30 -mt-40 md:-mt-60 opacity-0'}
->
-  {/* Content */}
-</div>
-```
-
-**ScrollToTop.tsx - Instant Positioning:**
-```text
-if (pathname === '/' && hash === '#products-section') {
-  // Instant scroll, no animation
-  window.scrollTo({ top: 0, behavior: 'instant' });
-  return;
-}
-```
+- `sessionStorage` is used instead of `localStorage` so the animation resets per browser session -- returning visitors in a new tab get the "wow" intro again
+- No content is removed from the DOM permanently; crawlers visiting `/` without the hash will still see everything
+- The GSAP useEffect cleanup already handles killing ScrollTrigger, so conditional skipping is safe
