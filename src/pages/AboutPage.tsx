@@ -8,6 +8,7 @@ import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
 import TrustedBySection from '@/components/home/TrustedBySection';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
+import { useEffect, useRef } from 'react';
 
 const AboutPage = () => {
   const { t } = useLanguage();
@@ -26,28 +27,59 @@ const AboutPage = () => {
     'whyWork.consistency',
   ];
 
+  // Autoplay video ONLY when scrolled into view (last placeholder section)
+  const productionVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const el = productionVideoRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        if (!productionVideoRef.current) return;
+
+        if (entry.isIntersecting) {
+          try {
+            // Some browsers require play() to be called after setting muted/playsInline
+            productionVideoRef.current.muted = true;
+            await productionVideoRef.current.play();
+          } catch {
+            // Autoplay can still be blocked in rare cases; user can hit play manually
+          }
+        } else {
+          productionVideoRef.current.pause();
+        }
+      },
+      {
+        threshold: 0.35, // starts playing when ~35% visible
+      }
+    );
+
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <Layout>
       {/* Hero Section - Main Background */}
       <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden main-section">
         {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 opacity-10" style={{
-          backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,0.03) 35px, rgba(0,0,0,0.03) 70px)'
-        }} />
-        
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage:
+              'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,0.03) 35px, rgba(0,0,0,0.03) 70px)',
+          }}
+        />
+
         {/* Hero Content */}
         <div className="container-page relative z-10 text-center py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-wide">
               {t('about.hero.title')}
             </h1>
-            <p className="text-lg md:text-xl opacity-80 max-w-2xl mx-auto">
-              {t('about.hero.subtitle')}
-            </p>
+            <p className="text-lg md:text-xl opacity-80 max-w-2xl mx-auto">{t('about.hero.subtitle')}</p>
           </motion.div>
         </div>
       </section>
@@ -56,13 +88,12 @@ const AboutPage = () => {
       <section className="section-padding main-section overflow-hidden">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            
             {/* VIDEO BOX - ΕΡΧΕΤΑΙ ΑΠΟ ΑΡΙΣΤΕΡΑ (-300px) */}
             <motion.div
               initial={{ x: -300, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
             >
               <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
                 <div className="absolute inset-0 flex items-center justify-center">
@@ -70,9 +101,7 @@ const AboutPage = () => {
                     <Play className="w-10 h-10 ml-1" />
                   </div>
                 </div>
-                <div className="absolute bottom-4 left-4 text-sm opacity-60">
-                  {t('about.videoPlaceholder')}
-                </div>
+                <div className="absolute bottom-4 left-4 text-sm opacity-60">{t('about.videoPlaceholder')}</div>
               </div>
             </motion.div>
 
@@ -80,19 +109,14 @@ const AboutPage = () => {
             <motion.div
               initial={{ x: 300, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
             >
               <div>
-                <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                  {t('about.whoWeAre.title')}
-                </h2>
-                <p className="leading-relaxed text-lg opacity-80">
-                  {t('about.whoWeAre.text')}
-                </p>
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('about.whoWeAre.title')}</h2>
+                <p className="leading-relaxed text-lg opacity-80">{t('about.whoWeAre.text')}</p>
               </div>
             </motion.div>
-
           </div>
         </div>
       </section>
@@ -101,9 +125,7 @@ const AboutPage = () => {
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {t('about.whatWeDo.title')}
-            </h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('about.whatWeDo.title')}</h2>
           </AnimatedSection>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -113,12 +135,8 @@ const AboutPage = () => {
                   <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-4">
                     <service.icon className="h-7 w-7" />
                   </div>
-                  <h3 className="text-lg font-semibold mb-2">
-                    {t(`about.services.${service.key}.title`)}
-                  </h3>
-                  <p className="text-sm opacity-80">
-                    {t(`about.services.${service.key}.desc`)}
-                  </p>
+                  <h3 className="text-lg font-semibold mb-2">{t(`about.services.${service.key}.title`)}</h3>
+                  <p className="text-sm opacity-80">{t(`about.services.${service.key}.desc`)}</p>
                 </div>
               </AnimatedSection>
             ))}
@@ -135,24 +153,22 @@ const AboutPage = () => {
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {t('about.production.title')}
-            </h2>
-            <p className="opacity-80 max-w-2xl mx-auto">
-              {t('about.production.text')}
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('about.production.title')}</h2>
+            <p className="opacity-80 max-w-2xl mx-auto">{t('about.production.text')}</p>
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated max-w-4xl mx-auto">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors duration-300">
-                  <Play className="w-10 h-10 ml-1" />
-                </div>
-              </div>
-              <div className="absolute bottom-4 left-4 text-sm opacity-60">
-                {t('about.videoPlaceholder')}
-              </div>
+            {/* ✅ Replaced ONLY this last placeholder with autoplay-on-scroll video */}
+            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elevated max-w-4xl mx-auto bg-white/10">
+              <video
+                ref={productionVideoRef}
+                className="w-full h-full object-cover"
+                src="/videos/production.mp4"
+                muted
+                loop
+                playsInline
+                preload="metadata"
+              />
             </div>
           </AnimatedSection>
         </div>
@@ -168,12 +184,8 @@ const AboutPage = () => {
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <AnimatedSection>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                {t('about.whyWork.title')}
-              </h2>
-              <p className="leading-relaxed mb-8 opacity-80">
-                {t('about.whyWork.text')}
-              </p>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('about.whyWork.title')}</h2>
+              <p className="leading-relaxed mb-8 opacity-80">{t('about.whyWork.text')}</p>
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
@@ -191,12 +203,8 @@ const AboutPage = () => {
                       <CheckCircle2 className="h-5 w-5" />
                     </div>
                     <div>
-                      <h4 className="font-semibold mb-1">
-                        {t(`about.${key}.title`)}
-                      </h4>
-                      <p className="text-sm opacity-80">
-                        {t(`about.${key}.desc`)}
-                      </p>
+                      <h4 className="font-semibold mb-1">{t(`about.${key}.title`)}</h4>
+                      <p className="text-sm opacity-80">{t(`about.${key}.desc`)}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -212,15 +220,11 @@ const AboutPage = () => {
           <motion.div
             initial={{ y: 200, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 1.2, ease: 'easeOut' }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              {t('cta.title')}
-            </h2>
-            <p className="opacity-80 mb-8 max-w-2xl mx-auto">
-              {t('cta.subtitle')}
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t('cta.title')}</h2>
+            <p className="opacity-80 mb-8 max-w-2xl mx-auto">{t('cta.subtitle')}</p>
             <Button asChild variant="heroOutline" size="lg">
               <Link to="/contact#quote" className="inline-flex items-center gap-2">
                 {t('cta.button')}

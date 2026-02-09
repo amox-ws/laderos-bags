@@ -68,7 +68,7 @@ const translations: Record<Language, Record<string, string>> = {
     'about.services.b2bPartnerships.title': 'B2B Συνεργασίες',
     'about.services.b2bPartnerships.desc': 'Μακροχρόνιες σχέσεις εμπιστοσύνης με επιχειρήσεις.',
     'about.production.title': 'Η Παραγωγή μας',
-    'about.production.text': 'Σύγχρονες εγκαταστάσεις και μηχανήματα τελευταίας τεχνολογίας για αποτελεσματική και ποιοτική παραγωγή.',
+    'about.production.text': 'Η διαδικασία παραγωγής μας συνδυάζει τον μηχανολογικό εξοπλισμό με τον αυστηρό ανθρώπινο έλεγχο σε κάθε στάδιο, εξασφαλίζοντας σταθερή ποιότητα σε κάθε παρτίδα.',
     'about.whyWork.title': 'Γιατί να Συνεργαστείτε Μαζί μας',
     'about.whyWork.text': 'Η εμπειρία 30 ετών μας επιτρέπει να κατανοούμε τις ανάγκες σας και να παρέχουμε λύσεις που κάνουν τη διαφορά.',
     'about.whyWork.experience.title': 'Εμπειρία',

@@ -227,7 +227,6 @@ const HomePage = () => {
           <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
           {!imagesLoaded && (
             <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-sm text-muted-foreground">
-              Loading…
             </div>
           )}
         </div>
