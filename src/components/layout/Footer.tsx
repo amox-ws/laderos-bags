@@ -4,7 +4,8 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 import footerLogo from '@/assets/footer-logo.png';
 const Footer = () => {
   const {
-    t
+    t,
+    language
   } = useLanguage();
   const currentYear = new Date().getFullYear();
   return <footer className="footer-section">
@@ -68,7 +69,10 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/20">
+        <div className="mt-12 pt-8 border-t border-white/20 flex flex-col items-center gap-2">
+          <Link to="/privacy-policy" className="opacity-60 hover:opacity-100 transition-colors text-sm">
+            {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
+          </Link>
           <p className="text-center opacity-60 text-sm">
             © {currentYear} Laderos Bags. {t('footer.rights')}.
           </p>
