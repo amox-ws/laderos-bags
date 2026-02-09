@@ -53,10 +53,9 @@ const AboutPage = () => {
       );
       observer1.observe(whoWeAreEl);
       
-      // Καθαρισμός για το πρώτο observer
       return () => observer1.disconnect();
     }
-  }, []); // Run once on mount
+  }, []);
 
   useEffect(() => {
     // --- Observer για το PRODUCTION video ---
@@ -78,31 +77,41 @@ const AboutPage = () => {
       );
       observer2.observe(productionEl);
 
-      // Καθαρισμός για το δεύτερο observer
       return () => observer2.disconnect();
     }
   }, []);
 
   return (
     <Layout>
-      {/* Hero Section - Main Background */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden main-section">
-        {/* Subtle Background Pattern */}
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,0,0,0.03) 35px, rgba(0,0,0,0.03) 70px)',
-          }}
-        />
+      {/* Hero Section - VIDEO BACKGROUND - FULL SCREEN */}
+      {/* ΑΛΛΑΓΗ 1: h-screen για να πιάνει όλη την οθόνη */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        
+        {/* Background Video Layer */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/videos/about_bg.mp4" type="video/mp4" />
+          </video>
+          
+          {/* ΑΛΛΑΓΗ 2: bg-background/90 για να ταιριάζει με το site και να είναι πολύ σκούρο */}
+          <div className="absolute inset-0 bg-background/80" />
+        </div>
 
         {/* Hero Content */}
         <div className="container-page relative z-10 text-center py-24">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-wide">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-wide text-white">
               {t('about.hero.title')}
             </h1>
-            <p className="text-lg md:text-xl opacity-80 max-w-2xl mx-auto">{t('about.hero.subtitle')}</p>
+            <p className="text-lg md:text-xl opacity-90 max-w-2xl mx-auto text-white">
+              {t('about.hero.subtitle')}
+            </p>
           </motion.div>
         </div>
       </section>
@@ -119,7 +128,6 @@ const AboutPage = () => {
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
-              {/* ΑΛΛΑΓΗ ΕΔΩ: Προστέθηκε το βίντεο who_we_are.mp4 */}
               <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
                 <video
                   ref={whoWeAreVideoRef}
