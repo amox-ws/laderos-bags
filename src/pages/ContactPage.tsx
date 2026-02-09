@@ -68,7 +68,7 @@ const ContactPage = () => {
                   {contactInfo.map((info, index) => (
                     <div
                       key={index}
-                      className="flex items-start gap-4 p-4 bg-white/10 rounded-xl"
+                      className="flex items-start gap-4 p-5 bg-white/10 rounded-xl border border-white/20 shadow-md"
                     >
                       <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
                         <info.icon className="h-6 w-6" />
