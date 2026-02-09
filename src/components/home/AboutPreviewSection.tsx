@@ -8,31 +8,38 @@ const AboutPreviewSection = () => {
   const { t } = useLanguage();
   
   const videoRef = useRef<HTMLVideoElement>(null);
-  // Ref για να ξέρουμε αν έχει ήδη παίξει το βίντεο σε αυτή την επίσκεψη
-  const hasPlayedOnce = useRef(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const videoEl = videoRef.current;
     if (!videoEl) return;
 
+    // 1. Observer: Παίζει όταν φαίνεται, σταματάει όταν κρύβεται
     const observer = new IntersectionObserver(
       async ([entry]) => {
-        // Παίζει μόνο αν εμφανιστεί στην οθόνη ΚΑΙ δεν έχει παίξει ήδη μέχρι το τέλος
-        if (entry.isIntersecting && !hasPlayedOnce.current) {
+        if (entry.isIntersecting) {
           try {
             videoEl.muted = true;
             await videoEl.play();
           } catch (err) {
             console.log('Autoplay blocked:', err);
           }
+        } else {
+          videoEl.pause();
+          // Αν σκρολάρεις μακριά, ακυρώνουμε την επανεκκίνηση αν περιμένει
+          if (timeoutRef.current) clearTimeout(timeoutRef.current);
         }
       },
       { threshold: 0.5 }
     );
 
-    // Event listener για να μαθαίνουμε πότε τελείωσε το βίντεο
+    // 2. Logic: Όταν τελειώσει, περίμενε και ξαναπαίξε
     const handleVideoEnd = () => {
-      hasPlayedOnce.current = true; // Μαρκάρουμε ότι τελείωσε
+      // Περιμένουμε 2000ms (2 δευτερόλεπτα) πριν το replay
+      timeoutRef.current = setTimeout(() => {
+        videoEl.currentTime = 0; // Γυρνάμε στην αρχή
+        videoEl.play().catch(() => {});
+      }, 2000); 
     };
 
     videoEl.addEventListener('ended', handleVideoEnd);
@@ -41,6 +48,7 @@ const AboutPreviewSection = () => {
     return () => {
       videoEl.removeEventListener('ended', handleVideoEnd);
       observer.disconnect();
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
 
@@ -65,7 +73,7 @@ const AboutPreviewSection = () => {
                 muted
                 playsInline
                 preload="metadata"
-                // ΑΦΑΙΡΕΘΗΚΕ ΤΟ loop ΕΔΩ
+                // ΣΗΜΑΝΤΙΚΟ: Αφαιρέσαμε το loop εδω
               />
               <div className="absolute inset-0 bg-black/5 pointer-events-none" />
             </div>
