@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useRef, useState, useMemo } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -13,12 +13,21 @@ import WhereToFindUsSection from '@/components/home/WhereToFindUsSection';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion'; // <--- ΠΡΟΣΘΗΚΗ IMPORT
+import { motion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const SESSION_KEY = 'laderos_animation_seen';
+
 const HomePage = () => {
   const { t } = useLanguage();
+  const location = useLocation();
+
+  // Determine if we should skip animation
+  const skipAnimation = useMemo(() => {
+    const seen = sessionStorage.getItem(SESSION_KEY);
+    return location.hash === '#products-section' || seen === 'true';
+  }, []); // only compute once on mount
 
   // Refs
   const pinnedSectionRef = useRef<HTMLDivElement>(null);
@@ -28,6 +37,7 @@ const HomePage = () => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
+    if (skipAnimation) return;
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d', { alpha: true });
     const pinnedEl = pinnedSectionRef.current;
@@ -159,6 +169,9 @@ const HomePage = () => {
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           render(self.progress);
+          if (self.progress >= 0.95) {
+            sessionStorage.setItem(SESSION_KEY, 'true');
+          }
         },
       },
     });
@@ -201,31 +214,29 @@ const HomePage = () => {
 
   return (
     <Layout>
-      {/* SECTION 1: ANIMATION WRAPPER */}
-      <div
-        ref={pinnedSectionRef}
-        className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
-      >
-        {/* Layer 1: Canvas */}
-        <canvas
-          ref={canvasRef}
-          className="absolute inset-0 w-full h-full z-20 pointer-events-none"
-        />
+      {/* SECTION 1: ANIMATION WRAPPER - Only on first visit */}
+      {!skipAnimation && (
+        <div
+          ref={pinnedSectionRef}
+          className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
+        >
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full z-20 pointer-events-none"
+          />
+          <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
+          {!imagesLoaded && (
+            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-sm text-muted-foreground">
+              Loading…
+            </div>
+          )}
+        </div>
+      )}
 
-        {/* Light Overlay */}
-        <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
-
-        {!imagesLoaded && (
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-sm text-muted-foreground">
-            Loading…
-          </div>
-        )}
-      </div>
-
-      {/* SECTION 2: MAIN CONTENT (Acts as new Hero) */}
+      {/* SECTION 2: MAIN CONTENT */}
       <div 
         ref={mainContentRef} 
-        className="relative z-30 -mt-40 md:-mt-60 opacity-0"
+        className={skipAnimation ? "relative z-30" : "relative z-30 -mt-40 md:-mt-60 opacity-0"}
       >
         <div className="main-section pt-12">
           <ProductsSection />
