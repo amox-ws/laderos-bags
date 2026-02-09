@@ -17,33 +17,17 @@ import { motion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SESSION_KEY = 'laderos_animation_seen';
-
-// Track if this is a SPA navigation (not a fresh page load)
-// On fresh load/refresh, navigation type is 'navigate' or 'reload'
-const isPageRefresh = () => {
-  const navEntries = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
-  if (navEntries.length > 0) {
-    return navEntries[0].type === 'reload' || navEntries[0].type === 'navigate';
-  }
-  return true;
-};
+// Module-level flag: survives SPA navigation, resets on page refresh/reload
+let animationHasPlayed = false;
 
 const HomePage = () => {
   const { t } = useLanguage();
   const location = useLocation();
 
-  // On fresh load/refresh: always show animation. On SPA nav back: skip if seen.
+  // Skip animation if it already played in this app session (module lifetime)
   const skipAnimation = useMemo(() => {
-    if (isPageRefresh()) {
-      // Fresh load or refresh — clear flag, show animation
-      sessionStorage.removeItem(SESSION_KEY);
-      return false;
-    }
-    // SPA navigation — skip if already seen
-    const seen = sessionStorage.getItem(SESSION_KEY);
-    return location.hash === '#products-section' || seen === 'true';
-  }, []); // only compute once on mount
+    return animationHasPlayed;
+  }, []);
 
   // Refs
   const pinnedSectionRef = useRef<HTMLDivElement>(null);
@@ -186,7 +170,7 @@ const HomePage = () => {
         onUpdate: (self) => {
           render(self.progress);
           if (self.progress >= 0.95) {
-            sessionStorage.setItem(SESSION_KEY, 'true');
+            animationHasPlayed = true;
           }
         },
       },
