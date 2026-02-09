@@ -76,6 +76,12 @@ const Footer = () => {
           <p className="text-center opacity-60 text-sm">
             © {currentYear} Laderos Bags. {t('footer.rights')}.
           </p>
+          <p className="text-center opacity-40 text-xs mt-1">
+            Powered by{' '}
+            <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-100 transition-opacity">
+              Amox
+            </a>
+          </p>
         </div>
       </div>
     </footer>;
