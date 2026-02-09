@@ -70,15 +70,9 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/20 flex flex-col items-center gap-2">
-          <div className="flex items-center gap-4">
-            <Link to="/privacy-policy" className="opacity-60 hover:opacity-100 transition-colors text-sm">
-              {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
-            </Link>
-            <span className="opacity-30">|</span>
-            <Link to="/terms-of-service" className="opacity-60 hover:opacity-100 transition-colors text-sm">
-              {language === 'el' ? 'Όροι Χρήσης' : 'Terms of Service'}
-            </Link>
-          </div>
+          <Link to="/privacy-policy" className="opacity-60 hover:opacity-100 transition-colors text-sm">
+            {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
+          </Link>
           <p className="text-center opacity-60 text-sm">
             © {currentYear} Laderos Bags. {t('footer.rights')}.
           </p>
