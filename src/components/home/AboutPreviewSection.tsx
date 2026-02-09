@@ -1,39 +1,77 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { Play } from 'lucide-react';
-import { motion } from 'framer-motion'; // <--- Import Framer Motion
+import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 
 const AboutPreviewSection = () => {
   const { t } = useLanguage();
+  
+  const videoRef = useRef<HTMLVideoElement>(null);
+  // Ref για να ξέρουμε αν έχει ήδη παίξει το βίντεο σε αυτή την επίσκεψη
+  const hasPlayedOnce = useRef(false);
+
+  useEffect(() => {
+    const videoEl = videoRef.current;
+    if (!videoEl) return;
+
+    const observer = new IntersectionObserver(
+      async ([entry]) => {
+        // Παίζει μόνο αν εμφανιστεί στην οθόνη ΚΑΙ δεν έχει παίξει ήδη μέχρι το τέλος
+        if (entry.isIntersecting && !hasPlayedOnce.current) {
+          try {
+            videoEl.muted = true;
+            await videoEl.play();
+          } catch (err) {
+            console.log('Autoplay blocked:', err);
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    // Event listener για να μαθαίνουμε πότε τελείωσε το βίντεο
+    const handleVideoEnd = () => {
+      hasPlayedOnce.current = true; // Μαρκάρουμε ότι τελείωσε
+    };
+
+    videoEl.addEventListener('ended', handleVideoEnd);
+    observer.observe(videoEl);
+
+    return () => {
+      videoEl.removeEventListener('ended', handleVideoEnd);
+      observer.disconnect();
+    };
+  }, []);
 
   return (
-    // ΠΡΟΣΟΧΗ: overflow-hidden για να μην χαλάει το width της σελίδας
     <section className="py-16 md:py-24 overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           
-          {/* Video Placeholder - Left Side (Έρχεται από τα αριστερά: -300px) */}
+          {/* VIDEO BOX - LEFT SIDE */}
           <motion.div 
             initial={{ x: -300, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="w-full"
+            className="w-full p-6 lg:p-10" 
           >
-            <div className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border shadow-sm">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-primary/10 flex items-center justify-center cursor-pointer hover:bg-primary/20 transition-colors duration-300">
-                  <Play className="w-8 h-8 md:w-10 md:h-10 text-primary ml-1" />
-                </div>
-              </div>
-              <div className="absolute bottom-4 left-4 text-sm text-muted-foreground">
-                Video Coming Soon
-              </div>
+            <div className="relative aspect-video bg-muted rounded-lg overflow-hidden border border-border shadow-elevated">
+              <video
+                ref={videoRef}
+                src="/videos/experience.mp4"
+                className="w-full h-full object-cover"
+                muted
+                playsInline
+                preload="metadata"
+                // ΑΦΑΙΡΕΘΗΚΕ ΤΟ loop ΕΔΩ
+              />
+              <div className="absolute inset-0 bg-black/5 pointer-events-none" />
             </div>
           </motion.div>
 
-          {/* Text Content - Right Side (Έρχεται από τα δεξιά: 300px) */}
+          {/* TEXT CONTENT - RIGHT SIDE */}
           <motion.div 
             initial={{ x: 300, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}

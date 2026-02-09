@@ -1,6 +1,6 @@
 // About Page - Laderos Bags
 import { motion } from 'framer-motion';
-import { Factory, Package, Award, Users, Play, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Factory, Package, Award, Users, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -27,37 +27,60 @@ const AboutPage = () => {
     'whyWork.consistency',
   ];
 
-  // Autoplay video ONLY when scrolled into view (last placeholder section)
+  // Ref για το ΠΡΩΤΟ βίντεο (Who We Are)
+  const whoWeAreVideoRef = useRef<HTMLVideoElement | null>(null);
+  
+  // Ref για το ΔΕΥΤΕΡΟ βίντεο (Production)
   const productionVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    const el = productionVideoRef.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      async ([entry]) => {
-        if (!productionVideoRef.current) return;
-
-        if (entry.isIntersecting) {
-          try {
-            // Some browsers require play() to be called after setting muted/playsInline
-            productionVideoRef.current.muted = true;
-            await productionVideoRef.current.play();
-          } catch {
-            // Autoplay can still be blocked in rare cases; user can hit play manually
+    // --- Observer για το WHO WE ARE video ---
+    const whoWeAreEl = whoWeAreVideoRef.current;
+    if (whoWeAreEl) {
+      const observer1 = new IntersectionObserver(
+        async ([entry]) => {
+          if (!whoWeAreVideoRef.current) return;
+          if (entry.isIntersecting) {
+            try {
+              whoWeAreVideoRef.current.muted = true;
+              await whoWeAreVideoRef.current.play();
+            } catch {}
+          } else {
+            whoWeAreVideoRef.current.pause();
           }
-        } else {
-          productionVideoRef.current.pause();
-        }
-      },
-      {
-        threshold: 0.35, // starts playing when ~35% visible
-      }
-    );
+        },
+        { threshold: 0.35 }
+      );
+      observer1.observe(whoWeAreEl);
+      
+      // Καθαρισμός για το πρώτο observer
+      return () => observer1.disconnect();
+    }
+  }, []); // Run once on mount
 
-    observer.observe(el);
+  useEffect(() => {
+    // --- Observer για το PRODUCTION video ---
+    const productionEl = productionVideoRef.current;
+    if (productionEl) {
+      const observer2 = new IntersectionObserver(
+        async ([entry]) => {
+          if (!productionVideoRef.current) return;
+          if (entry.isIntersecting) {
+            try {
+              productionVideoRef.current.muted = true;
+              await productionVideoRef.current.play();
+            } catch {}
+          } else {
+            productionVideoRef.current.pause();
+          }
+        },
+        { threshold: 0.35 }
+      );
+      observer2.observe(productionEl);
 
-    return () => observer.disconnect();
+      // Καθαρισμός για το δεύτερο observer
+      return () => observer2.disconnect();
+    }
   }, []);
 
   return (
@@ -88,6 +111,7 @@ const AboutPage = () => {
       <section className="section-padding main-section overflow-hidden">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            
             {/* VIDEO BOX - ΕΡΧΕΤΑΙ ΑΠΟ ΑΡΙΣΤΕΡΑ (-300px) */}
             <motion.div
               initial={{ x: -300, opacity: 0 }}
@@ -95,13 +119,17 @@ const AboutPage = () => {
               viewport={{ once: true, margin: '-100px' }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
+              {/* ΑΛΛΑΓΗ ΕΔΩ: Προστέθηκε το βίντεο who_we_are.mp4 */}
               <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-white/20 flex items-center justify-center cursor-pointer hover:bg-white/30 transition-colors duration-300">
-                    <Play className="w-10 h-10 ml-1" />
-                  </div>
-                </div>
-                <div className="absolute bottom-4 left-4 text-sm opacity-60">{t('about.videoPlaceholder')}</div>
+                <video
+                  ref={whoWeAreVideoRef}
+                  className="w-full h-full object-cover"
+                  src="/videos/who_we_are.mp4"
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
               </div>
             </motion.div>
 
@@ -158,7 +186,7 @@ const AboutPage = () => {
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            {/* ✅ Replaced ONLY this last placeholder with autoplay-on-scroll video */}
+            {/* PRODUCTION VIDEO */}
             <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elevated max-w-4xl mx-auto bg-white/10">
               <video
                 ref={productionVideoRef}
