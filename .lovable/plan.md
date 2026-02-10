@@ -1,63 +1,40 @@
 
+# Cookie Consent Banner Implementation
 
-# Home Page: Animation on First Visit Only
+## Why This Is Needed
+The website embeds Google Maps iframes in two places (Home page and Contact page). Google Maps sets third-party cookies (NID, CONSENT, etc.) for tracking and preferences. Under GDPR, these require explicit user consent before loading.
 
-## What Changes
+## What Will Be Built
 
-The bag scroll animation will play only on the very first visit to the homepage during a browsing session. Any time you navigate back to the homepage (from About, Contact, etc.), you'll land directly on the "Paper and Plastic Bags" section -- no animation, no scroll, no delay.
+### 1. Cookie Consent Context
+A React context (`CookieConsentContext`) that manages consent state:
+- Checks `localStorage` for previously saved consent
+- Provides `hasConsented`, `acceptCookies()`, and `declineCookies()` to all components
+- Persists the user's choice in `localStorage`
 
-## How It Works
+### 2. Cookie Consent Banner
+A bottom-of-screen banner that appears on first visit:
+- Bilingual text (Greek/English) explaining that the site uses third-party cookies (Google Maps)
+- "Accept" and "Decline" buttons
+- Disappears once the user makes a choice
+- Does not reappear on subsequent visits
 
-1. **Track "animation seen"** using a session-level flag (sessionStorage). On the very first homepage load, the flag is unset, so the full bag animation plays. Once the animation section is passed, the flag is set.
+### 3. Conditional Google Maps Loading
+Update both Google Maps embed locations:
+- `src/components/home/WhereToFindUsSection.tsx`
+- `src/pages/ContactPage.tsx`
 
-2. **When returning to Home** (flag is set):
-   - The bag animation section is completely hidden (not rendered)
-   - The Products section content is immediately visible (no opacity-0, no negative margin)
-   - The page starts at the top, which IS the Products section
-   - No GSAP setup runs, saving memory and load time
+If cookies are declined or no choice made yet, show a placeholder with a message like "Accept cookies to view the map" and a button to accept. If cookies are accepted, load the iframe normally.
 
-3. **Home nav link** stays as `/#products-section` so the routing logic knows to skip animation on return visits.
+### 4. Update Privacy Policy
+Update the Cookies section (Section 8) in `src/pages/PrivacyPolicyPage.tsx` to:
+- Mention Google Maps as a third-party service that sets cookies
+- Add a link to Formspree's privacy policy in the Third Parties section
 
-## Files to Modify
-
-| File | Change |
-|------|--------|
-| `src/pages/HomePage.tsx` | Read sessionStorage flag; conditionally skip animation section and show content immediately; set flag after animation completes |
-| `src/components/ScrollToTop.tsx` | For `/#products-section`, use instant scroll (`behavior: 'instant'`) with no delay |
-
-## Detailed Changes
-
-### HomePage.tsx
-
-- Import `useLocation` from react-router-dom
-- On mount, check `sessionStorage.getItem('laderos_animation_seen')`
-- If the hash is `#products-section` OR the flag is already set:
-  - Set `skipAnimation = true`
-  - Do NOT render the pinned animation `<div>` at all
-  - Render `mainContentRef` div without `opacity-0` and without negative margins
-  - Skip the entire GSAP useEffect (guard with `if (skipAnimation) return`)
-- If showing the animation:
-  - After the GSAP timeline completes (or on scroll past), set `sessionStorage.setItem('laderos_animation_seen', 'true')`
-- The flag resets naturally when the browser tab/session ends
-
-### ScrollToTop.tsx
-
-- When `pathname === '/'` and `hash === '#products-section'`:
-  - Use `window.scrollTo({ top: 0, behavior: 'instant' })` instead of smooth scrollIntoView
-  - Remove the setTimeout delay entirely (no need to wait for GSAP since animation section won't exist)
-
-## User Experience
-
-| Scenario | Behavior |
-|----------|----------|
-| First time opening the site | Full bag animation plays as you scroll |
-| Click "Home" from About page | Instantly see Products section, no animation |
-| Click "Home" from Contact page | Instantly see Products section, no animation |
-| Close tab and reopen site | Full bag animation plays again (new session) |
-| Refresh the homepage | Full bag animation plays again (depends on hash) |
-
-## Technical Notes
-
-- `sessionStorage` is used instead of `localStorage` so the animation resets per browser session -- returning visitors in a new tab get the "wow" intro again
-- No content is removed from the DOM permanently; crawlers visiting `/` without the hash will still see everything
-- The GSAP useEffect cleanup already handles killing ScrollTrigger, so conditional skipping is safe
+## Files to Create/Modify
+- **New**: `src/contexts/CookieConsentContext.tsx` -- consent state management
+- **New**: `src/components/CookieConsentBanner.tsx` -- the banner UI
+- **Modify**: `src/components/layout/Layout.tsx` -- wrap with CookieConsentProvider, include banner
+- **Modify**: `src/components/home/WhereToFindUsSection.tsx` -- conditional map loading
+- **Modify**: `src/pages/ContactPage.tsx` -- conditional map loading
+- **Modify**: `src/pages/PrivacyPolicyPage.tsx` -- update cookies and third-party sections
