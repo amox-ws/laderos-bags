@@ -22,11 +22,13 @@ const ContactPage = () => {
       icon: Phone,
       label: t('contact.info.phone'),
       value: '697 266 1870',
+      href: 'tel:+306972661870',
     },
     {
       icon: Mail,
       label: t('contact.info.email'),
       value: 'laderosbags@gmail.gr',
+      href: 'mailto:laderosbags@gmail.gr',
     },
     {
       icon: Clock,
@@ -80,7 +82,13 @@ const ContactPage = () => {
                         <p className="text-sm opacity-70 mb-1">
                           {info.label}
                         </p>
-                        <p className="font-medium">{info.value}</p>
+                        {'href' in info && info.href ? (
+                          <a href={info.href} className="font-medium hover:underline">
+                            {info.value}
+                          </a>
+                        ) : (
+                          <p className="font-medium">{info.value}</p>
+                        )}
                       </div>
                     </div>
                   ))}
