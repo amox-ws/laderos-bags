@@ -2,12 +2,15 @@
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useCookieConsent } from '@/contexts/CookieConsentContext';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import ContactQuoteForm from '@/components/forms/ContactQuoteForm';
+import MapPlaceholder from '@/components/MapPlaceholder';
 
 const ContactPage = () => {
   const { t, language } = useLanguage();
+  const { hasConsented } = useCookieConsent();
 
   const contactInfo = [
     {
@@ -92,6 +95,7 @@ const ContactPage = () => {
                   {language === 'el' ? 'Χάρτης' : 'Map'}
                 </h2>
                 <div className="flex-1 rounded-xl overflow-hidden min-h-[350px] shadow-card">
+                {hasConsented ? (
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3141.8876844456196!2d23.7244!3d38.0846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1999c7c9c7c9d%3A0x7c9c7c9c7c9c7c9c!2sElassonos%2013%2C%20Acharnes%20136%2072%2C%20Greece!5e0!3m2!1sen!2s!4v1706000000000!5m2!1sen!2s"
                     width="100%"
@@ -102,6 +106,9 @@ const ContactPage = () => {
                     referrerPolicy="no-referrer-when-downgrade"
                     title="Laderos Bags Location - Acharnes"
                   />
+                ) : (
+                  <MapPlaceholder className="min-h-[350px] h-full" />
+                )}
                 </div>
               </div>
             </AnimatedSection>
