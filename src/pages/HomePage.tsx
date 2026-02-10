@@ -218,29 +218,37 @@ const HomePage = () => {
       {!skipAnimation && (
         <div
           ref={pinnedSectionRef}
-          className="relative w-full h-screen overflow-hidden flex items-center justify-center bg-background -mt-16 md:-mt-20"
+          className="relative w-full h-screen overflow-hidden bg-background -mt-16 md:-mt-20"
         >
+          {/* Products content sits behind the canvas, revealed on fade */}
+          <div 
+            ref={mainContentRef}
+            className="absolute inset-0 z-10 overflow-y-auto opacity-0"
+          >
+            <div className="main-section pt-12">
+              <ProductsSection />
+            </div>
+          </div>
+
           <canvas
             ref={canvasRef}
             className="absolute inset-0 w-full h-full z-20 pointer-events-none"
           />
           <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
-          {!imagesLoaded && (
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 text-sm text-muted-foreground">
-            </div>
-          )}
         </div>
       )}
 
-      {/* SECTION 2: MAIN CONTENT */}
-      <div 
-        ref={mainContentRef} 
-        className={skipAnimation ? "relative z-30" : "relative z-30 -mt-[50vh] md:-mt-[60vh] opacity-0"}
-      >
-        <div className="main-section pt-12">
-          <ProductsSection />
+      {/* When animation is skipped, render content normally */}
+      {skipAnimation && (
+        <div className="relative z-30">
+          <div className="main-section pt-12">
+            <ProductsSection />
+          </div>
         </div>
+      )}
 
+      {/* REMAINING SECTIONS - always rendered normally below */}
+      <div>
         <div className="main-section">
           <TrustedBySection />
         </div>
