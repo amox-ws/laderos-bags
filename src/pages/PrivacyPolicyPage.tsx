@@ -95,11 +95,29 @@ const PrivacyPolicyPage = () => {
               <h2 className="text-xl font-semibold mb-3">
                 {isGreek ? '6. Τρίτα Μέρη' : '6. Third Parties'}
               </h2>
-              <p>
+              <p className="mb-3">
                 {isGreek
-                  ? 'Δεν πωλούμε, ενοικιάζουμε ή μοιραζόμαστε τα προσωπικά σας δεδομένα με τρίτους για διαφημιστικούς σκοπούς. Η υπηρεσία Formspree χρησιμοποιείται ως μεσολαβητής για τη μεταφορά των δεδομένων φόρμας στο email μας.'
-                  : 'We do not sell, rent, or share your personal data with third parties for marketing purposes. The Formspree service is used as an intermediary to transfer form data to our email.'}
+                  ? 'Δεν πωλούμε, ενοικιάζουμε ή μοιραζόμαστε τα προσωπικά σας δεδομένα με τρίτους για διαφημιστικούς σκοπούς. Χρησιμοποιούμε τις ακόλουθες υπηρεσίες τρίτων:'
+                  : 'We do not sell, rent, or share your personal data with third parties for marketing purposes. We use the following third-party services:'}
               </p>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>
+                  <strong>Formspree</strong> – {isGreek
+                    ? 'Χρησιμοποιείται ως μεσολαβητής για τη μεταφορά των δεδομένων φόρμας στο email μας.'
+                    : 'Used as an intermediary to transfer form data to our email.'}{' '}
+                  <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:opacity-80">
+                    {isGreek ? 'Πολιτική Απορρήτου Formspree' : 'Formspree Privacy Policy'}
+                  </a>
+                </li>
+                <li>
+                  <strong>Google Maps</strong> – {isGreek
+                    ? 'Χρησιμοποιείται για την εμφάνιση χαρτών στον ιστότοπό μας. Η φόρτωση του χάρτη απαιτεί τη συγκατάθεσή σας καθώς τοποθετεί cookies τρίτων.'
+                    : 'Used to display maps on our website. Loading the map requires your consent as it sets third-party cookies.'}{' '}
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:opacity-80">
+                    {isGreek ? 'Πολιτική Απορρήτου Google' : 'Google Privacy Policy'}
+                  </a>
+                </li>
+              </ul>
             </div>
 
             {/* Your Rights */}
@@ -133,10 +151,15 @@ const PrivacyPolicyPage = () => {
               <h2 className="text-xl font-semibold mb-3">
                 {isGreek ? '8. Cookies' : '8. Cookies'}
               </h2>
+              <p className="mb-3">
+                {isGreek
+                  ? 'Ο ιστότοπός μας δεν χρησιμοποιεί δικά του cookies παρακολούθησης. Ωστόσο, χρησιμοποιούμε ενσωματωμένους χάρτες Google Maps, οι οποίοι τοποθετούν cookies τρίτων (π.χ. NID, CONSENT) για λόγους λειτουργίας και προτιμήσεων.'
+                  : 'Our website does not use its own tracking cookies. However, we use embedded Google Maps, which set third-party cookies (e.g., NID, CONSENT) for functionality and preference purposes.'}
+              </p>
               <p>
                 {isGreek
-                  ? 'Ο ιστότοπός μας δεν χρησιμοποιεί cookies τρίτων ή cookies παρακολούθησης. Χρησιμοποιούνται μόνο τα απολύτως απαραίτητα τεχνικά cookies για τη λειτουργία του ιστοτόπου.'
-                  : 'Our website does not use third-party or tracking cookies. Only strictly necessary technical cookies are used for the functioning of the website.'}
+                  ? 'Οι χάρτες Google Maps φορτώνονται μόνο μετά τη ρητή συγκατάθεσή σας μέσω του banner cookies. Μπορείτε να αποδεχτείτε ή να απορρίψετε τα cookies ανά πάσα στιγμή. Η επιλογή σας αποθηκεύεται τοπικά στον browser σας.'
+                  : 'Google Maps are loaded only after your explicit consent via the cookie banner. You can accept or decline cookies at any time. Your choice is stored locally in your browser.'}
               </p>
             </div>
 
