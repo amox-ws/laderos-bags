@@ -512,10 +512,9 @@ const ContactQuoteForm: React.FC = () => {
                 >
                   <Button
                     type="button"
-                    variant="default"
                     size="lg"
                     onClick={handleSubmitClick}
-                    className="w-full md:w-auto min-w-[200px]"
+                    className="w-full md:w-auto min-w-[200px] bg-white text-primary font-bold hover:bg-gray-100 shadow-lg"
                   >
                     {t('quoteForm.submit')}
                   </Button>
