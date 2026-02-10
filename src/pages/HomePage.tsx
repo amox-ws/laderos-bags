@@ -162,7 +162,7 @@ const HomePage = () => {
         start: 'top top',
         end: '+=400%',
         pin: true,
-        scrub: 0.3,
+        scrub: 0.15,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
@@ -184,10 +184,10 @@ const HomePage = () => {
       onUpdate: () => render(st?.progress ?? 0),
     });
 
-    // B) Canvas Fades Out at the end
-    tl.to(canvas, { 
+    // B) Entire pinned section fades out, revealing products behind
+    tl.to(pinnedEl, { 
         opacity: 0, 
-        duration: 0.6, 
+        duration: 0.8, 
         ease: 'power1.inOut' 
     });
 
@@ -210,12 +210,6 @@ const HomePage = () => {
           ref={pinnedSectionRef}
           className="relative w-full h-screen bg-background -mt-16 md:-mt-20"
         >
-          {/* Products behind canvas - revealed when canvas fades */}
-          <div className="absolute inset-0 z-10 overflow-y-auto pt-16 md:pt-20">
-            <div className="main-section pt-12">
-              <ProductsSection />
-            </div>
-          </div>
           <canvas
             ref={canvasRef}
             className="absolute inset-0 w-full h-full z-20 pointer-events-none"
@@ -224,12 +218,10 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* Products section for returning visitors (skip animation) */}
-      {skipAnimation && (
-        <div className="main-section pt-12">
-          <ProductsSection />
-        </div>
-      )}
+      {/* Products section - pulled up behind canvas when animation is active */}
+      <div className={`main-section pt-12 ${!skipAnimation ? 'relative z-10 -mt-[100vh]' : ''}`}>
+        <ProductsSection />
+      </div>
 
       {/* REMAINING SECTIONS - always rendered normally below */}
       <div>
