@@ -32,7 +32,6 @@ const HomePage = () => {
   // Refs
   const pinnedSectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mainContentRef = useRef<HTMLDivElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
@@ -41,9 +40,8 @@ const HomePage = () => {
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext('2d', { alpha: true });
     const pinnedEl = pinnedSectionRef.current;
-    const contentEl = mainContentRef.current;
 
-    if (!canvas || !ctx || !pinnedEl || !contentEl) return;
+    if (!canvas || !ctx || !pinnedEl) return;
 
     // --- FIX: PRELOAD ΓΙΑ ΤΙΣ 8 ΕΙΚΟΝΕΣ ΤΟΥ CAROUSEL ---
     const productImages = [
@@ -162,9 +160,9 @@ const HomePage = () => {
       scrollTrigger: {
         trigger: pinnedEl,
         start: 'top top',
-        end: '+=450%',
+        end: '+=400%',
         pin: true,
-        scrub: 0.65, 
+        scrub: 0.3,
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
@@ -186,20 +184,12 @@ const HomePage = () => {
       onUpdate: () => render(st?.progress ?? 0),
     });
 
-    // B) Canvas Fades Out
+    // B) Canvas Fades Out at the end
     tl.to(canvas, { 
         opacity: 0, 
-        duration: 0.8, 
+        duration: 0.6, 
         ease: 'power1.inOut' 
     });
-
-    // C) NEXT SECTION (Products) Fades In seamlessly
-    tl.fromTo(
-      contentEl,
-      { opacity: 0, y: 0 },
-      { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' },
-      "-=0.5" 
-    );
 
     // Start
     preload();
@@ -220,16 +210,6 @@ const HomePage = () => {
           ref={pinnedSectionRef}
           className="relative w-full h-screen overflow-hidden bg-background -mt-16 md:-mt-20"
         >
-          {/* Products content sits behind the canvas, revealed on fade */}
-          <div 
-            ref={mainContentRef}
-            className="absolute inset-0 z-10 overflow-y-auto opacity-0"
-          >
-            <div className="main-section pt-12">
-              <ProductsSection />
-            </div>
-          </div>
-
           <canvas
             ref={canvasRef}
             className="absolute inset-0 w-full h-full z-20 pointer-events-none"
@@ -238,14 +218,10 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* When animation is skipped, render content normally */}
-      {skipAnimation && (
-        <div className="relative z-30">
-          <div className="main-section pt-12">
-            <ProductsSection />
-          </div>
-        </div>
-      )}
+      {/* Products section - always rendered normally, flows after pinned section */}
+      <div className="main-section pt-12">
+        <ProductsSection />
+      </div>
 
       {/* REMAINING SECTIONS - always rendered normally below */}
       <div>
