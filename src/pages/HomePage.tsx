@@ -208,8 +208,14 @@ const HomePage = () => {
       {!skipAnimation && (
         <div
           ref={pinnedSectionRef}
-          className="relative w-full h-screen overflow-hidden bg-background -mt-16 md:-mt-20"
+          className="relative w-full h-screen bg-background -mt-16 md:-mt-20"
         >
+          {/* Products behind canvas - revealed when canvas fades */}
+          <div className="absolute inset-0 z-10 overflow-y-auto pt-16 md:pt-20">
+            <div className="main-section pt-12">
+              <ProductsSection />
+            </div>
+          </div>
           <canvas
             ref={canvasRef}
             className="absolute inset-0 w-full h-full z-20 pointer-events-none"
@@ -218,10 +224,12 @@ const HomePage = () => {
         </div>
       )}
 
-      {/* Products section - always rendered normally, flows after pinned section */}
-      <div className="main-section pt-12">
-        <ProductsSection />
-      </div>
+      {/* Products section for returning visitors (skip animation) */}
+      {skipAnimation && (
+        <div className="main-section pt-12">
+          <ProductsSection />
+        </div>
+      )}
 
       {/* REMAINING SECTIONS - always rendered normally below */}
       <div>
