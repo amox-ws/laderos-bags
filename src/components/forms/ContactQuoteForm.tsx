@@ -284,7 +284,7 @@ const ContactQuoteForm: React.FC = () => {
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.4 }}
-                className="space-y-10"
+                className="space-y-10 overflow-hidden"
               >
                 {/* Size Selection */}
                 <motion.div
