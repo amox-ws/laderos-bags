@@ -1,24 +1,29 @@
 
-# Fix: Remove Empty Gap Between Bag Animation and Products Section
+
+# Fix: Products Section Appears From the Top After Bag Animation
 
 ## The Problem
-After the bag scroll animation finishes, there's a large empty/blank area before the Products section appears. This happens because:
-- The canvas fades out and the content slides up as separate sequential steps in the GSAP timeline
-- The negative margin (`-mt-40 md:-mt-60`) doesn't pull the content close enough to fill the gap
-- The content fade-in starts too late relative to when the canvas becomes invisible
+After the bag animation fades out, the "Χάρτινες & Πλαστικές Σακούλες Φτιαγμένες στα Μέτρα σας" section appears starting from the middle of the content instead of the top. This happens because the content container (`mainContentRef`) has `overflow-y-auto` and its scroll position may not be at 0 when it becomes visible.
 
 ## The Fix
-Adjust the GSAP timeline in `src/pages/HomePage.tsx` so the transition from the bag animation to the products section is seamless:
-
-1. **Start the content reveal earlier** -- overlap step C (content fade-in) more aggressively with step B (canvas fade-out) so there's no blank moment
-2. **Increase the negative margin** on the main content div so it visually sits right behind the pinned canvas section
-3. **Shorten the gap** by reducing the canvas fade duration slightly and starting the content slide-up sooner
+In `src/pages/HomePage.tsx`, reset the content container's `scrollTop` to `0` right before the fade-in begins. This is done by adding an `onStart` callback to the content fade-in tween (step C in the GSAP timeline).
 
 ## File to Modify
-- `src/pages/HomePage.tsx` -- adjust GSAP timeline timing and the negative margin class on the main content wrapper
+- `src/pages/HomePage.tsx`
 
 ## Technical Details
-- Change the canvas fade duration from `1` to `0.8`
-- Start content reveal (`fromTo`) slightly before the canvas fade using a negative offset like `"-=0.5"` instead of `"<"`
-- Increase the negative top margin from `-mt-40 md:-mt-60` to `-mt-[50vh] md:-mt-[60vh]` so the content is pulled up directly behind the pinned section
-- Adjust the content's initial `y` offset from `100` to `0` since the negative margin handles positioning
+In the GSAP timeline step C (around line 197), add an `onStart` callback that sets `contentEl.scrollTop = 0`:
+
+```js
+tl.fromTo(
+  contentEl,
+  { opacity: 0, y: 0 },
+  { 
+    opacity: 1, y: 0, duration: 1.2, ease: 'power2.out',
+    onStart: () => { contentEl.scrollTop = 0; }
+  },
+  "-=0.5"
+);
+```
+
+This ensures the products section always starts from the top heading when it fades in.
