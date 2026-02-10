@@ -308,7 +308,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-primary text-primary-foreground hover:bg-navy-light transition-colors py-6 text-base font-semibold"
+                      className="w-full py-6 text-base font-semibold border border-white/30 bg-transparent text-white hover:bg-white/10 transition-colors"
                     >
                       {isSubmitting 
                         ? (language === 'el' ? 'Υποβολή...' : 'Submitting...') 
