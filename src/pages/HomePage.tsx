@@ -197,7 +197,10 @@ const HomePage = () => {
     tl.fromTo(
       contentEl,
       { opacity: 0, y: 0 },
-      { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' },
+      { 
+        opacity: 1, y: 0, duration: 1.2, ease: 'power2.out',
+        onStart: () => { contentEl.scrollTop = 0; }
+      },
       "-=0.5" 
     );
 
