@@ -1,24 +1,35 @@
 
-# Fix: Remove Empty Gap Between Bag Animation and Products Section
 
-## The Problem
-After the bag scroll animation finishes, there's a large empty/blank area before the Products section appears. This happens because:
-- The canvas fades out and the content slides up as separate sequential steps in the GSAP timeline
-- The negative margin (`-mt-40 md:-mt-60`) doesn't pull the content close enough to fill the gap
-- The content fade-in starts too late relative to when the canvas becomes invisible
+# Fix: Eliminate Blank Space Between Bag Animation and Products Section
 
-## The Fix
-Adjust the GSAP timeline in `src/pages/HomePage.tsx` so the transition from the bag animation to the products section is seamless:
+## Root Cause
+GSAP's `pin: true` with `end: '+=400%'` creates a **pin spacer** div that is 4x the viewport height. This spacer reserves scroll distance for the animation. When the canvas fades out at the end, the spacer still occupies space below, resulting in a large blank area before the Products section appears.
 
-1. **Start the content reveal earlier** -- overlap step C (content fade-in) more aggressively with step B (canvas fade-out) so there's no blank moment
-2. **Increase the negative margin** on the main content div so it visually sits right behind the pinned canvas section
-3. **Shorten the gap** by reducing the canvas fade duration slightly and starting the content slide-up sooner
+## The Solution
+Place the Products section **inside** the pinned container, positioned behind the canvas (lower z-index). As the canvas fades to transparent, the Products section is naturally revealed underneath -- no gap, no spacer issue.
 
-## File to Modify
-- `src/pages/HomePage.tsx` -- adjust GSAP timeline timing and the negative margin class on the main content wrapper
+## Changes
 
-## Technical Details
-- Change the canvas fade duration from `1` to `0.8`
-- Start content reveal (`fromTo`) slightly before the canvas fade using a negative offset like `"-=0.5"` instead of `"<"`
-- Increase the negative top margin from `-mt-40 md:-mt-60` to `-mt-[50vh] md:-mt-[60vh]` so the content is pulled up directly behind the pinned section
-- Adjust the content's initial `y` offset from `100` to `0` since the negative margin handles positioning
+### File: `src/pages/HomePage.tsx`
+
+1. **Move ProductsSection inside the pinned div** -- position it absolutely at `z-10` (behind the canvas at `z-20`), so it's visible the moment the canvas becomes transparent
+2. **Keep a duplicate ProductsSection outside** for the `skipAnimation` case (returning visitors), wrapped in a conditional so only one renders at a time
+3. **Remove `overflow-hidden`** from the pinned div (or keep it but ensure the inner content is styled to fill the viewport correctly)
+
+The structure becomes:
+
+```text
+pinnedSectionRef (pinned, h-screen)
+  +-- ProductsSection (absolute, z-10, visible behind canvas)
+  +-- Canvas (absolute, z-20, fades out at end)
+  +-- Gradient overlay (z-20)
+
+{skipAnimation && <ProductsSection />}  (normal flow, no animation)
+```
+
+### Technical Details
+- The inner ProductsSection gets `absolute inset-0 z-10` positioning with `overflow-y-auto` so it scrolls if content is taller than viewport
+- Add top padding to account for the header height
+- The canvas stays at `z-20` and fades out via the existing GSAP timeline step B
+- No GSAP timeline changes needed -- the existing fade-out naturally reveals the content behind it
+
