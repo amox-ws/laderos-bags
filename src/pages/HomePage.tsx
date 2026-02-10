@@ -189,16 +189,16 @@ const HomePage = () => {
     // B) Canvas Fades Out
     tl.to(canvas, { 
         opacity: 0, 
-        duration: 1, 
+        duration: 0.8, 
         ease: 'power1.inOut' 
     });
 
-    // C) NEXT SECTION (Products) Fades In & Slides Up
+    // C) NEXT SECTION (Products) Fades In seamlessly
     tl.fromTo(
       contentEl,
-      { opacity: 0, y: 100 },
-      { opacity: 1, y: 0, duration: 1.5, ease: 'power2.out' },
-      "<" 
+      { opacity: 0, y: 0 },
+      { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' },
+      "-=0.5" 
     );
 
     // Start
@@ -235,7 +235,7 @@ const HomePage = () => {
       {/* SECTION 2: MAIN CONTENT */}
       <div 
         ref={mainContentRef} 
-        className={skipAnimation ? "relative z-30" : "relative z-30 -mt-40 md:-mt-60 opacity-0"}
+        className={skipAnimation ? "relative z-30" : "relative z-30 -mt-[50vh] md:-mt-[60vh] opacity-0"}
       >
         <div className="main-section pt-12">
           <ProductsSection />
