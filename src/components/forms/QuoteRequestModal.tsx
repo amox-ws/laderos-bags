@@ -181,14 +181,10 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
               {/* Close Button - Fixed on mobile for visibility */}
               <button
                 onClick={onClose}
-                className="fixed md:absolute top-4 right-4 md:top-4 md:right-4 z-[60] p-3 md:p-2 rounded-full bg-white shadow-lg md:shadow-md hover:bg-gray-100 transition-colors"
-                style={{ 
-                  paddingTop: 'max(0.75rem, env(safe-area-inset-top))',
-                  paddingRight: 'max(0.75rem, env(safe-area-inset-right))'
-                }}
+                className="absolute top-3 right-3 z-[60] p-2.5 rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/90 transition-colors"
                 aria-label="Close"
               >
-                <X className="h-6 w-6 md:h-5 md:w-5 text-foreground" />
+                <X className="h-5 w-5" />
               </button>
 
               <div className="grid grid-cols-1 lg:grid-cols-2">
