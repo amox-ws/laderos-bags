@@ -9,6 +9,10 @@ import TrustedBySection from '@/components/home/TrustedBySection';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const AboutPage = () => {
   const { t } = useLanguage();
@@ -27,9 +31,11 @@ const AboutPage = () => {
     'whyWork.consistency',
   ];
 
+  // Ref for hero pinning
+  const heroRef = useRef<HTMLDivElement>(null);
+
   // Ref για το ΠΡΩΤΟ βίντεο (Who We Are)
   const whoWeAreVideoRef = useRef<HTMLVideoElement | null>(null);
-  
   // Ref για το ΔΕΥΤΕΡΟ βίντεο (Production)
   const productionVideoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -81,11 +87,34 @@ const AboutPage = () => {
     }
   }, []);
 
+  // GSAP: Pin hero and fade out to reveal Who We Are
+  useEffect(() => {
+    const heroEl = heroRef.current;
+    if (!heroEl) return;
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: heroEl,
+        start: 'top top',
+        end: '+=100%',
+        pin: true,
+        scrub: 0.15,
+        anticipatePin: 1,
+      },
+    });
+
+    tl.to(heroEl, { opacity: 0, duration: 1, ease: 'power1.inOut' });
+
+    return () => {
+      tl.kill();
+      tl.scrollTrigger?.kill();
+    };
+  }, []);
+
   return (
     <Layout>
-      {/* Hero Section - VIDEO BACKGROUND - FULL SCREEN */}
-      {/* ΑΛΛΑΓΗ 1: h-screen για να πιάνει όλη την οθόνη */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Hero Section - VIDEO BACKGROUND - FULL SCREEN - PINNED */}
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         
         {/* Background Video Layer */}
         <div className="absolute inset-0 w-full h-full z-0">
@@ -116,8 +145,8 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Who We Are Section - Main Background */}
-      <section className="section-padding main-section overflow-hidden">
+      {/* Who We Are Section - pulled up behind hero */}
+      <section className="section-padding main-section overflow-hidden relative z-10 -mt-[100vh]">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             
