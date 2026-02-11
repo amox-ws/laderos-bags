@@ -1,35 +1,46 @@
+# Seamless Hero-to-"Who We Are" Transition on About Page
 
+## What It Does
 
-# Fix: Eliminate Blank Space Between Bag Animation and Products Section
+The About page hero section (video background with title) will seamlessly fade out as you scroll, revealing the "Who We Are" section from its very top -- the same technique used on the Home page for the bag animation to products transition.
 
-## Root Cause
-GSAP's `pin: true` with `end: '+=400%'` creates a **pin spacer** div that is 4x the viewport height. This spacer reserves scroll distance for the animation. When the canvas fades out at the end, the spacer still occupies space below, resulting in a large blank area before the Products section appears.
+## How It Works
 
-## The Solution
-Place the Products section **inside** the pinned container, positioned behind the canvas (lower z-index). As the canvas fades to transparent, the Products section is naturally revealed underneath -- no gap, no spacer issue.
+As you scroll down on the About page, the full-screen hero with the video background will stay pinned in place and gradually fade out. Behind it, the "Who We Are" section will already be waiting, so when the hero disappears you see the section starting from the top -- no blank gaps, no jumping.
 
-## Changes
+## Technical Details
 
-### File: `src/pages/HomePage.tsx`
+### File: `src/pages/AboutPage.tsx`
 
-1. **Move ProductsSection inside the pinned div** -- position it absolutely at `z-10` (behind the canvas at `z-20`), so it's visible the moment the canvas becomes transparent
-2. **Keep a duplicate ProductsSection outside** for the `skipAnimation` case (returning visitors), wrapped in a conditional so only one renders at a time
-3. **Remove `overflow-hidden`** from the pinned div (or keep it but ensure the inner content is styled to fill the viewport correctly)
+1. **Add GSAP imports and ScrollTrigger** -- import `gsap` and `ScrollTrigger`, register the plugin (same pattern as HomePage)
+2. **Add a ref for the hero section** (`heroRef`) and set up a GSAP ScrollTrigger timeline:
+  - `pin: true` to keep the hero fixed while scrolling
+  - `end: '+=100%'` (one viewport of scroll distance for the fade -- shorter than the bag animation since there are no frames to play)
+  - `scrub: 0.15` for smooth, responsive scrolling
+  - The timeline animates the hero's `opacity` from 1 to 0
+3. **Pull the "Who We Are" section up behind the hero** using a negative top margin (`-mt-[100vh]`) and `relative z-10`, so it sits directly behind the pinned hero. When the hero fades out, the "Who We Are" section is revealed from its start (top).
+4. **Wrap remaining sections** in a normal-flow container so they stack naturally after "Who We Are"
 
-The structure becomes:
+### Structure:
 
 ```text
-pinnedSectionRef (pinned, h-screen)
-  +-- ProductsSection (absolute, z-10, visible behind canvas)
-  +-- Canvas (absolute, z-20, fades out at end)
-  +-- Gradient overlay (z-20)
+<Layout>
+  <section ref={heroRef}>         <!-- pinned, fades out via GSAP -->
+    Video background + title
+  </section>
 
-{skipAnimation && <ProductsSection />}  (normal flow, no animation)
+  <div class="-mt-[100vh] relative z-10">   <!-- pulled behind hero -->
+    Who We Are section
+  </div>
+
+  <!-- remaining sections flow normally -->
+  What We Do, TrustedBy, Production, Stats, Why Work, CTA
+</Layout>
 ```
 
-### Technical Details
-- The inner ProductsSection gets `absolute inset-0 z-10` positioning with `overflow-y-auto` so it scrolls if content is taller than viewport
-- Add top padding to account for the header height
-- The canvas stays at `z-20` and fades out via the existing GSAP timeline step B
-- No GSAP timeline changes needed -- the existing fade-out naturally reveals the content behind it
+### Key points:
 
+- The hero video keeps playing while pinned
+- Scroll distance for the fade is just 1x viewport height (quick, smooth transition)
+- No changes to any other section -- only the hero gets the pin+fade treatment
+- The existing Framer Motion slide-in animations on "Who We Are" content still work as before
