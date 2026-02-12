@@ -1,46 +1,58 @@
-# Seamless Hero-to-"Who We Are" Transition on About Page
 
-## What It Does
 
-The About page hero section (video background with title) will seamlessly fade out as you scroll, revealing the "Who We Are" section from its very top -- the same technique used on the Home page for the bag animation to products transition.
+# Optimize Heavy Gallery Images on Product Pages
 
-## How It Works
+## The Problem
+The plastic bags page loads **15 PNG images totaling ~12-13MB**. Each image is 700KB-930KB. The paper bags page likely has a similar issue with its 16+ images. PNG is not ideal for photographic content -- it's designed for graphics with sharp edges and transparency.
 
-As you scroll down on the About page, the full-screen hero with the video background will stay pinned in place and gradually fade out. Behind it, the "Who We Are" section will already be waiting, so when the hero disappears you see the section starting from the top -- no blank gaps, no jumping.
+## Solutions (from easiest to most impactful)
 
-## Technical Details
+### Option A: Convert PNGs to WebP (Recommended -- Best Balance)
+Manually convert all product images from PNG to WebP format using an online tool like [squoosh.app](https://squoosh.app) or [cloudconvert.com](https://cloudconvert.com). WebP typically achieves **70-80% smaller file sizes** than PNG for photos with no visible quality loss.
 
-### File: `src/pages/AboutPage.tsx`
+- A 900KB PNG becomes roughly 150-200KB WebP
+- Total page weight drops from ~13MB to ~2-3MB
+- You would re-upload the converted images and update the file references in the code
 
-1. **Add GSAP imports and ScrollTrigger** -- import `gsap` and `ScrollTrigger`, register the plugin (same pattern as HomePage)
-2. **Add a ref for the hero section** (`heroRef`) and set up a GSAP ScrollTrigger timeline:
-  - `pin: true` to keep the hero fixed while scrolling
-  - `end: '+=100%'` (one viewport of scroll distance for the fade -- shorter than the bag animation since there are no frames to play)
-  - `scrub: 0.15` for smooth, responsive scrolling
-  - The timeline animates the hero's `opacity` from 1 to 0
-3. **Pull the "Who We Are" section up behind the hero** using a negative top margin (`-mt-[100vh]`) and `relative z-10`, so it sits directly behind the pinned hero. When the hero fades out, the "Who We Are" section is revealed from its start (top).
-4. **Wrap remaining sections** in a normal-flow container so they stack naturally after "Who We Are"
+**What changes in code:**
+- Update all image paths in `PlasticBagsPage.tsx` from `.PNG` to `.webp`
+- Update all image paths in `PaperBagsPage.tsx` from `.PNG` to `.webp`
 
-### Structure:
+### Option B: Add Progressive Loading (Can Combine with Option A)
+Show a low-quality placeholder or skeleton while images load, so the page feels faster even before images finish downloading.
 
-```text
-<Layout>
-  <section ref={heroRef}>         <!-- pinned, fades out via GSAP -->
-    Video background + title
-  </section>
+**What changes in code:**
+- Create a `LazyImage` component that shows a blurred placeholder or skeleton while loading
+- Replace `<img>` in `GalleryImage` with this new component
+- Uses the browser's native `loading="lazy"` (already in place) plus a visual loading state
 
-  <div class="-mt-[100vh] relative z-10">   <!-- pulled behind hero -->
-    Who We Are section
-  </div>
+### Option C: Responsive Images with srcSet (Advanced)
+Serve different image sizes based on the user's screen. A mobile user doesn't need a 1920px-wide image.
 
-  <!-- remaining sections flow normally -->
-  What We Do, TrustedBy, Production, Stats, Why Work, CTA
-</Layout>
-```
+**What changes in code:**
+- Requires creating multiple sizes of each image (small, medium, large)
+- Use `<img srcSet>` to let the browser pick the right size
+- Most impactful for mobile performance
 
-### Key points:
+## Recommended Approach
+**Option A + Option B together:**
+1. You convert the images to WebP outside of Lovable and re-upload them
+2. I update the file paths in the code and add a skeleton/placeholder loading component
 
-- The hero video keeps playing while pinned
-- Scroll distance for the fade is just 1x viewport height (quick, smooth transition)
-- No changes to any other section -- only the hero gets the pin+fade treatment
-- The existing Framer Motion slide-in animations on "Who We Are" content still work as before
+This gives the biggest performance improvement with the least complexity.
+
+## Technical Changes
+
+### 1. New Component: `src/components/ui/LazyImage.tsx`
+A wrapper that displays a skeleton placeholder until the image has loaded, preventing layout shifts and giving visual feedback.
+
+### 2. Update `src/pages/PlasticBagsPage.tsx`
+- Change all 15 image paths from `.PNG` to `.webp` (after you upload the converted files)
+- Use `LazyImage` inside `GalleryImage` instead of raw `<img>`
+
+### 3. Update `src/pages/PaperBagsPage.tsx`
+- Same changes as above for the paper bag images
+
+### 4. Update `src/components/home/ProductCarousel.tsx`
+- Use `LazyImage` for carousel images too (the `/product_bags/` images)
+
