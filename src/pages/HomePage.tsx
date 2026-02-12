@@ -32,7 +32,6 @@ const HomePage = () => {
   // Refs
   const pinnedSectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasOverlayRef = useRef<HTMLDivElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
@@ -185,14 +184,12 @@ const HomePage = () => {
       onUpdate: () => render(st?.progress ?? 0),
     });
 
-    // B) Canvas overlay fades out, revealing products behind
-    if (canvasOverlayRef.current) {
-      tl.to(canvasOverlayRef.current, { 
-          opacity: 0, 
-          duration: 0.8, 
-          ease: 'power1.inOut' 
-      });
-    }
+    // B) Entire pinned section fades out, revealing products behind
+    tl.to(pinnedEl, { 
+        opacity: 0, 
+        duration: 0.8, 
+        ease: 'power1.inOut' 
+    });
 
     // Start
     preload();
@@ -213,29 +210,18 @@ const HomePage = () => {
           ref={pinnedSectionRef}
           className="relative w-full h-screen bg-background -mt-16 md:-mt-20"
         >
-          {/* Background layer: ProductsSection revealed when canvas fades */}
-          <div className="absolute inset-0 z-10 overflow-y-hidden pt-16 md:pt-20">
-            <div className="main-section pt-12">
-              <ProductsSection />
-            </div>
-          </div>
-          {/* Foreground layer: canvas fades out */}
-          <div ref={canvasOverlayRef} className="absolute inset-0 z-20 pointer-events-none">
-            <canvas
-              ref={canvasRef}
-              className="absolute inset-0 w-full h-full"
-            />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-transparent" />
-          </div>
+          <canvas
+            ref={canvasRef}
+            className="absolute inset-0 w-full h-full z-20 pointer-events-none"
+          />
+          <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
         </div>
       )}
 
-      {/* Products section - normal flow when animation is skipped */}
-      {skipAnimation && (
-        <div className="main-section pt-12">
-          <ProductsSection />
-        </div>
-      )}
+      {/* Products section - pulled up behind canvas when animation is active */}
+      <div className={`main-section pt-12 ${!skipAnimation ? 'relative z-10 -mt-[100vh]' : ''}`}>
+        <ProductsSection />
+      </div>
 
       {/* REMAINING SECTIONS - always rendered normally below */}
       <div>

@@ -87,11 +87,7 @@ const AboutPage = () => {
     }
   }, []);
 
-  // Refs for hero overlay layers (fade these, not the whole section)
-  const heroOverlayRef = useRef<HTMLDivElement>(null);
-  const heroContentRef = useRef<HTMLDivElement>(null);
-
-  // GSAP: Pin hero and fade out overlay to reveal Who We Are
+  // GSAP: Pin hero and fade out to reveal Who We Are
   useEffect(() => {
     const heroEl = heroRef.current;
     if (!heroEl) return;
@@ -107,9 +103,7 @@ const AboutPage = () => {
       },
     });
 
-    // Fade only the overlay and hero text, not the background Who We Are layer
-    if (heroOverlayRef.current) tl.to(heroOverlayRef.current, { opacity: 0, duration: 1, ease: 'power1.inOut' }, 0);
-    if (heroContentRef.current) tl.to(heroContentRef.current, { opacity: 0, duration: 1, ease: 'power1.inOut' }, 0);
+    tl.to(heroEl, { opacity: 0, duration: 1, ease: 'power1.inOut' });
 
     return () => {
       tl.kill();
@@ -120,37 +114,10 @@ const AboutPage = () => {
   return (
     <Layout>
       {/* Hero Section - VIDEO BACKGROUND - FULL SCREEN - PINNED */}
-      <section ref={heroRef} className="relative h-screen overflow-hidden -mt-16 md:-mt-20">
+      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         
-        {/* Background layer: Who We Are content revealed when hero fades */}
-        <div className="absolute inset-0 z-10 overflow-hidden pt-16 md:pt-20">
-          <div className="section-padding main-section">
-            <div className="container-page">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <div>
-                  <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
-                    <video
-                      ref={whoWeAreVideoRef}
-                      className="w-full h-full object-cover"
-                      src="/videos/who_we_are.mp4"
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('about.whoWeAre.title')}</h2>
-                  <p className="leading-relaxed text-lg opacity-80">{t('about.whoWeAre.text')}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Foreground layer: Video hero overlay that fades out */}
-        <div ref={heroOverlayRef} className="absolute inset-0 w-full h-full z-20">
+        {/* Background Video Layer */}
+        <div className="absolute inset-0 w-full h-full z-0">
           <video
             autoPlay
             loop
@@ -160,11 +127,13 @@ const AboutPage = () => {
           >
             <source src="/videos/about_bg.mp4" type="video/mp4" />
           </video>
+          
+          {/* ΑΛΛΑΓΗ 2: bg-background/90 για να ταιριάζει με το site και να είναι πολύ σκούρο */}
           <div className="absolute inset-0 bg-background/80" />
         </div>
 
-        {/* Hero Content on top */}
-        <div ref={heroContentRef} className="container-page relative z-30 flex items-center justify-center h-full text-center">
+        {/* Hero Content */}
+        <div className="container-page relative z-10 text-center py-24">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 tracking-wide text-white">
               {t('about.hero.title')}
@@ -173,6 +142,47 @@ const AboutPage = () => {
               {t('about.hero.subtitle')}
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* Who We Are Section - pulled up behind hero */}
+      <section className="section-padding main-section overflow-hidden relative z-10 -mt-[100vh]">
+        <div className="container-page">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            
+            {/* VIDEO BOX - ΕΡΧΕΤΑΙ ΑΠΟ ΑΡΙΣΤΕΡΑ (-300px) */}
+            <motion.div
+              initial={{ x: -300, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+            >
+              <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
+                <video
+                  ref={whoWeAreVideoRef}
+                  className="w-full h-full object-cover"
+                  src="/videos/who_we_are.mp4"
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                />
+              </div>
+            </motion.div>
+
+            {/* TEXT CONTENT - ΕΡΧΕΤΑΙ ΑΠΟ ΔΕΞΙΑ (300px) */}
+            <motion.div
+              initial={{ x: 300, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: true, margin: '-100px' }}
+              transition={{ duration: 1.2, ease: 'easeOut' }}
+            >
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">{t('about.whoWeAre.title')}</h2>
+                <p className="leading-relaxed text-lg opacity-80">{t('about.whoWeAre.text')}</p>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
