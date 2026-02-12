@@ -255,7 +255,7 @@ const ContactQuoteForm: React.FC = () => {
                 className={cn(
                   'px-6 py-3 text-sm font-medium rounded-md border transition-all duration-200',
                   selectedBagType === 'paper'
-                    ? 'bg-brand text-accent-foreground border-brand shadow-md'
+                    ? 'bg-navy text-white border-navy shadow-md'
                     : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                 )}
               >
@@ -267,7 +267,7 @@ const ContactQuoteForm: React.FC = () => {
                 className={cn(
                   'px-6 py-3 text-sm font-medium rounded-md border transition-all duration-200',
                   selectedBagType === 'plastic'
-                    ? 'bg-brand text-accent-foreground border-brand shadow-md'
+                    ? 'bg-navy text-white border-navy shadow-md'
                     : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                 )}
               >
@@ -304,7 +304,7 @@ const ContactQuoteForm: React.FC = () => {
                         className={cn(
                           'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                           formData.size === size
-                            ? 'bg-brand text-accent-foreground border-brand shadow-md'
+                            ? 'bg-navy text-white border-navy shadow-md'
                             : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                         )}
                       >
@@ -405,7 +405,7 @@ const ContactQuoteForm: React.FC = () => {
                         className={cn(
                           'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                           formData.handle === handle.id
-                            ? 'bg-brand text-accent-foreground border-brand shadow-md'
+                            ? 'bg-navy text-white border-navy shadow-md'
                             : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                         )}
                       >
@@ -434,7 +434,7 @@ const ContactQuoteForm: React.FC = () => {
                           className={cn(
                             'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                             formData.finishing.includes(option.id)
-                              ? 'bg-brand text-accent-foreground border-brand shadow-md'
+                              ? 'bg-navy text-white border-navy shadow-md'
                               : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                           )}
                         >
@@ -463,7 +463,7 @@ const ContactQuoteForm: React.FC = () => {
                         className={cn(
                           'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                           formData.printing === option.id
-                            ? 'bg-brand text-accent-foreground border-brand shadow-md'
+                            ? 'bg-navy text-white border-navy shadow-md'
                             : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                         )}
                       >
@@ -492,7 +492,7 @@ const ContactQuoteForm: React.FC = () => {
                           className={cn(
                             'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                             formData.extraProcessing.includes(option.id)
-                              ? 'bg-brand text-accent-foreground border-brand shadow-md'
+                              ? 'bg-navy text-white border-navy shadow-md'
                               : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                           )}
                         >
