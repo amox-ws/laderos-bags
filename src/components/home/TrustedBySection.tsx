@@ -55,7 +55,6 @@ const TrustedBySection = () => {
 
       <div className="container-page mb-12 md:mb-16">
         <AnimatedSection className="text-center">
-          <span className="section-label">{t('trustedBy.title').split(' ')[0]}</span>
           <h2>
             {t('trustedBy.title')}
           </h2>

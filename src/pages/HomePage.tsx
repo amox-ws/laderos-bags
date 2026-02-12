@@ -251,7 +251,6 @@ const HomePage = () => {
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             >
-              <span className="section-label">{t('cta.title').split(' ')[0]}</span>
               <h2 className="mb-6">
                 {t('cta.title')}
               </h2>

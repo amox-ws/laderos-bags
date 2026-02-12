@@ -76,7 +76,6 @@ const PaperBagsPage = () => {
               <ArrowLeft className="h-4 w-4" />
               {t('paperBags.backToProducts')}
             </Link>
-            <span className="section-label block">{t('paperBags.title').split(' ')[0]}</span>
             <h1 className="mb-6">
               {t('paperBags.title')}
             </h1>
@@ -97,7 +96,6 @@ const PaperBagsPage = () => {
             <div className="w-full lg:w-[42%] xl:w-[38%]">
               <div className={isMobile ? '' : 'lg:sticky lg:top-28 lg:self-start'}>
                 <AnimatedSection>
-                  <span className="section-label">{t('paperBags.sectionTitle').split(' ')[0]}</span>
                   <h2 className="mb-6">
                     {t('paperBags.sectionTitle')}
                   </h2>
@@ -190,7 +188,6 @@ const PaperBagsPage = () => {
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <span className="section-label">{t('paperBags.applicationsTitle').split(' ')[0]}</span>
             <h2 className="mb-6">
               {t('paperBags.applicationsTitle')}
             </h2>

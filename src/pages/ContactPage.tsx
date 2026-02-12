@@ -48,7 +48,6 @@ const ContactPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <span className="section-label">{t('contact.title').split(' ')[0]}</span>
             <h1 className="mb-6">
               {t('contact.title')}
             </h1>

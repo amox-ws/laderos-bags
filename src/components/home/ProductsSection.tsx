@@ -25,21 +25,7 @@ const ProductsSection = () => {
       <div className="container-page">
         
         {/* Section Header */}
-        <AnimatedSection className="max-w-4xl mx-auto text-center mb-16 md:mb-24">
-          <span className="section-label">{t('products.section.title').split(' ')[0]}</span>
-          <h2 className="text-foreground mb-8 leading-[0.95]">
-            {t('products.section.title')}
-          </h2>
-          <div className="section-divider mb-8" />
-          <div className="space-y-5 max-w-2xl mx-auto">
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              {t('products.section.text1')}
-            </p>
-            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-              {t('products.section.text2')}
-            </p>
-          </div>
-        </AnimatedSection>
+        {/* Carousel section - no header */}
 
         {/* Product Carousels */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12">

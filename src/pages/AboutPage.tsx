@@ -115,7 +115,6 @@ const AboutPage = () => {
 
         <div className="container-page relative z-10 text-center py-24">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <span className="section-label text-white/60 mb-4 block">{t('about.hero.title').split(' ')[0]}</span>
             <h1 className="mb-8 tracking-wide text-white">
               {t('about.hero.title')}
             </h1>
@@ -158,7 +157,6 @@ const AboutPage = () => {
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
               <div>
-                <span className="section-label">{t('about.whoWeAre.title').split(' ')[0]}</span>
                 <h2 className="mb-6">{t('about.whoWeAre.title')}</h2>
                 <div className="w-12 h-[2px] bg-primary/40 mb-6" />
                 <p className="leading-relaxed text-lg text-muted-foreground">{t('about.whoWeAre.text')}</p>
@@ -172,7 +170,6 @@ const AboutPage = () => {
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center mb-16">
-            <span className="section-label">{t('about.whatWeDo.title').split(' ')[0]}</span>
             <h2 className="mb-4">{t('about.whatWeDo.title')}</h2>
             <div className="section-divider mt-6" />
           </AnimatedSection>
@@ -204,7 +201,6 @@ const AboutPage = () => {
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center mb-12">
-            <span className="section-label">{t('about.production.title').split(' ')[0]}</span>
             <h2 className="mb-4">{t('about.production.title')}</h2>
             <div className="section-divider mt-6 mb-6" />
             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">{t('about.production.text')}</p>
@@ -237,7 +233,6 @@ const AboutPage = () => {
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             <AnimatedSection>
-              <span className="section-label">{t('about.whyWork.title').split(' ')[0]}</span>
               <h2 className="mb-6">{t('about.whyWork.title')}</h2>
               <div className="w-12 h-[2px] bg-primary/40 mb-6" />
               <p className="leading-relaxed mb-8 text-muted-foreground text-lg">{t('about.whyWork.text')}</p>
@@ -281,7 +276,6 @@ const AboutPage = () => {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
           >
-            <span className="section-label">{t('cta.title').split(' ')[0]}</span>
             <h2 className="mb-6">{t('cta.title')}</h2>
             <div className="w-12 h-[1px] bg-white/30 mx-auto mb-6" />
             <p className="opacity-70 mb-10 max-w-2xl mx-auto text-lg">{t('cta.subtitle')}</p>
