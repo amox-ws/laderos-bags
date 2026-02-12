@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef, TouchEvent } from 'react';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface ProductCarouselProps {
@@ -15,22 +16,17 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  // Create extended array with first image cloned at the end
   const extendedImages = [...images, images[0]];
 
-  // Handle transition end - reset to first slide instantly when on clone
   const handleTransitionEnd = useCallback(() => {
     if (currentIndex === images.length) {
-      // We're on the cloned slide, instantly reset to real first slide
       setIsTransitioning(false);
       setCurrentIndex(0);
     }
   }, [currentIndex, images.length]);
 
-  // Re-enable transitions after instant reset
   useEffect(() => {
     if (!isTransitioning && currentIndex === 0) {
-      // Use requestAnimationFrame to ensure the DOM has updated
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
           setIsTransitioning(true);
@@ -39,7 +35,6 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
     }
   }, [isTransitioning, currentIndex]);
 
-  // Autoplay - advances every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prev) => prev + 1);
@@ -47,7 +42,6 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
     return () => clearInterval(interval);
   }, []);
 
-  // Swipe handlers
   const minSwipeDistance = 50;
 
   const onTouchStart = (e: TouchEvent) => {
@@ -65,27 +59,20 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
 
-    if (isLeftSwipe) {
-      // Swipe left = next slide
-      setCurrentIndex((prev) => prev + 1);
-    }
-    if (isRightSwipe) {
-      // Swipe right = previous slide
-      setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-    }
+    if (isLeftSwipe) setCurrentIndex((prev) => prev + 1);
+    if (isRightSwipe) setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   }, [touchStart, touchEnd, images.length]);
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
 
-  // Calculate which dot should be active (map clone back to first)
   const activeDotIndex = currentIndex >= images.length ? 0 : currentIndex;
 
   return (
     <Link 
       to={linkTo}
-      className="group block bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-300 cursor-pointer"
+      className="group block bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer"
     >
       {/* Carousel Container */}
       <div 
@@ -94,7 +81,6 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        {/* Images */}
         <div 
           ref={sliderRef}
           className={cn(
@@ -113,16 +99,15 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
                 <img
                   src={image}
                   alt={`${title} ${(index % images.length) + 1}`}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />
               ) : (
-                <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center group-hover:from-muted-foreground/5 transition-colors duration-300">
+                <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center">
                   <div className="text-center text-muted-foreground">
                     <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-3 rounded-full bg-muted-foreground/20 flex items-center justify-center">
                       <span className="text-2xl md:text-3xl font-bold">{(index % images.length) + 1}</span>
                     </div>
-                    <p className="text-sm md:text-base">Image Coming Soon</p>
                   </div>
                 </div>
               )}
@@ -130,7 +115,7 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
           ))}
         </div>
 
-        {/* Dots Indicator */}
+        {/* Dots */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
           {images.map((_, index) => (
             <button
@@ -141,10 +126,10 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
                 goToSlide(index);
               }}
               className={cn(
-                "w-2.5 h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-300",
+                "h-1.5 rounded-full transition-all duration-300",
                 index === activeDotIndex 
-                  ? "bg-primary w-6 md:w-8" 
-                  : "bg-background/60 hover:bg-background"
+                  ? "bg-white w-8" 
+                  : "bg-white/40 w-1.5 hover:bg-white/60"
               )}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -152,11 +137,12 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
         </div>
       </div>
 
-      {/* Title */}
-      <div className="p-5 md:p-6 lg:p-8 bg-card group-hover:bg-secondary transition-colors duration-300">
-        <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-foreground text-center">
+      {/* Title Bar */}
+      <div className="px-6 py-5 md:px-8 md:py-6 bg-card group-hover:bg-secondary transition-colors duration-500 flex items-center justify-between">
+        <h3 className="text-lg md:text-xl lg:text-2xl text-foreground group-hover:text-primary-foreground transition-colors duration-500">
           {title}
         </h3>
+        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary-foreground transition-all duration-500 group-hover:translate-x-1" />
       </div>
     </Link>
   );

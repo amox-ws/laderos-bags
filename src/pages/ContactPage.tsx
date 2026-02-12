@@ -39,8 +39,8 @@ const ContactPage = () => {
 
   return (
     <Layout>
-      {/* Page Title Section - Main Background */}
-      <section className="py-16 md:py-20 main-section">
+      {/* Page Title */}
+      <section className="py-20 md:py-28 main-section">
         <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -48,24 +48,26 @@ const ContactPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-wide mb-4">
+            <span className="section-label">{t('contact.title').split(' ')[0]}</span>
+            <h1 className="mb-6">
               {t('contact.title')}
             </h1>
-            <p className="text-lg md:text-xl opacity-80">
+            <div className="w-16 h-[2px] bg-primary/40 mb-6" />
+            <p className="text-lg md:text-xl text-muted-foreground">
               {t('contact.subtitle')}
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Contact Info & Map Section - Main Background */}
+      {/* Contact Info & Map */}
       <section className="section-padding pt-0 main-section">
         <div className="container-page">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
             {/* Contact Information */}
             <AnimatedSection>
               <div className="h-full">
-                <h2 className="text-2xl font-bold uppercase tracking-wide mb-8">
+                <h2 className="text-xl mb-10" style={{ fontFamily: 'Inter, system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: '13px', fontWeight: 600 }}>
                   {t('contact.info.title')}
                 </h2>
 
@@ -73,17 +75,17 @@ const ContactPage = () => {
                   {contactInfo.map((info, index) => (
                     <div
                       key={index}
-                      className="flex items-start gap-4 p-5 bg-white/10 rounded-xl border border-white/20 shadow-md"
+                      className="flex items-start gap-5 p-6 bg-white rounded-xl border border-border/40 shadow-card hover:shadow-card-hover transition-all duration-500"
                     >
-                      <div className="w-12 h-12 rounded-lg bg-white/20 flex items-center justify-center flex-shrink-0">
-                        <info.icon className="h-6 w-6" />
+                      <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <info.icon className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-sm opacity-70 mb-1">
+                        <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-1.5" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
                           {info.label}
                         </p>
                         {'href' in info && info.href ? (
-                          <a href={info.href} className="font-medium hover:underline">
+                          <a href={info.href} className="font-medium hover:text-primary transition-colors">
                             {info.value}
                           </a>
                         ) : (
@@ -99,10 +101,10 @@ const ContactPage = () => {
             {/* Map */}
             <AnimatedSection delay={0.2}>
               <div className="h-full flex flex-col">
-                <h2 className="text-2xl font-bold uppercase tracking-wide mb-8 lg:invisible">
+                <h2 className="text-xl mb-10 lg:invisible" style={{ fontFamily: 'Inter, system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: '13px', fontWeight: 600 }}>
                   {language === 'el' ? 'Χάρτης' : 'Map'}
                 </h2>
-                <div className="flex-1 rounded-xl overflow-hidden min-h-[350px] shadow-card">
+                <div className="flex-1 rounded-2xl overflow-hidden min-h-[350px] shadow-elevated">
                 {hasConsented ? (
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3141.8876844456196!2d23.7244!3d38.0846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1999c7c9c7c9d%3A0x7c9c7c9c7c9c7c9c!2sElassonos%2013%2C%20Acharnes%20136%2072%2C%20Greece!5e0!3m2!1sen!2s!4v1706000000000!5m2!1sen!2s"
@@ -124,7 +126,7 @@ const ContactPage = () => {
         </div>
       </section>
 
-      {/* Quote Request Section - Accent Background */}
+      {/* Quote Request Section */}
       <section id="quote" className="section-padding accent-section scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>

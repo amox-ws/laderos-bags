@@ -7,8 +7,6 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Component για την εμφάνιση της εικόνας
-// Προσθέσαμε το prop "objectFit" για να ελέγχουμε αν η εικόνα θα κόβεται ή όχι
 const GalleryImage = ({ 
   src, 
   className = '', 
@@ -20,12 +18,12 @@ const GalleryImage = ({
   index: number;
   objectFit?: 'cover' | 'contain';
 }) => (
-  <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
+  <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
     <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
       <img 
         src={src} 
         alt={`Paper Bag Application ${index + 1}`}
-        className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-110 ${
+        className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-105 ${
           objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
         }`}
         loading="lazy"
@@ -38,24 +36,22 @@ const PaperBagsPage = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
 
-  // --- ΛΙΣΤΑ ΕΙΚΟΝΩΝ ---
   const paperBagImages = [
-    '/paper_product/navy_green.PNG',       // 0
-    '/paper_product/bsb.PNG',              // 1
-    '/paper_product/anastasia.PNG',        // 2
-    '/paper_product/asteras_tripolis.PNG', // 3
-    '/paper_product/benetto.PNG',          // 4
+    '/paper_product/navy_green.PNG',
+    '/paper_product/bsb.PNG',
+    '/paper_product/anastasia.PNG',
+    '/paper_product/asteras_tripolis.PNG',
+    '/paper_product/benetto.PNG',
     '/paper_product/mts.PNG', 
-               // 5
     '/paper_product/di_mondo.PNG',  
-    '/paper_product/sagiakos.PNG',       // 6      // 7
-    '/paper_product/fikos_black.PNG',      // 8
-    '/paper_product/illusions.PNG',        // 9
-    '/paper_product/kostis.PNG',           // 10
-    '/paper_product/morris.PNG',           // 11
-    '/paper_product/wine.PNG',             // 12
-     '/paper_product/casba.PNG',           // 13
-     '/paper_product/dionisos.PNG',       // 14
+    '/paper_product/sagiakos.PNG',
+    '/paper_product/fikos_black.PNG',
+    '/paper_product/illusions.PNG',
+    '/paper_product/kostis.PNG',
+    '/paper_product/morris.PNG',
+    '/paper_product/wine.PNG',
+    '/paper_product/casba.PNG',
+    '/paper_product/dionisos.PNG',
   ];
 
   const features = [
@@ -69,40 +65,44 @@ const PaperBagsPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section - Main Background */}
+      {/* Hero */}
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center">
             <Link 
               to="/products" 
-              className="inline-flex items-center gap-2 opacity-70 hover:opacity-100 mb-6 transition-colors"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors text-sm uppercase tracking-[0.1em]"
             >
               <ArrowLeft className="h-4 w-4" />
               {t('paperBags.backToProducts')}
             </Link>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="section-label block">{t('paperBags.title').split(' ')[0]}</span>
+            <h1 className="mb-6">
               {t('paperBags.title')}
             </h1>
-            <p className="text-lg md:text-xl opacity-80 max-w-3xl mx-auto">
+            <div className="section-divider mb-8" />
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
               {t('paperBags.subtitle')}
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* Main Content with Sticky Text - Main Background */}
+      {/* Main Content */}
       <section className="main-section">
-        <div className="container-page py-16 md:py-24 lg:py-32">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
+        <div className="container-page py-16 md:py-28 lg:py-36">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 xl:gap-20">
             
-            {/* Left Column - Sticky Text Content */}
-            <div className="w-full lg:w-[45%] xl:w-[40%]">
-              <div className={isMobile ? '' : 'lg:sticky lg:top-24 lg:self-start'}>
+            {/* Left Column - Sticky Text */}
+            <div className="w-full lg:w-[42%] xl:w-[38%]">
+              <div className={isMobile ? '' : 'lg:sticky lg:top-28 lg:self-start'}>
                 <AnimatedSection>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  <span className="section-label">{t('paperBags.sectionTitle').split(' ')[0]}</span>
+                  <h2 className="mb-6">
                     {t('paperBags.sectionTitle')}
                   </h2>
-                  <div className="space-y-4 opacity-80">
+                  <div className="w-12 h-[2px] bg-primary/40 mb-6" />
+                  <div className="space-y-4 text-muted-foreground">
                     <p className="text-base md:text-lg leading-relaxed">
                       {t('paperBags.description1')}
                     </p>
@@ -111,24 +111,23 @@ const PaperBagsPage = () => {
                     </p>
                   </div>
 
-                  {/* Features List */}
-                  <div className="mt-8">
-                    <h3 className="text-xl font-semibold mb-4">
+                  {/* Features */}
+                  <div className="mt-10">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.15em] mb-5" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
                       {t('paperBags.featuresTitle')}
                     </h3>
                     <ul className="space-y-3">
                       {features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-3">
-                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-                            <Check className="h-3 w-3" />
+                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Check className="h-3 w-3 text-primary" />
                           </div>
-                          <span className="opacity-80">{feature}</span>
+                          <span className="text-muted-foreground text-sm">{feature}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* CTA */}
                   <div className="mt-10">
                     <Button 
                       variant="default" 
@@ -145,58 +144,41 @@ const PaperBagsPage = () => {
               </div>
             </div>
 
-            {/* Right Column - Gallery Grid */}
-            <div className="w-full lg:w-[55%] xl:w-[60%]">
+            {/* Right Column - Gallery */}
+            <div className="w-full lg:w-[58%] xl:w-[62%]">
               <AnimatedSection delay={0.2}>
                 <div className="flex flex-col gap-4">
-                  
-                  {/* Row 1: Navy Green - Χρησιμοποιούμε objectFit="contain" για να μην κόβεται */}
                   <div className="w-full">
                     <GalleryImage src={paperBagImages[0]} index={0} className="w-full aspect-[16/9]" />
                   </div>
-
-                  {/* Row 2: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={paperBagImages[1]} index={1} className="w-[55%] aspect-[3/4]" />
                     <GalleryImage src={paperBagImages[2]} index={2} className="w-[45%] aspect-square" />
                   </div>
-
-                  {/* Row 3: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={paperBagImages[3]} index={3} className="w-[45%] aspect-[4/5]" />
                     <GalleryImage src={paperBagImages[4]} index={4} className="w-[55%] aspect-[3/4]" />
                   </div>
-
-                  {/* Row 4: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={paperBagImages[5]} index={5} className="w-1/2 aspect-[4/5]" />
                     <GalleryImage src={paperBagImages[6]} index={6} className="w-1/2 aspect-[4/5]" />
                   </div>
-
-                  {/* Row 5: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={paperBagImages[7]} index={7} className="w-[40%] aspect-[3/4]" />
                     <GalleryImage src={paperBagImages[8]} index={8} className="w-[60%] aspect-[4/5]" />
                   </div>
-
-                  {/* Row 6: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={paperBagImages[9]} index={9} className="w-[55%] aspect-[3/4]" />
                     <GalleryImage src={paperBagImages[10]} index={10} className="w-[45%] aspect-[3/4]" />
                   </div>
-
-                  {/* Row 7: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={paperBagImages[11]} index={11} className="w-[60%] aspect-[4/5]" />
                     <GalleryImage src={paperBagImages[12]} index={12} className="w-[40%] aspect-[3/5]" />
                   </div>
-
-                  {/* Row 8: MTS & Sagiakos - Τώρα σε δυάδα (κανονικό μέγεθος) */}
                   <div className="flex gap-4">
                     <GalleryImage src={paperBagImages[13]} index={13} className="w-[50%] aspect-square" />
                     <GalleryImage src={paperBagImages[14]} index={14} className="w-[50%] aspect-square" />
                   </div>
-
                 </div>
               </AnimatedSection>
             </div>
@@ -204,21 +186,23 @@ const PaperBagsPage = () => {
         </div>
       </section>
 
-      {/* Applications Section - Main Background */}
+      {/* Applications */}
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <span className="section-label">{t('paperBags.applicationsTitle').split(' ')[0]}</span>
+            <h2 className="mb-6">
               {t('paperBags.applicationsTitle')}
             </h2>
-            <p className="text-lg opacity-80 mb-8">
+            <div className="section-divider mb-8" />
+            <p className="text-lg text-muted-foreground mb-10">
               {t('paperBags.applicationsText')}
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               {t('paperBags.industries').split(',').map((industry, index) => (
                 <span 
                   key={index}
-                  className="px-4 py-2 bg-white/10 rounded-full text-sm font-medium shadow-sm"
+                  className="px-5 py-2.5 bg-white rounded-full text-sm font-medium shadow-card border border-border/40"
                 >
                   {industry.trim()}
                 </span>
@@ -228,7 +212,7 @@ const PaperBagsPage = () => {
         </div>
       </section>
 
-      {/* Quote Request Form Section - Accent Background */}
+      {/* Quote Form */}
       <section id="quote-section" className="section-padding accent-section scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>

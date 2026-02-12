@@ -7,7 +7,6 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
 
-// --- IMAGES ---
 const paperThumbnail = '/paper_product/paper_thumbnail.jpeg';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.jpeg';
 
@@ -51,8 +50,8 @@ const ProductsPage = () => {
 
   return (
     <Layout>
-      {/* Page Title Section - Level 1 (Lightest) */}
-      <section className="py-16 md:py-20 section-depth-1">
+      {/* Page Title */}
+      <section className="py-20 md:py-28 section-depth-1">
         <div className="container-page">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -60,33 +59,30 @@ const ProductsPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <h1 className="text-4xl md:text-5xl font-bold uppercase tracking-wide">
+            <span className="section-label">{t('products.page.heroTitle').split(' ')[0]}</span>
+            <h1>
               {t('products.page.heroTitle')}
             </h1>
+            <div className="w-16 h-[2px] bg-primary/40 mt-6" />
           </motion.div>
         </div>
       </section>
 
-      {/* Products Section - Level 2 */}
-      {/* Προσθήκη overflow-hidden για τα slide animations */}
+      {/* Products Section */}
       <section className="section-padding section-depth-2 overflow-hidden">
         <div className="container-page">
-          <div className="space-y-24">
+          <div className="space-y-28 md:space-y-36">
             {products.map((product, index) => {
-              // Λογική για το ποιος πάει αριστερά και ποιος δεξιά
-              // Index 0 (Paper): Εικόνα αριστερά, Κείμενο δεξιά
-              // Index 1 (Plastic): Εικόνα δεξιά (λόγω reverse), Κείμενο αριστερά
               const isEven = index % 2 === 0;
 
               return (
                 <div
                   key={product.id}
-                  className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${
+                  className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center ${
                     !isEven ? 'lg:flex-row-reverse' : ''
                   }`}
                 >
-                  {/* Product Image Column */}
-                  {/* Αν είναι ζυγό (Paper) έρχεται από αριστερά (-300), αλλιώς από δεξιά (300) */}
+                  {/* Product Image */}
                   <motion.div 
                     className={!isEven ? 'lg:order-2' : ''}
                     initial={{ x: isEven ? -300 : 300, opacity: 0 }}
@@ -104,20 +100,19 @@ const ProductsPage = () => {
                           alt={product.title}
                           className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
                         />
-                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
-                                <span className="bg-white/90 text-black px-6 py-3 rounded-full font-medium flex items-center gap-2">
-                                    {t('products.viewMore')} <ArrowRight className="h-4 w-4" />
-                                </span>
-                            </div>
+                          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-4 group-hover:translate-y-0">
+                            <span className="bg-white/90 text-foreground px-6 py-3 rounded-full font-medium flex items-center gap-2 text-sm">
+                              {t('products.viewMore')} <ArrowRight className="h-4 w-4" />
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </Link>
                   </motion.div>
 
-                  {/* Content Column */}
-                  {/* Αν είναι ζυγό (Paper) έρχεται από δεξιά (300), αλλιώς από αριστερά (-300) */}
+                  {/* Content */}
                   <motion.div 
                     className={!isEven ? 'lg:order-1' : ''}
                     initial={{ x: isEven ? 300 : -300, opacity: 0 }}
@@ -125,31 +120,33 @@ const ProductsPage = () => {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 1.2, ease: "easeOut" }}
                   >
-                    <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    <span className="section-label">{product.title.split(' ')[0]}</span>
+                    <h2 className="mb-6">
                       {product.title}
                     </h2>
-                    <p className="leading-relaxed mb-6 opacity-80">
+                    <div className="w-12 h-[2px] bg-primary/40 mb-6" />
+                    <p className="leading-relaxed mb-8 text-muted-foreground text-lg">
                       {product.description}
                     </p>
 
-                    <div className="mb-8">
-                      <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
+                    <div className="mb-10">
+                      <h3 className="text-xs font-semibold uppercase tracking-[0.15em] mb-5" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
                         {t('products.features')}
                       </h3>
-                      <ul className="grid grid-cols-2 gap-3">
+                      <ul className="grid grid-cols-2 gap-4">
                         {product.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 opacity-80">
-                            <CheckCircle2 className="h-5 w-5 text-brand flex-shrink-0" />
+                          <li key={i} className="flex items-center gap-3 text-muted-foreground">
+                            <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
                             <span className="text-sm">{feature}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <Button variant="brand" size="lg" asChild>
+                    <Button variant="brand" size="lg" asChild className="group">
                       <Link to={product.linkTo}>
                         {t('products.viewMore')}
-                        <ArrowRight className="ml-2 h-5 w-5" />
+                        <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                       </Link>
                     </Button>
                   </motion.div>
@@ -160,13 +157,12 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      {/* Who Trusts Us Section - Level 3 */}
+      {/* Who Trusts Us */}
       <div className="section-depth-3">
         <TrustedBySection />
       </div>
 
-      {/* Gallery Section - Level 4 */}
-      {/* Αφαίρεσα το padding (py-12...) και το container για να πιάνει όλο το χώρο (w-full) */}
+      {/* Gallery */}
       <section className="section-depth-4 w-full">
         <AnimatedSection>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0">
@@ -189,26 +185,28 @@ const ProductsPage = () => {
         </AnimatedSection>
       </section>
 
-      {/* CTA Section - Level 6 (Darkest) */}
+      {/* CTA */}
       <section className="section-padding section-depth-6 overflow-hidden">
         <div className="container-page">
           <motion.div
-            className="text-center"
-            initial={{ y: 200, opacity: 0 }} // Ξεκινάει 200px κάτω
-            whileInView={{ y: 0, opacity: 1 }} // Πηγαίνει στο 0
+            className="text-center max-w-3xl mx-auto"
+            initial={{ y: 200, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <span className="section-label">{t('cta.title').split(' ')[0]}</span>
+            <h2 className="mb-6">
               {t('cta.title')}
             </h2>
-            <p className="text-lg opacity-80 mb-8 max-w-xl mx-auto">
+            <div className="w-12 h-[1px] bg-white/20 mx-auto mb-6" />
+            <p className="text-lg opacity-60 mb-10 max-w-xl mx-auto">
               {t('cta.subtitle')}
             </p>
-            <Button variant="heroOutline" size="xl" asChild>
+            <Button variant="heroOutline" size="xl" asChild className="group">
               <Link to="/contact#quote">
                 {t('cta.button')}
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Link>
             </Button>
           </motion.div>

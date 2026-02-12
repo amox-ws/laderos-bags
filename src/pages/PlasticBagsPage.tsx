@@ -7,18 +7,14 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Component για την εμφάνιση της εικόνας
-// Προσθέσαμε το prop "scale" για να κάνουμε zoom σε συγκεκριμένες εικόνες
 const GalleryImage = ({ src, className = '', index, scale = 1 }: { src: string; className?: string; index: number; scale?: number }) => (
-  <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
+  <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
     <div className="w-full h-full bg-muted overflow-hidden">
       <img 
         src={src} 
         alt={`Plastic Bag Application ${index + 1}`}
-        // Εφαρμόζουμε το scale εδώ. Το 1.2 σημαίνει 20% μεγαλύτερη.
-        // Προσθέσαμε και το 'origin-center' για να μεγαλώνει από το κέντρο.
         style={{ transform: `scale(${scale})` }}
-        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 origin-center"
+        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 origin-center"
         loading="lazy"
       />
     </div>
@@ -29,23 +25,22 @@ const PlasticBagsPage = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
 
-  // --- ΛΙΣΤΑ ΕΙΚΟΝΩΝ ---
   const plasticBagImages = [
-    '/plastic_product/sporthero.PNG', // 0. Μεγάλη φαρδιά πάνω
-    '/plastic_product/annette.PNG', // 1. Κάθετη αριστερά
-    '/plastic_product/b&b.PNG', // 2. Τετράγωνη δεξιά
-    '/plastic_product/beauty.PNG', // 3. Μικρή αριστερά
-    '/plastic_product/butchery.PNG', // 4. Κάθετη δεξιά
-    '/plastic_product/casba.PNG', // 5. Αριστερά (ίση)
-    '/plastic_product/lab35.PNG', // 6. Δεξιά (ίση)
-    '/plastic_product/navy_green.PNG', // 7. Μικρή σκοτεινή αριστερά
-    '/plastic_product/oasis.PNG', // 8. Μεγάλη δεξιά
-    '/plastic_product/oida.PNG', // 9. Μεγάλη αριστερά
-    '/plastic_product/plaza.PNG', // 10. Μικρή δεξιά
-    '/plastic_product/proton.PNG', // 11. Μεγάλη αριστερά
-    '/plastic_product/sport_jean.PNG', // 12. Μικρή δεξιά
-    '/plastic_product/annas_secret.PNG', // 13.
-    '/plastic_product/ugeia.PNG', // 14. Μεγάλη φαρδιά (τελευταία)
+    '/plastic_product/sporthero.PNG',
+    '/plastic_product/annette.PNG',
+    '/plastic_product/b&b.PNG',
+    '/plastic_product/beauty.PNG',
+    '/plastic_product/butchery.PNG',
+    '/plastic_product/casba.PNG',
+    '/plastic_product/lab35.PNG',
+    '/plastic_product/navy_green.PNG',
+    '/plastic_product/oasis.PNG',
+    '/plastic_product/oida.PNG',
+    '/plastic_product/plaza.PNG',
+    '/plastic_product/proton.PNG',
+    '/plastic_product/sport_jean.PNG',
+    '/plastic_product/annas_secret.PNG',
+    '/plastic_product/ugeia.PNG',
   ];
 
   const features = [
@@ -59,40 +54,44 @@ const PlasticBagsPage = () => {
 
   return (
     <Layout>
-      {/* Hero Section - Main Background */}
+      {/* Hero */}
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center">
             <Link 
               to="/products" 
-              className="inline-flex items-center gap-2 opacity-70 hover:opacity-100 mb-6 transition-colors"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors text-sm uppercase tracking-[0.1em]"
             >
               <ArrowLeft className="h-4 w-4" />
               {t('plasticBags.backToProducts')}
             </Link>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            <span className="section-label block">{t('plasticBags.title').split(' ')[0]}</span>
+            <h1 className="mb-6">
               {t('plasticBags.title')}
             </h1>
-            <p className="text-lg md:text-xl opacity-80 max-w-3xl mx-auto">
+            <div className="section-divider mb-8" />
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
               {t('plasticBags.subtitle')}
             </p>
           </AnimatedSection>
         </div>
       </section>
 
-      {/* Main Content with Sticky Text - Main Background */}
+      {/* Main Content */}
       <section className="main-section">
-        <div className="container-page py-16 md:py-24 lg:py-32">
-          <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16">
+        <div className="container-page py-16 md:py-28 lg:py-36">
+          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 xl:gap-20">
             
-            {/* Left Column - Sticky Text Content */}
-            <div className="w-full lg:w-[45%] xl:w-[40%]">
-              <div className={isMobile ? '' : 'lg:sticky lg:top-24 lg:self-start'}>
+            {/* Left Column - Sticky Text */}
+            <div className="w-full lg:w-[42%] xl:w-[38%]">
+              <div className={isMobile ? '' : 'lg:sticky lg:top-28 lg:self-start'}>
                 <AnimatedSection>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  <span className="section-label">{t('plasticBags.sectionTitle').split(' ')[0]}</span>
+                  <h2 className="mb-6">
                     {t('plasticBags.sectionTitle')}
                   </h2>
-                  <div className="space-y-4 opacity-80">
+                  <div className="w-12 h-[2px] bg-primary/40 mb-6" />
+                  <div className="space-y-4 text-muted-foreground">
                     <p className="text-base md:text-lg leading-relaxed">
                       {t('plasticBags.description1')}
                     </p>
@@ -101,24 +100,23 @@ const PlasticBagsPage = () => {
                     </p>
                   </div>
 
-                  {/* Features List */}
-                  <div className="mt-8">
-                    <h3 className="text-xl font-semibold mb-4">
+                  {/* Features */}
+                  <div className="mt-10">
+                    <h3 className="text-xs font-semibold uppercase tracking-[0.15em] mb-5" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
                       {t('plasticBags.featuresTitle')}
                     </h3>
                     <ul className="space-y-3">
                       {features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-3">
-                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-                            <Check className="h-3 w-3" />
+                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
+                            <Check className="h-3 w-3 text-primary" />
                           </div>
-                          <span className="opacity-80">{feature}</span>
+                          <span className="text-muted-foreground text-sm">{feature}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  {/* CTA */}
                   <div className="mt-10">
                     <Button 
                       variant="default" 
@@ -135,63 +133,41 @@ const PlasticBagsPage = () => {
               </div>
             </div>
 
-            {/* Right Column - Gallery Grid */}
-            <div className="w-full lg:w-[55%] xl:w-[60%]">
+            {/* Right Column - Gallery */}
+            <div className="w-full lg:w-[58%] xl:w-[62%]">
               <AnimatedSection delay={0.2}>
                 <div className="flex flex-col gap-4">
-                  
-                  {/* Row 1: Sporthero - Της δίνουμε scale={1.2} για να ζουμάρει */}
                   <div className="w-full">
-                    <GalleryImage 
-                      src={plasticBagImages[0]} 
-                      index={0} 
-                      className="w-full aspect-[16/9]" 
-                      scale={1.5} // ZOOM ΕΔΩ: Άλλαξε το 1.2 σε μεγαλύτερο αριθμό για περισσότερο ζουμ
-                    />
+                    <GalleryImage src={plasticBagImages[0]} index={0} className="w-full aspect-[16/9]" scale={1.5} />
                   </div>
-
-                  {/* Row 2: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[1]} index={1} className="w-[55%] aspect-[3/4]" />
                     <GalleryImage src={plasticBagImages[2]} index={2} className="w-[45%] aspect-square" />
                   </div>
-
-                  {/* Row 3: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[3]} index={3} className="w-[45%] aspect-[4/5]" />
                     <GalleryImage src={plasticBagImages[4]} index={4} className="w-[55%] aspect-[3/4]" />
                   </div>
-
-                  {/* Row 4: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[5]} index={5} className="w-[45%] aspect-[4/5]" />
                     <GalleryImage src={plasticBagImages[6]} index={6} className="w-[55%] aspect-[4/5]" />
                   </div>
-
-                  {/* Row 5: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[7]} index={7} className="w-[52%] aspect-[3/4]" />
                     <GalleryImage src={plasticBagImages[8]} index={8} className="w-[48%] aspect-[4/5]" />
                   </div>
-
-                  {/* Row 6: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[9]} index={9} className="w-[55%] aspect-[3/4]" />
                     <GalleryImage src={plasticBagImages[10]} index={10} className="w-[45%] aspect-[3/4]" />
                   </div>
-
-                  {/* Row 7: Two images */}
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[11]} index={11} className="w-[58%] aspect-[4/5]" />
                     <GalleryImage src={plasticBagImages[12]} index={12} className="w-[42%] aspect-[3/5]" />
                   </div>
-
-                  {/* Row 8: Single full width */}
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[13]} index={13} className="w-[45%] aspect-[3/5]" />
                     <GalleryImage src={plasticBagImages[14]} index={14} className="w-[55%] aspect-[4/5]" />
                   </div>
-
                 </div>
               </AnimatedSection>
             </div>
@@ -199,21 +175,23 @@ const PlasticBagsPage = () => {
         </div>
       </section>
 
-      {/* Applications Section - Main Background */}
+      {/* Applications */}
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <span className="section-label">{t('plasticBags.applicationsTitle').split(' ')[0]}</span>
+            <h2 className="mb-6">
               {t('plasticBags.applicationsTitle')}
             </h2>
-            <p className="text-lg opacity-80 mb-8">
+            <div className="section-divider mb-8" />
+            <p className="text-lg text-muted-foreground mb-10">
               {t('plasticBags.applicationsText')}
             </p>
             <div className="flex flex-wrap justify-center gap-3">
               {t('plasticBags.industries').split(',').map((industry, index) => (
                 <span 
                   key={index}
-                  className="px-4 py-2 bg-white/10 rounded-full text-sm font-medium shadow-sm"
+                  className="px-5 py-2.5 bg-white rounded-full text-sm font-medium shadow-card border border-border/40"
                 >
                   {industry.trim()}
                 </span>
@@ -223,7 +201,7 @@ const PlasticBagsPage = () => {
         </div>
       </section>
 
-      {/* Quote Request Form Section - Accent Background */}
+      {/* Quote Form */}
       <section id="quote-section" className="section-padding accent-section scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
