@@ -1,20 +1,23 @@
 
 
-# Fix: Mobile Scroll on Quote Request Modal
+# Remove Title and Divider from Carousel on Products Page
 
-## The Problem
-The modal popup uses `flex items-center justify-center` on its container, which conflicts with `overflow-y-auto` on mobile. When flexbox centers content vertically in a fixed container, the top of the content can become unreachable -- the browser can't scroll up past the centered position.
+## What Changes
 
-## The Fix
-Change the modal layout so that on mobile, the content is top-aligned (not vertically centered) and sits inside a properly scrollable container. On desktop, it stays centered as before.
+The "Who Trusts Us" carousel section on the Products page currently shows a heading and a blue divider line above the logo carousels. You want just the carousel logos displayed cleanly, without the title or line, and properly centered.
 
-## Technical Changes
+Since this carousel component is reused on other pages (Home, About) where the title should remain, we will add an option to hide it.
 
-### File: `src/components/forms/QuoteRequestModal.tsx`
+## Technical Details
 
-**Line 175** -- Change the modal wrapper classes:
-- From: `fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto`
-- To: `fixed inset-0 z-50 flex items-start md:items-center justify-center p-4 overflow-y-auto`
+### 1. Update `src/components/home/TrustedBySection.tsx`
+- Add a `showTitle` prop (defaults to `true` so other pages are unaffected)
+- When `showTitle` is `false`, skip rendering the heading and blue divider line
+- Reduce top padding slightly when no title is shown for tighter spacing
 
-This single change switches from `items-center` (which traps scroll) to `items-start` on mobile, so the modal starts at the top and scrolls naturally downward. On `md:` screens and above, it stays vertically centered since the modal fits within the viewport.
+### 2. Update `src/pages/ProductsPage.tsx`
+- Pass `showTitle={false}` to the `TrustedBySection` component on the Products page
+- This removes the title and blue line, leaving only the centered carousel
+
+No layout, typography, or animation changes.
 
