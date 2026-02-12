@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef, TouchEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import LazyImage from '@/components/ui/LazyImage';
 
 interface ProductCarouselProps {
   title: string;
@@ -110,11 +111,10 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
               className="min-w-full h-full flex items-center justify-center"
             >
               {image ? (
-                <img
+                <LazyImage
                   src={image}
                   alt={`${title} ${(index % images.length) + 1}`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-muted to-muted-foreground/10 flex items-center justify-center group-hover:from-muted-foreground/5 transition-colors duration-300">

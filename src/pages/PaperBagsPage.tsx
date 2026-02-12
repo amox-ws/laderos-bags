@@ -6,9 +6,8 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
+import LazyImage from '@/components/ui/LazyImage';
 
-// Component για την εμφάνιση της εικόνας
-// Προσθέσαμε το prop "objectFit" για να ελέγχουμε αν η εικόνα θα κόβεται ή όχι
 const GalleryImage = ({ 
   src, 
   className = '', 
@@ -22,13 +21,12 @@ const GalleryImage = ({
 }) => (
   <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
     <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
-      <img 
+      <LazyImage 
         src={src} 
         alt={`Paper Bag Application ${index + 1}`}
         className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-110 ${
           objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
         }`}
-        loading="lazy"
       />
     </div>
   </div>
