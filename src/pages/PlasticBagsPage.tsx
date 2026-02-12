@@ -6,16 +6,20 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
-import LazyImage from '@/components/ui/LazyImage';
 
+// Component για την εμφάνιση της εικόνας
+// Προσθέσαμε το prop "scale" για να κάνουμε zoom σε συγκεκριμένες εικόνες
 const GalleryImage = ({ src, className = '', index, scale = 1 }: { src: string; className?: string; index: number; scale?: number }) => (
   <div className={`group relative rounded-xl overflow-hidden shadow-card hover:shadow-elevated transition-all duration-500 hover:scale-[1.01] ${className}`}>
     <div className="w-full h-full bg-muted overflow-hidden">
-      <LazyImage 
+      <img 
         src={src} 
         alt={`Plastic Bag Application ${index + 1}`}
+        // Εφαρμόζουμε το scale εδώ. Το 1.2 σημαίνει 20% μεγαλύτερη.
+        // Προσθέσαμε και το 'origin-center' για να μεγαλώνει από το κέντρο.
         style={{ transform: `scale(${scale})` }}
         className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 origin-center"
+        loading="lazy"
       />
     </div>
   </div>
