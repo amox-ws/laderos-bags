@@ -65,7 +65,6 @@ const PlasticBagsPage = () => {
               <ArrowLeft className="h-4 w-4" />
               {t('plasticBags.backToProducts')}
             </Link>
-            <span className="section-label block">{t('plasticBags.title').split(' ')[0]}</span>
             <h1 className="mb-6">
               {t('plasticBags.title')}
             </h1>
@@ -86,7 +85,6 @@ const PlasticBagsPage = () => {
             <div className="w-full lg:w-[42%] xl:w-[38%]">
               <div className={isMobile ? '' : 'lg:sticky lg:top-28 lg:self-start'}>
                 <AnimatedSection>
-                  <span className="section-label">{t('plasticBags.sectionTitle').split(' ')[0]}</span>
                   <h2 className="mb-6">
                     {t('plasticBags.sectionTitle')}
                   </h2>
@@ -179,7 +177,6 @@ const PlasticBagsPage = () => {
       <section className="section-padding main-section">
         <div className="container-page">
           <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <span className="section-label">{t('plasticBags.applicationsTitle').split(' ')[0]}</span>
             <h2 className="mb-6">
               {t('plasticBags.applicationsTitle')}
             </h2>

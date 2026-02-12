@@ -51,7 +51,6 @@ const WhereToFindUsSection = () => {
           >
             <div className="space-y-6 lg:space-y-8">
               <div>
-                <span className="section-label">{t('whereToFindUs.title').split(' ')[0]}</span>
                 <h3 className="text-foreground leading-[0.95] mb-6">
                   {t('whereToFindUs.title')}
                 </h3>

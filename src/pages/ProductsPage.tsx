@@ -59,7 +59,6 @@ const ProductsPage = () => {
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <span className="section-label">{t('products.page.heroTitle').split(' ')[0]}</span>
             <h1>
               {t('products.page.heroTitle')}
             </h1>
@@ -120,7 +119,6 @@ const ProductsPage = () => {
                     viewport={{ once: true, margin: "-100px" }}
                     transition={{ duration: 1.2, ease: "easeOut" }}
                   >
-                    <span className="section-label">{product.title.split(' ')[0]}</span>
                     <h2 className="mb-6">
                       {product.title}
                     </h2>
@@ -195,7 +193,6 @@ const ProductsPage = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <span className="section-label">{t('cta.title').split(' ')[0]}</span>
             <h2 className="mb-6">
               {t('cta.title')}
             </h2>
