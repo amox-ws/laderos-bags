@@ -42,21 +42,20 @@ const StatItem = ({ endValue, suffix, label, isInView, duration = 2000, index }:
 
   return (
     <motion.div 
-      className="text-center"
-      // ΑΛΛΑΓΗ ΕΔΩ: y: 200 (Ξεκινάει 200 pixels πιο κάτω)
+      className="text-center relative"
       initial={{ opacity: 0, y: 200 }}
-      // Όταν φανεί, πάει στο 0
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 200 }}
       transition={{ 
-        duration: 1.2, // Αύξησα τη διάρκεια για να είναι πιο ομαλή η μεγάλη διαδρομή
+        duration: 1.2,
         ease: "easeOut",
-        delay: index * 0.2 // Λίγο μεγαλύτερη καθυστέρηση ανάμεσα τους
+        delay: index * 0.2
       }}
     >
-      <div className="text-4xl md:text-5xl font-bold mb-2">
+      <div className="text-5xl md:text-6xl lg:text-7xl mb-3" style={{ fontFamily: 'Bebas Neue, Impact, sans-serif', letterSpacing: '0.02em' }}>
         {count}{suffix}
       </div>
-      <div className="opacity-70 text-sm">
+      <div className="w-8 h-[1px] bg-white/30 mx-auto mb-3" />
+      <div className="opacity-60 text-xs md:text-sm uppercase tracking-[0.15em]" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
         {label}
       </div>
     </motion.div>
@@ -66,7 +65,6 @@ const StatItem = ({ endValue, suffix, label, isInView, duration = 2000, index }:
 const AnimatedStatsSection = () => {
   const { t } = useLanguage();
   const ref = useRef(null);
-  // Αυξήσαμε το margin σε -150px για να ξεκινήσει το animation λίγο πιο νωρίς καθώς σκρολάρεις
   const isInView = useInView(ref, { once: true, margin: '-150px' });
 
   const stats = [
@@ -77,10 +75,9 @@ const AnimatedStatsSection = () => {
   ];
 
   return (
-    // overflow-hidden για να μην φαίνονται όσο έρχονται από κάτω εκτός ορίων
     <section ref={ref} className="section-padding overflow-hidden">
       <div className="container-page">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {stats.map((stat, index) => (
             <StatItem
               key={index}

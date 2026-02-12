@@ -241,26 +241,28 @@ const HomePage = () => {
           <WhereToFindUsSection />
         </div>
 
-        {/* CTA Section - Accent Background #6A8595 */}
+        {/* CTA Section */}
         <section className="section-padding accent-section overflow-hidden">
           <div className="container-page">
             <motion.div 
-              className="text-center"
+              className="text-center max-w-3xl mx-auto"
               initial={{ y: 200, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             >
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              <span className="section-label">{t('cta.title').split(' ')[0]}</span>
+              <h2 className="mb-6">
                 {t('cta.title')}
               </h2>
-              <p className="text-lg opacity-80 mb-8 max-w-xl mx-auto">
+              <div className="w-12 h-[1px] bg-white/30 mx-auto mb-6" />
+              <p className="text-lg opacity-70 mb-10 max-w-xl mx-auto">
                 {t('cta.subtitle')}
               </p>
-              <Button variant="heroOutline" size="xl" asChild>
+              <Button variant="heroOutline" size="xl" asChild className="group">
                 <Link to="/contact#quote">
                   {t('cta.button')}
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Link>
               </Button>
             </motion.div>

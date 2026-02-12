@@ -12,12 +12,11 @@ const WhereToFindUsSection = () => {
   const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3140.8!2d23.7316!3d38.0847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1a2f8a8a8a8a8%3A0x0!2zRWxhc3Nvbm9zIDEzLCBBY2hhcm5lcyAxMzYgNzIsIEdyZWVjZQ!5e0!3m2!1sen!2sgr!4v1700000000000!5m2!1sen!2sgr";
 
   return (
-    // ΠΡΟΣΟΧΗ: overflow-hidden για να μην "σπάει" το width
     <section className="section-padding overflow-hidden">
       <div className="container-page">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-center">
           
-          {/* Map Column - ΕΡΧΕΤΑΙ ΑΠΟ ΑΡΙΣΤΕΡΑ (-300px) */}
+          {/* Map Column */}
           <motion.div
             initial={{ x: -300, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
@@ -25,7 +24,7 @@ const WhereToFindUsSection = () => {
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
             {hasConsented ? (
-              <div className="rounded-xl overflow-hidden shadow-elevated aspect-video lg:aspect-[4/3]">
+              <div className="rounded-2xl overflow-hidden shadow-elevated aspect-video lg:aspect-[4/3]">
                 <iframe
                   src={mapEmbedUrl}
                   width="100%"
@@ -39,21 +38,25 @@ const WhereToFindUsSection = () => {
                 />
               </div>
             ) : (
-              <MapPlaceholder className="aspect-video lg:aspect-[4/3] min-h-[300px] lg:min-h-[400px]" />
+              <MapPlaceholder className="aspect-video lg:aspect-[4/3] min-h-[300px] lg:min-h-[400px] rounded-2xl" />
             )}
           </motion.div>
 
-          {/* Text Content Column - ΕΡΧΕΤΑΙ ΑΠΟ ΔΕΞΙΑ (300px) */}
+          {/* Text Content Column */}
           <motion.div
             initial={{ x: 300, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <div className="space-y-6">
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-foreground">
-                {t('whereToFindUs.title')}
-              </h3>
+            <div className="space-y-6 lg:space-y-8">
+              <div>
+                <span className="section-label">{t('whereToFindUs.title').split(' ')[0]}</span>
+                <h3 className="text-foreground leading-[0.95] mb-6">
+                  {t('whereToFindUs.title')}
+                </h3>
+                <div className="w-12 h-[2px] bg-primary/40" />
+              </div>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
                 {t('whereToFindUs.text')}
               </p>
