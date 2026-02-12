@@ -115,7 +115,7 @@ const AboutPage = () => {
 
         <div className="container-page relative z-10 text-center py-24">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <h1 className="mb-8 tracking-wide text-white">
+            <h1 className="mb-8 tracking-wide text-brand-light">
               {t('about.hero.title')}
             </h1>
             <div className="w-16 h-[1px] bg-white/30 mx-auto mb-8" />
