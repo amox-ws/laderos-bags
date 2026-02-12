@@ -1,7 +1,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 
-const TrustedBySection = () => {
+interface TrustedBySectionProps {
+  showTitle?: boolean;
+}
+
+const TrustedBySection = ({ showTitle = true }: TrustedBySectionProps) => {
   const { t } = useLanguage();
 
   const topPartners = [
@@ -32,7 +36,7 @@ const TrustedBySection = () => {
   const duplicatedBottom = [...bottomPartners, ...bottomPartners, ...bottomPartners];
 
   return (
-    <section className="py-16 md:py-24 lg:py-28 overflow-hidden bg-white">
+    <section className={`${showTitle ? 'py-16 md:py-24 lg:py-28' : 'py-8 md:py-12'} overflow-hidden bg-white`}>
       <style>{`
         @keyframes infinite-scroll-left {
           0% { transform: translateX(0); }
@@ -53,14 +57,16 @@ const TrustedBySection = () => {
         }
       `}</style>
 
-      <div className="container-page mb-12 md:mb-16">
-        <AnimatedSection className="text-center">
-          <h2>
-            {t('trustedBy.title')}
-          </h2>
-          <div className="section-divider mt-6" />
-        </AnimatedSection>
-      </div>
+      {showTitle && (
+        <div className="container-page mb-12 md:mb-16">
+          <AnimatedSection className="text-center">
+            <h2>
+              {t('trustedBy.title')}
+            </h2>
+            <div className="section-divider mt-6" />
+          </AnimatedSection>
+        </div>
+      )}
 
       <div className="relative">
         {/* Edge fades */}
