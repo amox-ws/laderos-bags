@@ -172,7 +172,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
+            className="fixed inset-0 z-50 flex items-start md:items-center justify-center p-4 overflow-y-auto"
           >
             <div 
               className="relative w-full max-w-5xl bg-background rounded-xl shadow-2xl overflow-hidden my-8"
