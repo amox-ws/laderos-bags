@@ -157,7 +157,7 @@ const ProductsPage = () => {
 
       {/* Who Trusts Us */}
       <div className="section-depth-3">
-        <TrustedBySection />
+        <TrustedBySection showTitle={false} />
       </div>
 
       {/* Gallery */}
