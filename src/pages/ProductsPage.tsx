@@ -84,9 +84,9 @@ const ProductsPage = () => {
                   {/* Product Image */}
                   <motion.div 
                     className={!isEven ? 'lg:order-2' : ''}
-                    initial={{ x: isEven ? -300 : 300, opacity: 0 }}
+                    initial={{ x: isEven ? -100 : 100, opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
+                    viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 1.2, ease: "easeOut" }}
                   >
                     <Link 
@@ -114,9 +114,9 @@ const ProductsPage = () => {
                   {/* Content */}
                   <motion.div 
                     className={!isEven ? 'lg:order-1' : ''}
-                    initial={{ x: isEven ? 300 : -300, opacity: 0 }}
+                    initial={{ x: isEven ? 100 : -100, opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
+                    viewport={{ once: true, margin: "-50px" }}
                     transition={{ duration: 1.2, ease: "easeOut" }}
                   >
                     <h2 className="mb-6">
@@ -188,9 +188,9 @@ const ProductsPage = () => {
         <div className="container-page">
           <motion.div
             className="text-center max-w-3xl mx-auto"
-            initial={{ y: 200, opacity: 0 }}
+            initial={{ y: 80, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
             <h2 className="mb-6">
