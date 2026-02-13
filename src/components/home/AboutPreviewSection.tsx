@@ -56,9 +56,9 @@ const AboutPreviewSection = () => {
           
           {/* VIDEO BOX */}
           <motion.div 
-            initial={{ x: -300, opacity: 0 }}
+            initial={{ x: -100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
             <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden shadow-elevated">
@@ -76,9 +76,9 @@ const AboutPreviewSection = () => {
 
           {/* TEXT CONTENT */}
           <motion.div 
-            initial={{ x: 300, opacity: 0 }}
+            initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="space-y-6 lg:space-y-8"
           >

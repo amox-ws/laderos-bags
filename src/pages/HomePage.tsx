@@ -219,7 +219,7 @@ const HomePage = () => {
       )}
 
       {/* Products section - pulled up behind canvas when animation is active */}
-      <div className={`main-section pt-12 ${!skipAnimation ? 'relative z-10 -mt-[100vh]' : ''}`}>
+      <div className={`main-section pt-12 ${!skipAnimation ? 'relative z-10 -mt-[100dvh]' : ''}`}>
         <ProductsSection />
       </div>
 
@@ -246,9 +246,9 @@ const HomePage = () => {
           <div className="container-page">
             <motion.div 
               className="text-center max-w-3xl mx-auto"
-              initial={{ y: 200, opacity: 0 }}
+              initial={{ y: 80, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 1.2, ease: "easeOut" }}
             >
               <h2 className="mb-6">

@@ -105,7 +105,7 @@ const AboutPage = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
+      <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">
           <video autoPlay loop muted playsInline className="w-full h-full object-cover">
             <source src="/videos/about_bg.mp4" type="video/mp4" />
@@ -127,14 +127,14 @@ const AboutPage = () => {
       </section>
 
       {/* Who We Are Section */}
-      <section className="section-padding main-section overflow-hidden relative z-10 -mt-[100vh]">
+      <section className="section-padding main-section overflow-hidden relative z-10 -mt-[100dvh]">
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
             
             <motion.div
-              initial={{ x: -300, opacity: 0 }}
+              initial={{ x: -100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, margin: '-100px' }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
               <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
@@ -151,9 +151,9 @@ const AboutPage = () => {
             </motion.div>
 
             <motion.div
-              initial={{ x: 300, opacity: 0 }}
+              initial={{ x: 100, opacity: 0 }}
               whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, margin: '-100px' }}
+              viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
               <div>
@@ -271,9 +271,9 @@ const AboutPage = () => {
         <div className="container-page text-center">
           <motion.div
             className="max-w-3xl mx-auto"
-            initial={{ y: 200, opacity: 0 }}
+            initial={{ y: 80, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: '-100px' }}
+            viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 1.2, ease: 'easeOut' }}
           >
             <h2 className="mb-6">{t('cta.title')}</h2>
