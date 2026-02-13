@@ -37,21 +37,21 @@ const PaperBagsPage = () => {
   const isMobile = useIsMobile();
 
   const paperBagImages = [
-    '/paper_product/navy_green.PNG',
-    '/paper_product/bsb.PNG',
-    '/paper_product/anastasia.PNG',
-    '/paper_product/asteras_tripolis.PNG',
-    '/paper_product/benetto.PNG',
-    '/paper_product/mts.PNG', 
-    '/paper_product/di_mondo.PNG',  
-    '/paper_product/sagiakos.PNG',
-    '/paper_product/fikos_black.PNG',
-    '/paper_product/illusions.PNG',
-    '/paper_product/kostis.PNG',
-    '/paper_product/morris.PNG',
-    '/paper_product/wine.PNG',
-    '/paper_product/casba.PNG',
-    '/paper_product/dionisos.PNG',
+    '/paper_product/navy_green.webp',
+    '/paper_product/bsb.webp',
+    '/paper_product/anastasia.webp',
+    '/paper_product/asteras_tripolis.webp',
+    '/paper_product/benetto.webp',
+    '/paper_product/mts.webp', 
+    '/paper_product/di_mondo.webp',  
+    '/paper_product/sagiakos.webp',
+    '/paper_product/fikos_black.webp',
+    '/paper_product/illusions.webp',
+    '/paper_product/kostis.webp',
+    '/paper_product/morris.webp',
+    '/paper_product/wine.webp',
+    '/paper_product/casba.webp',
+    '/paper_product/dionisos.webp',
   ];
 
   const features = [

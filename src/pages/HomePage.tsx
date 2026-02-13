@@ -63,7 +63,7 @@ const HomePage = () => {
 
     // --- 1) FRAMES SETUP ---
     const frameCount = 140;
-    const frameSrc = (i: number) => `/bags/ezgif-frame-${String(i + 1).padStart(3, '0')}.png`;
+    const frameSrc = (i: number) => `/bags/ezgif-frame-${String(i + 1).padStart(3, '0')}.webp`;
 
     const images: HTMLImageElement[] = new Array(frameCount);
     const bag = { frame: 0 };

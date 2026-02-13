@@ -26,21 +26,21 @@ const PlasticBagsPage = () => {
   const isMobile = useIsMobile();
 
   const plasticBagImages = [
-    '/plastic_product/sporthero.PNG',
-    '/plastic_product/annette.PNG',
-    '/plastic_product/b&b.PNG',
-    '/plastic_product/beauty.PNG',
-    '/plastic_product/butchery.PNG',
-    '/plastic_product/casba.PNG',
-    '/plastic_product/lab35.PNG',
-    '/plastic_product/navy_green.PNG',
-    '/plastic_product/oasis.PNG',
-    '/plastic_product/oida.PNG',
-    '/plastic_product/plaza.PNG',
-    '/plastic_product/proton.PNG',
-    '/plastic_product/sport_jean.PNG',
-    '/plastic_product/annas_secret.PNG',
-    '/plastic_product/ugeia.PNG',
+    '/plastic_product/sporthero.webp',
+    '/plastic_product/annette.webp',
+    '/plastic_product/b&b.webp',
+    '/plastic_product/beauty.webp',
+    '/plastic_product/butchery.webp',
+    '/plastic_product/casba.webp',
+    '/plastic_product/lab35.webp',
+    '/plastic_product/navy_green.webp',
+    '/plastic_product/oasis.webp',
+    '/plastic_product/oida.webp',
+    '/plastic_product/plaza.webp',
+    '/plastic_product/proton.webp',
+    '/plastic_product/sport_jean.webp',
+    '/plastic_product/annas_secret.webp',
+    '/plastic_product/ugeia.webp',
   ];
 
   const features = [
