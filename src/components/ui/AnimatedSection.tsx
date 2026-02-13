@@ -10,7 +10,7 @@ interface AnimatedSectionProps {
 
 const AnimatedSection = ({ children, className = '', delay = 0 }: AnimatedSectionProps) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
     <motion.div
