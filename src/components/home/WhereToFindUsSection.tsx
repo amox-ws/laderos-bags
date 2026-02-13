@@ -18,9 +18,9 @@ const WhereToFindUsSection = () => {
           
           {/* Map Column */}
           <motion.div
-            initial={{ x: -300, opacity: 0 }}
+            initial={{ x: -100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
             {hasConsented ? (
@@ -44,9 +44,9 @@ const WhereToFindUsSection = () => {
 
           {/* Text Content Column */}
           <motion.div
-            initial={{ x: 300, opacity: 0 }}
+            initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
           >
             <div className="space-y-6 lg:space-y-8">
