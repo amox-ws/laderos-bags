@@ -45,13 +45,13 @@ const HomePage = () => {
 
     // --- FIX: PRELOAD ΓΙΑ ΤΙΣ 8 ΕΙΚΟΝΕΣ ΤΟΥ CAROUSEL ---
     const productImages = [
-      '/product_bags/navy_and_green.png',
-      '/product_bags/pink.png',
-      '/product_bags/redbull.png',
-      '/product_bags/cashew.png',
-      '/product_bags/black_pink.png',
-      '/product_bags/ygeia.png',
-      '/product_bags/oasisbnb.png',
+      '/product_bags/navy_and_green.webp',
+      '/product_bags/pink.webp',
+      '/product_bags/redbull.webp',
+      '/product_bags/cashew.webp',
+      '/product_bags/black_pink.webp',
+      '/product_bags/ygeia.webp',
+      '/product_bags/oasisbnb.webp',
       '/product_bags/butcher.png'
     ];
 
