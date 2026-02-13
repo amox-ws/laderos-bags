@@ -11,15 +11,15 @@ const paperThumbnail = '/paper_product/paper_thumbnail.jpeg';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.jpeg';
 
 const galleryImages = [
-  { src: '/gallery/gallery9.png', position: '60% center' }, 
-  { src: '/gallery/gallery8.png', position: '60% center' },
-  { src: '/gallery/gallery3.png', position: 'center' },
-  { src: '/gallery/gallery4.jpeg', position: 'center' },
-  { src: '/gallery/gallery2.jpeg', position: 'center' },
-  { src: '/gallery/gallery6.png', position: 'center' },
-  { src: '/gallery/gallery7.jpeg', position: 'center' },
-  { src: '/gallery/gallery5.png', position: 'center' },
-  { src: '/gallery/gallery1.jpeg', position: 'center' }
+  { src: '/gallery/gallery9.webp', position: '60% center' }, 
+  { src: '/gallery/gallery8.webp', position: '60% center' },
+  { src: '/gallery/gallery3.webp', position: 'center' },
+  { src: '/gallery/gallery4.webp', position: 'center' },
+  { src: '/gallery/gallery2.webp', position: 'center' },
+  { src: '/gallery/gallery6.webp', position: 'center' },
+  { src: '/gallery/gallery7.webp', position: 'center' },
+  { src: '/gallery/gallery5.webp', position: 'center' },
+  { src: '/gallery/gallery1.webp', position: 'center' }
 ];
 
 const ProductsPage = () => {
