@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronsDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -34,6 +34,7 @@ const HomePage = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [showIndicator, setShowIndicator] = useState(true);
 
   useEffect(() => {
     if (skipAnimation) return;
@@ -167,6 +168,7 @@ const HomePage = () => {
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           render(self.progress);
+          setShowIndicator(self.progress <= 0.05);
           if (self.progress >= 0.95) {
             animationHasPlayed = true;
           }
@@ -215,6 +217,10 @@ const HomePage = () => {
             className="absolute inset-0 w-full h-full z-20 pointer-events-none"
           />
           <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
+          <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center transition-opacity duration-500 ${showIndicator ? 'opacity-100' : 'opacity-0'}`}>
+            <span className="text-white/70 text-sm tracking-widest uppercase mb-2">Scroll</span>
+            <ChevronsDown className="text-white/70 w-6 h-6 animate-bounce" />
+          </div>
         </div>
       )}
 
