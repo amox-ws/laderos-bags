@@ -119,7 +119,7 @@ const AboutPage = () => {
               {t('about.hero.title')}
             </h1>
             <div className="w-16 h-[1px] bg-white/30 mx-auto mb-8" />
-            <p className="text-lg md:text-xl opacity-70 max-w-2xl mx-auto text-white">
+            <p className="text-lg md:text-xl opacity-70 max-w-2xl mx-auto text-foreground">
               {t('about.hero.subtitle')}
             </p>
           </motion.div>
