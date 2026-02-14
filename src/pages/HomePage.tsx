@@ -53,7 +53,7 @@ const HomePage = () => {
       '/product_bags/black_pink.webp',
       '/product_bags/ygeia.webp',
       '/product_bags/oasisbnb.webp',
-      '/product_bags/butcher.png'
+      '/product_bags/butcher.webp'
     ];
 
     productImages.forEach((src) => {
