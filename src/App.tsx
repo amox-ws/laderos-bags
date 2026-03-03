@@ -15,6 +15,8 @@ import ContactPage from "./pages/ContactPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import NotFound from "./pages/NotFound";
 
+import { Analytics } from "@vercel/analytics/react";
+
 const queryClient = new QueryClient();
 
 // Main App Component - Laderos Bags Website v4 - rebuild
@@ -23,6 +25,7 @@ const App = () => (
     <LanguageProvider>
       <CookieConsentProvider>
       <TooltipProvider>
+        <Analytics />
         <Toaster />
         <Sonner />
         <BrowserRouter>

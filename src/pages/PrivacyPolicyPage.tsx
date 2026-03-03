@@ -13,7 +13,7 @@ const PrivacyPolicyPage = () => {
             {isGreek ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
           </h1>
           <p className="text-muted-foreground mb-8 text-sm">
-            {isGreek ? 'Τελευταία ενημέρωση: Φεβρουάριος 2026' : 'Last updated: February 2026'}
+            {isGreek ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
           </p>
 
           <div className="space-y-8 text-foreground/90 leading-relaxed">
@@ -117,6 +117,14 @@ const PrivacyPolicyPage = () => {
                     {isGreek ? 'Πολιτική Απορρήτου Google' : 'Google Privacy Policy'}
                   </a>
                 </li>
+                <li>
+                  <strong>Vercel Analytics</strong> – {isGreek
+                    ? 'Χρησιμοποιείται για την ανάλυση της επισκεψιμότητας του ιστότοπου με τρόπο που σέβεται το απόρρητο, χωρίς να συλλέγει προσωπικά δεδομένα.'
+                    : 'Used for privacy-friendly website traffic analysis without collecting personal data.'}{' '}
+                  <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:opacity-80">
+                    {isGreek ? 'Πολιτική Απορρήτου Vercel' : 'Vercel Privacy Policy'}
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -149,17 +157,17 @@ const PrivacyPolicyPage = () => {
             {/* Cookies */}
             <div>
               <h2 className="text-xl font-semibold mb-3">
-                {isGreek ? '8. Cookies' : '8. Cookies'}
+                {isGreek ? '8. Cookies & Αναλυτικά Στοιχεία' : '8. Cookies & Analytics'}
               </h2>
               <p className="mb-3">
                 {isGreek
-                  ? 'Ο ιστότοπός μας δεν χρησιμοποιεί δικά του cookies παρακολούθησης. Ωστόσο, χρησιμοποιούμε ενσωματωμένους χάρτες Google Maps, οι οποίοι τοποθετούν cookies τρίτων (π.χ. NID, CONSENT) για λόγους λειτουργίας και προτιμήσεων.'
-                  : 'Our website does not use its own tracking cookies. However, we use embedded Google Maps, which set third-party cookies (e.g., NID, CONSENT) for functionality and preference purposes.'}
+                  ? 'Ο ιστότοπός μας χρησιμοποιεί Vercel Analytics για τη βελτίωση της εμπειρίας του χρήστη. Αυτό το εργαλείο είναι σχεδιασμένο να προστατεύει το απόρρητό σας και δεν συλλέγει προσωπικά αναγνωρίσιμα στοιχεία. Επιπλέον, χρησιμοποιούμε ενσωματωμένους χάρτες Google Maps, οι οποίοι τοποθετούν cookies τρίτων (π.χ. NID, CONSENT) για λόγους λειτουργίας.'
+                  : 'Our website uses Vercel Analytics to improve the user experience. This tool is designed to protect your privacy and does not collect personally identifiable information. Additionally, we use embedded Google Maps, which set third-party cookies (e.g., NID, CONSENT) for functionality purposes.'}
               </p>
               <p>
                 {isGreek
-                  ? 'Οι χάρτες Google Maps φορτώνονται μόνο μετά τη ρητή συγκατάθεσή σας μέσω του banner cookies. Μπορείτε να αποδεχτείτε ή να απορρίψετε τα cookies ανά πάσα στιγμή. Η επιλογή σας αποθηκεύεται τοπικά στον browser σας.'
-                  : 'Google Maps are loaded only after your explicit consent via the cookie banner. You can accept or decline cookies at any time. Your choice is stored locally in your browser.'}
+                  ? 'Τα cookies και τα εργαλεία ανάλυσης ενεργοποιούνται μόνο μετά τη ρητή συγκατάθεσή σας μέσω του banner cookies. Μπορείτε να αποδεχτείτε ή να απορρίψετε τη χρήση τους ανά πάσα στιγμή.'
+                  : 'Cookies and analytics tools are activated only after your explicit consent via the cookie banner. You can accept or decline their use at any time.'}
               </p>
             </div>
 

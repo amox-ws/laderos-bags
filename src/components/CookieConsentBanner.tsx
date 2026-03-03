@@ -26,8 +26,8 @@ const CookieConsentBanner = () => {
               <div className="flex-1">
                 <p className="text-sm text-foreground leading-relaxed">
                   {isGreek
-                    ? 'Ο ιστότοπός μας χρησιμοποιεί cookies τρίτων (Google Maps) για την εμφάνιση χαρτών. Μπορείτε να αποδεχτείτε ή να απορρίψετε τη χρήση τους.'
-                    : 'Our website uses third-party cookies (Google Maps) to display maps. You can accept or decline their use.'}
+                    ? 'Ο ιστότοπός μας χρησιμοποιεί cookies τρίτων (Google Maps) και εργαλεία ανάλυσης (Vercel Analytics) για τη βελτίωση της εμπειρίας σας. Μπορείτε να αποδεχτείτε ή να απορρίψετε τη χρήση τους.'
+                    : 'Our website uses third-party cookies (Google Maps) and analytics tools (Vercel Analytics) to improve your experience. You can accept or decline their use.'}
                   {' '}
                   <Link to="/privacy-policy" className="text-primary underline underline-offset-2 hover:opacity-80">
                     {isGreek ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
