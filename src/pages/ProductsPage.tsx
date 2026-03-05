@@ -7,8 +7,8 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
 
-const paperThumbnail = '/paper_product/paper_thumbnail.jpeg';
-const plasticThumbnail = '/plastic_product/plastic_thumbnail.jpeg';
+const paperThumbnail = '/paper_product/paper_thumbnail.webp';
+const plasticThumbnail = '/plastic_product/plastic_thumbnail.webp';
 
 const galleryImages = [
   { src: '/gallery/gallery9.webp', position: '60% center' }, 
