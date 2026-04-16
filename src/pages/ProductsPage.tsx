@@ -51,18 +51,25 @@ const ProductsPage = () => {
   return (
     <Layout>
       {/* Page Title */}
-      <section className="py-20 md:py-28 section-depth-1">
-        <div className="container-page">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-3xl"
+      <section className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
+        <div className="absolute inset-0 w-full h-full z-0">
+          <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+            <source src="/videos/productshero.mp4" type="video/mp4" />
+          </video>
+          <div className="absolute inset-0 bg-background/80" />
+        </div>
+
+        <div className="container-page relative z-10 text-center py-24">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 0.8 }} 
+            className="max-w-3xl mx-auto flex flex-col items-center"
           >
-            <h1>
+            <h1 className="mb-8 tracking-wide text-brand-light text-center">
               {t('products.page.heroTitle')}
             </h1>
-            <div className="w-16 h-[2px] bg-primary/40 mt-6" />
+            <div className="w-16 h-[2px] bg-primary/40" />
           </motion.div>
         </div>
       </section>

@@ -32,53 +32,6 @@ const AboutPage = () => {
   ];
 
   const heroRef = useRef<HTMLDivElement>(null);
-  const whoWeAreVideoRef = useRef<HTMLVideoElement | null>(null);
-  const productionVideoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    const whoWeAreEl = whoWeAreVideoRef.current;
-    if (whoWeAreEl) {
-      const observer1 = new IntersectionObserver(
-        async ([entry]) => {
-          if (!whoWeAreVideoRef.current) return;
-          if (entry.isIntersecting) {
-            try {
-              whoWeAreVideoRef.current.muted = true;
-              await whoWeAreVideoRef.current.play();
-            } catch {}
-          } else {
-            whoWeAreVideoRef.current.pause();
-          }
-        },
-        { threshold: 0.35 }
-      );
-      observer1.observe(whoWeAreEl);
-      return () => observer1.disconnect();
-    }
-  }, []);
-
-  useEffect(() => {
-    const productionEl = productionVideoRef.current;
-    if (productionEl) {
-      const observer2 = new IntersectionObserver(
-        async ([entry]) => {
-          if (!productionVideoRef.current) return;
-          if (entry.isIntersecting) {
-            try {
-              productionVideoRef.current.muted = true;
-              await productionVideoRef.current.play();
-            } catch {}
-          } else {
-            productionVideoRef.current.pause();
-          }
-        },
-        { threshold: 0.35 }
-      );
-      observer2.observe(productionEl);
-      return () => observer2.disconnect();
-    }
-  }, []);
-
   useEffect(() => {
     const heroEl = heroRef.current;
     if (!heroEl) return;
@@ -108,7 +61,7 @@ const AboutPage = () => {
       <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">
           <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-            <source src="/videos/about_bg.mp4" type="video/mp4" />
+            <source src="/videos/aboutherolb.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-background/80" />
         </div>
@@ -138,14 +91,11 @@ const AboutPage = () => {
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
               <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
-                <video
-                  ref={whoWeAreVideoRef}
+                <img
                   className="w-full h-full object-cover"
-                  src="/videos/who_we_are.mp4"
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
+                  src="/gallery/production_image.jpg"
+                  alt="Who We Are"
+                  loading="lazy"
                 />
               </div>
             </motion.div>
@@ -207,17 +157,31 @@ const AboutPage = () => {
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elevated max-w-5xl mx-auto bg-white/10">
-              <video
-                ref={productionVideoRef}
-                className="w-full h-full object-cover"
-                src="/videos/production.mp4"
-                muted
-                loop
-                playsInline
-                preload="metadata"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto justify-center">
+              {/* Photo */}
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated bg-white/10">
+                <img
+                  className="absolute inset-0 w-full h-full object-cover"
+                  src="/gallery/our_production_2.jpg"
+                  alt="Our Production"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+              </div>
+              
+              {/* Video */}
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated bg-white/10">
+                <video
+                  className="absolute inset-0 w-full h-full object-cover"
+                  src="/videos/ourprodction.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+              </div>
             </div>
           </AnimatedSection>
         </div>
