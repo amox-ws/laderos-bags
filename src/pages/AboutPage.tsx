@@ -85,7 +85,7 @@ const AboutPage = () => {
       <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">
           <video autoPlay loop muted playsInline className="w-full h-full object-cover">
-            <source src="/videos/about_bg.mp4" type="video/mp4" />
+            <source src="/videos/aboutherolb.mp4" type="video/mp4" />
           </video>
           <div className="absolute inset-0 bg-background/80" />
         </div>
