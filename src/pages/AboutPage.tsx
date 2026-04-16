@@ -32,30 +32,6 @@ const AboutPage = () => {
   ];
 
   const heroRef = useRef<HTMLDivElement>(null);
-  const whoWeAreVideoRef = useRef<HTMLVideoElement | null>(null);
-
-  useEffect(() => {
-    const whoWeAreEl = whoWeAreVideoRef.current;
-    if (whoWeAreEl) {
-      const observer1 = new IntersectionObserver(
-        async ([entry]) => {
-          if (!whoWeAreVideoRef.current) return;
-          if (entry.isIntersecting) {
-            try {
-              whoWeAreVideoRef.current.muted = true;
-              await whoWeAreVideoRef.current.play();
-            } catch {}
-          } else {
-            whoWeAreVideoRef.current.pause();
-          }
-        },
-        { threshold: 0.35 }
-      );
-      observer1.observe(whoWeAreEl);
-      return () => observer1.disconnect();
-    }
-  }, []);
-
   useEffect(() => {
     const heroEl = heroRef.current;
     if (!heroEl) return;
@@ -115,14 +91,11 @@ const AboutPage = () => {
               transition={{ duration: 1.2, ease: 'easeOut' }}
             >
               <div className="relative aspect-video bg-white/10 rounded-2xl overflow-hidden shadow-elevated">
-                <video
-                  ref={whoWeAreVideoRef}
+                <img
                   className="w-full h-full object-cover"
-                  src="/videos/who_we_are.mp4"
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
+                  src="/gallery/production_image.jpg"
+                  alt="Who We Are"
+                  loading="lazy"
                 />
               </div>
             </motion.div>

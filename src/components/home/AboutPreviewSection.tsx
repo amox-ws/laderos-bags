@@ -52,20 +52,22 @@ const AboutPreviewSection = () => {
   return (
     <section className="py-20 md:py-32 lg:py-40 overflow-hidden">
       <div className="container-page">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 xl:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 xl:gap-20 items-center">
           
-          {/* VIDEO BOX */}
+          {/* New Video (Arxiki) */}
           <motion.div 
             initial={{ x: -100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
+            className="order-1 lg:order-none lg:col-start-1 lg:row-start-1"
           >
             <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden shadow-elevated">
               <video
-                ref={videoRef}
-                src="/videos/experience.mp4"
+                src="/videos/arxikivid.mp4"
                 className="w-full h-full object-cover"
+                autoPlay
+                loop
                 muted
                 playsInline
                 preload="metadata"
@@ -74,13 +76,13 @@ const AboutPreviewSection = () => {
             </div>
           </motion.div>
 
-          {/* TEXT CONTENT */}
+          {/* TEXT CONTENT (Middle in Mobile, Right Col in Desktop) */}
           <motion.div 
             initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 1.2, ease: "easeOut" }}
-            className="space-y-6 lg:space-y-8"
+            className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 space-y-6 lg:space-y-8"
           >
             <div>
               <h3 className="text-foreground leading-[0.95] mb-6">
@@ -102,6 +104,27 @@ const AboutPreviewSection = () => {
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
             </Button>
+          </motion.div>
+
+          {/* Existing Video (Experience) */}
+          <motion.div 
+            initial={{ x: -100, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
+            className="order-3 lg:order-none lg:col-start-1 lg:row-start-2"
+          >
+            <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden shadow-elevated">
+              <video
+                ref={videoRef}
+                src="/videos/experience.mp4"
+                className="w-full h-full object-cover"
+                muted
+                playsInline
+                preload="metadata"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+            </div>
           </motion.div>
 
         </div>
