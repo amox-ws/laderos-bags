@@ -157,14 +157,31 @@ const AboutPage = () => {
           </AnimatedSection>
 
           <AnimatedSection delay={0.2}>
-            <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elevated max-w-5xl mx-auto bg-white/10">
-              <img
-                className="w-full h-full object-cover"
-                src="/gallery/production_image.jpg"
-                alt="Our Production"
-                loading="lazy"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto justify-center">
+              {/* Photo */}
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated bg-white/10">
+                <img
+                  className="absolute inset-0 w-full h-full object-cover"
+                  src="/gallery/our_production_2.jpg"
+                  alt="Our Production"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+              </div>
+              
+              {/* Video */}
+              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated bg-white/10">
+                <video
+                  className="absolute inset-0 w-full h-full object-cover"
+                  src="/videos/ourprodction.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+              </div>
             </div>
           </AnimatedSection>
         </div>
