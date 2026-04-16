@@ -33,7 +33,6 @@ const AboutPage = () => {
 
   const heroRef = useRef<HTMLDivElement>(null);
   const whoWeAreVideoRef = useRef<HTMLVideoElement | null>(null);
-  const productionVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const whoWeAreEl = whoWeAreVideoRef.current;
@@ -54,28 +53,6 @@ const AboutPage = () => {
       );
       observer1.observe(whoWeAreEl);
       return () => observer1.disconnect();
-    }
-  }, []);
-
-  useEffect(() => {
-    const productionEl = productionVideoRef.current;
-    if (productionEl) {
-      const observer2 = new IntersectionObserver(
-        async ([entry]) => {
-          if (!productionVideoRef.current) return;
-          if (entry.isIntersecting) {
-            try {
-              productionVideoRef.current.muted = true;
-              await productionVideoRef.current.play();
-            } catch {}
-          } else {
-            productionVideoRef.current.pause();
-          }
-        },
-        { threshold: 0.35 }
-      );
-      observer2.observe(productionEl);
-      return () => observer2.disconnect();
     }
   }, []);
 
@@ -208,14 +185,11 @@ const AboutPage = () => {
 
           <AnimatedSection delay={0.2}>
             <div className="relative aspect-video rounded-2xl overflow-hidden shadow-elevated max-w-5xl mx-auto bg-white/10">
-              <video
-                ref={productionVideoRef}
+              <img
                 className="w-full h-full object-cover"
-                src="/videos/production.mp4"
-                muted
-                loop
-                playsInline
-                preload="metadata"
+                src="/gallery/production_image.jpg"
+                alt="Our Production"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
             </div>
