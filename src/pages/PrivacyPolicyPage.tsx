@@ -185,7 +185,7 @@ const PrivacyPolicyPage = () => {
                 <p><strong>Laderos Bags</strong></p>
                 <p>Ελασσώνος 13, Αχαρνές 136 72</p>
                 <p>Email: laderosbags@gmail.gr</p>
-                <p>{isGreek ? 'Τηλ' : 'Tel'}: 697 266 1870</p>
+                <p>{isGreek ? 'Τηλ' : 'Tel'}: 697 266 1870 · 210 244 3550 · 210 244 3800</p>
               </div>
             </div>
 

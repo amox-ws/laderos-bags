@@ -63,9 +63,13 @@ const Footer = () => {
                 <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
                 <span className="text-sm">Αθήνα, Ελλάδα</span>
               </li>
-              <li className="flex items-center gap-3 opacity-60">
-                <Phone className="h-4 w-4 flex-shrink-0" />
-                <a href="tel:+306972661870" className="text-sm hover:opacity-100 transition-opacity">697 266 1870</a>
+              <li className="flex items-start gap-3 opacity-60">
+                <Phone className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                <div className="flex flex-col gap-1">
+                  <a href="tel:+306972661870" className="text-sm hover:opacity-100 transition-opacity">697 266 1870</a>
+                  <a href="tel:+302102443550" className="text-sm hover:opacity-100 transition-opacity">210 244 3550</a>
+                  <a href="tel:+302102443800" className="text-sm hover:opacity-100 transition-opacity">210 244 3800</a>
+                </div>
               </li>
               <li className="flex items-center gap-3 opacity-60">
                 <Mail className="h-4 w-4 flex-shrink-0" />

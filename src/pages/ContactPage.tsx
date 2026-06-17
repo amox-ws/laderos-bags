@@ -1,6 +1,6 @@
 // Contact Page - Laderos Bags
 import { motion } from 'framer-motion';
-import { MapPin, Phone, Mail, Clock } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCookieConsent } from '@/contexts/CookieConsentContext';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -12,7 +12,13 @@ const ContactPage = () => {
   const { t, language } = useLanguage();
   const { hasConsented } = useCookieConsent();
 
-  const contactInfo = [
+  const contactInfo: {
+    icon: LucideIcon;
+    label: string;
+    value?: string;
+    href?: string;
+    phones?: { value: string; href: string }[];
+  }[] = [
     {
       icon: MapPin,
       label: t('contact.info.address'),
@@ -21,8 +27,11 @@ const ContactPage = () => {
     {
       icon: Phone,
       label: t('contact.info.phone'),
-      value: '697 266 1870',
-      href: 'tel:+306972661870',
+      phones: [
+        { value: '697 266 1870', href: 'tel:+306972661870' },
+        { value: '210 244 3550', href: 'tel:+302102443550' },
+        { value: '210 244 3800', href: 'tel:+302102443800' },
+      ],
     },
     {
       icon: Mail,
@@ -83,7 +92,15 @@ const ContactPage = () => {
                         <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-1.5" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
                           {info.label}
                         </p>
-                        {'href' in info && info.href ? (
+                        {info.phones ? (
+                          <div className="flex flex-col gap-1">
+                            {info.phones.map((phone) => (
+                              <a key={phone.href} href={phone.href} className="font-medium hover:text-primary transition-colors">
+                                {phone.value}
+                              </a>
+                            ))}
+                          </div>
+                        ) : info.href ? (
                           <a href={info.href} className="font-medium hover:text-primary transition-colors">
                             {info.value}
                           </a>
