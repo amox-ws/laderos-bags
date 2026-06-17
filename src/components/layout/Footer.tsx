@@ -1,98 +1,104 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import footerLogo from '@/assets/footer-logo.png';
 
 const Footer = () => {
   const { t, language } = useLanguage();
   const currentYear = new Date().getFullYear();
 
+  const quickLinks = [
+    { href: '/', label: t('nav.home') },
+    { href: '/about', label: t('nav.about') },
+    { href: '/products', label: t('nav.products') },
+    { href: '/contact', label: t('nav.contact') },
+  ];
+
   return (
-    <footer className="footer-section">
-      <div className="container-page pt-16 pb-10 md:pt-24 md:pb-12">
-        {/* Top accent line */}
-        <div className="w-12 h-[2px] bg-primary/40 mb-12 md:mb-16" />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
-          {/* Logo & Description */}
-          <div className="lg:col-span-2">
-            <div className="mb-6">
-              <img src={footerLogo} alt="Laderos Bags" className="h-14 md:h-16 w-auto" />
-            </div>
-            <p className="opacity-60 max-w-sm text-sm leading-relaxed">
+    <footer className="footer-section relative overflow-hidden">
+      {/* Ambient navy glow */}
+      <div
+        className="pointer-events-none absolute -top-40 right-[-10%] w-[40rem] h-[40rem] rounded-full opacity-[0.18] blur-3xl"
+        style={{ background: 'radial-gradient(circle, hsl(var(--brand-blue)) 0%, transparent 70%)' }}
+        aria-hidden
+      />
+
+      <div className="container-page pt-20 pb-10 md:pt-28 md:pb-14 relative">
+        {/* Brand statement */}
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 pb-14 md:pb-20 border-b border-white/10">
+          <div className="lg:col-span-5">
+            <img src={footerLogo} alt="Laderos Bags" className="h-14 md:h-16 w-auto mb-7" />
+            <p className="opacity-60 max-w-sm leading-relaxed text-[15px]">
               {t('footer.description')}
             </p>
+            <Link
+              to="/contact"
+              className="link-underline mt-8 text-brand-light text-sm font-semibold uppercase tracking-[0.18em]"
+            >
+              {language === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] mb-6 opacity-50" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
-              Links
+          <div className="lg:col-span-3 lg:col-start-7">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.26em] mb-6 text-brand-light/80">
+              {language === 'el' ? 'Πλοήγηση' : 'Navigation'}
             </h4>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/" className="opacity-60 hover:opacity-100 transition-all duration-300 text-sm">
-                  {t('nav.home')}
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="opacity-60 hover:opacity-100 transition-all duration-300 text-sm">
-                  {t('nav.about')}
-                </Link>
-              </li>
-              <li>
-                <Link to="/products" className="opacity-60 hover:opacity-100 transition-all duration-300 text-sm">
-                  {t('nav.products')}
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="opacity-60 hover:opacity-100 transition-all duration-300 text-sm">
-                  {t('nav.contact')}
-                </Link>
-              </li>
+            <ul className="space-y-3.5">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    to={link.href}
+                    className="group inline-flex items-center gap-1.5 opacity-65 hover:opacity-100 transition-all duration-300 text-[15px]"
+                  >
+                    <span className="link-underline">{link.label}</span>
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-xs font-semibold uppercase tracking-[0.2em] mb-6 opacity-50" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+          <div className="lg:col-span-3">
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.26em] mb-6 text-brand-light/80">
               {t('contact.info.title')}
             </h4>
             <ul className="space-y-4">
-              <li className="flex items-start gap-3 opacity-60">
-                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <span className="text-sm">Αθήνα, Ελλάδα</span>
+              <li className="flex items-start gap-3 opacity-65">
+                <MapPin className="h-4 w-4 mt-1 flex-shrink-0 text-brand-light" />
+                <span className="text-[15px] leading-relaxed">Ελασσώνος 13, Αχαρνές 136 72</span>
               </li>
-              <li className="flex items-start gap-3 opacity-60">
-                <Phone className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                <div className="flex flex-col gap-1">
-                  <a href="tel:+306972661870" className="text-sm hover:opacity-100 transition-opacity">697 266 1870</a>
-                  <a href="tel:+302102443550" className="text-sm hover:opacity-100 transition-opacity">210 244 3550</a>
-                  <a href="tel:+302102443800" className="text-sm hover:opacity-100 transition-opacity">210 244 3800</a>
+              <li className="flex items-start gap-3 opacity-65">
+                <Phone className="h-4 w-4 flex-shrink-0 mt-1 text-brand-light" />
+                <div className="flex flex-col gap-1.5">
+                  <a href="tel:+306972661870" className="text-[15px] hover:opacity-100 hover:text-brand-light transition-all">697 266 1870</a>
+                  <a href="tel:+302102443550" className="text-[15px] hover:opacity-100 hover:text-brand-light transition-all">210 244 3550</a>
+                  <a href="tel:+302102443800" className="text-[15px] hover:opacity-100 hover:text-brand-light transition-all">210 244 3800</a>
                 </div>
               </li>
-              <li className="flex items-center gap-3 opacity-60">
-                <Mail className="h-4 w-4 flex-shrink-0" />
-                <span className="text-sm">laderosbags@gmail.gr</span>
+              <li className="flex items-start gap-3 opacity-65">
+                <Mail className="h-4 w-4 flex-shrink-0 mt-1 text-brand-light" />
+                <a href="mailto:laderosbags@gmail.gr" className="text-[15px] hover:opacity-100 hover:text-brand-light transition-all break-all">laderosbags@gmail.gr</a>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-white/10 flex flex-col items-center gap-3">
-          <Link to="/privacy-policy" className="opacity-40 hover:opacity-80 transition-all duration-300 text-xs uppercase tracking-[0.15em]">
-            {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
-          </Link>
-          <p className="text-center opacity-30 text-xs tracking-wider">
+        <div className="mt-8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="opacity-40 text-xs tracking-wider order-2 md:order-1">
             © {currentYear} Laderos Bags. {t('footer.rights')}.
           </p>
-          <p className="text-center opacity-20 text-[11px] mt-1 tracking-wider">
-            Powered by{' '}
-            <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="hover:opacity-60 transition-opacity">
-              Amox
-            </a>
-          </p>
+          <div className="flex items-center gap-6 order-1 md:order-2">
+            <Link to="/privacy-policy" className="opacity-50 hover:opacity-90 transition-all duration-300 text-xs uppercase tracking-[0.15em]">
+              {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
+            </Link>
+            <span className="opacity-30 text-[11px] tracking-wider">
+              Powered by{' '}
+              <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="hover:opacity-100 hover:text-brand-light transition-all">
+                Amox
+              </a>
+            </span>
+          </div>
         </div>
       </div>
     </footer>

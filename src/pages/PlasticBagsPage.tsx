@@ -100,7 +100,7 @@ const PlasticBagsPage = () => {
 
                   {/* Features */}
                   <div className="mt-10">
-                    <h3 className="text-xs font-semibold uppercase tracking-[0.15em] mb-5" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                    <h3 className="eyebrow block mb-5">
                       {t('plasticBags.featuresTitle')}
                     </h3>
                     <ul className="space-y-3">

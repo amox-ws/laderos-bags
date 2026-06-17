@@ -70,12 +70,12 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
   const activeDotIndex = currentIndex >= images.length ? 0 : currentIndex;
 
   return (
-    <Link 
+    <Link
       to={linkTo}
-      className="group block bg-card rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 cursor-pointer"
+      className="group block bg-card rounded-xl overflow-hidden border border-border/60 shadow-card hover:shadow-card-hover hover:-translate-y-1.5 hover:border-brand/30 transition-all duration-500 cursor-pointer"
     >
       {/* Carousel Container */}
-      <div 
+      <div
         className="relative aspect-[4/3] overflow-hidden bg-muted"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -138,11 +138,13 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
       </div>
 
       {/* Title Bar */}
-      <div className="px-6 py-5 md:px-8 md:py-6 bg-card group-hover:bg-secondary transition-colors duration-500 flex items-center justify-between">
-        <h3 className="text-lg md:text-xl lg:text-2xl text-foreground group-hover:text-primary-foreground transition-colors duration-500">
+      <div className="px-6 py-5 md:px-7 md:py-6 bg-card group-hover:bg-secondary transition-colors duration-500 flex items-center justify-between gap-4">
+        <h3 className="text-2xl md:text-3xl text-foreground group-hover:text-primary-foreground transition-colors duration-500 leading-none">
           {title}
         </h3>
-        <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary-foreground transition-all duration-500 group-hover:translate-x-1" />
+        <span className="flex-shrink-0 w-11 h-11 rounded-full border border-border group-hover:border-primary-foreground/30 flex items-center justify-center transition-all duration-500">
+          <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary-foreground transition-all duration-500 group-hover:translate-x-0.5" />
+        </span>
       </div>
     </Link>
   );

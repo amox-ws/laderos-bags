@@ -21,7 +21,7 @@ gsap.registerPlugin(ScrollTrigger);
 let animationHasPlayed = false;
 
 const HomePage = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const location = useLocation();
 
   // Skip animation if it already played in this app session (module lifetime)
@@ -248,20 +248,30 @@ const HomePage = () => {
         </div>
 
         {/* CTA Section */}
-        <section className="section-padding accent-section overflow-hidden">
-          <div className="container-page">
-            <motion.div 
-              className="text-center max-w-3xl mx-auto"
-              initial={{ y: 80, opacity: 0 }}
+        <section className="section-padding accent-section overflow-hidden relative grain-overlay">
+          <div
+            className="pointer-events-none absolute inset-0 opacity-70"
+            style={{
+              background:
+                'radial-gradient(ellipse 60% 55% at 50% 0%, hsl(210 90% 62% / 0.4), transparent 60%), radial-gradient(ellipse 60% 60% at 50% 120%, hsl(218 60% 14% / 0.55), transparent 60%)',
+            }}
+            aria-hidden
+          />
+          <div className="container-page relative">
+            <motion.div
+              className="text-center max-w-3xl mx-auto flex flex-col items-center"
+              initial={{ y: 60, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 1.2, ease: "easeOut" }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h2 className="mb-6">
+              <span className="section-label justify-center">
+                {language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'}
+              </span>
+              <h2 className="mb-6 max-w-2xl">
                 {t('cta.title')}
               </h2>
-              <div className="w-12 h-[1px] bg-white/30 mx-auto mb-6" />
-              <p className="text-lg opacity-70 mb-10 max-w-xl mx-auto">
+              <p className="text-lg opacity-80 mb-10 max-w-xl mx-auto">
                 {t('cta.subtitle')}
               </p>
               <Button variant="heroOutline" size="xl" asChild className="group">

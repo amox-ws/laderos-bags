@@ -1,10 +1,11 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import ProductCarousel from './ProductCarousel';
 import { motion } from 'framer-motion';
 
 const ProductsSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const paperBagImages = [
     '/product_bags/navy_and_green.webp', 
@@ -25,18 +26,18 @@ const ProductsSection = () => {
       <div className="container-page">
         
         {/* Section Header */}
-        <AnimatedSection className="text-center mb-16 md:mb-24">
-          <h2 className="mb-8">
-            {t('products.section.title')}
-          </h2>
-          <div className="max-w-3xl mx-auto space-y-5">
-            <p className="text-base md:text-lg leading-relaxed opacity-70">
-              {t('products.section.text1')}
-            </p>
-            <p className="text-base md:text-lg leading-relaxed opacity-70">
-              {t('products.section.text2')}
-            </p>
-          </div>
+        <SectionHeading
+          eyebrow={language === 'el' ? 'Τα προϊόντα μας' : 'Our products'}
+          title={t('products.section.title')}
+          className="mb-16 md:mb-24"
+        />
+        <AnimatedSection delay={0.1} className="max-w-3xl mx-auto -mt-10 mb-16 md:mb-24 text-center space-y-5">
+          <p className="text-base md:text-lg leading-relaxed opacity-70">
+            {t('products.section.text1')}
+          </p>
+          <p className="text-base md:text-lg leading-relaxed opacity-70">
+            {t('products.section.text2')}
+          </p>
         </AnimatedSection>
 
         {/* Product Carousels */}

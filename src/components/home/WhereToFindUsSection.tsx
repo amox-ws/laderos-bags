@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import MapPlaceholder from '@/components/MapPlaceholder';
 
 const WhereToFindUsSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { hasConsented } = useCookieConsent();
   const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3140.8!2d23.7316!3d38.0847!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1a2f8a8a8a8a8%3A0x0!2zRWxhc3Nvbm9zIDEzLCBBY2hhcm5lcyAxMzYgNzIsIEdyZWVjZQ!5e0!3m2!1sen!2sgr!4v1700000000000!5m2!1sen!2sgr";
 
@@ -51,10 +51,10 @@ const WhereToFindUsSection = () => {
           >
             <div className="space-y-6 lg:space-y-8">
               <div>
-                <h3 className="text-foreground leading-[0.95] mb-6">
+                <span className="section-label">{language === 'el' ? 'Η έδρα μας' : 'Our location'}</span>
+                <h3 className="text-foreground mb-0">
                   {t('whereToFindUs.title')}
                 </h3>
-                <div className="w-12 h-[2px] bg-primary/40" />
               </div>
               <p className="text-muted-foreground leading-relaxed text-base md:text-lg">
                 {t('whereToFindUs.text')}

@@ -218,12 +218,13 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-10"
+          className="mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground uppercase tracking-wide">
+          <span className="section-label">{language === 'el' ? 'Αίτημα προσφοράς' : 'Quote request'}</span>
+          <h2 className="mb-3">
             {t('quoteForm.title')}
           </h2>
-          <p className="text-lg text-muted-foreground mt-2">
+          <p className="text-lg opacity-80 measure">
             {t('quoteForm.subtitle')}
           </p>
         </motion.div>
@@ -236,7 +237,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
               {t('quoteForm.size')}
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -336,7 +337,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.15 }}
           >
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
               {t('quoteForm.handles')}
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -366,7 +367,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
                 {t('quoteForm.finishing')}
               </h3>
               <div className="flex flex-wrap gap-3">
@@ -396,7 +397,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
               {t('quoteForm.printing')}
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -426,7 +427,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+              <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
                 {t('quoteForm.extraProcessing')}
               </h3>
               <div className="flex flex-wrap gap-3">

@@ -54,14 +54,14 @@ const ContactPage = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl"
           >
+            <span className="section-label">{language === 'el' ? 'Επικοινωνία' : 'Get in touch'}</span>
             <h1 className="mb-6">
               {t('contact.title')}
             </h1>
-            <div className="w-16 h-[2px] bg-primary/40 mb-6" />
-            <p className="text-lg md:text-xl text-muted-foreground">
+            <p className="text-lg md:text-xl text-muted-foreground measure">
               {t('contact.subtitle')}
             </p>
           </motion.div>
@@ -75,7 +75,7 @@ const ContactPage = () => {
             {/* Contact Information */}
             <AnimatedSection>
               <div className="h-full">
-                <h2 className="text-xl mb-10" style={{ fontFamily: 'Inter, system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: '13px', fontWeight: 600 }}>
+                <h2 className="eyebrow block mb-8">
                   {t('contact.info.title')}
                 </h2>
 
@@ -89,7 +89,7 @@ const ContactPage = () => {
                         <info.icon className="h-5 w-5 text-primary" />
                       </div>
                       <div>
-                        <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-1.5" style={{ fontFamily: 'Inter, system-ui, sans-serif' }}>
+                        <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground mb-1.5" style={{ fontFamily: 'Manrope, system-ui, sans-serif' }}>
                           {info.label}
                         </p>
                         {info.phones ? (
@@ -117,7 +117,7 @@ const ContactPage = () => {
             {/* Map */}
             <AnimatedSection delay={0.2}>
               <div className="h-full flex flex-col">
-                <h2 className="text-xl mb-10 lg:invisible" style={{ fontFamily: 'Inter, system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: '13px', fontWeight: 600 }}>
+                <h2 className="eyebrow block mb-8 lg:invisible">
                   {language === 'el' ? 'Χάρτης' : 'Map'}
                 </h2>
                 <div className="flex-1 rounded-2xl overflow-hidden min-h-[350px] shadow-elevated">

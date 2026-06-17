@@ -7,19 +7,20 @@ const PrivacyPolicyPage = () => {
 
   return (
     <Layout>
-      <section className="py-16 md:py-24">
+      <section className="py-20 md:py-28 main-section">
         <div className="container-page max-w-3xl">
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
+          <span className="section-label">{isGreek ? 'Νομικά' : 'Legal'}</span>
+          <h1 className="text-4xl md:text-6xl text-foreground mb-4">
             {isGreek ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
           </h1>
-          <p className="text-muted-foreground mb-8 text-sm">
+          <p className="text-muted-foreground mb-12 text-sm">
             {isGreek ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
           </p>
 
           <div className="space-y-8 text-foreground/90 leading-relaxed">
             {/* Introduction */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '1. Εισαγωγή' : '1. Introduction'}
               </h2>
               <p>
@@ -31,7 +32,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Data We Collect */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '2. Δεδομένα που Συλλέγουμε' : '2. Data We Collect'}
               </h2>
               <p className="mb-3">
@@ -51,7 +52,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Purpose of Data Processing */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '3. Σκοπός Επεξεργασίας' : '3. Purpose of Data Processing'}
               </h2>
               <p className="mb-3">
@@ -68,7 +69,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Legal Basis */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '4. Νομική Βάση' : '4. Legal Basis'}
               </h2>
               <p>
@@ -80,7 +81,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Data Storage */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '5. Αποθήκευση Δεδομένων' : '5. Data Storage'}
               </h2>
               <p>
@@ -92,7 +93,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Third Parties */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '6. Τρίτα Μέρη' : '6. Third Parties'}
               </h2>
               <p className="mb-3">
@@ -130,7 +131,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Your Rights */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '7. Τα Δικαιώματά σας' : '7. Your Rights'}
               </h2>
               <p className="mb-3">
@@ -156,7 +157,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Cookies */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '8. Cookies & Αναλυτικά Στοιχεία' : '8. Cookies & Analytics'}
               </h2>
               <p className="mb-3">
@@ -173,7 +174,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Contact */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '9. Επικοινωνία' : '9. Contact'}
               </h2>
               <p className="mb-2">
@@ -191,7 +192,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Supervisory Authority */}
             <div>
-              <h2 className="text-xl font-semibold mb-3">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                 {isGreek ? '10. Εποπτική Αρχή' : '10. Supervisory Authority'}
               </h2>
               <p>

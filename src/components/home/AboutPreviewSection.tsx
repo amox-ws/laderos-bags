@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 
 const AboutPreviewSection = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -85,10 +85,10 @@ const AboutPreviewSection = () => {
             className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 space-y-6 lg:space-y-8"
           >
             <div>
-              <h3 className="text-foreground leading-[0.95] mb-6">
+              <span className="section-label">{language === 'el' ? 'Η εταιρεία' : 'About us'}</span>
+              <h3 className="text-foreground mb-0">
                 {t('aboutPreview.title')}
               </h3>
-              <div className="w-12 h-[2px] bg-primary/40" />
             </div>
             <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
               {t('aboutPreview.text')}
