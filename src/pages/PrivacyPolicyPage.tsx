@@ -1,4 +1,5 @@
 import Layout from '@/components/layout/Layout';
+import SEO from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const PrivacyPolicyPage = () => {
@@ -7,6 +8,7 @@ const PrivacyPolicyPage = () => {
 
   return (
     <Layout>
+      <SEO routeKey="/privacy-policy" />
       <section className="py-20 md:py-28 main-section">
         <div className="container-page max-w-3xl">
           <span className="section-label">{isGreek ? 'Νομικά' : 'Legal'}</span>
@@ -150,8 +152,8 @@ const PrivacyPolicyPage = () => {
               </ul>
               <p className="mt-3">
                 {isGreek
-                  ? 'Για την άσκηση οποιουδήποτε δικαιώματος, επικοινωνήστε μαζί μας στο laderosbags@gmail.gr.'
-                  : 'To exercise any of these rights, contact us at laderosbags@gmail.gr.'}
+                  ? 'Για την άσκηση οποιουδήποτε δικαιώματος, επικοινωνήστε μαζί μας στο laderosbags@gmail.com.'
+                  : 'To exercise any of these rights, contact us at laderosbags@gmail.com.'}
               </p>
             </div>
 
@@ -185,7 +187,7 @@ const PrivacyPolicyPage = () => {
               <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-1">
                 <p><strong>Laderos Bags</strong></p>
                 <p>Ελασσώνος 13, Αχαρνές 136 72</p>
-                <p>Email: laderosbags@gmail.gr</p>
+                <p>Email: laderosbags@gmail.com</p>
                 <p>{isGreek ? 'Τηλ' : 'Tel'}: 697 266 1870 · 210 244 3550 · 210 244 3800</p>
               </div>
             </div>

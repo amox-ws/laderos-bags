@@ -1,4 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
+import SEO from '@/components/SEO';
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import Layout from "@/components/layout/Layout";
@@ -15,6 +16,7 @@ const NotFound = () => {
 
   return (
     <Layout>
+      <SEO noindex />
       <section className="min-h-[82vh] flex items-center justify-center main-section relative overflow-hidden">
         <div className="container-page text-center relative z-10 flex flex-col items-center py-24">
           <span className="font-display font-semibold text-[9rem] md:text-[15rem] leading-[0.8] text-primary/15 select-none" aria-hidden>

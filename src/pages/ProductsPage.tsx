@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SEO from '@/components/SEO';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -50,6 +51,7 @@ const ProductsPage = () => {
 
   return (
     <Layout>
+      <SEO routeKey="/products" />
       {/* Hero — cinematic navy overlay over production video */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">

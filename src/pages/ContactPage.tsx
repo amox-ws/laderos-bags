@@ -1,5 +1,6 @@
 // Contact Page - Laderos Bags
 import { motion } from 'framer-motion';
+import SEO from '@/components/SEO';
 import { MapPin, Phone, Mail, Clock, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCookieConsent } from '@/contexts/CookieConsentContext';
@@ -36,8 +37,8 @@ const ContactPage = () => {
     {
       icon: Mail,
       label: t('contact.info.email'),
-      value: 'laderosbags@gmail.gr',
-      href: 'mailto:laderosbags@gmail.gr',
+      value: 'laderosbags@gmail.com',
+      href: 'mailto:laderosbags@gmail.com',
     },
     {
       icon: Clock,
@@ -48,6 +49,7 @@ const ContactPage = () => {
 
   return (
     <Layout>
+      <SEO routeKey="/contact" />
       {/* Page Title */}
       <section className="py-20 md:py-28 main-section">
         <div className="container-page">

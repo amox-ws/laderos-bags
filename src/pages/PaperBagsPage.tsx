@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SEO from '@/components/SEO';
 import { ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -65,6 +66,7 @@ const PaperBagsPage = () => {
 
   return (
     <Layout>
+      <SEO routeKey="/products/paper-bags" />
       {/* Hero */}
       <section className="section-padding main-section">
         <div className="container-page">

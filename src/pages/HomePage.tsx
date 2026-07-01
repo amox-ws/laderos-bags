@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useMemo } from 'react';
+import SEO from '@/components/SEO';
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowRight, ChevronsDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -206,6 +207,13 @@ const HomePage = () => {
 
   return (
     <Layout>
+      <SEO routeKey="/" />
+      {/* Primary page heading — visually hidden, present for SEO & screen readers */}
+      <h1 className="sr-only">
+        {language === 'el'
+          ? 'Laderos Bags — Χάρτινες & Πλαστικές Σακούλες με Εκτύπωση Λογοτύπου για Επιχειρήσεις'
+          : 'Laderos Bags — Custom Printed Paper & Plastic Bags for Businesses'}
+      </h1>
       {/* SECTION 1: ANIMATION WRAPPER - Only on first visit */}
       {!skipAnimation && (
         <div
