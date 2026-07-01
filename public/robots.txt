@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://laderosbags.gr/sitemap.xml
+Sitemap: https://www.laderosbags.gr/sitemap.xml

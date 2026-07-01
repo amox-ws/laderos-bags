@@ -1,7 +1,7 @@
 // Central SEO configuration for Laderos Bags.
 // Per-page titles/descriptions (bilingual el/en). Used by the <SEO /> component.
 
-export const SITE_URL = 'https://laderosbags.gr';
+export const SITE_URL = 'https://www.laderosbags.gr';
 export const SITE_NAME = 'Laderos Bags';
 export const DEFAULT_OG_IMAGE =
   'https://storage.googleapis.com/gpt-engineer-file-uploads/EOvTIjSi3la1fOQUPjIBzIO5dKp2/social-images/social-1770739384600-Gemini_Generated_Image_9qc1zc9qc1zc9qc1.png';
