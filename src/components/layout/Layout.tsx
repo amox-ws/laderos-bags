@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
@@ -7,55 +7,59 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-/** How far (as % of its height) the footer starts shifted down. */
-const REVEAL_SHIFT = 38;
-
 /**
- * Layout with a scroll-linked footer reveal: the footer lives in the normal
- * document flow (so the page always scrolls far enough for it to fully show),
- * but its content starts shifted downwards and slides up in sync with the
- * scroll — it gradually appears top-first, in motion, and reaches its natural
- * position exactly at the end of the page.
+ * Footer reveal: the content (main) scrolls normally until its end reaches
+ * the bottom of the viewport — there it STICKS (sticky with a negative top
+ * equal to `100vh - mainHeight`), and as the user keeps scrolling the footer
+ * slides up OVER the pinned section: its title appears first, then
+ * progressively the rest, until the footer fully covers it. Because the
+ * footer is in the normal flow, it always ends fully visible.
  */
 const Layout = ({ children }: LayoutProps) => {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
+  const [stickyTop, setStickyTop] = useState<number | null>(null);
 
   useEffect(() => {
-    const update = () => {
-      const wrap = wrapRef.current;
-      const inner = innerRef.current;
-      if (!wrap || !inner) return;
-      const rect = wrap.getBoundingClientRect();
+    const el = mainRef.current;
+    if (!el) return;
+
+    const measure = () => {
       const vh = window.innerHeight;
-      const h = rect.height || 1;
-      // 0 → footer top just entered the viewport bottom
-      // 1 → footer bottom aligned with viewport bottom (end of page)
-      const progress = Math.min(1, Math.max(0, (vh - rect.top) / h));
-      inner.style.transform = `translateY(${((1 - progress) * REVEAL_SHIFT).toFixed(3)}%)`;
+      const h = el.offsetHeight;
+      // pin the main only once its bottom hits the viewport bottom
+      setStickyTop(Math.min(0, Math.round(vh - h)));
     };
 
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    window.addEventListener('resize', measure);
     return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      ro.disconnect();
+      window.removeEventListener('resize', measure);
     };
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen">
       <Header />
-      <main className="flex-1 pt-16 md:pt-20">
+
+      {/* Content — sticks when fully scrolled, footer slides over it */}
+      <main
+        ref={mainRef}
+        className="pt-16 md:pt-20"
+        style={{
+          position: 'sticky',
+          top: stickyTop ?? undefined,
+          zIndex: 0,
+        }}
+      >
         {children}
       </main>
 
-      {/* Footer reveal — slides up into place as you scroll */}
-      <div ref={wrapRef} className="relative overflow-hidden" style={{ backgroundColor: 'hsl(220 55% 6%)' }}>
-        <div ref={innerRef} style={{ transform: `translateY(${REVEAL_SHIFT}%)`, willChange: 'transform' }}>
-          <Footer />
-        </div>
+      {/* Footer — normal flow, layered above the pinned content */}
+      <div className="relative z-10">
+        <Footer />
       </div>
 
       <CookieConsentBanner />

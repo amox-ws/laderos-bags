@@ -29,19 +29,13 @@ const PlasticBagsPage = () => {
   const plasticBagImages = [
     '/plastic_product/sporthero.webp',
     '/plastic_product/annette.webp',
-    '/plastic_product/b&b.webp',
     '/plastic_product/beauty.webp',
     '/plastic_product/butchery.webp',
     '/plastic_product/casba.webp',
-    '/plastic_product/lab35.webp',
     '/plastic_product/navy_green.webp',
     '/plastic_product/oasis.webp',
-    '/plastic_product/oida.webp',
-    '/plastic_product/plaza.webp',
     '/plastic_product/proton.webp',
     '/plastic_product/sport_jean.webp',
-    '/plastic_product/annas_secret.webp',
-    '/plastic_product/ugeia.webp',
   ];
 
   const features = [
@@ -155,18 +149,6 @@ const PlasticBagsPage = () => {
                   <div className="flex gap-4">
                     <GalleryImage src={plasticBagImages[7]} index={7} className="w-[52%] aspect-[3/4]" />
                     <GalleryImage src={plasticBagImages[8]} index={8} className="w-[48%] aspect-[4/5]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[9]} index={9} className="w-[55%] aspect-[3/4]" />
-                    <GalleryImage src={plasticBagImages[10]} index={10} className="w-[45%] aspect-[3/4]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[11]} index={11} className="w-[58%] aspect-[4/5]" />
-                    <GalleryImage src={plasticBagImages[12]} index={12} className="w-[42%] aspect-[3/5]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[13]} index={13} className="w-[45%] aspect-[3/5]" />
-                    <GalleryImage src={plasticBagImages[14]} index={14} className="w-[55%] aspect-[4/5]" />
                   </div>
                 </div>
               </AnimatedSection>

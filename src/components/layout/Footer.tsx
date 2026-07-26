@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Phone, MapPin, ArrowUp, ArrowRight } from 'lucide-react';
-import footerLogo from '@/assets/footer-logo.png';
 
 const ink = 'hsl(220 55% 8%)';
 
@@ -20,54 +19,67 @@ const Footer = () => {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="footer-section relative overflow-hidden">
-      <div className="container-page pt-14 md:pt-20 pb-8 relative">
+    <footer
+      className="footer-section relative overflow-hidden"
+      style={{ boxShadow: '0 -36px 70px -36px rgba(0, 0, 0, 0.55)' }}
+    >
+      <div className="container-page pt-10 md:pt-12 pb-6 relative">
 
-        {/* CTA band — the Laderos signature row */}
+        {/* Giant wordmark — the reveal leads with this */}
         <div
-          className="flex flex-col md:flex-row md:items-center md:justify-between gap-7 pb-12 md:pb-14 border-b-2"
+          aria-hidden
+          className="select-none leading-[0.85] font-extrabold uppercase tracking-[-0.03em] whitespace-nowrap text-[11vw] lg:text-[8.5rem]"
+          style={{ color: ink }}
+        >
+          Laderos Bags
+        </div>
+
+        {/* CTA row */}
+        <div
+          className="mt-6 md:mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-y-2 py-5"
           style={{ borderColor: 'hsl(220 55% 8% / 0.3)' }}
         >
-          <h2 className="max-w-2xl text-3xl sm:text-4xl md:text-5xl">
+          <h4 className="text-xl md:text-2xl max-w-xl">
             {t('cta.title')}
-          </h2>
+          </h4>
           <Link
             to="/contact#quote"
-            className="group inline-flex items-center gap-4 font-extrabold uppercase tracking-[0.05em] text-sm md:text-base flex-shrink-0"
+            className="group inline-flex items-center gap-3.5 font-extrabold uppercase tracking-[0.05em] text-sm flex-shrink-0"
           >
             {language === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
             <span
-              className="w-14 h-14 rounded-full border-2 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5"
+              className="w-12 h-12 rounded-full border-2 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5"
               style={{ borderColor: ink }}
             >
-              <ArrowRight className="h-5 w-5" />
+              <ArrowRight className="h-4 w-4" />
             </span>
           </Link>
         </div>
 
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 pt-12 md:pt-14">
-          {/* Brand / description / contact */}
-          <div className="lg:col-span-5 space-y-5">
-            <img src={footerLogo} alt="Laderos Bags" className="h-12 md:h-14 w-auto" />
-            <p className="max-w-sm leading-relaxed text-[15px] font-medium opacity-90">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pt-8">
+          {/* Description + contact */}
+          <div className="lg:col-span-5 space-y-4">
+            <p className="max-w-sm leading-relaxed text-sm font-medium opacity-90">
               {t('footer.description')}
             </p>
-            <ul className="space-y-3 pt-1">
-              <li className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 mt-1 flex-shrink-0" />
-                <span className="text-[15px] font-semibold">Ελασσώνος 13, Αχαρνές 136 72</span>
+            <ul className="space-y-2">
+              <li className="flex items-start gap-2.5">
+                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <span className="text-sm font-semibold">Ελασσώνος 13, Αχαρνές 136 72</span>
               </li>
-              <li className="flex items-start gap-3">
-                <Phone className="h-4 w-4 mt-1 flex-shrink-0" />
-                <div className="flex flex-col gap-1 text-[15px] font-semibold">
+              <li className="flex items-start gap-2.5">
+                <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <span className="text-sm font-semibold">
                   <a href="tel:+306972661870" className="hover:opacity-70 transition-opacity">697 266 1870</a>
+                  {' · '}
                   <a href="tel:+302102443550" className="hover:opacity-70 transition-opacity">210 244 3550</a>
+                  {' · '}
                   <a href="tel:+302102443800" className="hover:opacity-70 transition-opacity">210 244 3800</a>
-                </div>
+                </span>
               </li>
-              <li className="flex items-start gap-3">
-                <Mail className="h-4 w-4 mt-1 flex-shrink-0" />
-                <a href="mailto:laderosbags@gmail.gr" className="text-[15px] font-semibold hover:opacity-70 transition-opacity break-all">
+              <li className="flex items-start gap-2.5">
+                <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <a href="mailto:laderosbags@gmail.gr" className="text-sm font-semibold hover:opacity-70 transition-opacity break-all">
                   laderosbags@gmail.gr
                 </a>
               </li>
@@ -77,17 +89,17 @@ const Footer = () => {
           {/* Navigation */}
           <div className="lg:col-span-4 lg:col-start-7">
             <h4
-              className="text-base md:text-lg mb-6 inline-block pb-1.5 border-b-4"
+              className="text-base mb-4 inline-block pb-1 border-b-4"
               style={{ borderColor: ink }}
             >
               {language === 'el' ? 'Πλοήγηση' : 'Navigation'}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1.5">
               {navCol.map((link) => (
                 <li key={link.href}>
                   <Link
                     to={link.href}
-                    className="link-underline text-[14px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
+                    className="link-underline text-[13px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
                   >
                     {link.label}
                   </Link>
@@ -96,19 +108,19 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* General */}
+          {/* General + back to top */}
           <div className="lg:col-span-3">
             <h4
-              className="text-base md:text-lg mb-6 inline-block pb-1.5 border-b-4"
+              className="text-base mb-4 inline-block pb-1 border-b-4"
               style={{ borderColor: ink }}
             >
               {language === 'el' ? 'Γενικά' : 'General'}
             </h4>
-            <ul className="space-y-2.5">
+            <ul className="space-y-1.5">
               <li>
                 <Link
                   to="/privacy-policy"
-                  className="link-underline text-[14px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
+                  className="link-underline text-[13px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
                 >
                   {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
                 </Link>
@@ -116,18 +128,17 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact#quote"
-                  className="link-underline text-[14px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
+                  className="link-underline text-[13px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
                 >
                   {language === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
                 </Link>
               </li>
             </ul>
 
-            {/* Back to top */}
             <button
               onClick={scrollTop}
               aria-label={language === 'el' ? 'Επιστροφή στην κορυφή' : 'Back to top'}
-              className="mt-8 w-12 h-12 rounded-full border-2 flex items-center justify-center hover:-translate-y-1 active:translate-y-0 transition-transform duration-300"
+              className="mt-6 w-11 h-11 rounded-full border-2 flex items-center justify-center hover:-translate-y-1 active:translate-y-0 transition-transform duration-300"
               style={{ borderColor: ink }}
             >
               <ArrowUp className="h-5 w-5" />
@@ -135,9 +146,9 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom bar */}
         <div
-          className="mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 border-t-2"
+          className="mt-8 pt-4 flex flex-col md:flex-row items-center justify-between gap-2 border-t-2"
           style={{ borderColor: 'hsl(220 55% 8% / 0.25)' }}
         >
           <p className="text-xs font-bold tracking-wide">
