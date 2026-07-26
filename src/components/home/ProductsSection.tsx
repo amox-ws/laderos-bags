@@ -1,21 +1,20 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import ProductCarousel from './ProductCarousel';
 import { motion } from 'framer-motion';
 
 const ProductsSection = () => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const paperBagImages = [
-    '/product_bags/navy_and_green.webp', 
+    '/product_bags/navy_and_green.webp',
     '/product_bags/pink.webp',
     '/product_bags/redbull.webp',
     '/product_bags/cashew.webp',
   ];
 
   const plasticBagImages = [
-    '/product_bags/black_pink.webp', 
+    '/product_bags/black_pink.webp',
     '/product_bags/ygeia.webp',
     '/product_bags/oasisbnb.webp',
     '/product_bags/butcher.webp',
@@ -24,46 +23,47 @@ const ProductsSection = () => {
   return (
     <section id="products-section" className="section-padding overflow-hidden">
       <div className="container-page">
-        
-        {/* Section Header */}
-        <SectionHeading
-          eyebrow={language === 'el' ? 'Τα προϊόντα μας' : 'Our products'}
-          title={t('products.section.title')}
-          className="mb-16 md:mb-24"
-        />
-        <AnimatedSection delay={0.1} className="max-w-3xl mx-auto -mt-10 mb-16 md:mb-24 text-center space-y-5">
-          <p className="text-base md:text-lg leading-relaxed opacity-70">
-            {t('products.section.text1')}
-          </p>
-          <p className="text-base md:text-lg leading-relaxed opacity-70">
-            {t('products.section.text2')}
-          </p>
+
+        {/* Statement header — giant, left-aligned, with marks */}
+        <AnimatedSection className="mb-12 md:mb-16">
+          <h2 className="max-w-5xl mb-8">
+            {t('products.section.title')}
+          </h2>
+          <div className="w-24 h-1.5 mb-10" style={{ backgroundColor: 'hsl(210 88% 60%)' }} aria-hidden />
+          <div className="max-w-4xl space-y-4">
+            <p className="text-base md:text-lg leading-relaxed text-white/85">
+              {t('products.section.text1')}
+            </p>
+            <p className="text-base md:text-lg leading-relaxed text-white/85">
+              {t('products.section.text2')}
+            </p>
+          </div>
         </AnimatedSection>
 
-        {/* Product Carousels */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12">
-          
+        {/* Product media — big, labels underneath */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8">
+
           <motion.div
-            initial={{ x: -100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
+            initial={{ y: 60, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           >
-            <ProductCarousel 
-              title={t('products.paper.title')} 
+            <ProductCarousel
+              title={t('products.paper.title')}
               images={paperBagImages}
               linkTo="/products/paper-bags"
             />
           </motion.div>
-          
+
           <motion.div
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
+            initial={{ y: 60, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
             viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
           >
-            <ProductCarousel 
-              title={t('products.plastic.title')} 
+            <ProductCarousel
+              title={t('products.plastic.title')}
               images={plasticBagImages}
               linkTo="/products/plastic-bags"
             />

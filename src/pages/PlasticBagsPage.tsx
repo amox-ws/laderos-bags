@@ -201,7 +201,7 @@ const PlasticBagsPage = () => {
       </section>
 
       {/* Quote Form */}
-      <section id="quote-section" className="section-padding accent-section scroll-mt-20">
+      <section id="quote-section" className="section-padding ink-section scroll-mt-20">
         <div className="container-page">
           <AnimatedSection>
             <QuoteRequestForm bagType="plastic" />

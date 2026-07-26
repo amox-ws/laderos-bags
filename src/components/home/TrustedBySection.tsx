@@ -6,7 +6,7 @@ interface TrustedBySectionProps {
 }
 
 const TrustedBySection = ({ showTitle = true }: TrustedBySectionProps) => {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const topPartners = [
     { name: 'Partner 1', logo: '/logos/NavyGreen_logo.png' },
@@ -58,12 +58,11 @@ const TrustedBySection = ({ showTitle = true }: TrustedBySectionProps) => {
       `}</style>
 
       {showTitle && (
-        <div className="container-page mb-14 md:mb-20">
-          <AnimatedSection className="text-center flex flex-col items-center">
-            <span className="section-label">{language === 'el' ? 'Συνεργασίες' : 'Partners'}</span>
-            <h2 className="mb-0">
-              {t('trustedBy.title')}
-            </h2>
+        <div className="container-page mb-12 md:mb-16">
+          <AnimatedSection>
+            <h3 className="mb-0">
+              [ {t('trustedBy.title')} ]
+            </h3>
           </AnimatedSection>
         </div>
       )}

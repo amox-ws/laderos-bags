@@ -233,17 +233,19 @@ const HomePage = () => {
       )}
 
       {/* Products section - pulled up behind canvas when animation is active */}
-      <div className={`main-section pt-12 ${!skipAnimation ? 'relative z-10 -mt-[100dvh]' : ''}`}>
+      <div className={`ink-section pt-12 ${!skipAnimation ? 'relative z-10 -mt-[100dvh]' : ''}`}>
         <ProductsSection />
       </div>
 
       {/* REMAINING SECTIONS - always rendered normally below */}
       <div>
+        <div className="stripe-divider" aria-hidden />
+
         <div className="main-section">
           <TrustedBySection />
         </div>
 
-        <div className="main-section">
+        <div className="ink-section">
           <AboutPreviewSection />
         </div>
 
@@ -256,33 +258,33 @@ const HomePage = () => {
         </div>
 
         {/* CTA Section */}
-        <section className="section-padding accent-section overflow-hidden relative grain-overlay">
+        <section className="section-padding ink-section overflow-hidden relative grain-overlay">
           <div
-            className="pointer-events-none absolute inset-0 opacity-70"
+            className="pointer-events-none absolute inset-0 opacity-60"
             style={{
               background:
-                'radial-gradient(ellipse 60% 55% at 50% 0%, hsl(210 90% 62% / 0.4), transparent 60%), radial-gradient(ellipse 60% 60% at 50% 120%, hsl(218 60% 14% / 0.55), transparent 60%)',
+                'radial-gradient(ellipse 60% 55% at 50% 0%, hsl(214 80% 47% / 0.28), transparent 60%)',
             }}
             aria-hidden
           />
           <div className="container-page relative">
             <motion.div
-              className="text-center max-w-3xl mx-auto flex flex-col items-center"
+              className="text-center max-w-4xl mx-auto flex flex-col items-center"
               initial={{ y: 60, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="section-label justify-center">
+              <span className="section-label text-white/80">
                 {language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'}
               </span>
-              <h2 className="mb-6 max-w-2xl">
+              <h2 className="mb-6 max-w-3xl">
                 {t('cta.title')}
               </h2>
-              <p className="text-lg opacity-80 mb-10 max-w-xl mx-auto">
+              <p className="text-lg opacity-85 mb-10 max-w-xl mx-auto text-white">
                 {t('cta.subtitle')}
               </p>
-              <Button variant="heroOutline" size="xl" asChild className="group">
+              <Button variant="heroOutline" size="xl" asChild className="group rounded-[var(--radius)] font-extrabold uppercase tracking-[0.06em]">
                 <Link to="/contact#quote">
                   {t('cta.button')}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />

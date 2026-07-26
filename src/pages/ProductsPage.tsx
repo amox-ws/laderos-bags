@@ -74,7 +74,7 @@ const ProductsPage = () => {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-4xl mx-auto flex flex-col items-center"
           >
-            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-brand-light mb-7">
+            <span className="section-label text-brand-light mb-7">
               {language === 'el' ? 'Η γκάμα μας' : 'Our range'}
             </span>
             <h1 className="text-white text-center mb-0">

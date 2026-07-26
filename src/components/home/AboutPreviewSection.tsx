@@ -85,12 +85,12 @@ const AboutPreviewSection = () => {
             className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 space-y-6 lg:space-y-8"
           >
             <div>
-              <span className="section-label">{language === 'el' ? 'Η εταιρεία' : 'About us'}</span>
-              <h3 className="text-foreground mb-0">
+              <span className="section-label text-white/80">{language === 'el' ? 'Η εταιρεία' : 'About us'}</span>
+              <h3 className="mb-0 text-3xl md:text-4xl lg:text-5xl">
                 {t('aboutPreview.title')}
               </h3>
             </div>
-            <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
+            <p className="text-white/85 text-base md:text-lg leading-relaxed">
               {t('aboutPreview.text')}
             </p>
             <Button 

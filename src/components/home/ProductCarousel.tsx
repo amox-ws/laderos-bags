@@ -72,11 +72,11 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
   return (
     <Link
       to={linkTo}
-      className="group block bg-card rounded-xl overflow-hidden border border-border/60 shadow-card hover:shadow-card-hover hover:-translate-y-1.5 hover:border-brand/30 transition-all duration-500 cursor-pointer"
+      className="group block cursor-pointer"
     >
       {/* Carousel Container */}
       <div
-        className="relative aspect-[4/3] overflow-hidden bg-muted"
+        className="relative aspect-[4/3] overflow-hidden bg-muted rounded-[var(--radius)]"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -137,14 +137,10 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
         </div>
       </div>
 
-      {/* Title Bar */}
-      <div className="px-6 py-5 md:px-7 md:py-6 bg-card group-hover:bg-secondary transition-colors duration-500 flex items-center justify-between gap-4">
-        <h3 className="text-2xl md:text-3xl text-foreground group-hover:text-primary-foreground transition-colors duration-500 leading-none">
-          {title}
-        </h3>
-        <span className="flex-shrink-0 w-11 h-11 rounded-full border border-border group-hover:border-primary-foreground/30 flex items-center justify-center transition-all duration-500">
-          <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-primary-foreground transition-all duration-500 group-hover:translate-x-0.5" />
-        </span>
+      {/* Label underneath — Patras-style */}
+      <div className="media-label group-hover:gap-3.5 transition-all duration-300">
+        {title}
+        <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
       </div>
     </Link>
   );

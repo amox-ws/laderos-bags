@@ -82,7 +82,7 @@ const AboutPage = () => {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center"
           >
-            <span className="text-[11px] font-semibold uppercase tracking-[0.3em] text-brand-light mb-7">
+            <span className="section-label text-brand-light mb-7">
               {language === 'el' ? 'Η εταιρεία' : 'About us'}
             </span>
             <h1 className="mb-8 text-white max-w-4xl">
@@ -253,7 +253,7 @@ const AboutPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding accent-section overflow-hidden relative grain-overlay">
+      <section className="section-padding ink-section overflow-hidden relative grain-overlay">
         <div
           className="pointer-events-none absolute inset-0 opacity-60"
           style={{

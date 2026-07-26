@@ -249,7 +249,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
                   className={cn(
                     'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                     formData.size === size
-                      ? 'bg-navy text-white border-navy shadow-md'
+                      ? 'bg-primary text-white border-primary shadow-md'
                       : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                   )}
                 >
@@ -349,7 +349,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
                   className={cn(
                     'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                     formData.handle === handle.id
-                      ? 'bg-navy text-white border-navy shadow-md'
+                      ? 'bg-primary text-white border-primary shadow-md'
                       : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                   )}
                 >
@@ -379,7 +379,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
                     className={cn(
                       'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                       formData.finishing.includes(option.id)
-                        ? 'bg-navy text-white border-navy shadow-md'
+                        ? 'bg-primary text-white border-primary shadow-md'
                         : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                     )}
                   >
@@ -409,7 +409,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
                   className={cn(
                     'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                     formData.printing === option.id
-                      ? 'bg-navy text-white border-navy shadow-md'
+                      ? 'bg-primary text-white border-primary shadow-md'
                       : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                     )}
                 >
@@ -439,7 +439,7 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
                     className={cn(
                       'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
                       formData.extraProcessing.includes(option.id)
-                        ? 'bg-navy text-white border-navy shadow-md'
+                        ? 'bg-primary text-white border-primary shadow-md'
                         : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
                     )}
                   >
