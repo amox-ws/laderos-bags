@@ -34,8 +34,60 @@ const GalleryImage = ({
 );
 
 const PaperBagsPage = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const isMobile = useIsMobile();
+
+  const optikaImages = [
+    '/paper_product/optika/sakoula-optolux.webp',
+    '/paper_product/optika/sakoula-optolux-2.webp',
+    '/paper_product/optika/sakoula-optolux-3.webp',
+    '/paper_product/optika/sakoula-optolux-panagouli.webp',
+    '/paper_product/optika/sakoula-optolux-panagouli-2.webp',
+    '/paper_product/optika/sakoula-optofree.webp',
+    '/paper_product/optika/sakoula-optofree-2.webp',
+    '/paper_product/optika/sakoula-optofree-3.webp',
+    '/paper_product/optika/sakoula-occhi-eleganti.webp',
+    '/paper_product/optika/sakoula-optical-room.webp',
+    '/paper_product/optika/sakoula-optics.webp',
+    '/paper_product/optika/sakoula-optics-poly.webp',
+    '/paper_product/optika/sakoula-excellens.webp',
+    '/paper_product/optika/sakoula-eye-like-u.webp',
+  ];
+
+  const paidikaImages = [
+    '/paper_product/paidika/sakoula-kid-club.webp',
+    '/paper_product/paidika/sakoula-kid-club-2.webp',
+    '/paper_product/paidika/sakoula-kid-club-3.webp',
+    '/paper_product/paidika/sakoula-kid-club-4.webp',
+    '/paper_product/paidika/sakoula-oneiropagida.webp',
+    '/paper_product/paidika/sakoula-oneiropagida-2.webp',
+    '/paper_product/paidika/sakoula-oneiropagida-3.webp',
+    '/paper_product/paidika/sakoula-oneiropagida-4.webp',
+    '/paper_product/paidika/sakoula-oneiropagida-5.webp',
+    '/paper_product/paidika/sakoula-oneiropagida-6.webp',
+    '/paper_product/paidika/sakoula-oneiropagida-7.webp',
+    '/paper_product/paidika/sakoula-capolino.webp',
+    '/paper_product/paidika/sakoula-lilipoupoli.webp',
+    '/paper_product/paidika/sakoula-lilipoupoli-2.webp',
+    '/paper_product/paidika/sakoula-lilipoupoli-3.webp',
+    '/paper_product/paidika/sakoula-sash-club.webp',
+    '/paper_product/paidika/sakoula-sash-club-2.webp',
+    '/paper_product/paidika/sakoula-sash-club-3.webp',
+    '/paper_product/paidika/sakoula-sash-club-4.webp',
+    '/paper_product/paidika/sakoula-tom-and-jerry.webp',
+    '/paper_product/paidika/sakoula-tom-and-jerry-2.webp',
+    '/paper_product/paidika/sakoula-azure-2.webp',
+    '/paper_product/paidika/sakoula-bee-fashion.webp',
+    '/paper_product/paidika/sakoula-brands.webp',
+    '/paper_product/paidika/sakoula-cool-step.webp',
+    '/paper_product/paidika/sakoula-dodo-squawk-fashion.webp',
+    '/paper_product/paidika/sakoula-fragolina.webp',
+    '/paper_product/paidika/sakoula-paidikos-paradeisos.webp',
+    '/paper_product/paidika/sakoula-pallina.webp',
+    '/paper_product/paidika/sakoula-skertso-kids-fashion.webp',
+    '/paper_product/paidika/sakoula-sole-kids-footwear.webp',
+    '/paper_product/paidika/sakoula-this-is-my-smile.webp',
+  ];
 
   const paperBagImages = [
     '/paper_product/navy_green.webp',
@@ -179,6 +231,30 @@ const PaperBagsPage = () => {
                     <GalleryImage src={paperBagImages[13]} index={13} className="w-[50%] aspect-square" />
                     <GalleryImage src={paperBagImages[14]} index={14} className="w-[50%] aspect-square" />
                   </div>
+                </div>
+              </AnimatedSection>
+
+              {/* Οπτικά */}
+              <AnimatedSection className="mt-16">
+                <h3 className="mb-6">
+                  [ {language === 'el' ? 'Οπτικά' : 'Optical'} ]
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {optikaImages.map((src, i) => (
+                    <GalleryImage key={src} src={src} index={i} className="aspect-square" />
+                  ))}
+                </div>
+              </AnimatedSection>
+
+              {/* Παιδικά */}
+              <AnimatedSection className="mt-16">
+                <h3 className="mb-6">
+                  [ {language === 'el' ? 'Παιδικά' : 'Kids'} ]
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  {paidikaImages.map((src, i) => (
+                    <GalleryImage key={src} src={src} index={i} className="aspect-square" />
+                  ))}
                 </div>
               </AnimatedSection>
             </div>
