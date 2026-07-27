@@ -13,6 +13,8 @@ const Footer = () => {
     { href: '/about', label: t('nav.about') },
     { href: '/products/paper-bags', label: t('nav.products.paper') },
     { href: '/products/plastic-bags', label: t('nav.products.plastic') },
+    { href: '/products/optika', label: language === 'el' ? 'Οπτικά' : 'Optical' },
+    { href: '/products/paidika', label: language === 'el' ? 'Παιδικά' : 'Kids' },
     { href: '/contact', label: t('nav.contact') },
   ];
 

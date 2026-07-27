@@ -25,6 +25,8 @@ const Header = () => {
   const productSubLinks = [
     { href: '/products/paper-bags', label: t('nav.products.paper') },
     { href: '/products/plastic-bags', label: t('nav.products.plastic') },
+    { href: '/products/optika', label: language === 'el' ? 'Οπτικά' : 'Optical' },
+    { href: '/products/paidika', label: language === 'el' ? 'Παιδικά' : 'Kids' },
   ];
 
   const toggleLanguage = () => {

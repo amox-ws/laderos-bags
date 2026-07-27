@@ -78,6 +78,28 @@ export const PAGE_SEO: Record<string, PageSeo> = {
     },
     path: '/products/plastic-bags',
   },
+  '/products/optika': {
+    title: {
+      el: 'Σακούλες για Οπτικά Καταστήματα με Εκτύπωση | Laderos Bags',
+      en: 'Custom Printed Bags for Optical Stores | Laderos Bags',
+    },
+    description: {
+      el: 'Χάρτινες σακούλες για οπτικά και καταστήματα φακών επαφής, με εκτύπωση λογοτύπου έως 4 χρώματα. Διαστάσεις για θήκες γυαλιών, λαβές και φινιρίσματα της επιλογής σας.',
+      en: 'Paper bags for optical and contact-lens stores, printed with your logo in up to 4 colours. Sized for eyewear cases, with your choice of handles and finishes.',
+    },
+    path: '/products/optika',
+  },
+  '/products/paidika': {
+    title: {
+      el: 'Σακούλες για Παιδικά Καταστήματα με Εκτύπωση | Laderos Bags',
+      en: 'Custom Printed Bags for Kids Stores | Laderos Bags',
+    },
+    description: {
+      el: 'Χάρτινες σακούλες για παιδικά ρούχα, είδη μπεμπέ και παιδικά υποδήματα, με πολύχρωμη εκτύπωση λογοτύπου. Πολλά μεγέθη, ανθεκτικές λαβές, δυνατότητα πλαστικοποίησης.',
+      en: 'Paper bags for childrenswear, baby goods and kids footwear, with full-colour logo printing. Multiple sizes, durable handles, lamination available.',
+    },
+    path: '/products/paidika',
+  },
   '/contact': {
     title: {
       el: 'Επικοινωνία & Προσφορά — Αχαρνές | Laderos Bags',
@@ -204,6 +226,17 @@ export const makeBreadcrumbLd = (items: [string, string][]) => ({
     position: i + 1,
     name,
     item: `${SITE_URL}${path === '/' ? '' : path}`,
+  })),
+});
+
+/** FAQPage builder — makes the questions eligible for rich results. */
+export const makeFaqLd = (items: { question: string; answer: string }[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: { '@type': 'Answer', text: answer },
   })),
 });
 

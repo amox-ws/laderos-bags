@@ -12,6 +12,8 @@ import AboutPage from "./pages/AboutPage";
 import ProductsPage from "./pages/ProductsPage";
 import PaperBagsPage from "./pages/PaperBagsPage";
 import PlasticBagsPage from "./pages/PlasticBagsPage";
+import CategoryPage from "./pages/CategoryPage";
+import { OPTIKA, PAIDIKA } from "./content/categories";
 import ContactPage from "./pages/ContactPage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import NotFound from "./pages/NotFound";
@@ -38,6 +40,8 @@ const App = () => (
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/products/paper-bags" element={<PaperBagsPage />} />
             <Route path="/products/plastic-bags" element={<PlasticBagsPage />} />
+            <Route path="/products/optika" element={<CategoryPage content={OPTIKA} />} />
+            <Route path="/products/paidika" element={<CategoryPage content={PAIDIKA} />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

@@ -94,7 +94,7 @@ const ProductsSection = () => {
             <ProductCarousel
               title={language === 'el' ? 'Οπτικά' : 'Optical'}
               images={optikaImages}
-              linkTo="/products/paper-bags"
+              linkTo="/products/optika"
             />
           </motion.div>
 
@@ -107,7 +107,7 @@ const ProductsSection = () => {
             <ProductCarousel
               title={language === 'el' ? 'Παιδικά' : 'Kids'}
               images={paidikaImages}
-              linkTo="/products/paper-bags"
+              linkTo="/products/paidika"
             />
           </motion.div>
 

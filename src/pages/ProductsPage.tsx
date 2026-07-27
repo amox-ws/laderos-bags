@@ -62,8 +62,8 @@ const ProductsPage = () => {
           makeItemListLd('Κατηγορίες Προϊόντων Laderos Bags', [
             ['Χάρτινες Σακούλες', '/products/paper-bags'],
             ['Πλαστικές Σακούλες', '/products/plastic-bags'],
-            ['Σακούλες για Οπτικά', '/products/paper-bags'],
-            ['Σακούλες για Παιδικά', '/products/paper-bags'],
+            ['Σακούλες για Οπτικά', '/products/optika'],
+            ['Σακούλες για Παιδικά', '/products/paidika'],
           ]),
         ]}
       />

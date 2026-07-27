@@ -1,20 +1,13 @@
 import { Link } from 'react-router-dom';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
-import { ArrowLeft, Check } from 'lucide-react';
+import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
-
-/** Derive a human-readable brand name from an image path for alt text. */
-const brandFromSrc = (src: string) =>
-  (src.split('/').pop() || '')
-    .replace('sakoula-', '')
-    .replace('.webp', '')
-    .replace(/-/g, ' ');
 
 const GalleryImage = ({
   src,
@@ -138,8 +131,8 @@ const PaperBagsPage = () => {
           ]),
           makeItemListLd('Κατηγορίες Χάρτινων Σακουλών', [
             ['Χάρτινες Σακούλες Πολυτελείας', '/products/paper-bags'],
-            ['Σακούλες για Οπτικά', '/products/paper-bags'],
-            ['Σακούλες για Παιδικά', '/products/paper-bags'],
+            ['Σακούλες για Οπτικά', '/products/optika'],
+            ['Σακούλες για Παιδικά', '/products/paidika'],
           ]),
         ]}
       />
@@ -258,39 +251,51 @@ const PaperBagsPage = () => {
                 </div>
               </AnimatedSection>
 
-              {/* Οπτικά */}
+              {/* Ειδικές κατηγορίες — πλήρεις συλλογές σε δικές τους σελίδες */}
               <AnimatedSection className="mt-16">
                 <h3 className="mb-6">
-                  [ {language === 'el' ? 'Οπτικά' : 'Optical'} ]
+                  [ {language === 'el' ? 'Ειδικές κατηγορίες' : 'Special categories'} ]
                 </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {optikaImages.map((src, i) => (
-                    <GalleryImage
-                      key={src}
-                      src={src}
-                      index={i}
-                      className="aspect-square"
-                      alt={`Χάρτινη σακούλα για οπτικά — ${brandFromSrc(src)} | Laderos Bags`}
-                    />
-                  ))}
-                </div>
-              </AnimatedSection>
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <Link to="/products/optika" className="group block">
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-muted shadow-card group-hover:shadow-card-hover transition-all duration-500">
+                      <img
+                        src={optikaImages[0]}
+                        alt={language === 'el' ? 'Χάρτινες σακούλες για οπτικά καταστήματα | Laderos Bags' : 'Paper bags for optical stores | Laderos Bags'}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="media-label group-hover:gap-3.5 transition-all duration-300">
+                      {language === 'el' ? 'Οπτικά' : 'Optical'}
+                      <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {language === 'el'
+                        ? 'Σακούλες για οπτικά και φακούς επαφής — δείτε όλη τη συλλογή.'
+                        : 'Bags for optical and contact-lens stores — see the full collection.'}
+                    </p>
+                  </Link>
 
-              {/* Παιδικά */}
-              <AnimatedSection className="mt-16">
-                <h3 className="mb-6">
-                  [ {language === 'el' ? 'Παιδικά' : 'Kids'} ]
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  {paidikaImages.map((src, i) => (
-                    <GalleryImage
-                      key={src}
-                      src={src}
-                      index={i}
-                      className="aspect-square"
-                      alt={`Χάρτινη σακούλα για παιδικά — ${brandFromSrc(src)} | Laderos Bags`}
-                    />
-                  ))}
+                  <Link to="/products/paidika" className="group block">
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-muted shadow-card group-hover:shadow-card-hover transition-all duration-500">
+                      <img
+                        src={paidikaImages[0]}
+                        alt={language === 'el' ? 'Χάρτινες σακούλες για παιδικά καταστήματα | Laderos Bags' : 'Paper bags for kids stores | Laderos Bags'}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="media-label group-hover:gap-3.5 transition-all duration-300">
+                      {language === 'el' ? 'Παιδικά' : 'Kids'}
+                      <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {language === 'el'
+                        ? 'Σακούλες για παιδικά ρούχα και υποδήματα — δείτε όλη τη συλλογή.'
+                        : 'Bags for childrenswear and kids footwear — see the full collection.'}
+                    </p>
+                  </Link>
                 </div>
               </AnimatedSection>
             </div>
