@@ -126,7 +126,7 @@ const ContactPage = () => {
                 <div className="flex-1 rounded-2xl overflow-hidden min-h-[350px] shadow-elevated">
                 {hasConsented ? (
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3141.8876844456196!2d23.7244!3d38.0846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1999c7c9c7c9d%3A0x7c9c7c9c7c9c7c9c!2sElassonos%2013%2C%20Acharnes%20136%2072%2C%20Greece!5e0!3m2!1sen!2s!4v1706000000000!5m2!1sen!2s"
+                    src="https://maps.google.com/maps?q=38.098358,23.7499251&z=16&hl=el&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0, minHeight: '350px' }}

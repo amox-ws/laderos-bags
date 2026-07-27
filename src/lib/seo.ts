@@ -6,6 +6,12 @@ export const SITE_URL = 'https://www.laderosbags.gr';
 export const SITE_NAME = 'Laderos Bags';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 
+/** Canonical Google Business Profile listing (derived from the Maps CID). */
+export const GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=6099904786620582164';
+
+/** Verified coordinates of Ελασσώνος 13, Αχαρνές (from the Maps listing). */
+export const GEO = { latitude: 38.098358, longitude: 23.7499251 };
+
 export type Lang = 'el' | 'en';
 
 export interface PageSeo {
@@ -162,9 +168,11 @@ export const LOCAL_BUSINESS_LD = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 38.0846,
-    longitude: 23.7244,
+    latitude: GEO.latitude,
+    longitude: GEO.longitude,
   },
+  hasMap: GOOGLE_MAPS_URL,
+  sameAs: [GOOGLE_MAPS_URL],
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
