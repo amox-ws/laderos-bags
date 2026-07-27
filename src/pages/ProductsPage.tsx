@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import SEO from '@/components/SEO';
+import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -51,7 +52,21 @@ const ProductsPage = () => {
 
   return (
     <Layout>
-      <SEO routeKey="/products" />
+      <SEO
+        routeKey="/products"
+        jsonLd={[
+          makeBreadcrumbLd([
+            ['Αρχική', '/'],
+            ['Προϊόντα', '/products'],
+          ]),
+          makeItemListLd('Κατηγορίες Προϊόντων Laderos Bags', [
+            ['Χάρτινες Σακούλες', '/products/paper-bags'],
+            ['Πλαστικές Σακούλες', '/products/plastic-bags'],
+            ['Σακούλες για Οπτικά', '/products/paper-bags'],
+            ['Σακούλες για Παιδικά', '/products/paper-bags'],
+          ]),
+        ]}
+      />
       {/* Hero — cinematic navy overlay over production video */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">

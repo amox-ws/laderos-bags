@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import SEO from '@/components/SEO';
+import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
 import { ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
@@ -8,22 +9,31 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-const GalleryImage = ({ 
-  src, 
-  className = '', 
-  index, 
-  objectFit = 'cover' 
-}: { 
-  src: string; 
-  className?: string; 
+/** Derive a human-readable brand name from an image path for alt text. */
+const brandFromSrc = (src: string) =>
+  (src.split('/').pop() || '')
+    .replace('sakoula-', '')
+    .replace('.webp', '')
+    .replace(/-/g, ' ');
+
+const GalleryImage = ({
+  src,
+  className = '',
+  index,
+  objectFit = 'cover',
+  alt,
+}: {
+  src: string;
+  className?: string;
   index: number;
   objectFit?: 'cover' | 'contain';
+  alt?: string;
 }) => (
   <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
     <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
-      <img 
-        src={src} 
-        alt={`Paper Bag Application ${index + 1}`}
+      <img
+        src={src}
+        alt={alt ?? `Χάρτινη σακούλα με εκτύπωση λογοτύπου — δείγμα ${index + 1} | Laderos Bags`}
         className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-105 ${
           objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
         }`}
@@ -118,7 +128,21 @@ const PaperBagsPage = () => {
 
   return (
     <Layout>
-      <SEO routeKey="/products/paper-bags" />
+      <SEO
+        routeKey="/products/paper-bags"
+        jsonLd={[
+          makeBreadcrumbLd([
+            ['Αρχική', '/'],
+            ['Προϊόντα', '/products'],
+            ['Χάρτινες Σακούλες', '/products/paper-bags'],
+          ]),
+          makeItemListLd('Κατηγορίες Χάρτινων Σακουλών', [
+            ['Χάρτινες Σακούλες Πολυτελείας', '/products/paper-bags'],
+            ['Σακούλες για Οπτικά', '/products/paper-bags'],
+            ['Σακούλες για Παιδικά', '/products/paper-bags'],
+          ]),
+        ]}
+      />
       {/* Hero */}
       <section className="section-padding main-section">
         <div className="container-page">
@@ -241,7 +265,13 @@ const PaperBagsPage = () => {
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   {optikaImages.map((src, i) => (
-                    <GalleryImage key={src} src={src} index={i} className="aspect-square" />
+                    <GalleryImage
+                      key={src}
+                      src={src}
+                      index={i}
+                      className="aspect-square"
+                      alt={`Χάρτινη σακούλα για οπτικά — ${brandFromSrc(src)} | Laderos Bags`}
+                    />
                   ))}
                 </div>
               </AnimatedSection>
@@ -253,7 +283,13 @@ const PaperBagsPage = () => {
                 </h3>
                 <div className="grid grid-cols-2 gap-4">
                   {paidikaImages.map((src, i) => (
-                    <GalleryImage key={src} src={src} index={i} className="aspect-square" />
+                    <GalleryImage
+                      key={src}
+                      src={src}
+                      index={i}
+                      className="aspect-square"
+                      alt={`Χάρτινη σακούλα για παιδικά — ${brandFromSrc(src)} | Laderos Bags`}
+                    />
                   ))}
                 </div>
               </AnimatedSection>

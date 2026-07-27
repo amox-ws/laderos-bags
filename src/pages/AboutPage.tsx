@@ -1,6 +1,7 @@
 // About Page - Laderos Bags
 import { motion } from 'framer-motion';
 import SEO from '@/components/SEO';
+import { makeBreadcrumbLd } from '@/lib/seo';
 import { Factory, Package, Award, Users, ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -59,7 +60,7 @@ const AboutPage = () => {
 
   return (
     <Layout>
-      <SEO routeKey="/about" />
+      <SEO routeKey="/about" jsonLd={makeBreadcrumbLd([['Αρχική', '/'], ['Η Εταιρεία', '/about']])} />
       {/* Hero Section — cinematic navy overlay */}
       <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">
