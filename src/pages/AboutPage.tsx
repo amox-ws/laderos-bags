@@ -14,6 +14,7 @@ import { Button } from '@/components/ui/button';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Eyebrow from '@/components/ui/Eyebrow';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -83,9 +84,11 @@ const AboutPage = () => {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center"
           >
-            <span className="section-label text-brand-light mb-7">
-              {language === 'el' ? 'Η εταιρεία' : 'About us'}
-            </span>
+            <Eyebrow
+              label={language === 'el' ? 'Η εταιρεία' : 'About us'}
+              heading={t('about.hero.title')}
+              className="text-brand-light mb-7"
+            />
             <h1 className="mb-8 text-white max-w-4xl">
               {t('about.hero.title')}
             </h1>
@@ -128,7 +131,7 @@ const AboutPage = () => {
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
               <div>
-                <span className="section-label">{language === 'el' ? 'Ποιοι είμαστε' : 'Who we are'}</span>
+                <Eyebrow label={language === 'el' ? 'Ποιοι είμαστε' : 'Who we are'} heading={t('about.whoWeAre.title')} />
                 <h2 className="mb-6">{t('about.whoWeAre.title')}</h2>
                 <p className="leading-relaxed text-lg text-muted-foreground measure">{t('about.whoWeAre.text')}</p>
               </div>
@@ -220,7 +223,7 @@ const AboutPage = () => {
         <div className="container-page">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
             <AnimatedSection className="lg:sticky lg:top-28">
-              <span className="section-label">{language === 'el' ? 'Γιατί εμάς' : 'Why us'}</span>
+              <Eyebrow label={language === 'el' ? 'Γιατί εμάς' : 'Why us'} heading={t('about.whyWork.title')} />
               <h2 className="mb-6">{t('about.whyWork.title')}</h2>
               <p className="leading-relaxed mb-8 text-muted-foreground text-lg measure">{t('about.whyWork.text')}</p>
             </AnimatedSection>
@@ -271,7 +274,7 @@ const AboutPage = () => {
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="section-label justify-center">{language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'}</span>
+            <Eyebrow label={language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'} heading={t('cta.title')} className="justify-center" />
             <h2 className="mb-6 max-w-2xl">{t('cta.title')}</h2>
             <p className="opacity-80 mb-10 max-w-2xl mx-auto text-lg">{t('cta.subtitle')}</p>
             <Button asChild variant="heroOutline" size="xl" className="group">

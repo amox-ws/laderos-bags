@@ -15,6 +15,7 @@ import WhereToFindUsSection from '@/components/home/WhereToFindUsSection';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
+import Eyebrow from '@/components/ui/Eyebrow';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -275,9 +276,11 @@ const HomePage = () => {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="section-label text-white/80">
-                {language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'}
-              </span>
+              <Eyebrow
+                label={language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'}
+                heading={t('cta.title')}
+                className="text-white/80"
+              />
               <h2 className="mb-6 max-w-3xl">
                 {t('cta.title')}
               </h2>

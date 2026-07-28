@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useInView, motion } from 'framer-motion';
+import Eyebrow from '@/components/ui/Eyebrow';
 
 interface StatItemProps {
   endValue: number;
@@ -93,9 +94,11 @@ const AnimatedStatsSection = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="section-label justify-center">
-            {language === 'el' ? 'Με αριθμούς' : 'By the numbers'}
-          </span>
+          <Eyebrow
+            label={language === 'el' ? 'Με αριθμούς' : 'By the numbers'}
+            heading={language === 'el' ? 'Συνέπεια που μετριέται σε χρόνια' : 'Consistency measured in years'}
+            className="justify-center"
+          />
           <h2 className="max-w-3xl mx-auto">
             {language === 'el' ? 'Συνέπεια που μετριέται σε χρόνια' : 'Consistency measured in years'}
           </h2>

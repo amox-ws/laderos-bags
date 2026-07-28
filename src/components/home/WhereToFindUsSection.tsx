@@ -5,6 +5,7 @@ import { useCookieConsent } from '@/contexts/CookieConsentContext';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import MapPlaceholder from '@/components/MapPlaceholder';
+import Eyebrow from '@/components/ui/Eyebrow';
 
 const WhereToFindUsSection = () => {
   const { t, language } = useLanguage();
@@ -51,7 +52,7 @@ const WhereToFindUsSection = () => {
           >
             <div className="space-y-6 lg:space-y-8">
               <div>
-                <span className="section-label">{language === 'el' ? 'Η έδρα μας' : 'Our location'}</span>
+                <Eyebrow label={language === 'el' ? 'Η έδρα μας' : 'Our location'} heading={t('whereToFindUs.title')} />
                 <h3 className="text-foreground mb-0">
                   {t('whereToFindUs.title')}
                 </h3>

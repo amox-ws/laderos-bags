@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
+import Eyebrow from '@/components/ui/Eyebrow';
 
 const paperThumbnail = '/paper_product/paper_thumbnail.webp';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.webp';
@@ -89,9 +90,11 @@ const ProductsPage = () => {
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-4xl mx-auto flex flex-col items-center"
           >
-            <span className="section-label text-brand-light mb-7">
-              {language === 'el' ? 'Η γκάμα μας' : 'Our range'}
-            </span>
+            <Eyebrow
+              label={language === 'el' ? 'Η γκάμα μας' : 'Our range'}
+              heading={t('products.page.heroTitle')}
+              className="text-brand-light mb-7"
+            />
             <h1 className="text-white text-center mb-0">
               {t('products.page.heroTitle')}
             </h1>
@@ -200,7 +203,10 @@ const ProductsPage = () => {
       <section className="main-section w-full">
         <div className="container-page py-20 md:py-28">
           <AnimatedSection className="text-center flex flex-col items-center mb-14 md:mb-16">
-            <span className="section-label">{language === 'el' ? 'Η δουλειά μας' : 'Our work'}</span>
+            <Eyebrow
+              label={language === 'el' ? 'Η δουλειά μας' : 'Our work'}
+              heading={language === 'el' ? 'Δείγματα παραγωγής' : 'Production gallery'}
+            />
             <h2 className="mb-0">{language === 'el' ? 'Δείγματα παραγωγής' : 'Production gallery'}</h2>
           </AnimatedSection>
         </div>
@@ -243,9 +249,11 @@ const ProductsPage = () => {
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           >
-            <span className="section-label justify-center">
-              {language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'}
-            </span>
+            <Eyebrow
+              label={language === 'el' ? 'Ξεκινήστε σήμερα' : 'Get started'}
+              heading={t('cta.title')}
+              className="justify-center"
+            />
             <h2 className="mb-6 max-w-2xl">
               {t('cta.title')}
             </h2>

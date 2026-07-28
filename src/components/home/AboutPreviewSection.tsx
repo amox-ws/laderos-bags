@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
+import Eyebrow from '@/components/ui/Eyebrow';
 
 const AboutPreviewSection = () => {
   const { t, language } = useLanguage();
@@ -85,7 +86,7 @@ const AboutPreviewSection = () => {
             className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 space-y-6 lg:space-y-8"
           >
             <div>
-              <span className="section-label text-white/80">{language === 'el' ? 'Η εταιρεία' : 'About us'}</span>
+              <Eyebrow label={language === 'el' ? 'Η εταιρεία' : 'About us'} heading={t('aboutPreview.title')} className="text-white/80" />
               <h3 className="mb-0 text-3xl md:text-4xl lg:text-5xl">
                 {t('aboutPreview.title')}
               </h3>
