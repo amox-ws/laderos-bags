@@ -31,6 +31,9 @@ const Footer = () => {
     { href: '/products/plastic-bags', label: t('nav.products.plastic') },
     { href: '/products/optika', label: language === 'el' ? 'Οπτικά' : 'Optical' },
     { href: '/products/paidika', label: language === 'el' ? 'Παιδικά' : 'Kids' },
+    { href: '/products/andrika', label: language === 'el' ? 'Ανδρικά' : 'Menswear' },
+    { href: '/products/gynaikeia', label: language === 'el' ? 'Γυναικεία' : 'Womenswear' },
+    { href: '/products/oikologika', label: language === 'el' ? 'Οικολογικά' : 'Eco-Friendly' },
     { href: '/contact', label: t('nav.contact') },
   ];
 

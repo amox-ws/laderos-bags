@@ -113,6 +113,39 @@ export const PAGE_SEO: Record<string, PageSeo> = {
     },
     path: '/products/optika',
   },
+  '/products/andrika': {
+    title: {
+      el: 'Σακούλες για Ανδρικά Καταστήματα με Εκτύπωση | Laderos Bags',
+      en: 'Custom Printed Bags for Menswear Stores | Laderos Bags',
+    },
+    description: {
+      el: 'Χάρτινες σακούλες για καταστήματα ανδρικής ένδυσης και υπόδησης, με εκτύπωση λογοτύπου έως 4 χρώματα. Μεγέθη από αξεσουάρ έως ολόκληρο κοστούμι.',
+      en: 'Paper bags for men\u2019s clothing and footwear stores, printed with your logo in up to 4 colours. Sizes from accessories to a full suit.',
+    },
+    path: '/products/andrika',
+  },
+  '/products/gynaikeia': {
+    title: {
+      el: 'Σακούλες για Γυναικεία Καταστήματα με Εκτύπωση | Laderos Bags',
+      en: 'Custom Printed Bags for Womenswear Stores | Laderos Bags',
+    },
+    description: {
+      el: 'Χάρτινες σακούλες για boutique γυναικείας ένδυσης, εσωρούχων και αξεσουάρ. Σατέν κορδέλα, ματ ή γυαλιστερό φινίρισμα, θερμοτυπία και ανάγλυφο λογότυπο.',
+      en: 'Paper bags for women\u2019s clothing, lingerie and accessory boutiques. Satin ribbon, matte or glossy finish, hot stamping and embossed logos.',
+    },
+    path: '/products/gynaikeia',
+  },
+  '/products/oikologika': {
+    title: {
+      el: 'Οικολογικές Χάρτινες Σακούλες με Εκτύπωση | Laderos Bags',
+      en: 'Eco-Friendly Printed Paper Bags | Laderos Bags',
+    },
+    description: {
+      el: 'Χάρτινες σακούλες σε kraft εμφάνιση, με προαιρετική πλαστικοποίηση και στριφτή χάρτινη λαβή για σακούλα εξ ολοκλήρου χάρτινη. Εκτύπωση λογοτύπου έως 4 χρώματα.',
+      en: 'Kraft-look paper bags with optional lamination and a twisted paper handle for an all-paper bag. Logo printing in up to 4 colours.',
+    },
+    path: '/products/oikologika',
+  },
   '/products/paidika': {
     title: {
       el: 'Σακούλες για Παιδικά Καταστήματα με Εκτύπωση | Laderos Bags',

@@ -41,6 +41,55 @@ const GalleryImage = ({
   );
 };
 
+/**
+ * Mosaic rhythm for the paper-bag gallery: one full-width shot, then paired
+ * rows of varying widths. The pattern repeats, so the gallery keeps the same
+ * editorial feel however many photos the list grows to.
+ */
+const GALLERY_PATTERN: { width: string; aspect: string }[][] = [
+  [{ width: 'w-full', aspect: 'aspect-[16/9]' }],
+  [{ width: 'w-[55%]', aspect: 'aspect-[3/4]' }, { width: 'w-[45%]', aspect: 'aspect-square' }],
+  [{ width: 'w-[45%]', aspect: 'aspect-[4/5]' }, { width: 'w-[55%]', aspect: 'aspect-[3/4]' }],
+  [{ width: 'w-1/2', aspect: 'aspect-[4/5]' }, { width: 'w-1/2', aspect: 'aspect-[4/5]' }],
+  [{ width: 'w-[40%]', aspect: 'aspect-[3/4]' }, { width: 'w-[60%]', aspect: 'aspect-[4/5]' }],
+  [{ width: 'w-[55%]', aspect: 'aspect-[3/4]' }, { width: 'w-[45%]', aspect: 'aspect-[3/4]' }],
+  [{ width: 'w-[60%]', aspect: 'aspect-[4/5]' }, { width: 'w-[40%]', aspect: 'aspect-[3/5]' }],
+  [{ width: 'w-[50%]', aspect: 'aspect-square' }, { width: 'w-[50%]', aspect: 'aspect-square' }],
+];
+
+interface GalleryCell {
+  src: string;
+  width: string;
+  aspect: string;
+  index: number;
+}
+
+/** Lay the images out over the repeating pattern, widening a lone trailing image. */
+const buildGalleryRows = (images: string[]): GalleryCell[][] => {
+  const rows: GalleryCell[][] = [];
+  let i = 0;
+  let step = 0;
+
+  while (i < images.length) {
+    const spec = GALLERY_PATTERN[step % GALLERY_PATTERN.length];
+    const take = Math.min(spec.length, images.length - i);
+
+    rows.push(
+      spec.slice(0, take).map((cell, k) => ({
+        src: images[i + k],
+        width: take < spec.length ? 'w-full' : cell.width,
+        aspect: cell.aspect,
+        index: i + k,
+      }))
+    );
+
+    i += take;
+    step += 1;
+  }
+
+  return rows;
+};
+
 const PaperBagsPage = () => {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
@@ -113,6 +162,29 @@ const PaperBagsPage = () => {
     '/paper_product/wine.webp',
     '/paper_product/casba.webp',
     '/paper_product/dionisos.webp',
+    '/paper_product/loipa/sakoula-afoi-iosifidi.webp',
+    '/paper_product/loipa/sakoula-asteras-tripolis.webp',
+    '/paper_product/loipa/sakoula-atmoulis.webp',
+    '/paper_product/loipa/sakoula-boxbox.webp',
+    '/paper_product/loipa/sakoula-cashew.webp',
+    '/paper_product/loipa/sakoula-endeavor-lines.webp',
+    '/paper_product/loipa/sakoula-exis-vivliopoleio.webp',
+    '/paper_product/loipa/sakoula-georgios-galifianakis.webp',
+    '/paper_product/loipa/sakoula-ladybird-deco.webp',
+    '/paper_product/loipa/sakoula-le-shop.webp',
+    '/paper_product/loipa/sakoula-le-shop-2.webp',
+    '/paper_product/loipa/sakoula-le-shop-3.webp',
+    '/paper_product/loipa/sakoula-mole.webp',
+    '/paper_product/loipa/sakoula-mole-2.webp',
+    '/paper_product/loipa/sakoula-oida-vivliopoleio.webp',
+    '/paper_product/loipa/sakoula-oida-vivliopoleio-2.webp',
+    '/paper_product/loipa/sakoula-posto.webp',
+    '/paper_product/loipa/sakoula-seneca.webp',
+    '/paper_product/loipa/sakoula-seneca-2.webp',
+    '/paper_product/loipa/sakoula-seneca-medical-group.webp',
+    '/paper_product/loipa/sakoula-studio-ioannidis.webp',
+    '/paper_product/loipa/sakoula-ygeia-diagnostika-kentra.webp',
+    '/paper_product/loipa/sakoula-yournuts.webp',
   ];
 
   const features = [
@@ -222,37 +294,18 @@ const PaperBagsPage = () => {
             <div className="w-full lg:w-[58%] xl:w-[62%]">
               <AnimatedSection delay={0.2}>
                 <div className="flex flex-col gap-4">
-                  <div className="w-full">
-                    <GalleryImage src={paperBagImages[0]} index={0} className="w-full aspect-[16/9]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[1]} index={1} className="w-[55%] aspect-[3/4]" />
-                    <GalleryImage src={paperBagImages[2]} index={2} className="w-[45%] aspect-square" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[3]} index={3} className="w-[45%] aspect-[4/5]" />
-                    <GalleryImage src={paperBagImages[4]} index={4} className="w-[55%] aspect-[3/4]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[5]} index={5} className="w-1/2 aspect-[4/5]" />
-                    <GalleryImage src={paperBagImages[6]} index={6} className="w-1/2 aspect-[4/5]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[7]} index={7} className="w-[40%] aspect-[3/4]" />
-                    <GalleryImage src={paperBagImages[8]} index={8} className="w-[60%] aspect-[4/5]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[9]} index={9} className="w-[55%] aspect-[3/4]" />
-                    <GalleryImage src={paperBagImages[10]} index={10} className="w-[45%] aspect-[3/4]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[11]} index={11} className="w-[60%] aspect-[4/5]" />
-                    <GalleryImage src={paperBagImages[12]} index={12} className="w-[40%] aspect-[3/5]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={paperBagImages[13]} index={13} className="w-[50%] aspect-square" />
-                    <GalleryImage src={paperBagImages[14]} index={14} className="w-[50%] aspect-square" />
-                  </div>
+                  {buildGalleryRows(paperBagImages).map((row, rowIndex) => (
+                    <div key={rowIndex} className={row.length === 1 ? 'w-full' : 'flex gap-4'}>
+                      {row.map((cell) => (
+                        <GalleryImage
+                          key={cell.src}
+                          src={cell.src}
+                          index={cell.index}
+                          className={`${cell.width} ${cell.aspect}`}
+                        />
+                      ))}
+                    </div>
+                  ))}
                 </div>
               </AnimatedSection>
 

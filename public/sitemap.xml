@@ -83,6 +83,33 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://www.laderosbags.gr/products/andrika</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/products/andrika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en/products/andrika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.laderosbags.gr/products/andrika" />
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.laderosbags.gr/products/gynaikeia</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/products/gynaikeia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en/products/gynaikeia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.laderosbags.gr/products/gynaikeia" />
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.laderosbags.gr/products/oikologika</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/products/oikologika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en/products/oikologika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.laderosbags.gr/products/oikologika" />
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.laderosbags.gr/en</loc>
     <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en" />
@@ -159,6 +186,33 @@
     <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/products/paidika" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en/products/paidika" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.laderosbags.gr/products/paidika" />
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.laderosbags.gr/en/products/andrika</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/products/andrika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en/products/andrika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.laderosbags.gr/products/andrika" />
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.laderosbags.gr/en/products/gynaikeia</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/products/gynaikeia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en/products/gynaikeia" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.laderosbags.gr/products/gynaikeia" />
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.laderosbags.gr/en/products/oikologika</loc>
+    <xhtml:link rel="alternate" hreflang="el" href="https://www.laderosbags.gr/products/oikologika" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.laderosbags.gr/en/products/oikologika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.laderosbags.gr/products/oikologika" />
     <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>

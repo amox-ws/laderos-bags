@@ -62,6 +62,9 @@ const NAV_LABEL = {
   '/products/plastic-bags': 'Πλαστικές Σακούλες',
   '/products/optika': 'Σακούλες για Οπτικά',
   '/products/paidika': 'Σακούλες για Παιδικά',
+  '/products/andrika': 'Σακούλες για Ανδρικά',
+  '/products/gynaikeia': 'Σακούλες για Γυναικεία',
+  '/products/oikologika': 'Οικολογικές Σακούλες',
   '/contact': 'Επικοινωνία',
   '/privacy-policy': 'Πολιτική Απορρήτου',
 };
@@ -75,6 +78,9 @@ const NAV_LABEL_EN = {
   '/products/plastic-bags': 'Plastic Bags',
   '/products/optika': 'Bags for Optical Stores',
   '/products/paidika': 'Bags for Kids Stores',
+  '/products/andrika': 'Bags for Menswear Stores',
+  '/products/gynaikeia': 'Bags for Womenswear Stores',
+  '/products/oikologika': 'Eco-Friendly Paper Bags',
   '/contact': 'Contact',
   '/privacy-policy': 'Privacy Policy',
 };
@@ -108,6 +114,12 @@ const EXTRA = {
     'Χάρτινες σακούλες για οπτικά και καταστήματα φακών επαφής, με εκτύπωση λογοτύπου έως 4 χρώματα και διαστάσεις για θήκες γυαλιών.',
   '/products/paidika':
     'Χάρτινες σακούλες για παιδικά ρούχα, είδη μπεμπέ και παιδικά υποδήματα, με πολύχρωμη εκτύπωση και ανθεκτικές λαβές.',
+  '/products/andrika':
+    'Χάρτινες σακούλες για καταστήματα ανδρικής ένδυσης και υπόδησης, με ενισχυμένη βάση για βαριά προϊόντα και μεγέθη έως 60x50x15 εκ.',
+  '/products/gynaikeia':
+    'Χάρτινες σακούλες για boutique γυναικείας ένδυσης, εσωρούχων και αξεσουάρ, με σατέν κορδέλα και ματ ή γυαλιστερό φινίρισμα.',
+  '/products/oikologika':
+    'Χάρτινες σακούλες σε kraft εμφάνιση, με προαιρετική πλαστικοποίηση και στριφτή χάρτινη λαβή για σακούλα εξ ολοκλήρου χάρτινη.',
   '/': 'Πάνω από 30 χρόνια εμπειρίας στην παραγωγή σακουλών συσκευασίας. Έδρα στις Αχαρνές Αττικής, με παραδόσεις σε όλη την Ελλάδα.',
   '/about':
     'Σύγχρονη μονάδα παραγωγής στις Αχαρνές, με έμφαση στην ποιότητα, τη συνέπεια και την εξατομικευμένη εξυπηρέτηση.',
@@ -161,6 +173,9 @@ const PAGE_SRC = {
   '/products/plastic-bags': 'src/pages/PlasticBagsPage.tsx',
   '/products/optika': 'src/pages/CategoryPage.tsx',
   '/products/paidika': 'src/pages/CategoryPage.tsx',
+  '/products/andrika': 'src/pages/CategoryPage.tsx',
+  '/products/gynaikeia': 'src/pages/CategoryPage.tsx',
+  '/products/oikologika': 'src/pages/CategoryPage.tsx',
   '/contact': 'src/pages/ContactPage.tsx',
   '/privacy-policy': 'src/pages/PrivacyPolicyPage.tsx',
   '/404': 'src/pages/NotFound.tsx',

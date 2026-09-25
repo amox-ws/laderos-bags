@@ -8,7 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
 import ScrollToTop from "@/components/ScrollToTop";
-import { OPTIKA, PAIDIKA } from "./content/categories";
+import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA } from "./content/categories";
 import { lazyPage } from "@/lib/lazyPage";
 import { EN_PREFIX } from "@/lib/i18nPaths";
 
@@ -35,6 +35,9 @@ const BASE_ROUTES = [
   { path: "/products/plastic-bags", page: PlasticBagsPage, element: <PlasticBagsPage /> },
   { path: "/products/optika", page: CategoryPage, element: <CategoryPage content={OPTIKA} /> },
   { path: "/products/paidika", page: CategoryPage, element: <CategoryPage content={PAIDIKA} /> },
+  { path: "/products/andrika", page: CategoryPage, element: <CategoryPage content={ANDRIKA} /> },
+  { path: "/products/gynaikeia", page: CategoryPage, element: <CategoryPage content={GYNAIKEIA} /> },
+  { path: "/products/oikologika", page: CategoryPage, element: <CategoryPage content={OIKOLOGIKA} /> },
   { path: "/contact", page: ContactPage, element: <ContactPage /> },
   { path: "/privacy-policy", page: PrivacyPolicyPage, element: <PrivacyPolicyPage /> },
   // Add new pages here (Greek path) — the /en version is created automatically below.
