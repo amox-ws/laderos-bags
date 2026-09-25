@@ -1,5 +1,7 @@
 // Language Context - Laderos Bags i18n v3 - rebuild
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useCallback, ReactNode } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { langFromPath, localizePath } from '@/lib/i18nPaths';
 
 type Language = 'el' | 'en';
 
@@ -393,8 +395,22 @@ const translations: Record<Language, Record<string, string>> = {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
+/**
+ * The language comes from the URL ("/en/..." = English), so every page has a
+ * crawlable URL per language. Must be rendered inside the router.
+ * setLanguage() switches to the same page in the other language.
+ */
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [language, setLanguage] = useState<Language>('el');
+  const { pathname, search, hash } = useLocation();
+  const navigate = useNavigate();
+  const language: Language = langFromPath(pathname);
+
+  const setLanguage = useCallback(
+    (lang: Language) => {
+      if (lang !== language) navigate(localizePath(pathname + search + hash, lang));
+    },
+    [language, navigate, pathname, search, hash]
+  );
 
   const t = (key: string): string => {
     return translations[language][key] || key;
