@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Mail, Phone, MapPin, ArrowUp, ArrowRight, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import type { ComponentType, SVGProps } from 'react';
-import { SOCIAL_PROFILES, type SOCIAL_LINKS } from '@/lib/seo';
+import { ADDRESS_LINE, SOCIAL_PROFILES, type SOCIAL_LINKS } from '@/lib/seo';
 
 const ink = 'hsl(220 55% 8%)';
 
@@ -83,7 +83,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li className="flex items-start gap-2.5">
                 <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <span className="text-sm font-semibold">Ελασσώνος 13, Αχαρνές 136 72</span>
+                <span className="text-sm font-semibold">{ADDRESS_LINE[language === 'en' ? 'en' : 'el']}</span>
               </li>
               <li className="flex items-start gap-2.5">
                 <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />

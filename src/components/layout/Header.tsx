@@ -1,7 +1,9 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import { useState, useRef, useEffect } from 'react';
 import { Menu, X, Globe, ChevronDown, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { stripLang } from '@/lib/i18nPaths';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '@/assets/logo.png';
@@ -33,13 +35,15 @@ const Header = () => {
     setLanguage(language === 'el' ? 'en' : 'el');
   };
 
+  // Compare against the Greek-form path so "/en/contact" counts as "/contact".
+  const basePath = stripLang(location.pathname);
   const isActive = (path: string) => {
     if (path === '/#products-section') {
-      return location.pathname === '/';
+      return basePath === '/';
     }
-    return location.pathname === path;
+    return basePath === path;
   };
-  const isProductsActive = location.pathname.startsWith('/products');
+  const isProductsActive = basePath.startsWith('/products');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,7 +95,7 @@ const Header = () => {
       <div className="container-page">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center group" aria-label="Laderos Bags — Αρχική">
+          <Link to="/" className="flex items-center group" aria-label={`Laderos Bags — ${t('nav.home')}`}>
             <img
               src={logo}
               alt="Laderos Bags"

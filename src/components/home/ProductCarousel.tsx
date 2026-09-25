@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef, TouchEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { brandFromSrc } from '@/lib/text';

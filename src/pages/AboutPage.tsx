@@ -4,7 +4,7 @@ import LazyVideo from '@/components/ui/LazyVideo';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd } from '@/lib/seo';
 import { Factory, Package, Award, Users, ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import { useLanguage } from '@/contexts/LanguageContext';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -12,7 +12,7 @@ import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
 import TrustedBySection from '@/components/home/TrustedBySection';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Eyebrow from '@/components/ui/Eyebrow';
@@ -62,7 +62,7 @@ const AboutPage = () => {
 
   return (
     <Layout>
-      <SEO routeKey="/about" jsonLd={makeBreadcrumbLd([['Αρχική', '/'], ['Η Εταιρεία', '/about']])} />
+      <SEO routeKey="/about" jsonLd={makeBreadcrumbLd([[t('nav.home'), '/'], [t('nav.about'), '/about']])} />
       {/* Hero Section — cinematic navy overlay */}
       <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">
@@ -90,7 +90,11 @@ const AboutPage = () => {
               heading={t('about.hero.title')}
               className="text-brand-light mb-7"
             />
-            <h1 className="mb-8 text-white max-w-4xl">
+            <h1
+              className={`mb-8 text-white max-w-4xl${language === 'en' ? ' fit-heading' : ''}`}
+              // "MANUFACTURING" is 8.44× the font size — too wide for phones at 48px.
+              style={language === 'en' ? ({ '--fit': 8.61 } as CSSProperties) : undefined}
+            >
               {t('about.hero.title')}
             </h1>
             <p className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto">

@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
+import { OPTIKA, PAIDIKA } from '@/content/categories';
 import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
@@ -57,14 +58,14 @@ const ProductsPage = () => {
         routeKey="/products"
         jsonLd={[
           makeBreadcrumbLd([
-            ['Αρχική', '/'],
-            ['Προϊόντα', '/products'],
+            [t('nav.home'), '/'],
+            [t('nav.products'), '/products'],
           ]),
-          makeItemListLd('Κατηγορίες Προϊόντων Laderos Bags', [
-            ['Χάρτινες Σακούλες', '/products/paper-bags'],
-            ['Πλαστικές Σακούλες', '/products/plastic-bags'],
-            ['Σακούλες για Οπτικά', '/products/optika'],
-            ['Σακούλες για Παιδικά', '/products/paidika'],
+          makeItemListLd(language === 'el' ? 'Κατηγορίες Προϊόντων Laderos Bags' : 'Laderos Bags Product Categories', [
+            [t('nav.products.paper'), '/products/paper-bags'],
+            [t('nav.products.plastic'), '/products/plastic-bags'],
+            [language === 'el' ? 'Σακούλες για Οπτικά' : OPTIKA.h1.en, '/products/optika'],
+            [language === 'el' ? 'Σακούλες για Παιδικά' : PAIDIKA.h1.en, '/products/paidika'],
           ]),
         ]}
       />

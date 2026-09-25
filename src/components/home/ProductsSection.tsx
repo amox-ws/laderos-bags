@@ -1,4 +1,5 @@
 import { useLanguage } from '@/contexts/LanguageContext';
+import type { CSSProperties } from 'react';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import ProductCarousel from './ProductCarousel';
 import { motion } from 'framer-motion';
@@ -37,7 +38,11 @@ const ProductsSection = () => {
 
         {/* Statement header — giant, left-aligned, with marks */}
         <AnimatedSection className="mb-12 md:mb-16">
-          <h2 className="max-w-5xl mb-8">
+          <h2
+            className={`max-w-5xl mb-8${language === 'en' ? ' fit-heading' : ''}`}
+            // "Measurements" is 7.99× the font size — a touch too wide on 320px phones.
+            style={language === 'en' ? ({ '--fit': 8.15, '--fit-max': '2.25rem' } as CSSProperties) : undefined}
+          >
             {t('products.section.title')}
           </h2>
           <div className="w-24 h-1.5 mb-10" style={{ backgroundColor: 'hsl(210 88% 60%)' }} aria-hidden />

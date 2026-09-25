@@ -10,6 +10,7 @@ import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
 import ScrollToTop from "@/components/ScrollToTop";
 import { OPTIKA, PAIDIKA } from "./content/categories";
 import { lazyPage } from "@/lib/lazyPage";
+import { EN_PREFIX } from "@/lib/i18nPaths";
 
 import { Analytics } from "@vercel/analytics/react";
 
@@ -25,8 +26,8 @@ const ContactPage = lazyPage(() => import("./pages/ContactPage"));
 const PrivacyPolicyPage = lazyPage(() => import("./pages/PrivacyPolicyPage"));
 const NotFound = lazyPage(() => import("./pages/NotFound"));
 
-/** Route table, shared by the browser app and the build-time prerender. */
-export const ROUTES = [
+/** Route table (Greek paths), shared by the browser app and the build-time prerender. */
+const BASE_ROUTES = [
   { path: "/", page: HomePage, element: <HomePage /> },
   { path: "/about", page: AboutPage, element: <AboutPage /> },
   { path: "/products", page: ProductsPage, element: <ProductsPage /> },
@@ -36,7 +37,13 @@ export const ROUTES = [
   { path: "/products/paidika", page: CategoryPage, element: <CategoryPage content={PAIDIKA} /> },
   { path: "/contact", page: ContactPage, element: <ContactPage /> },
   { path: "/privacy-policy", page: PrivacyPolicyPage, element: <PrivacyPolicyPage /> },
-  // ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE
+  // Add new pages here (Greek path) — the /en version is created automatically below.
+];
+
+/** Greek routes plus their English twins under /en, then the 404 catch-all. */
+export const ROUTES = [
+  ...BASE_ROUTES,
+  ...BASE_ROUTES.map((r) => ({ ...r, path: r.path === "/" ? EN_PREFIX : `${EN_PREFIX}${r.path}` })),
   { path: "*", page: NotFound, element: <NotFound /> },
 ];
 
@@ -52,7 +59,6 @@ export const AppProviders = ({
 }) => (
   <HelmetProvider context={helmetContext}>
   <QueryClientProvider client={queryClient}>
-    <LanguageProvider>
       <CookieConsentProvider>
       <TooltipProvider>
         <Analytics />
@@ -61,13 +67,12 @@ export const AppProviders = ({
         {children}
       </TooltipProvider>
       </CookieConsentProvider>
-    </LanguageProvider>
   </QueryClientProvider>
   </HelmetProvider>
 );
 
 export const AppRoutes = () => (
-  <>
+  <LanguageProvider>
     <ScrollToTop />
     <Suspense fallback={null}>
       <Routes>
@@ -76,7 +81,7 @@ export const AppRoutes = () => (
         ))}
       </Routes>
     </Suspense>
-  </>
+  </LanguageProvider>
 );
 
 // Main App Component - Laderos Bags Website v4 - rebuild
