@@ -1,5 +1,6 @@
 // About Page - Laderos Bags
 import { motion } from 'framer-motion';
+import LazyVideo from '@/components/ui/LazyVideo';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd } from '@/lib/seo';
 import { Factory, Package, Award, Users, ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
@@ -65,7 +66,7 @@ const AboutPage = () => {
       {/* Hero Section — cinematic navy overlay */}
       <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">
-          <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+          <video autoPlay loop muted playsInline poster="/videos/posters/aboutherolb.webp" className="w-full h-full object-cover">
             <source src="/videos/aboutherolb.mp4" type="video/mp4" />
           </video>
           <div
@@ -197,14 +198,10 @@ const AboutPage = () => {
 
               {/* Video */}
               <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated bg-muted">
-                <video
+                <LazyVideo
                   className="absolute inset-0 w-full h-full object-cover"
                   src="/videos/ourprodction.mp4"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  preload="metadata"
+                  poster="/videos/posters/ourprodction.webp"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy/30 via-transparent to-transparent pointer-events-none" />
               </div>

@@ -1,8 +1,24 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Mail, Phone, MapPin, ArrowUp, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, ArrowRight, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import type { ComponentType, SVGProps } from 'react';
+import { SOCIAL_PROFILES, type SOCIAL_LINKS } from '@/lib/seo';
 
 const ink = 'hsl(220 55% 8%)';
+
+const TikTok = (props: SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
+    <path d="M16 3a5 5 0 0 0 5 5v3a8 8 0 0 1-5-1.7V15a6 6 0 1 1-6-6v3a3 3 0 1 0 3 3V3z" />
+  </svg>
+);
+
+const SOCIAL_META: Record<keyof typeof SOCIAL_LINKS, { label: string; Icon: ComponentType<SVGProps<SVGSVGElement>> }> = {
+  facebook: { label: 'Facebook', Icon: Facebook },
+  instagram: { label: 'Instagram', Icon: Instagram },
+  linkedin: { label: 'LinkedIn', Icon: Linkedin },
+  youtube: { label: 'YouTube', Icon: Youtube },
+  tiktok: { label: 'TikTok', Icon: TikTok },
+};
 
 const Footer = () => {
   const { t, language } = useLanguage();
@@ -86,6 +102,28 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
+            {/* Social profiles — shown only for the ones filled in SOCIAL_LINKS (src/lib/seo.ts) */}
+            {SOCIAL_PROFILES.length > 0 && (
+              <ul className="flex items-center gap-2.5 pt-1">
+                {SOCIAL_PROFILES.map(({ network, url }) => {
+                  const { label, Icon } = SOCIAL_META[network];
+                  return (
+                    <li key={network}>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Laderos Bags — ${label}`}
+                        className="w-9 h-9 rounded-full border-2 flex items-center justify-center hover:opacity-70 transition-opacity"
+                        style={{ borderColor: ink }}
+                      >
+                        <Icon className="h-4 w-4" />
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
           </div>
 
           {/* Navigation */}

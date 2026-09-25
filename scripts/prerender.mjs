@@ -2,19 +2,27 @@
  * Static prerender for the Laderos Bags SPA.
  *
  * Vite ships a single empty index.html, so crawlers receive zero content
- * until they execute JavaScript. This script runs after `vite build` and
- * writes one real HTML file per route into dist/, each containing:
- *   - the correct <title>, meta description, canonical and OG/Twitter tags
- *   - BreadcrumbList JSON-LD
- *   - a visible <h1>, intro paragraph and internal links inside #root
+ * until they execute JavaScript — and AI crawlers (GPTBot, ClaudeBot,
+ * PerplexityBot) never do. This script runs after `vite build` and writes one
+ * real HTML file per route into dist/.
  *
- * React replaces the seeded markup on mount, so users see no difference —
- * but Google gets a fully readable page without running any JS, and the
- * internal links help it discover the other routes.
+ * Full mode (default): each route is rendered with the real React app
+ * (dist-ssr/entry-server.js, built by `vite build --ssr`), so the HTML holds
+ * the complete page — all text, images with alt text, FAQ — plus the page's
+ * own <title>/meta/canonical/JSON-LD from react-helmet. The browser app then
+ * mounts over it and renders the same thing, so visitors see no difference.
+ *
+ * Fallback mode: if the server build is missing or a route fails to render,
+ * that route gets the lightweight seeded markup below (title, meta, h1, intro,
+ * internal links) exactly as before.
+ *
+ * Either way the site-wide LocalBusiness/WebSite JSON-LD is regenerated from
+ * src/lib/seo.ts, so business details and social profiles live in one place.
  *
  * Failures are non-fatal: the build still succeeds with the plain SPA output.
  */
 import { build } from 'esbuild';
+import { existsSync } from 'node:fs';
 import { mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -112,6 +120,94 @@ function seededBody(path, h1, description) {
     </div></div></div>`;
 }
 
+/** Page module behind each route, to preload its JS chunk (see modulePreloads). */
+const PAGE_SRC = {
+  '/': 'src/pages/HomePage.tsx',
+  '/about': 'src/pages/AboutPage.tsx',
+  '/products': 'src/pages/ProductsPage.tsx',
+  '/products/paper-bags': 'src/pages/PaperBagsPage.tsx',
+  '/products/plastic-bags': 'src/pages/PlasticBagsPage.tsx',
+  '/products/optika': 'src/pages/CategoryPage.tsx',
+  '/products/paidika': 'src/pages/CategoryPage.tsx',
+  '/contact': 'src/pages/ContactPage.tsx',
+  '/privacy-policy': 'src/pages/PrivacyPolicyPage.tsx',
+  '/404': 'src/pages/NotFound.tsx',
+};
+
+/** <link rel="modulepreload"> for a route's chunk and its imports, so the page
+ *  code downloads in parallel with the main bundle instead of after it. */
+function modulePreloads(manifest, path) {
+  const start = manifest?.[PAGE_SRC[path]];
+  if (!start) return '';
+  const files = new Set();
+  const walk = (entry) => {
+    if (!entry || entry.isEntry || files.has(entry.file)) return;
+    files.add(entry.file);
+    (entry.imports || []).forEach((k) => walk(manifest[k]));
+  };
+  walk(start);
+  return [...files].map((f) => `<link rel="modulepreload" crossorigin href="/${f}">`).join('\n    ');
+}
+
+/** Head tags react-helmet renders for every page — drop the static copies. */
+const HELMET_OWNED = [
+  /<title>[\s\S]*?<\/title>\s*/,
+  /<meta\s+name="description"[^>]*>\s*/g,
+  /<link\s+rel="canonical"[^>]*>\s*/g,
+  /<meta\s+name="robots"[^>]*>\s*/g,
+  /<meta\s+property="og:(title|description|url|site_name|locale)"[^>]*>\s*/g,
+  /<meta\s+name="twitter:(title|description)"[^>]*>\s*/g,
+];
+
+/** Full page: the real React render + helmet head tags. */
+function renderFull(base, { appHtml, helmet, preloads }) {
+  let html = base;
+  for (const re of HELMET_OWNED) html = html.replace(re, '');
+  const head = [
+    helmet.title.toString(),
+    helmet.meta.toString(),
+    helmet.link.toString(),
+    helmet.script.toString(),
+    preloads,
+  ]
+    .filter(Boolean)
+    .join('\n    ');
+  html = html.replace('</head>', `    ${head}\n  </head>`);
+  const lang = /lang="([a-z-]+)"/i.exec(helmet.htmlAttributes.toString())?.[1];
+  if (lang) html = html.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
+  return html.replace(/<div id="root">\s*<\/div>/, `<div id="root">${appHtml}</div>`);
+}
+
+/** Replace index.html's static site-wide JSON-LD with the one from seo.ts. */
+function withSiteGraph(base, graph) {
+  if (!graph) return base;
+  const tag = `<script type="application/ld+json">${JSON.stringify(graph)}</script>`;
+  const re = /<script type="application\/ld\+json">[\s\S]*?"@graph"[\s\S]*?<\/script>/;
+  return re.test(base) ? base.replace(re, tag) : base.replace('</head>', `  ${tag}\n</head>`);
+}
+
+/** Load the server build (dist-ssr) if present; null → fallback mode. */
+async function loadServerRender() {
+  const entry = join(root, 'dist-ssr', 'entry-server.js');
+  if (!existsSync(entry)) return null;
+  try {
+    const mod = await import(pathToFileURL(entry).href);
+    await mod.preloadAll();
+    return mod.render;
+  } catch (err) {
+    console.warn('⚠ server render unavailable, using seeded markup:', err?.message || err);
+    return null;
+  }
+}
+
+async function loadManifest() {
+  try {
+    return JSON.parse(await readFile(join(dist, '.vite', 'manifest.json'), 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
 /** Replace (or insert) a meta/link tag in the head. */
 function setTag(html, matcher, replacement) {
   return matcher.test(html)
@@ -162,8 +258,10 @@ function renderPage(base, { path, title, description, canonical, jsonLd, h1, sit
 }
 
 async function main() {
-  const { PAGE_SEO, NOT_FOUND_SEO, SITE_URL, makeBreadcrumbLd } = await loadSeo();
-  const base = await readFile(join(dist, 'index.html'), 'utf8');
+  const { PAGE_SEO, NOT_FOUND_SEO, SITE_URL, SITE_GRAPH_LD, makeBreadcrumbLd } = await loadSeo();
+  const base = withSiteGraph(await readFile(join(dist, 'index.html'), 'utf8'), SITE_GRAPH_LD);
+  const serverRender = await loadServerRender();
+  const manifest = await loadManifest();
 
   const crumbsFor = (path) => {
     if (path === '/') return null;
@@ -173,6 +271,21 @@ async function main() {
     return makeBreadcrumbLd(items);
   };
 
+  /** Full render when possible, seeded markup otherwise. */
+  const pageHtml = (path, url, seeded) => {
+    if (serverRender) {
+      try {
+        const { html: appHtml, helmet } = serverRender(url);
+        if (appHtml && helmet) {
+          return { html: renderFull(base, { appHtml, helmet, preloads: modulePreloads(manifest, path) }), mode: 'full' };
+        }
+      } catch (err) {
+        console.warn(`  ⚠ ${path}: server render failed (${err?.message || err}), using seeded markup`);
+      }
+    }
+    return { html: renderPage(base, seeded), mode: 'seeded' };
+  };
+
   let count = 0;
   for (const [path, cfg] of Object.entries(PAGE_SEO)) {
     const title = cfg.title.el;
@@ -180,7 +293,7 @@ async function main() {
     const canonical = `${SITE_URL}${path === '/' ? '' : path}`;
     const h1 = title.split(' | ')[0];
 
-    const html = renderPage(base, {
+    const { html, mode } = pageHtml(path, path, {
       path,
       title,
       description,
@@ -194,12 +307,12 @@ async function main() {
     await mkdir(outDir, { recursive: true });
     await writeFile(join(outDir, 'index.html'), html, 'utf8');
     count++;
-    console.log(`  prerendered ${path}`);
+    console.log(`  prerendered ${path} (${mode})`);
   }
 
   // Real 404 page (Vercel serves dist/404.html with a 404 status).
   const nf = NOT_FOUND_SEO;
-  const notFound = renderPage(base, {
+  const { html: notFound, mode: nfMode } = pageHtml('/404', '/__not-found__', {
     path: '/404',
     title: nf.title.el,
     description: nf.description.el,
@@ -210,9 +323,12 @@ async function main() {
     noindex: true,
   });
   await writeFile(join(dist, '404.html'), notFound, 'utf8');
-  console.log('  prerendered 404.html');
+  console.log(`  prerendered 404.html (${nfMode})`);
 
-  console.log(`✓ prerender: ${count} routes + 404`);
+  // The route→chunk manifest was only needed here; don't publish it.
+  await rm(join(dist, '.vite'), { recursive: true, force: true });
+
+  console.log(`✓ prerender: ${count} routes + 404 (${serverRender ? 'full render' : 'seeded fallback'})`);
 }
 
 main().catch((err) => {

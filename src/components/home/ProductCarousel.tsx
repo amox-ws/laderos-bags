@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef, TouchEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { brandFromSrc } from '@/lib/text';
 
 interface ProductCarouselProps {
   title: string;
@@ -98,7 +99,7 @@ const ProductCarousel = ({ title, images, linkTo }: ProductCarouselProps) => {
               {image ? (
                 <img
                   src={image}
-                  alt={`${title} ${(index % images.length) + 1}`}
+                  alt={`${title} — ${brandFromSrc(image)} | Laderos Bags`}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   loading="lazy"
                 />

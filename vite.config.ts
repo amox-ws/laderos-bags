@@ -13,6 +13,14 @@ export default defineConfig(({ mode }) => ({
     },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  // Build-time prerender (src/entry-server.tsx): bundle CJS-only packages so Node
+  // can import the server build. The client manifest maps routes → JS chunks.
+  ssr: {
+    noExternal: ["react-helmet-async"],
+  },
+  build: {
+    manifest: true,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import LazyVideo from '@/components/ui/LazyVideo';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -64,14 +65,10 @@ const AboutPreviewSection = () => {
             className="order-1 lg:order-none lg:col-start-1 lg:row-start-1"
           >
             <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden shadow-elevated">
-              <video
+              <LazyVideo
                 src="/videos/arxikivid.mp4"
+                poster="/videos/posters/arxikivid.webp"
                 className="w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="metadata"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
             </div>
@@ -119,6 +116,7 @@ const AboutPreviewSection = () => {
               <video
                 ref={videoRef}
                 src="/videos/experience.mp4"
+                poster="/videos/posters/experience.webp"
                 className="w-full h-full object-cover"
                 muted
                 playsInline

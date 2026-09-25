@@ -71,7 +71,7 @@ const ProductsPage = () => {
       {/* Hero — cinematic navy overlay over production video */}
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">
-          <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+          <video autoPlay loop muted playsInline poster="/videos/posters/productshero.webp" className="w-full h-full object-cover">
             <source src="/videos/productshero.mp4" type="video/mp4" />
           </video>
           <div
