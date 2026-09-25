@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
 import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
@@ -9,6 +9,7 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { brandFromSrc } from '@/lib/text';
+import { OPTIKA, PAIDIKA } from '@/content/categories';
 
 const GalleryImage = ({
   src,
@@ -22,12 +23,14 @@ const GalleryImage = ({
   index: number;
   objectFit?: 'cover' | 'contain';
   alt?: string;
-}) => (
+}) => {
+  const { language } = useLanguage();
+  return (
   <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
     <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
       <img
         src={src}
-        alt={alt ?? `Χάρτινη σακούλα με εκτύπωση λογοτύπου — ${brandFromSrc(src)} | Laderos Bags`}
+        alt={alt ?? `${language === 'el' ? 'Χάρτινη σακούλα με εκτύπωση λογοτύπου' : 'Custom paper bag with logo printing'} — ${brandFromSrc(src)} | Laderos Bags`}
         className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-105 ${
           objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
         }`}
@@ -35,7 +38,8 @@ const GalleryImage = ({
       />
     </div>
   </div>
-);
+  );
+};
 
 const PaperBagsPage = () => {
   const { t, language } = useLanguage();
@@ -126,14 +130,14 @@ const PaperBagsPage = () => {
         routeKey="/products/paper-bags"
         jsonLd={[
           makeBreadcrumbLd([
-            ['Αρχική', '/'],
-            ['Προϊόντα', '/products'],
-            ['Χάρτινες Σακούλες', '/products/paper-bags'],
+            [t('nav.home'), '/'],
+            [t('nav.products'), '/products'],
+            [t('nav.products.paper'), '/products/paper-bags'],
           ]),
-          makeItemListLd('Κατηγορίες Χάρτινων Σακουλών', [
-            ['Χάρτινες Σακούλες Πολυτελείας', '/products/paper-bags'],
-            ['Σακούλες για Οπτικά', '/products/optika'],
-            ['Σακούλες για Παιδικά', '/products/paidika'],
+          makeItemListLd(language === 'el' ? 'Κατηγορίες Χάρτινων Σακουλών' : 'Paper Bag Categories', [
+            [language === 'el' ? 'Χάρτινες Σακούλες Πολυτελείας' : 'Luxury Paper Bags', '/products/paper-bags'],
+            [language === 'el' ? 'Σακούλες για Οπτικά' : OPTIKA.h1.en, '/products/optika'],
+            [language === 'el' ? 'Σακούλες για Παιδικά' : PAIDIKA.h1.en, '/products/paidika'],
           ]),
         ]}
       />

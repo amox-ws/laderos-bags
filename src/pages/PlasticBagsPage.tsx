@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd } from '@/lib/seo';
 import { ArrowLeft, Check } from 'lucide-react';
@@ -50,7 +50,7 @@ const PlasticBagsPage = () => {
 
   return (
     <Layout>
-      <SEO routeKey="/products/plastic-bags" jsonLd={makeBreadcrumbLd([['Αρχική', '/'], ['Προϊόντα', '/products'], ['Πλαστικές Σακούλες', '/products/plastic-bags']])} />
+      <SEO routeKey="/products/plastic-bags" jsonLd={makeBreadcrumbLd([[t('nav.home'), '/'], [t('nav.products'), '/products'], [t('nav.products.plastic'), '/products/plastic-bags']])} />
       {/* Hero */}
       <section className="section-padding main-section">
         <div className="container-page">

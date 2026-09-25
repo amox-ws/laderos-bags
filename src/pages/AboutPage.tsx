@@ -4,7 +4,7 @@ import LazyVideo from '@/components/ui/LazyVideo';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd } from '@/lib/seo';
 import { Factory, Package, Award, Users, ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import { useLanguage } from '@/contexts/LanguageContext';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -62,7 +62,7 @@ const AboutPage = () => {
 
   return (
     <Layout>
-      <SEO routeKey="/about" jsonLd={makeBreadcrumbLd([['Αρχική', '/'], ['Η Εταιρεία', '/about']])} />
+      <SEO routeKey="/about" jsonLd={makeBreadcrumbLd([[t('nav.home'), '/'], [t('nav.about'), '/about']])} />
       {/* Hero Section — cinematic navy overlay */}
       <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
         <div className="absolute inset-0 w-full h-full z-0">

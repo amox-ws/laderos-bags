@@ -1,5 +1,6 @@
 import Layout from '@/components/layout/Layout';
 import SEO from '@/components/SEO';
+import { ADDRESS_LINE } from '@/lib/seo';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 const PrivacyPolicyPage = () => {
@@ -186,7 +187,7 @@ const PrivacyPolicyPage = () => {
               </p>
               <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-1">
                 <p><strong>Laderos Bags</strong></p>
-                <p>Ελασσώνος 13, Αχαρνές 136 72</p>
+                <p>{ADDRESS_LINE[isGreek ? 'el' : 'en']}</p>
                 <p>Email: laderosbags@gmail.com</p>
                 <p>{isGreek ? 'Τηλ' : 'Tel'}: 697 266 1870 · 210 244 3550 · 210 244 3800</p>
               </div>

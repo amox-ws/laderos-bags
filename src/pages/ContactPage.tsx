@@ -1,7 +1,7 @@
 // Contact Page - Laderos Bags
 import { motion } from 'framer-motion';
 import SEO from '@/components/SEO';
-import { makeBreadcrumbLd } from '@/lib/seo';
+import { ADDRESS_LINE, makeBreadcrumbLd } from '@/lib/seo';
 import { MapPin, Phone, Mail, Clock, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useCookieConsent } from '@/contexts/CookieConsentContext';
@@ -25,7 +25,7 @@ const ContactPage = () => {
     {
       icon: MapPin,
       label: t('contact.info.address'),
-      value: 'Ελασσώνος 13, Αχαρνές 136 72',
+      value: ADDRESS_LINE[language === 'en' ? 'en' : 'el'],
     },
     {
       icon: Phone,
@@ -51,7 +51,7 @@ const ContactPage = () => {
 
   return (
     <Layout>
-      <SEO routeKey="/contact" jsonLd={makeBreadcrumbLd([['Αρχική', '/'], ['Επικοινωνία', '/contact']])} />
+      <SEO routeKey="/contact" jsonLd={makeBreadcrumbLd([[t('nav.home'), '/'], [t('nav.contact'), '/contact']])} />
       {/* Page Title */}
       <section className="py-20 md:py-28 main-section">
         <div className="container-page">

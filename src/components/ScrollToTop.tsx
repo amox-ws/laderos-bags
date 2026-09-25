@@ -1,5 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { stripLang } from '@/lib/i18nPaths';
 
 /**
  * Resets scroll position on navigation.
@@ -7,11 +8,19 @@ import { useLocation } from 'react-router-dom';
  *   `scroll-behavior: smooth`, which would otherwise animate the jump).
  * - Real in-page anchors (e.g. /contact#quote) smooth-scroll to their target.
  * - The "/#products-section" home link is intentionally treated as "go to top".
+ * - Switching language (e.g. /about → /en/about) keeps the scroll position,
+ *   just like the old in-place language toggle did.
  */
 const ScrollToTop = () => {
   const { pathname, hash } = useLocation();
+  const prev = useRef<{ base: string; hash: string } | null>(null);
 
   useEffect(() => {
+    const base = stripLang(pathname);
+    const onlyLanguageChanged = prev.current?.base === base && prev.current?.hash === hash;
+    prev.current = { base, hash };
+    if (onlyLanguageChanged) return;
+
     const isRealAnchor = hash && hash !== '#products-section';
 
     if (isRealAnchor) {

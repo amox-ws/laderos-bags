@@ -66,6 +66,36 @@ const NAV_LABEL = {
   '/privacy-policy': 'Πολιτική Απορρήτου',
 };
 
+/** English labels for the seeded fallback on /en pages (same wording as the site's English menu). */
+const NAV_LABEL_EN = {
+  '/': 'Home',
+  '/about': 'About',
+  '/products': 'Products',
+  '/products/paper-bags': 'Paper Bags',
+  '/products/plastic-bags': 'Plastic Bags',
+  '/products/optika': 'Bags for Optical Stores',
+  '/products/paidika': 'Bags for Kids Stores',
+  '/contact': 'Contact',
+  '/privacy-policy': 'Privacy Policy',
+};
+
+/** "/about" → "/en/about", "/" → "/en". */
+const enPath = (p) => (p === '/' ? '/en' : `/en${p}`);
+
+/** Head tags that are hard-coded in Greek in index.html, in English for /en pages. */
+function localizeStaticHead(html, lang) {
+  if (lang !== 'en') return html;
+  return html
+    .replace(
+      /<meta\s+property="og:image:alt"[^>]*>/,
+      '<meta property="og:image:alt" content="Luxury printed paper bag — Laderos Bags" />'
+    )
+    .replace(
+      /<meta\s+name="keywords"[^>]*>/,
+      '<meta name="keywords" content="custom paper bags, custom plastic bags, printed bags, logo printing, luxury paper bags, bags for optical stores, bags for kids stores, custom bags, packaging, wholesale, Acharnes, Athens, B2B bag manufacturing Greece">'
+    );
+}
+
 /** Extra keyword-rich context per route (mirrors what the page actually says). */
 const EXTRA = {
   '/products/paper-bags':
@@ -91,7 +121,7 @@ const EXTRA = {
  * it is styled inline as a clean, on-brand intro (same navy/blue as the site)
  * rather than raw unstyled text. The copy matches the page's real content.
  */
-function seededBody(path, h1, description) {
+function seededBody(path, h1, description, lang = 'el') {
   const S = {
     wrap: 'min-height:100vh;background:hsl(220 55% 6%);color:#fff;display:flex;align-items:center;justify-content:center;padding:2rem;font-family:Manrope,system-ui,sans-serif;',
     inner: 'max-width:56rem;text-align:center;',
@@ -102,19 +132,21 @@ function seededBody(path, h1, description) {
     foot: 'margin-top:2rem;font-size:0.85rem;opacity:0.6;',
   };
 
-  const links = Object.entries(NAV_LABEL)
+  const labels = lang === 'en' ? NAV_LABEL_EN : NAV_LABEL;
+  const links = Object.entries(labels)
     .filter(([p]) => p !== path)
-    .map(([p, label]) => `<li><a style="${S.a}" href="${p}">${esc(label)}</a></li>`)
+    .map(([p, label]) => `<li><a style="${S.a}" href="${lang === 'en' ? enPath(p) : p}">${esc(label)}</a></li>`)
     .join('');
 
-  const extra = EXTRA[path] ? `<p style="${S.p}">${esc(EXTRA[path])}</p>` : '';
+  const extra = lang === 'el' && EXTRA[path] ? `<p style="${S.p}">${esc(EXTRA[path])}</p>` : '';
+  const address = lang === 'en' ? 'Elassonos 13, Acharnes 136 72' : 'Ελασσώνος 13, Αχαρνές 136 72';
 
   return `<div id="root"><div style="${S.wrap}"><div style="${S.inner}">
       <h1 style="${S.h1}">${esc(h1)}</h1>
       <p style="${S.p}">${esc(description)}</p>
       ${extra}
       <nav aria-label="Laderos Bags"><ul style="${S.nav}">${links}</ul></nav>
-      <p style="${S.foot}"><strong>Laderos Bags</strong> — Ελασσώνος 13, Αχαρνές 136 72 ·
+      <p style="${S.foot}"><strong>Laderos Bags</strong> — ${address} ·
       <a style="color:inherit" href="tel:+302102443550">210 244 3550</a> ·
       <a style="color:inherit" href="mailto:laderosbags@gmail.com">laderosbags@gmail.com</a></p>
     </div></div></div>`;
@@ -172,7 +204,8 @@ function renderFull(base, { appHtml, helmet, preloads }) {
   ]
     .filter(Boolean)
     .join('\n    ');
-  html = html.replace('</head>', `    ${head}\n  </head>`);
+  // react-helmet writes the React prop name; use the standard lowercase attribute.
+  html = html.replace('</head>', `    ${head.replace(/ hrefLang=/g, ' hreflang=')}\n  </head>`);
   const lang = /lang="([a-z-]+)"/i.exec(helmet.htmlAttributes.toString())?.[1];
   if (lang) html = html.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
   return html.replace(/<div id="root">\s*<\/div>/, `<div id="root">${appHtml}</div>`);
@@ -215,8 +248,8 @@ function setTag(html, matcher, replacement) {
     : html.replace('</head>', `    ${replacement}\n  </head>`);
 }
 
-function renderPage(base, { path, title, description, canonical, jsonLd, h1, siteUrl, noindex }) {
-  let html = base;
+function renderPage(base, { path, title, description, canonical, jsonLd, h1, siteUrl, noindex, lang = 'el' }) {
+  let html = base.replace(/<html lang="[^"]*"/, `<html lang="${lang}"`);
 
   html = html.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`);
 
@@ -252,27 +285,40 @@ function renderPage(base, { path, title, description, canonical, jsonLd, h1, sit
   }
 
   // Seed crawlable content inside the React mount point.
-  html = html.replace(/<div id="root">\s*<\/div>/, seededBody(path, h1, description, siteUrl));
+  html = html.replace(/<div id="root">\s*<\/div>/, seededBody(path, h1, description, lang));
 
   return html;
 }
 
 async function main() {
-  const { PAGE_SEO, NOT_FOUND_SEO, SITE_URL, SITE_GRAPH_LD, makeBreadcrumbLd } = await loadSeo();
-  const base = withSiteGraph(await readFile(join(dist, 'index.html'), 'utf8'), SITE_GRAPH_LD);
+  const { PAGE_SEO, NOT_FOUND_SEO, SITE_URL, siteGraphLd, makeBreadcrumbLd } = await loadSeo();
+  const index = await readFile(join(dist, 'index.html'), 'utf8');
+  const bases = {
+    el: withSiteGraph(index, siteGraphLd('el')),
+    en: withSiteGraph(localizeStaticHead(index, 'en'), siteGraphLd('en')),
+  };
   const serverRender = await loadServerRender();
   const manifest = await loadManifest();
 
-  const crumbsFor = (path) => {
+  const urlOf = (path, lang) => {
+    const p = lang === 'en' ? enPath(path) : path;
+    return `${SITE_URL}${p === '/' ? '' : p}`;
+  };
+
+  const crumbsFor = (path, lang) => {
     if (path === '/') return null;
-    const items = [['Αρχική', '/']];
-    if (path.startsWith('/products/')) items.push(['Προϊόντα', '/products']);
-    items.push([NAV_LABEL[path] || path, path]);
-    return makeBreadcrumbLd(items);
+    const labels = lang === 'en' ? NAV_LABEL_EN : NAV_LABEL;
+    const items = [[labels['/'], '/']];
+    if (path.startsWith('/products/')) items.push([labels['/products'], '/products']);
+    items.push([labels[path] || path, path]);
+    const ld = makeBreadcrumbLd(items);
+    if (lang === 'en') ld.itemListElement.forEach((it, i) => (it.item = urlOf(items[i][1], 'en')));
+    return ld;
   };
 
   /** Full render when possible, seeded markup otherwise. */
-  const pageHtml = (path, url, seeded) => {
+  const pageHtml = (path, url, seeded, lang) => {
+    const base = bases[lang];
     if (serverRender) {
       try {
         const { html: appHtml, helmet } = serverRender(url);
@@ -280,34 +326,36 @@ async function main() {
           return { html: renderFull(base, { appHtml, helmet, preloads: modulePreloads(manifest, path) }), mode: 'full' };
         }
       } catch (err) {
-        console.warn(`  ⚠ ${path}: server render failed (${err?.message || err}), using seeded markup`);
+        console.warn(`  ⚠ ${url}: server render failed (${err?.message || err}), using seeded markup`);
       }
     }
-    return { html: renderPage(base, seeded), mode: 'seeded' };
+    return { html: renderPage(base, { ...seeded, lang }), mode: 'seeded' };
   };
 
   let count = 0;
-  for (const [path, cfg] of Object.entries(PAGE_SEO)) {
-    const title = cfg.title.el;
-    const description = cfg.description.el;
-    const canonical = `${SITE_URL}${path === '/' ? '' : path}`;
-    const h1 = title.split(' | ')[0];
+  for (const lang of ['el', 'en']) {
+    for (const [path, cfg] of Object.entries(PAGE_SEO)) {
+      const title = cfg.title[lang];
+      const description = cfg.description[lang];
+      const url = lang === 'en' ? enPath(path) : path;
+      const h1 = title.split(' | ')[0];
 
-    const { html, mode } = pageHtml(path, path, {
-      path,
-      title,
-      description,
-      canonical,
-      jsonLd: crumbsFor(path),
-      h1,
-      siteUrl: SITE_URL,
-    });
+      const { html, mode } = pageHtml(path, url, {
+        path,
+        title,
+        description,
+        canonical: urlOf(path, lang),
+        jsonLd: crumbsFor(path, lang),
+        h1,
+        siteUrl: SITE_URL,
+      }, lang);
 
-    const outDir = path === '/' ? dist : join(dist, path);
-    await mkdir(outDir, { recursive: true });
-    await writeFile(join(outDir, 'index.html'), html, 'utf8');
-    count++;
-    console.log(`  prerendered ${path} (${mode})`);
+      const outDir = url === '/' ? dist : join(dist, url);
+      await mkdir(outDir, { recursive: true });
+      await writeFile(join(outDir, 'index.html'), html, 'utf8');
+      count++;
+      console.log(`  prerendered ${url} (${mode})`);
+    }
   }
 
   // Real 404 page (Vercel serves dist/404.html with a 404 status).
@@ -321,14 +369,14 @@ async function main() {
     h1: nf.title.el.split(' | ')[0],
     siteUrl: SITE_URL,
     noindex: true,
-  });
+  }, 'el');
   await writeFile(join(dist, '404.html'), notFound, 'utf8');
   console.log(`  prerendered 404.html (${nfMode})`);
 
   // The route→chunk manifest was only needed here; don't publish it.
   await rm(join(dist, '.vite'), { recursive: true, force: true });
 
-  console.log(`✓ prerender: ${count} routes + 404 (${serverRender ? 'full render' : 'seeded fallback'})`);
+  console.log(`✓ prerender: ${count} pages (el + en) + 404 (${serverRender ? 'full render' : 'seeded fallback'})`);
 }
 
 main().catch((err) => {

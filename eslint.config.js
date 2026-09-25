@@ -21,6 +21,24 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "@typescript-eslint/no-unused-vars": "off",
+      // English pages live under /en — links must keep the visitor's language.
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "react-router-dom",
+              importNames: ["Link", "NavLink"],
+              message: "Use `import { Link } from '@/components/LocalizedLink'` so links keep the /en prefix on English pages.",
+            },
+          ],
+        },
+      ],
     },
+  },
+  {
+    // The one place allowed to wrap react-router's Link.
+    files: ["src/components/LocalizedLink.tsx", "src/components/NavLink.tsx"],
+    rules: { "no-restricted-imports": "off" },
   },
 );

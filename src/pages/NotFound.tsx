@@ -1,4 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Link } from "@/components/LocalizedLink";
 import SEO from '@/components/SEO';
 import { useEffect } from "react";
 import { ArrowLeft } from "lucide-react";

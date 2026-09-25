@@ -3,7 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Cookie } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 
 const CookieConsentBanner = () => {
   const { consent, acceptCookies, declineCookies } = useCookieConsent();

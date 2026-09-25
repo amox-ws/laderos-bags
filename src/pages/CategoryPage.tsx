@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@/components/LocalizedLink';
 import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd, makeFaqLd } from '@/lib/seo';
@@ -30,9 +30,9 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
         routeKey={routeKey}
         jsonLd={[
           makeBreadcrumbLd([
-            ['Αρχική', '/'],
-            ['Προϊόντα', '/products'],
-            [content.h1.el, routeKey],
+            [t('nav.home'), '/'],
+            [t('nav.products'), '/products'],
+            [content.h1[lang], routeKey],
           ]),
           makeFaqLd(
             content.faq.map((f) => ({ question: f.q[lang], answer: f.a[lang] }))

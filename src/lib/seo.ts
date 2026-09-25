@@ -9,6 +9,12 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
 /** Canonical Google Business Profile listing (derived from the Maps CID). */
 export const GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=6099904786620582164';
 
+/** Street address as shown on the page (English form as used elsewhere on the site). */
+export const ADDRESS_LINE = {
+  el: 'Ελασσώνος 13, Αχαρνές 136 72',
+  en: 'Elassonos 13, Acharnes 136 72',
+};
+
 /** Verified coordinates of Ελασσώνος 13, Αχαρνές (from the Maps listing). */
 export const GEO = { latitude: 38.098358, longitude: 23.7499251 };
 
@@ -252,6 +258,34 @@ export const SITE_GRAPH_LD = {
   '@context': 'https://schema.org',
   '@graph': [LOCAL_BUSINESS_LD, WEBSITE_LD].map(({ '@context': _ctx, ...node }) => node),
 };
+
+/** English wording for the site-wide graph on /en pages (reuses the site's existing English copy). */
+const LOCAL_BUSINESS_EN = {
+  description: PAGE_SEO['/'].description.en,
+  knowsAbout: [
+    'Custom printed paper bags',
+    'Custom printed plastic bags',
+    'Luxury paper bags',
+    'Bags for optical stores',
+    'Bags for kids stores',
+    'Packaging for businesses',
+  ],
+};
+
+/** Site-wide graph in the page's language (address and contact details stay as registered). */
+export const siteGraphLd = (lang: 'el' | 'en') =>
+  lang === 'el'
+    ? SITE_GRAPH_LD
+    : {
+        ...SITE_GRAPH_LD,
+        '@graph': SITE_GRAPH_LD['@graph'].map((node) =>
+          node['@type'] === 'LocalBusiness'
+            ? { ...node, ...LOCAL_BUSINESS_EN }
+            : node['@type'] === 'WebSite'
+              ? { ...node, inLanguage: 'en' }
+              : node
+        ),
+      };
 
 /** BreadcrumbList builder: makeBreadcrumbLd([['Αρχική','/'],['Προϊόντα','/products']]) */
 export const makeBreadcrumbLd = (items: [string, string][]) => ({
