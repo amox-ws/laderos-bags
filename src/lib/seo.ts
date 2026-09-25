@@ -12,6 +12,24 @@ export const GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=6099904786620582164
 /** Verified coordinates of Ελασσώνος 13, Αχαρνές (from the Maps listing). */
 export const GEO = { latitude: 38.098358, longitude: 23.7499251 };
 
+/**
+ * Social profiles — paste the full profile URL once an account exists
+ * (e.g. 'https://www.facebook.com/laderosbags'). Empty entries are ignored:
+ * no icon appears in the footer and nothing is added to the schema `sameAs`.
+ */
+export const SOCIAL_LINKS = {
+  facebook: '',
+  instagram: '',
+  linkedin: '',
+  youtube: '',
+  tiktok: '',
+};
+
+/** Only the filled-in social profiles. */
+export const SOCIAL_PROFILES = (Object.entries(SOCIAL_LINKS) as [keyof typeof SOCIAL_LINKS, string][])
+  .filter(([, url]) => url.trim() !== '')
+  .map(([network, url]) => ({ network, url: url.trim() }));
+
 export type Lang = 'el' | 'en';
 
 export interface PageSeo {
@@ -151,10 +169,10 @@ export const LOCAL_BUSINESS_LD = {
   '@id': `${SITE_URL}/#business`,
   name: SITE_NAME,
   description:
-    'Κατασκευή χάρτινων και πλαστικών σακουλών με εκτύπωση λογοτύπου για επιχειρήσεις.',
+    'Κατασκευή χάρτινων και πλαστικών σακουλών με εκτύπωση λογοτύπου για επιχειρήσεις — καταστήματα λιανικής, οπτικά, παιδικά και κάθε brand. Πάνω από 30 χρόνια εμπειρίας.',
   url: SITE_URL,
-  logo: `${SITE_URL}/og-image.jpg`,
-  image: `${SITE_URL}/og-image.jpg`,
+  logo: `${SITE_URL}/favicon.png`,
+  image: DEFAULT_OG_IMAGE,
   email: 'laderosbags@gmail.com',
   telephone: '+302102443550',
   contactPoint: [
@@ -184,7 +202,7 @@ export const LOCAL_BUSINESS_LD = {
     '@type': 'PostalAddress',
     streetAddress: 'Ελασσώνος 13',
     addressLocality: 'Αχαρνές',
-    postalCode: '136 72',
+    postalCode: '13672',
     addressRegion: 'Αττική',
     addressCountry: 'GR',
   },
@@ -194,7 +212,7 @@ export const LOCAL_BUSINESS_LD = {
     longitude: GEO.longitude,
   },
   hasMap: GOOGLE_MAPS_URL,
-  sameAs: [GOOGLE_MAPS_URL],
+  sameAs: [GOOGLE_MAPS_URL, ...SOCIAL_PROFILES.map((p) => p.url)],
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
@@ -203,7 +221,16 @@ export const LOCAL_BUSINESS_LD = {
       closes: '17:00',
     },
   ],
+  areaServed: { '@type': 'Country', name: 'Greece' },
   priceRange: '€€',
+  knowsAbout: [
+    'Χάρτινες σακούλες με εκτύπωση',
+    'Πλαστικές σακούλες με εκτύπωση',
+    'Σακούλες πολυτελείας',
+    'Σακούλες για οπτικά καταστήματα',
+    'Σακούλες για παιδικά καταστήματα',
+    'Συσκευασία για επιχειρήσεις',
+  ],
 };
 
 /** WebSite — names the site in search results. */
@@ -215,6 +242,15 @@ export const WEBSITE_LD = {
   url: SITE_URL,
   inLanguage: 'el-GR',
   publisher: { '@id': `${SITE_URL}/#business` },
+};
+
+/**
+ * Site-wide graph (LocalBusiness + WebSite). The prerender step writes this into
+ * every page, so SOCIAL_LINKS / business details only ever need editing here.
+ */
+export const SITE_GRAPH_LD = {
+  '@context': 'https://schema.org',
+  '@graph': [LOCAL_BUSINESS_LD, WEBSITE_LD].map(({ '@context': _ctx, ...node }) => node),
 };
 
 /** BreadcrumbList builder: makeBreadcrumbLd([['Αρχική','/'],['Προϊόντα','/products']]) */

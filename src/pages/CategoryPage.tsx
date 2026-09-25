@@ -9,6 +9,7 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import type { CategoryContent } from '@/content/categories';
 import Eyebrow from '@/components/ui/Eyebrow';
+import { brandFromSrc } from '@/lib/text';
 
 interface CategoryPageProps {
   content: CategoryContent;
@@ -136,10 +137,7 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
                 >
                   <img
                     src={src}
-                    alt={`${content.altPrefix[lang]} — ${(src.split('/').pop() || '')
-                      .replace('sakoula-', '')
-                      .replace('.webp', '')
-                      .replace(/-/g, ' ')} | Laderos Bags`}
+                    alt={`${content.altPrefix[lang]} — ${brandFromSrc(src)} | Laderos Bags`}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                     loading={i < 4 ? 'eager' : 'lazy'}
                   />

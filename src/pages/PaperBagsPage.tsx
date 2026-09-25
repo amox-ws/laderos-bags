@@ -8,6 +8,7 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { brandFromSrc } from '@/lib/text';
 
 const GalleryImage = ({
   src,
@@ -26,7 +27,7 @@ const GalleryImage = ({
     <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
       <img
         src={src}
-        alt={alt ?? `Χάρτινη σακούλα με εκτύπωση λογοτύπου — δείγμα ${index + 1} | Laderos Bags`}
+        alt={alt ?? `Χάρτινη σακούλα με εκτύπωση λογοτύπου — ${brandFromSrc(src)} | Laderos Bags`}
         className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-105 ${
           objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
         }`}
