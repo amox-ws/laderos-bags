@@ -9,7 +9,7 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { brandFromSrc } from '@/lib/text';
-import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA } from '@/content/categories';
+import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA, SPECIAL_CATEGORIES } from '@/content/categories';
 
 const GalleryImage = ({
   src,
@@ -79,54 +79,15 @@ const PaperBagsPage = () => {
     '/paper_product/bsb.webp',
   ];
 
-  /** Teaser cards for the categories that have a page of their own. */
-  const specialCategories = [
-    {
-      to: '/products/optika',
-      content: OPTIKA,
-      label: language === 'el' ? 'Οπτικά' : 'Optical',
-      blurb: language === 'el'
-        ? 'Σακούλες για οπτικά και φακούς επαφής — δείτε όλη τη συλλογή.'
-        : 'Bags for optical and contact-lens stores — see the full collection.',
-    },
-    {
-      to: '/products/paidika',
-      content: PAIDIKA,
-      label: language === 'el' ? 'Παιδικά' : 'Kids',
-      blurb: language === 'el'
-        ? 'Σακούλες για παιδικά ρούχα και υποδήματα — δείτε όλη τη συλλογή.'
-        : 'Bags for childrenswear and kids footwear — see the full collection.',
-    },
-    {
-      to: '/products/andrika',
-      content: ANDRIKA,
-      label: language === 'el' ? 'Ανδρικά' : 'Menswear',
-      blurb: language === 'el'
-        ? 'Σακούλες για ανδρική ένδυση και υπόδηση — δείτε όλη τη συλλογή.'
-        : 'Bags for men\u2019s clothing and footwear — see the full collection.',
-    },
-    {
-      to: '/products/gynaikeia',
-      content: GYNAIKEIA,
-      label: language === 'el' ? 'Γυναικεία' : 'Womenswear',
-      blurb: language === 'el'
-        ? 'Σακούλες για boutique, εσώρουχα και αξεσουάρ — δείτε όλη τη συλλογή.'
-        : 'Bags for boutiques, lingerie and accessories — see the full collection.',
-    },
-    {
-      to: '/products/oikologika',
-      content: OIKOLOGIKA,
-      label: language === 'el' ? 'Οικολογικά' : 'Eco-Friendly',
-      blurb: language === 'el'
-        ? 'Σακούλες σε kraft εμφάνιση, χωρίς περιττά στρώματα — δείτε όλη τη συλλογή.'
-        : 'Kraft-look bags with no unnecessary layers — see the full collection.',
-    },
-  ].map((c) => ({
-    to: c.to,
-    label: c.label,
-    blurb: c.blurb,
-    image: c.content.images[0],
-    alt: `${c.content.altPrefix[language === 'en' ? 'en' : 'el']} | Laderos Bags`,
+  const lang = language === 'en' ? 'en' : 'el';
+
+  /** Teaser cards, straight from the category definitions. */
+  const specialCategories = SPECIAL_CATEGORIES.map((c) => ({
+    to: `/products/${c.slug}`,
+    label: c.navLabel[lang],
+    blurb: c.teaser[lang],
+    image: c.cardImage ?? c.images[0],
+    alt: `${c.altPrefix[lang]} | Laderos Bags`,
   }));
 
   const features = [

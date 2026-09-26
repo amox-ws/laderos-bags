@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
+import { SPECIAL_CATEGORIES } from '@/content/categories';
 
 const paperThumbnail = '/paper_product/paper_thumbnail.webp';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.webp';
@@ -183,6 +184,54 @@ const ProductsPage = () => {
                     </Button>
                   </motion.div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Special categories — each has a landing page of its own */}
+      <section className="section-padding ink-section overflow-hidden">
+        <div className="container-page">
+          <AnimatedSection className="max-w-2xl mb-14 md:mb-16">
+            <h2 className="mb-5">
+              {language === 'el' ? 'Ειδικές κατηγορίες' : 'Special categories'}
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed text-white/80">
+              {language === 'el'
+                ? 'Κάθε κλάδος έχει τις δικές του απαιτήσεις σε μέγεθος, αντοχή και εμφάνιση. Δείτε τις συλλογές που έχουμε κατασκευάσει ανά κατηγορία καταστήματος.'
+                : 'Every sector has its own demands in size, strength and appearance. Browse the collections we have produced for each type of store.'}
+            </p>
+          </AnimatedSection>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {SPECIAL_CATEGORIES.map((cat, i) => {
+              const lang = language === 'en' ? 'en' : 'el';
+              return (
+                <AnimatedSection key={cat.slug} delay={i * 0.08}>
+                  <Link
+                    to={`/products/${cat.slug}`}
+                    className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white/[0.04] ring-1 ring-white/10 transition-all duration-500 hover:bg-white/[0.07] hover:ring-white/25 hover:-translate-y-1"
+                  >
+                    <div className="relative aspect-square overflow-hidden bg-muted">
+                      <img
+                        src={cat.cardImage ?? cat.images[0]}
+                        alt={`${cat.altPrefix[lang]} | Laderos Bags`}
+                        /* contain: the bag is shown whole, never cropped */
+                        className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+                        loading="lazy"
+                      />
+                    </div>
+
+                    <div className="flex flex-1 flex-col p-6">
+                      <h3 className="mb-2.5 flex items-center gap-2.5 text-xl md:text-2xl">
+                        {cat.navLabel[lang]}
+                        <ArrowRight className="h-5 w-5 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1.5" />
+                      </h3>
+                      <p className="text-sm leading-relaxed text-white/70">{cat.teaser[lang]}</p>
+                    </div>
+                  </Link>
+                </AnimatedSection>
               );
             })}
           </div>

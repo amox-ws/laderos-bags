@@ -22,6 +22,12 @@ export interface CategorySection {
 
 export interface CategoryContent {
   slug: string;
+  /** Short name for menus and teaser cards, e.g. "Ανδρικά". */
+  navLabel: { el: string; en: string };
+  /** One line for the teaser cards that link here from other pages. */
+  teaser: { el: string; en: string };
+  /** Photo for the teaser cards. Falls back to the first gallery image. */
+  cardImage?: string;
   h1: { el: string; en: string };
   intro: { el: string[]; en: string[] };
   sections: CategorySection[];
@@ -40,6 +46,11 @@ const SPEC_SIZES = '53x43x14, 28x38x9, 40x34x12, 24x24x10, 38x31x9, 25x40x12, 40
 
 export const OPTIKA: CategoryContent = {
   slug: 'optika',
+  navLabel: { el: 'Οπτικά', en: 'Optical' },
+  teaser: {
+    el: 'Σακούλες για οπτικά και φακούς επαφής — δείτε όλη τη συλλογή.',
+    en: 'Bags for optical and contact-lens stores — see the full collection.',
+  },
   h1: {
     el: 'Σακούλες για Οπτικά Καταστήματα',
     en: 'Bags for Optical Stores',
@@ -162,6 +173,12 @@ export const OPTIKA: CategoryContent = {
 
 export const PAIDIKA: CategoryContent = {
   slug: 'paidika',
+  cardImage: '/paper_product/paidika/sakoula-brands.webp',
+  navLabel: { el: 'Παιδικά', en: 'Kids' },
+  teaser: {
+    el: 'Σακούλες για παιδικά ρούχα και υποδήματα — δείτε όλη τη συλλογή.',
+    en: 'Bags for childrenswear and kids footwear — see the full collection.',
+  },
   h1: {
     el: 'Σακούλες για Παιδικά Καταστήματα',
     en: 'Bags for Kids Stores',
@@ -304,6 +321,11 @@ export const CATEGORIES: Record<string, CategoryContent> = {
 
 export const ANDRIKA: CategoryContent = {
   slug: 'andrika',
+  navLabel: { el: 'Ανδρικά', en: 'Menswear' },
+  teaser: {
+    el: 'Σακούλες για ανδρική ένδυση και υπόδηση — δείτε όλη τη συλλογή.',
+    en: 'Bags for men\u2019s clothing and footwear — see the full collection.',
+  },
   h1: {
     el: 'Σακούλες για Ανδρικά Καταστήματα',
     en: 'Bags for Menswear Stores',
@@ -432,6 +454,11 @@ export const ANDRIKA: CategoryContent = {
 
 export const GYNAIKEIA: CategoryContent = {
   slug: 'gynaikeia',
+  navLabel: { el: 'Γυναικεία', en: 'Womenswear' },
+  teaser: {
+    el: 'Σακούλες για boutique, εσώρουχα και αξεσουάρ — δείτε όλη τη συλλογή.',
+    en: 'Bags for boutiques, lingerie and accessories — see the full collection.',
+  },
   h1: {
     el: 'Σακούλες για Γυναικεία Καταστήματα',
     en: 'Bags for Womenswear Stores',
@@ -561,6 +588,11 @@ export const GYNAIKEIA: CategoryContent = {
  */
 export const OIKOLOGIKA: CategoryContent = {
   slug: 'oikologika',
+  navLabel: { el: 'Οικολογικά', en: 'Eco-Friendly' },
+  teaser: {
+    el: 'Σακούλες σε kraft εμφάνιση, χωρίς περιττά στρώματα — δείτε όλη τη συλλογή.',
+    en: 'Kraft-look bags with no unnecessary layers — see the full collection.',
+  },
   h1: {
     el: 'Οικολογικές Χάρτινες Σακούλες',
     en: 'Eco-Friendly Paper Bags',
@@ -675,3 +707,12 @@ export const OIKOLOGIKA: CategoryContent = {
   ],
   altPrefix: { el: 'Οικολογική χάρτινη σακούλα', en: 'Eco-friendly paper bag' },
 };
+
+/** Every category that has a landing page of its own, in menu order. */
+export const SPECIAL_CATEGORIES: CategoryContent[] = [
+  OPTIKA,
+  PAIDIKA,
+  ANDRIKA,
+  GYNAIKEIA,
+  OIKOLOGIKA,
+];
