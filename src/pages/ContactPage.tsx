@@ -9,7 +9,6 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import ContactQuoteForm from '@/components/forms/ContactQuoteForm';
 import MapPlaceholder from '@/components/MapPlaceholder';
-import Eyebrow from '@/components/ui/Eyebrow';
 
 const ContactPage = () => {
   const { t, language } = useLanguage();
@@ -61,7 +60,6 @@ const ContactPage = () => {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="max-w-3xl"
           >
-            <Eyebrow label={language === 'el' ? 'Επικοινωνία' : 'Get in touch'} heading={t('contact.title')} />
             <h1 className="mb-6">
               {t('contact.title')}
             </h1>

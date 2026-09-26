@@ -22,7 +22,6 @@ export interface CategorySection {
 
 export interface CategoryContent {
   slug: string;
-  eyebrow: { el: string; en: string };
   h1: { el: string; en: string };
   intro: { el: string[]; en: string[] };
   sections: CategorySection[];
@@ -41,7 +40,6 @@ const SPEC_SIZES = '53x43x14, 28x38x9, 40x34x12, 24x24x10, 38x31x9, 25x40x12, 40
 
 export const OPTIKA: CategoryContent = {
   slug: 'optika',
-  eyebrow: { el: 'Κατηγορία', en: 'Category' },
   h1: {
     el: 'Σακούλες για Οπτικά Καταστήματα',
     en: 'Bags for Optical Stores',
@@ -164,7 +162,6 @@ export const OPTIKA: CategoryContent = {
 
 export const PAIDIKA: CategoryContent = {
   slug: 'paidika',
-  eyebrow: { el: 'Κατηγορία', en: 'Category' },
   h1: {
     el: 'Σακούλες για Παιδικά Καταστήματα',
     en: 'Bags for Kids Stores',
@@ -307,7 +304,6 @@ export const CATEGORIES: Record<string, CategoryContent> = {
 
 export const ANDRIKA: CategoryContent = {
   slug: 'andrika',
-  eyebrow: { el: 'Κατηγορία', en: 'Category' },
   h1: {
     el: 'Σακούλες για Ανδρικά Καταστήματα',
     en: 'Bags for Menswear Stores',
@@ -436,7 +432,6 @@ export const ANDRIKA: CategoryContent = {
 
 export const GYNAIKEIA: CategoryContent = {
   slug: 'gynaikeia',
-  eyebrow: { el: 'Κατηγορία', en: 'Category' },
   h1: {
     el: 'Σακούλες για Γυναικεία Καταστήματα',
     en: 'Bags for Womenswear Stores',
@@ -566,7 +561,6 @@ export const GYNAIKEIA: CategoryContent = {
  */
 export const OIKOLOGIKA: CategoryContent = {
   slug: 'oikologika',
-  eyebrow: { el: 'Κατηγορία', en: 'Category' },
   h1: {
     el: 'Οικολογικές Χάρτινες Σακούλες',
     en: 'Eco-Friendly Paper Bags',

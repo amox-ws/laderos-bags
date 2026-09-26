@@ -383,19 +383,11 @@
   }
 
   /* ── Bracket label — the [EYEBROW] signature ────────────────────── */
-  .section-label {
-    @apply text-sm md:text-base font-extrabold uppercase tracking-[0.08em] mb-5 inline-block;
-    color: currentColor;
-  }
-  .section-label::before { content: '[ '; opacity: 0.9; }
-  .section-label::after { content: ' ]'; opacity: 0.9; }
 
   .eyebrow {
     @apply text-sm font-extrabold uppercase tracking-[0.08em];
     color: hsl(var(--brand-blue));
   }
-  .eyebrow::before { content: '[ '; }
-  .eyebrow::after { content: ' ]'; }
 
   .ink-section .eyebrow, .dark-section .eyebrow, .section-depth-5 .eyebrow, .section-depth-6 .eyebrow {
     color: hsl(var(--brand-blue-light));

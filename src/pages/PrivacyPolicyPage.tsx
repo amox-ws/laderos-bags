@@ -12,7 +12,6 @@ const PrivacyPolicyPage = () => {
       <SEO routeKey="/privacy-policy" />
       <section className="py-20 md:py-28 main-section">
         <div className="container-page max-w-3xl">
-          <span className="section-label">{isGreek ? 'Νομικά' : 'Legal'}</span>
           <h1 className="text-4xl md:text-6xl text-foreground mb-4">
             {isGreek ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
           </h1>

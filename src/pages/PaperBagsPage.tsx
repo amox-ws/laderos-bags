@@ -9,183 +9,125 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { brandFromSrc } from '@/lib/text';
-import { OPTIKA, PAIDIKA } from '@/content/categories';
+import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA } from '@/content/categories';
 
 const GalleryImage = ({
   src,
   className = '',
-  index,
-  objectFit = 'cover',
   alt,
 }: {
   src: string;
   className?: string;
-  index: number;
-  objectFit?: 'cover' | 'contain';
   alt?: string;
 }) => {
   const { language } = useLanguage();
   return (
-  <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
-    <div className={`w-full h-full ${objectFit === 'contain' ? 'bg-white' : 'bg-muted'}`}>
+    <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
       <img
         src={src}
         alt={alt ?? `${language === 'el' ? 'Χάρτινη σακούλα με εκτύπωση λογοτύπου' : 'Custom paper bag with logo printing'} — ${brandFromSrc(src)} | Laderos Bags`}
-        className={`w-full h-full transition-transform duration-700 ease-out group-hover:scale-105 ${
-          objectFit === 'contain' ? 'object-contain p-2' : 'object-cover'
-        }`}
+        /* h-auto keeps the photo's own aspect ratio, so no bag is ever cropped */
+        className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-105"
         loading="lazy"
       />
     </div>
-  </div>
   );
-};
-
-/**
- * Mosaic rhythm for the paper-bag gallery: one full-width shot, then paired
- * rows of varying widths. The pattern repeats, so the gallery keeps the same
- * editorial feel however many photos the list grows to.
- */
-const GALLERY_PATTERN: { width: string; aspect: string }[][] = [
-  [{ width: 'w-full', aspect: 'aspect-[16/9]' }],
-  [{ width: 'w-[55%]', aspect: 'aspect-[3/4]' }, { width: 'w-[45%]', aspect: 'aspect-square' }],
-  [{ width: 'w-[45%]', aspect: 'aspect-[4/5]' }, { width: 'w-[55%]', aspect: 'aspect-[3/4]' }],
-  [{ width: 'w-1/2', aspect: 'aspect-[4/5]' }, { width: 'w-1/2', aspect: 'aspect-[4/5]' }],
-  [{ width: 'w-[40%]', aspect: 'aspect-[3/4]' }, { width: 'w-[60%]', aspect: 'aspect-[4/5]' }],
-  [{ width: 'w-[55%]', aspect: 'aspect-[3/4]' }, { width: 'w-[45%]', aspect: 'aspect-[3/4]' }],
-  [{ width: 'w-[60%]', aspect: 'aspect-[4/5]' }, { width: 'w-[40%]', aspect: 'aspect-[3/5]' }],
-  [{ width: 'w-[50%]', aspect: 'aspect-square' }, { width: 'w-[50%]', aspect: 'aspect-square' }],
-];
-
-interface GalleryCell {
-  src: string;
-  width: string;
-  aspect: string;
-  index: number;
-}
-
-/** Lay the images out over the repeating pattern, widening a lone trailing image. */
-const buildGalleryRows = (images: string[]): GalleryCell[][] => {
-  const rows: GalleryCell[][] = [];
-  let i = 0;
-  let step = 0;
-
-  while (i < images.length) {
-    const spec = GALLERY_PATTERN[step % GALLERY_PATTERN.length];
-    const take = Math.min(spec.length, images.length - i);
-
-    rows.push(
-      spec.slice(0, take).map((cell, k) => ({
-        src: images[i + k],
-        width: take < spec.length ? 'w-full' : cell.width,
-        aspect: cell.aspect,
-        index: i + k,
-      }))
-    );
-
-    i += take;
-    step += 1;
-  }
-
-  return rows;
 };
 
 const PaperBagsPage = () => {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
 
-  const optikaImages = [
-    '/paper_product/optika/sakoula-optolux.webp',
-    '/paper_product/optika/sakoula-optolux-2.webp',
-    '/paper_product/optika/sakoula-optolux-3.webp',
-    '/paper_product/optika/sakoula-optolux-panagouli.webp',
-    '/paper_product/optika/sakoula-optolux-panagouli-2.webp',
-    '/paper_product/optika/sakoula-optofree.webp',
-    '/paper_product/optika/sakoula-optofree-2.webp',
-    '/paper_product/optika/sakoula-optofree-3.webp',
-    '/paper_product/optika/sakoula-occhi-eleganti.webp',
-    '/paper_product/optika/sakoula-optical-room.webp',
-    '/paper_product/optika/sakoula-optics.webp',
-    '/paper_product/optika/sakoula-optics-poly.webp',
-    '/paper_product/optika/sakoula-excellens.webp',
-    '/paper_product/optika/sakoula-eye-like-u.webp',
-  ];
-
-  const paidikaImages = [
-    '/paper_product/paidika/sakoula-kid-club.webp',
-    '/paper_product/paidika/sakoula-kid-club-2.webp',
-    '/paper_product/paidika/sakoula-kid-club-3.webp',
-    '/paper_product/paidika/sakoula-kid-club-4.webp',
-    '/paper_product/paidika/sakoula-oneiropagida.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-2.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-3.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-4.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-5.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-6.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-7.webp',
-    '/paper_product/paidika/sakoula-capolino.webp',
-    '/paper_product/paidika/sakoula-lilipoupoli.webp',
-    '/paper_product/paidika/sakoula-lilipoupoli-2.webp',
-    '/paper_product/paidika/sakoula-lilipoupoli-3.webp',
-    '/paper_product/paidika/sakoula-sash-club.webp',
-    '/paper_product/paidika/sakoula-sash-club-2.webp',
-    '/paper_product/paidika/sakoula-sash-club-3.webp',
-    '/paper_product/paidika/sakoula-sash-club-4.webp',
-    '/paper_product/paidika/sakoula-tom-and-jerry.webp',
-    '/paper_product/paidika/sakoula-tom-and-jerry-2.webp',
-    '/paper_product/paidika/sakoula-azure-2.webp',
-    '/paper_product/paidika/sakoula-bee-fashion.webp',
-    '/paper_product/paidika/sakoula-brands.webp',
-    '/paper_product/paidika/sakoula-cool-step.webp',
-    '/paper_product/paidika/sakoula-dodo-squawk-fashion.webp',
-    '/paper_product/paidika/sakoula-fragolina.webp',
-    '/paper_product/paidika/sakoula-paidikos-paradeisos.webp',
-    '/paper_product/paidika/sakoula-pallina.webp',
-    '/paper_product/paidika/sakoula-skertso-kids-fashion.webp',
-    '/paper_product/paidika/sakoula-sole-kids-footwear.webp',
-    '/paper_product/paidika/sakoula-this-is-my-smile.webp',
-  ];
-
   const paperBagImages = [
-    '/paper_product/navy_green.webp',
-    '/paper_product/bsb.webp',
-    '/paper_product/anastasia.webp',
-    '/paper_product/asteras_tripolis.webp',
-    '/paper_product/benetto.webp',
-    '/paper_product/mts.webp', 
-    '/paper_product/di_mondo.webp',  
-    '/paper_product/sagiakos.webp',
-    '/paper_product/fikos_black.webp',
-    '/paper_product/illusions.webp',
-    '/paper_product/kostis.webp',
-    '/paper_product/morris.webp',
-    '/paper_product/wine.webp',
-    '/paper_product/casba.webp',
-    '/paper_product/dionisos.webp',
-    '/paper_product/loipa/sakoula-afoi-iosifidi.webp',
-    '/paper_product/loipa/sakoula-asteras-tripolis.webp',
-    '/paper_product/loipa/sakoula-atmoulis.webp',
-    '/paper_product/loipa/sakoula-boxbox.webp',
+    '/paper_product/loipa/sakoula-studio-ioannidis.webp',
     '/paper_product/loipa/sakoula-cashew.webp',
-    '/paper_product/loipa/sakoula-endeavor-lines.webp',
-    '/paper_product/loipa/sakoula-exis-vivliopoleio.webp',
-    '/paper_product/loipa/sakoula-georgios-galifianakis.webp',
-    '/paper_product/loipa/sakoula-ladybird-deco.webp',
-    '/paper_product/loipa/sakoula-le-shop.webp',
-    '/paper_product/loipa/sakoula-le-shop-2.webp',
-    '/paper_product/loipa/sakoula-le-shop-3.webp',
-    '/paper_product/loipa/sakoula-mole.webp',
+    '/paper_product/kostis.webp',
+    '/paper_product/fikos_black.webp',
     '/paper_product/loipa/sakoula-mole-2.webp',
     '/paper_product/loipa/sakoula-oida-vivliopoleio.webp',
+    '/paper_product/loipa/sakoula-exis-vivliopoleio.webp',
+    '/paper_product/casba.webp',
+    '/paper_product/loipa/sakoula-asteras-tripolis.webp',
+    '/paper_product/illusions.webp',
+    '/paper_product/loipa/sakoula-le-shop.webp',
+    '/paper_product/loipa/sakoula-endeavor-lines.webp',
+    '/paper_product/morris.webp',
+    '/paper_product/asteras_tripolis.webp',
     '/paper_product/loipa/sakoula-oida-vivliopoleio-2.webp',
     '/paper_product/loipa/sakoula-posto.webp',
-    '/paper_product/loipa/sakoula-seneca.webp',
-    '/paper_product/loipa/sakoula-seneca-2.webp',
-    '/paper_product/loipa/sakoula-seneca-medical-group.webp',
-    '/paper_product/loipa/sakoula-studio-ioannidis.webp',
-    '/paper_product/loipa/sakoula-ygeia-diagnostika-kentra.webp',
     '/paper_product/loipa/sakoula-yournuts.webp',
+    '/paper_product/mts.webp',
+    '/paper_product/loipa/sakoula-ygeia-diagnostika-kentra.webp',
+    '/paper_product/loipa/sakoula-seneca.webp',
+    '/paper_product/loipa/sakoula-mole.webp',
+    '/paper_product/navy_green.webp',
+    '/paper_product/loipa/sakoula-seneca-medical-group.webp',
+    '/paper_product/loipa/sakoula-ladybird-deco.webp',
+    '/paper_product/benetto.webp',
+    '/paper_product/loipa/sakoula-afoi-iosifidi.webp',
+    '/paper_product/di_mondo.webp',
+    '/paper_product/wine.webp',
+    '/paper_product/loipa/sakoula-le-shop-3.webp',
+    '/paper_product/loipa/sakoula-georgios-galifianakis.webp',
+    '/paper_product/dionisos.webp',
+    '/paper_product/sagiakos.webp',
+    '/paper_product/loipa/sakoula-seneca-2.webp',
+    '/paper_product/loipa/sakoula-le-shop-2.webp',
+    '/paper_product/anastasia.webp',
+    '/paper_product/loipa/sakoula-atmoulis.webp',
+    '/paper_product/loipa/sakoula-boxbox.webp',
+    '/paper_product/bsb.webp',
   ];
+
+  /** Teaser cards for the categories that have a page of their own. */
+  const specialCategories = [
+    {
+      to: '/products/optika',
+      content: OPTIKA,
+      label: language === 'el' ? 'Οπτικά' : 'Optical',
+      blurb: language === 'el'
+        ? 'Σακούλες για οπτικά και φακούς επαφής — δείτε όλη τη συλλογή.'
+        : 'Bags for optical and contact-lens stores — see the full collection.',
+    },
+    {
+      to: '/products/paidika',
+      content: PAIDIKA,
+      label: language === 'el' ? 'Παιδικά' : 'Kids',
+      blurb: language === 'el'
+        ? 'Σακούλες για παιδικά ρούχα και υποδήματα — δείτε όλη τη συλλογή.'
+        : 'Bags for childrenswear and kids footwear — see the full collection.',
+    },
+    {
+      to: '/products/andrika',
+      content: ANDRIKA,
+      label: language === 'el' ? 'Ανδρικά' : 'Menswear',
+      blurb: language === 'el'
+        ? 'Σακούλες για ανδρική ένδυση και υπόδηση — δείτε όλη τη συλλογή.'
+        : 'Bags for men\u2019s clothing and footwear — see the full collection.',
+    },
+    {
+      to: '/products/gynaikeia',
+      content: GYNAIKEIA,
+      label: language === 'el' ? 'Γυναικεία' : 'Womenswear',
+      blurb: language === 'el'
+        ? 'Σακούλες για boutique, εσώρουχα και αξεσουάρ — δείτε όλη τη συλλογή.'
+        : 'Bags for boutiques, lingerie and accessories — see the full collection.',
+    },
+    {
+      to: '/products/oikologika',
+      content: OIKOLOGIKA,
+      label: language === 'el' ? 'Οικολογικά' : 'Eco-Friendly',
+      blurb: language === 'el'
+        ? 'Σακούλες σε kraft εμφάνιση, χωρίς περιττά στρώματα — δείτε όλη τη συλλογή.'
+        : 'Kraft-look bags with no unnecessary layers — see the full collection.',
+    },
+  ].map((c) => ({
+    to: c.to,
+    label: c.label,
+    blurb: c.blurb,
+    image: c.content.images[0],
+    alt: `${c.content.altPrefix[language === 'en' ? 'en' : 'el']} | Laderos Bags`,
+  }));
 
   const features = [
     t('paperBags.feature1'),
@@ -210,6 +152,9 @@ const PaperBagsPage = () => {
             [language === 'el' ? 'Χάρτινες Σακούλες Πολυτελείας' : 'Luxury Paper Bags', '/products/paper-bags'],
             [language === 'el' ? 'Σακούλες για Οπτικά' : OPTIKA.h1.en, '/products/optika'],
             [language === 'el' ? 'Σακούλες για Παιδικά' : PAIDIKA.h1.en, '/products/paidika'],
+            [language === 'el' ? ANDRIKA.h1.el : ANDRIKA.h1.en, '/products/andrika'],
+            [language === 'el' ? GYNAIKEIA.h1.el : GYNAIKEIA.h1.en, '/products/gynaikeia'],
+            [language === 'el' ? OIKOLOGIKA.h1.el : OIKOLOGIKA.h1.en, '/products/oikologika'],
           ]),
         ]}
       />
@@ -293,18 +238,9 @@ const PaperBagsPage = () => {
             {/* Right Column - Gallery */}
             <div className="w-full lg:w-[58%] xl:w-[62%]">
               <AnimatedSection delay={0.2}>
-                <div className="flex flex-col gap-4">
-                  {buildGalleryRows(paperBagImages).map((row, rowIndex) => (
-                    <div key={rowIndex} className={row.length === 1 ? 'w-full' : 'flex gap-4'}>
-                      {row.map((cell) => (
-                        <GalleryImage
-                          key={cell.src}
-                          src={cell.src}
-                          index={cell.index}
-                          className={`${cell.width} ${cell.aspect}`}
-                        />
-                      ))}
-                    </div>
+                <div className="columns-1 sm:columns-2 xl:columns-3 gap-4 [column-fill:balance]">
+                  {paperBagImages.map((src) => (
+                    <GalleryImage key={src} src={src} className="mb-4 break-inside-avoid" />
                   ))}
                 </div>
               </AnimatedSection>
@@ -312,48 +248,27 @@ const PaperBagsPage = () => {
               {/* Ειδικές κατηγορίες — πλήρεις συλλογές σε δικές τους σελίδες */}
               <AnimatedSection className="mt-16">
                 <h3 className="mb-6">
-                  [ {language === 'el' ? 'Ειδικές κατηγορίες' : 'Special categories'} ]
+                  {language === 'el' ? 'Ειδικές κατηγορίες' : 'Special categories'}
                 </h3>
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <Link to="/products/optika" className="group block">
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-muted shadow-card group-hover:shadow-card-hover transition-all duration-500">
-                      <img
-                        src={optikaImages[0]}
-                        alt={language === 'el' ? 'Χάρτινες σακούλες για οπτικά καταστήματα | Laderos Bags' : 'Paper bags for optical stores | Laderos Bags'}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="media-label group-hover:gap-3.5 transition-all duration-300">
-                      {language === 'el' ? 'Οπτικά' : 'Optical'}
-                      <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {language === 'el'
-                        ? 'Σακούλες για οπτικά και φακούς επαφής — δείτε όλη τη συλλογή.'
-                        : 'Bags for optical and contact-lens stores — see the full collection.'}
-                    </p>
-                  </Link>
-
-                  <Link to="/products/paidika" className="group block">
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-muted shadow-card group-hover:shadow-card-hover transition-all duration-500">
-                      <img
-                        src={paidikaImages[0]}
-                        alt={language === 'el' ? 'Χάρτινες σακούλες για παιδικά καταστήματα | Laderos Bags' : 'Paper bags for kids stores | Laderos Bags'}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div className="media-label group-hover:gap-3.5 transition-all duration-300">
-                      {language === 'el' ? 'Παιδικά' : 'Kids'}
-                      <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {language === 'el'
-                        ? 'Σακούλες για παιδικά ρούχα και υποδήματα — δείτε όλη τη συλλογή.'
-                        : 'Bags for childrenswear and kids footwear — see the full collection.'}
-                    </p>
-                  </Link>
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {specialCategories.map((cat) => (
+                    <Link key={cat.to} to={cat.to} className="group block">
+                      <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted shadow-card group-hover:shadow-card-hover transition-all duration-500">
+                        <img
+                          src={cat.image}
+                          alt={cat.alt}
+                          /* contain: the thumbnail is never cropped, whatever ratio the photo has */
+                          className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="media-label group-hover:gap-3.5 transition-all duration-300">
+                        {cat.label}
+                        <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-1">{cat.blurb}</p>
+                    </Link>
+                  ))}
                 </div>
               </AnimatedSection>
             </div>

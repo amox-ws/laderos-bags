@@ -61,7 +61,7 @@ const TrustedBySection = ({ showTitle = true }: TrustedBySectionProps) => {
         <div className="container-page mb-12 md:mb-16">
           <AnimatedSection>
             <h3 className="mb-0">
-              [ {t('trustedBy.title')} ]
+              {t('trustedBy.title')}
             </h3>
           </AnimatedSection>
         </div>

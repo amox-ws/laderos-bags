@@ -8,7 +8,6 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import type { CategoryContent } from '@/content/categories';
-import Eyebrow from '@/components/ui/Eyebrow';
 import { brandFromSrc } from '@/lib/text';
 
 interface CategoryPageProps {
@@ -54,7 +53,6 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
               </Link>
             </div>
 
-            <Eyebrow label={content.eyebrow[lang]} heading={content.h1[lang]} className="block" />
             <h1 className="mb-8 max-w-4xl">{content.h1[lang]}</h1>
 
             <div className="max-w-3xl space-y-5">
@@ -152,7 +150,6 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
       <section className="section-padding section-depth-2">
         <div className="container-page">
           <AnimatedSection className="mb-12">
-            <span className="section-label">FAQ</span>
             <h2 className="mb-0">
               {lang === 'el' ? 'Συχνές ερωτήσεις' : 'Frequently asked questions'}
             </h2>

@@ -7,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
 import QuoteRequestModal from './QuoteRequestModal';
-import Eyebrow from '@/components/ui/Eyebrow';
 
 type BagType = 'paper' | 'plastic';
 
@@ -221,7 +220,6 @@ const QuoteRequestForm: React.FC<QuoteRequestFormProps> = ({ bagType }) => {
           transition={{ duration: 0.5 }}
           className="mb-12"
         >
-          <Eyebrow label={language === 'el' ? 'Αίτημα προσφοράς' : 'Quote request'} heading={t('quoteForm.title')} />
           <h2 className="mb-3">
             {t('quoteForm.title')}
           </h2>

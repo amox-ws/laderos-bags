@@ -1,8 +1,6 @@
 import AnimatedSection from './AnimatedSection';
-import Eyebrow from '@/components/ui/Eyebrow';
 
 interface SectionHeadingProps {
-  eyebrow?: string;
   title: string;
   description?: string;
   align?: 'left' | 'center';
@@ -12,12 +10,10 @@ interface SectionHeadingProps {
 }
 
 /**
- * Editorial section heading: small tracked eyebrow label, Cormorant serif
- * title, and an optional supporting paragraph. Inherits foreground colours
+ * Editorial section heading: title plus an optional supporting paragraph. Inherits foreground colours
  * from the surrounding section surface (main / accent / dark / footer).
  */
 const SectionHeading = ({
-  eyebrow,
   title,
   description,
   align = 'center',
@@ -28,7 +24,6 @@ const SectionHeading = ({
 
   return (
     <AnimatedSection className={`${isCenter ? 'text-center flex flex-col items-center' : ''} ${className}`}>
-      <Eyebrow label={eyebrow} heading={title} />
       <h2 className={`mb-0 ${isCenter ? 'max-w-4xl' : 'max-w-2xl'}`}>{title}</h2>
       {description && (
         <p className={`mt-6 text-base md:text-lg leading-relaxed opacity-70 ${narrow ? 'max-w-2xl' : ''} ${isCenter ? 'mx-auto' : ''}`}>

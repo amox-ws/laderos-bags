@@ -23,9 +23,6 @@ const NotFound = () => {
           <span className="font-display font-semibold text-[9rem] md:text-[15rem] leading-[0.8] text-primary/15 select-none" aria-hidden>
             404
           </span>
-          <span className="section-label justify-center -mt-6 md:-mt-12">
-            {language === "el" ? "Σφάλμα" : "Error"}
-          </span>
           <h1 className="mb-6 max-w-2xl">
             {language === "el" ? "Η σελίδα δεν βρέθηκε" : "Page not found"}
           </h1>
