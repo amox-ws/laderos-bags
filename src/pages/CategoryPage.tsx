@@ -8,6 +8,7 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import type { CategoryContent } from '@/content/categories';
+import CategoryCarousel from '@/components/ui/CategoryCarousel';
 import { brandFromSrc } from '@/lib/text';
 
 interface CategoryPageProps {
@@ -53,26 +54,36 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
               </Link>
             </div>
 
-            <h1 className="mb-8 max-w-4xl">{content.h1[lang]}</h1>
+            <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+              {/* Copy */}
+              <div className="lg:col-span-7">
+                <h1 className="mb-8">{content.h1[lang]}</h1>
 
-            <div className="max-w-3xl space-y-5">
-              {content.intro[lang].map((p, i) => (
-                <p key={i} className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  {p}
-                </p>
-              ))}
-            </div>
+                <div className="space-y-5">
+                  {content.intro[lang].map((p, i) => (
+                    <p key={i} className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                      {p}
+                    </p>
+                  ))}
+                </div>
 
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Button variant="default" size="lg" onClick={scrollToQuote}>
-                {lang === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
-              </Button>
-              <Button variant="outline" size="lg" asChild>
-                <Link to="/products/paper-bags">
-                  {lang === 'el' ? 'Όλες οι χάρτινες σακούλες' : 'All paper bags'}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <Button variant="default" size="lg" onClick={scrollToQuote}>
+                    {lang === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
+                  </Button>
+                  <Button variant="outline" size="lg" asChild>
+                    <Link to="/products/paper-bags">
+                      {lang === 'el' ? 'Όλες οι χάρτινες σακούλες' : 'All paper bags'}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Auto-playing carousel filling the space beside the copy */}
+              <div className="lg:col-span-5">
+                <CategoryCarousel images={content.images} altPrefix={content.altPrefix[lang]} />
+              </div>
             </div>
           </AnimatedSection>
         </div>
