@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
+import { SpecialCategoriesTeaser } from '@/components/products/SpecialCategories';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const GalleryImage = ({ src, className = '', index, scale = 1 }: { src: string; className?: string; index: number; scale?: number }) => (
@@ -153,6 +154,9 @@ const PlasticBagsPage = () => {
                   </div>
                 </div>
               </AnimatedSection>
+
+              {/* Ειδικές κατηγορίες — πλήρεις συλλογές σε δικές τους σελίδες */}
+              <SpecialCategoriesTeaser className="mt-16" />
             </div>
           </div>
         </div>

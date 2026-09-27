@@ -1,7 +1,7 @@
 import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
-import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import AnimatedSection from '@/components/ui/AnimatedSection';
@@ -9,7 +9,8 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { brandFromSrc } from '@/lib/text';
-import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA, SPECIAL_CATEGORIES } from '@/content/categories';
+import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA } from '@/content/categories';
+import { SpecialCategoriesTeaser } from '@/components/products/SpecialCategories';
 
 const GalleryImage = ({
   src,
@@ -78,17 +79,6 @@ const PaperBagsPage = () => {
     '/paper_product/loipa/sakoula-boxbox.webp',
     '/paper_product/bsb.webp',
   ];
-
-  const lang = language === 'en' ? 'en' : 'el';
-
-  /** Teaser cards, straight from the category definitions. */
-  const specialCategories = SPECIAL_CATEGORIES.map((c) => ({
-    to: `/products/${c.slug}`,
-    label: c.navLabel[lang],
-    blurb: c.teaser[lang],
-    image: c.cardImage ?? c.images[0],
-    alt: `${c.altPrefix[lang]} | Laderos Bags`,
-  }));
 
   const features = [
     t('paperBags.feature1'),
@@ -207,31 +197,7 @@ const PaperBagsPage = () => {
               </AnimatedSection>
 
               {/* Ειδικές κατηγορίες — πλήρεις συλλογές σε δικές τους σελίδες */}
-              <AnimatedSection className="mt-16">
-                <h3 className="mb-6">
-                  {language === 'el' ? 'Ειδικές κατηγορίες' : 'Special categories'}
-                </h3>
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                  {specialCategories.map((cat) => (
-                    <Link key={cat.to} to={cat.to} className="group block">
-                      <div className="relative aspect-square rounded-2xl overflow-hidden bg-muted shadow-card group-hover:shadow-card-hover transition-all duration-500">
-                        <img
-                          src={cat.image}
-                          alt={cat.alt}
-                          /* contain: the thumbnail is never cropped, whatever ratio the photo has */
-                          className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                          loading="lazy"
-                        />
-                      </div>
-                      <div className="media-label group-hover:gap-3.5 transition-all duration-300">
-                        {cat.label}
-                        <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                      </div>
-                      <p className="text-sm text-muted-foreground mt-1">{cat.blurb}</p>
-                    </Link>
-                  ))}
-                </div>
-              </AnimatedSection>
+              <SpecialCategoriesTeaser className="mt-16" />
             </div>
           </div>
         </div>

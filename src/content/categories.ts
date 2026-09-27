@@ -321,6 +321,7 @@ export const CATEGORIES: Record<string, CategoryContent> = {
 
 export const ANDRIKA: CategoryContent = {
   slug: 'andrika',
+  cardImage: '/paper_product/andrika/sakoula-beneto-maretti-2.webp',
   navLabel: { el: 'Ανδρικά', en: 'Menswear' },
   teaser: {
     el: 'Σακούλες για ανδρική ένδυση και υπόδηση — δείτε όλη τη συλλογή.',
@@ -454,6 +455,7 @@ export const ANDRIKA: CategoryContent = {
 
 export const GYNAIKEIA: CategoryContent = {
   slug: 'gynaikeia',
+  cardImage: '/paper_product/woman/sakoula-xontou-boutique.webp',
   navLabel: { el: 'Γυναικεία', en: 'Womenswear' },
   teaser: {
     el: 'Σακούλες για boutique, εσώρουχα και αξεσουάρ — δείτε όλη τη συλλογή.',
@@ -588,6 +590,7 @@ export const GYNAIKEIA: CategoryContent = {
  */
 export const OIKOLOGIKA: CategoryContent = {
   slug: 'oikologika',
+  cardImage: '/paper_product/oikologika/sakoula-surf-skate-shop.webp',
   navLabel: { el: 'Οικολογικά', en: 'Eco-Friendly' },
   teaser: {
     el: 'Σακούλες σε kraft εμφάνιση, χωρίς περιττά στρώματα — δείτε όλη τη συλλογή.',
