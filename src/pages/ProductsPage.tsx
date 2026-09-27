@@ -10,20 +10,21 @@ import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
 import SpecialCategories from '@/components/products/SpecialCategories';
+import ProductionGallery from '@/components/products/ProductionGallery';
 
 const paperThumbnail = '/paper_product/paper_thumbnail.webp';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.webp';
 
 const galleryImages = [
-  { src: '/gallery/gallery9.webp', position: '60% center' },
-  { src: '/gallery/gallery8.webp', position: '60% center' },
-  { src: '/gallery/gallery3.webp', position: 'center' },
-  { src: '/gallery/gallery4.webp', position: 'center' },
-  { src: '/gallery/gallery2.webp', position: 'center' },
-  { src: '/gallery/gallery6.webp', position: 'center' },
-  { src: '/gallery/gallery7.webp', position: 'center' },
-  { src: '/gallery/gallery5.webp', position: 'center' },
-  { src: '/gallery/gallery1.webp', position: 'center' }
+  '/gallery/gallery9.webp',
+  '/gallery/gallery8.webp',
+  '/gallery/gallery3.webp',
+  '/gallery/gallery4.webp',
+  '/gallery/gallery2.webp',
+  '/gallery/gallery6.webp',
+  '/gallery/gallery7.webp',
+  '/gallery/gallery5.webp',
+  '/gallery/gallery1.webp',
 ];
 
 const ProductsPage = () => {
@@ -198,31 +199,14 @@ const ProductsPage = () => {
       </div>
 
       {/* Gallery */}
-      <section className="main-section w-full">
+      <section className="main-section w-full overflow-hidden">
         <div className="container-page py-20 md:py-28">
           <AnimatedSection className="text-center flex flex-col items-center mb-14 md:mb-16">
             <h2 className="mb-0">{language === 'el' ? 'Δείγματα παραγωγής' : 'Production gallery'}</h2>
           </AnimatedSection>
+
+          <ProductionGallery images={galleryImages} />
         </div>
-        <AnimatedSection>
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-1.5 md:gap-2">
-            {galleryImages.map((item, index) => (
-              <div
-                key={index}
-                className="aspect-square bg-muted group cursor-pointer overflow-hidden relative"
-              >
-                <img
-                  src={item.src}
-                  alt={`${language === 'el' ? 'Δείγμα παραγωγής' : 'Production sample'} ${index + 1}`}
-                  style={{ objectPosition: item.position }}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/15 transition-colors duration-500" />
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
       </section>
 
       {/* CTA */}
