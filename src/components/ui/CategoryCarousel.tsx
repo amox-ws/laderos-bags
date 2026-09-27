@@ -18,6 +18,10 @@ interface CategoryCarouselProps {
   showDots?: boolean;
   /** Show a bar below with prev/next buttons the viewer can drive. */
   showControls?: boolean;
+  /** 'contain' shows the whole photo; 'cover' fills the card edge to edge. */
+  fit?: 'contain' | 'cover';
+  /** Where a covered photo is anchored, e.g. 'center 75%' to favour the base. */
+  objectPosition?: string;
 }
 
 /** How far each neighbouring card sits from the centre, and how it is dimmed. */
@@ -46,6 +50,8 @@ const CategoryCarousel = ({
   spread = 1,
   showDots = true,
   showControls = false,
+  fit = 'contain',
+  objectPosition,
 }: CategoryCarouselProps) => {
   const { language } = useLanguage();
   const el = language !== 'en';
@@ -115,8 +121,8 @@ const CategoryCarousel = ({
                 <img
                   src={src}
                   alt={offset === 0 ? `${altPrefix} — ${brandFromSrc(src)} | Laderos Bags` : ''}
-                  /* contain: the bag is shown whole, never cropped */
-                  className="w-full h-full object-contain"
+                  className={`w-full h-full ${fit === 'cover' ? 'object-cover' : 'object-contain'}`}
+                  style={objectPosition ? { objectPosition } : undefined}
                   loading={i === 0 ? 'eager' : 'lazy'}
                   draggable={false}
                 />

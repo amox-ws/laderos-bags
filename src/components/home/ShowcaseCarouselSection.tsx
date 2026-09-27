@@ -37,6 +37,10 @@ const ShowcaseCarouselSection = () => {
           spread={1.45}
           showDots={false}
           showControls
+          fit="cover"
+          /* The four portrait shots stand on a surface, so the crop is nudged
+             down to keep the base of every bag in frame. */
+          objectPosition="center 75%"
         />
       </AnimatedSection>
     </section>
