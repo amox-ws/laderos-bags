@@ -11,6 +11,7 @@ import ProductsSection from '@/components/home/ProductsSection';
 import TrustedBySection from '@/components/home/TrustedBySection';
 import AboutPreviewSection from '@/components/home/AboutPreviewSection';
 import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
+import ShowcaseCarouselSection from '@/components/home/ShowcaseCarouselSection';
 import WhereToFindUsSection from '@/components/home/WhereToFindUsSection';
 
 import gsap from 'gsap';
@@ -249,6 +250,8 @@ const HomePage = () => {
         <div className="ink-section">
           <AboutPreviewSection />
         </div>
+
+        <ShowcaseCarouselSection />
 
         <div className="accent-section">
           <AnimatedStatsSection />
