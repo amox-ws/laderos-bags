@@ -11,6 +11,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { brandFromSrc } from '@/lib/text';
 import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA } from '@/content/categories';
 import { SpecialCategoriesTeaser } from '@/components/products/SpecialCategories';
+import { scrollToId } from '@/lib/scrollToTarget';
 
 const GalleryImage = ({
   src,
@@ -176,7 +177,7 @@ const PaperBagsPage = () => {
                       size="lg" 
                       onClick={() => {
                         const quoteSection = document.getElementById('quote-section');
-                        quoteSection?.scrollIntoView({ behavior: 'smooth' });
+                        scrollToId('quote-section');
                       }}
                     >
                       {t('paperBags.cta')}

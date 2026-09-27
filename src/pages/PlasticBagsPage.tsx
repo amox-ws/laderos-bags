@@ -9,6 +9,7 @@ import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { SpecialCategoriesTeaser } from '@/components/products/SpecialCategories';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { scrollToId } from '@/lib/scrollToTarget';
 
 const GalleryImage = ({ src, className = '', index, scale = 1 }: { src: string; className?: string; index: number; scale?: number }) => (
   <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
@@ -119,7 +120,7 @@ const PlasticBagsPage = () => {
                       size="lg" 
                       onClick={() => {
                         const quoteSection = document.getElementById('quote-section');
-                        quoteSection?.scrollIntoView({ behavior: 'smooth' });
+                        scrollToId('quote-section');
                       }}
                     >
                       {t('plasticBags.cta')}

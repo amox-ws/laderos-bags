@@ -10,6 +10,7 @@ import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import type { CategoryContent } from '@/content/categories';
 import CategoryCarousel from '@/components/ui/CategoryCarousel';
 import { brandFromSrc } from '@/lib/text';
+import { scrollToId } from '@/lib/scrollToTarget';
 
 interface CategoryPageProps {
   content: CategoryContent;
@@ -22,7 +23,7 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
   const routeKey = `/products/${content.slug}`;
 
   const scrollToQuote = () =>
-    document.getElementById('quote-section')?.scrollIntoView({ behavior: 'smooth' });
+    scrollToId('quote-section');
 
   return (
     <Layout>
