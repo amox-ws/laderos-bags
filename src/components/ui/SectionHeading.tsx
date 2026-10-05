@@ -1,4 +1,5 @@
 import AnimatedSection from './AnimatedSection';
+import { RevealHeading } from './Reveal';
 
 interface SectionHeadingProps {
   title: string;
@@ -23,14 +24,16 @@ const SectionHeading = ({
   const isCenter = align === 'center';
 
   return (
-    <AnimatedSection className={`${isCenter ? 'text-center flex flex-col items-center' : ''} ${className}`}>
-      <h2 className={`mb-0 ${isCenter ? 'max-w-4xl' : 'max-w-2xl'}`}>{title}</h2>
+    <div className={`${isCenter ? 'text-center flex flex-col items-center' : ''} ${className}`}>
+      <RevealHeading text={title} className={`mb-0 ${isCenter ? 'max-w-4xl' : 'max-w-2xl'}`} />
       {description && (
-        <p className={`mt-6 text-base md:text-lg leading-relaxed opacity-70 ${narrow ? 'max-w-2xl' : ''} ${isCenter ? 'mx-auto' : ''}`}>
-          {description}
-        </p>
+        <AnimatedSection delay={0.15}>
+          <p className={`mt-7 text-base md:text-lg leading-relaxed opacity-70 ${narrow ? 'max-w-2xl' : ''} ${isCenter ? 'mx-auto' : ''}`}>
+            {description}
+          </p>
+        </AnimatedSection>
       )}
-    </AnimatedSection>
+    </div>
   );
 };
 

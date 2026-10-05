@@ -26,7 +26,7 @@ const ShowcaseCarouselSection = () => {
   const el = language !== 'en';
 
   return (
-    <section className="py-16 md:py-24 main-section overflow-hidden">
+    <section className="overflow-hidden py-20 md:py-32">
       {/* Full-bleed stage: the neighbours run out towards both edges */}
       <AnimatedSection>
         <CategoryCarousel

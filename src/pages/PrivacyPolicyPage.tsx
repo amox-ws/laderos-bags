@@ -10,19 +10,21 @@ const PrivacyPolicyPage = () => {
   return (
     <Layout>
       <SEO routeKey="/privacy-policy" />
-      <section className="py-20 md:py-28 main-section">
-        <div className="container-page max-w-3xl">
-          <h1 className="text-4xl md:text-6xl text-foreground mb-4">
-            {isGreek ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
-          </h1>
-          <p className="text-muted-foreground mb-12 text-sm">
-            {isGreek ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
-          </p>
+      <section className="main-section pb-24 pt-14 md:pb-32 md:pt-24">
+        <div className="container-page">
+          <div className="mb-16 border-b border-ink/10 pb-12 md:mb-20 md:pb-16">
+            <h1 className="mb-6 text-[clamp(3rem,1.6rem+5vw,7.5rem)] leading-[0.92] tracking-[-0.045em]">
+              {isGreek ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
+            </h1>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink/50">
+              {isGreek ? 'Τελευταία ενημέρωση: Μάρτιος 2026' : 'Last updated: March 2026'}
+            </p>
+          </div>
 
-          <div className="space-y-8 text-foreground/90 leading-relaxed">
+          <div className="prose-legal mx-auto max-w-3xl space-y-14 text-[17px] leading-relaxed">
             {/* Introduction */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '1. Εισαγωγή' : '1. Introduction'}
               </h2>
               <p>
@@ -34,7 +36,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Data We Collect */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '2. Δεδομένα που Συλλέγουμε' : '2. Data We Collect'}
               </h2>
               <p className="mb-3">
@@ -42,7 +44,7 @@ const PrivacyPolicyPage = () => {
                   ? 'Συλλέγουμε προσωπικά δεδομένα μόνο όταν εσείς τα παρέχετε οικειοθελώς μέσω των φορμών επικοινωνίας και αιτημάτων προσφοράς στον ιστότοπό μας. Αυτά περιλαμβάνουν:'
                   : 'We collect personal data only when you voluntarily provide it through the contact and quote request forms on our website. This includes:'}
               </p>
-              <ul className="list-disc pl-6 space-y-1">
+              <ul>
                 <li>{isGreek ? 'Ονοματεπώνυμο' : 'Full name'}</li>
                 <li>{isGreek ? 'Διεύθυνση email' : 'Email address'}</li>
                 <li>{isGreek ? 'Αριθμός τηλεφώνου' : 'Phone number'}</li>
@@ -54,7 +56,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Purpose of Data Processing */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '3. Σκοπός Επεξεργασίας' : '3. Purpose of Data Processing'}
               </h2>
               <p className="mb-3">
@@ -62,7 +64,7 @@ const PrivacyPolicyPage = () => {
                   ? 'Χρησιμοποιούμε τα δεδομένα σας αποκλειστικά για τους ακόλουθους σκοπούς:'
                   : 'We use your data exclusively for the following purposes:'}
               </p>
-              <ul className="list-disc pl-6 space-y-1">
+              <ul>
                 <li>{isGreek ? 'Να απαντήσουμε στα αιτήματα επικοινωνίας σας' : 'To respond to your contact inquiries'}</li>
                 <li>{isGreek ? 'Να επεξεργαστούμε τα αιτήματα προσφοράς σας' : 'To process your quote requests'}</li>
                 <li>{isGreek ? 'Να επικοινωνήσουμε μαζί σας σχετικά με τα προϊόντα και τις υπηρεσίες μας' : 'To communicate with you about our products and services'}</li>
@@ -71,7 +73,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Legal Basis */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '4. Νομική Βάση' : '4. Legal Basis'}
               </h2>
               <p>
@@ -83,7 +85,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Data Storage */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '5. Αποθήκευση Δεδομένων' : '5. Data Storage'}
               </h2>
               <p>
@@ -95,7 +97,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Third Parties */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '6. Τρίτα Μέρη' : '6. Third Parties'}
               </h2>
               <p className="mb-3">
@@ -103,12 +105,12 @@ const PrivacyPolicyPage = () => {
                   ? 'Δεν πωλούμε, ενοικιάζουμε ή μοιραζόμαστε τα προσωπικά σας δεδομένα με τρίτους για διαφημιστικούς σκοπούς. Χρησιμοποιούμε τις ακόλουθες υπηρεσίες τρίτων:'
                   : 'We do not sell, rent, or share your personal data with third parties for marketing purposes. We use the following third-party services:'}
               </p>
-              <ul className="list-disc pl-6 space-y-2">
+              <ul>
                 <li>
                   <strong>Formspree</strong> – {isGreek
                     ? 'Χρησιμοποιείται ως μεσολαβητής για τη μεταφορά των δεδομένων φόρμας στο email μας.'
                     : 'Used as an intermediary to transfer form data to our email.'}{' '}
-                  <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:opacity-80">
+                  <a href="https://formspree.io/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-brand underline decoration-brand/30 underline-offset-4 transition-colors hover:decoration-brand">
                     {isGreek ? 'Πολιτική Απορρήτου Formspree' : 'Formspree Privacy Policy'}
                   </a>
                 </li>
@@ -116,7 +118,7 @@ const PrivacyPolicyPage = () => {
                   <strong>Google Maps</strong> – {isGreek
                     ? 'Χρησιμοποιείται για την εμφάνιση χαρτών στον ιστότοπό μας. Η φόρτωση του χάρτη απαιτεί τη συγκατάθεσή σας καθώς τοποθετεί cookies τρίτων.'
                     : 'Used to display maps on our website. Loading the map requires your consent as it sets third-party cookies.'}{' '}
-                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:opacity-80">
+                  <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-brand underline decoration-brand/30 underline-offset-4 transition-colors hover:decoration-brand">
                     {isGreek ? 'Πολιτική Απορρήτου Google' : 'Google Privacy Policy'}
                   </a>
                 </li>
@@ -124,7 +126,7 @@ const PrivacyPolicyPage = () => {
                   <strong>Vercel Analytics</strong> – {isGreek
                     ? 'Χρησιμοποιείται για την ανάλυση της επισκεψιμότητας του ιστότοπου με τρόπο που σέβεται το απόρρητο, χωρίς να συλλέγει προσωπικά δεδομένα.'
                     : 'Used for privacy-friendly website traffic analysis without collecting personal data.'}{' '}
-                  <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-primary underline underline-offset-2 hover:opacity-80">
+                  <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-brand underline decoration-brand/30 underline-offset-4 transition-colors hover:decoration-brand">
                     {isGreek ? 'Πολιτική Απορρήτου Vercel' : 'Vercel Privacy Policy'}
                   </a>
                 </li>
@@ -133,7 +135,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Your Rights */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '7. Τα Δικαιώματά σας' : '7. Your Rights'}
               </h2>
               <p className="mb-3">
@@ -141,7 +143,7 @@ const PrivacyPolicyPage = () => {
                   ? 'Σύμφωνα με τον GDPR, έχετε τα ακόλουθα δικαιώματα:'
                   : 'Under the GDPR, you have the following rights:'}
               </p>
-              <ul className="list-disc pl-6 space-y-1">
+              <ul>
                 <li>{isGreek ? 'Δικαίωμα πρόσβασης στα δεδομένα σας' : 'Right to access your data'}</li>
                 <li>{isGreek ? 'Δικαίωμα διόρθωσης ανακριβών δεδομένων' : 'Right to rectify inaccurate data'}</li>
                 <li>{isGreek ? 'Δικαίωμα διαγραφής ("δικαίωμα στη λήθη")' : 'Right to erasure ("right to be forgotten")'}</li>
@@ -159,7 +161,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Cookies */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '8. Cookies & Αναλυτικά Στοιχεία' : '8. Cookies & Analytics'}
               </h2>
               <p className="mb-3">
@@ -176,7 +178,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Contact */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '9. Επικοινωνία' : '9. Contact'}
               </h2>
               <p className="mb-2">
@@ -184,7 +186,7 @@ const PrivacyPolicyPage = () => {
                   ? 'Για ερωτήσεις σχετικά με την πολιτική απορρήτου ή τα δεδομένα σας, επικοινωνήστε μαζί μας:'
                   : 'For questions about this privacy policy or your data, contact us:'}
               </p>
-              <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-1">
+              <div className="mt-5 space-y-1 rounded-media bg-white p-6 text-[15px] shadow-[inset_0_0_0_1px_hsl(var(--ink)/0.06)]">
                 <p><strong>Laderos Bags</strong></p>
                 <p>{ADDRESS_LINE[isGreek ? 'el' : 'en']}</p>
                 <p>Email: laderosbags@gmail.com</p>
@@ -194,7 +196,7 @@ const PrivacyPolicyPage = () => {
 
             {/* Supervisory Authority */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+              <h2>
                 {isGreek ? '10. Εποπτική Αρχή' : '10. Supervisory Authority'}
               </h2>
               <p>

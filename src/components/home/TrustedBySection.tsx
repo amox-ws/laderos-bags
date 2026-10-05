@@ -1,9 +1,22 @@
 import { useLanguage } from '@/contexts/LanguageContext';
-import AnimatedSection from '@/components/ui/AnimatedSection';
+import Marquee from '@/components/ui/Marquee';
+import { RevealHeading } from '@/components/ui/Reveal';
 
 interface TrustedBySectionProps {
   showTitle?: boolean;
 }
+
+const LogoTile = ({ name, logo }: { name: string; logo: string }) => (
+  <div className="mx-2 flex h-24 w-40 flex-shrink-0 items-center justify-center rounded-2xl bg-white p-5 shadow-[inset_0_0_0_1px_hsl(var(--ink)/0.05)] md:mx-2.5 md:h-28 md:w-52 md:p-6">
+    <img
+      src={logo}
+      alt={name}
+      className="h-full w-full object-contain"
+      loading="lazy"
+      draggable={false}
+    />
+  </div>
+);
 
 const TrustedBySection = ({ showTitle = true }: TrustedBySectionProps) => {
   const { t } = useLanguage();
@@ -32,81 +45,30 @@ const TrustedBySection = ({ showTitle = true }: TrustedBySectionProps) => {
     { name: 'Partner 18', logo: '/logos/redbull_logo.png' }
   ];
 
-  const duplicatedTop = [...topPartners, ...topPartners, ...topPartners];
-  const duplicatedBottom = [...bottomPartners, ...bottomPartners, ...bottomPartners];
-
   return (
-    <section className={`${showTitle ? 'py-16 md:py-24 lg:py-28' : 'py-8 md:py-12'} overflow-hidden bg-white`}>
-      <style>{`
-        @keyframes infinite-scroll-left {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-33.33%); }
-        }
-        @keyframes infinite-scroll-right {
-          0% { transform: translateX(-33.33%); }
-          100% { transform: translateX(0); }
-        }
-        .animate-infinite-scroll-left {
-          animation: infinite-scroll-left 30s linear infinite;
-        }
-        .animate-infinite-scroll-right {
-          animation: infinite-scroll-right 30s linear infinite;
-        }
-        .scroll-track {
-          width: max-content;
-        }
-      `}</style>
-
+    <section className={`${showTitle ? 'py-24 md:py-32' : 'py-10 md:py-14'} overflow-hidden`}>
       {showTitle && (
         <div className="container-page mb-12 md:mb-16">
-          <AnimatedSection>
-            <h3 className="mb-0">
-              {t('trustedBy.title')}
-            </h3>
-          </AnimatedSection>
+          <RevealHeading
+            as="h3"
+            text={t('trustedBy.title')}
+            className="mb-0 text-[clamp(2.2rem,1.4rem+2.8vw,4.25rem)] tracking-[-0.03em]"
+          />
         </div>
       )}
 
-      <div className="relative">
-        {/* Edge fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-32 lg:w-40 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-32 lg:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-
-        {/* Top carousel */}
-        <div className="relative w-full overflow-hidden mb-6 md:mb-8">
-          <div className="flex scroll-track animate-infinite-scroll-left">
-            {duplicatedTop.map((partner, index) => (
-              <div key={`top-${index}`} className="flex-shrink-0 mx-3 md:mx-4">
-                <div className="w-28 h-18 md:w-36 md:h-22 lg:w-44 lg:h-28 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom carousel */}
-        <div className="relative w-full overflow-hidden">
-          <div className="flex scroll-track animate-infinite-scroll-right">
-            {duplicatedBottom.map((partner, index) => (
-              <div key={`bottom-${index}`} className="flex-shrink-0 mx-3 md:mx-4">
-                <div className="w-28 h-18 md:w-36 md:h-22 lg:w-44 lg:h-28 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity duration-300">
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    className="w-full h-full object-contain"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Purely a moving showcase: full colour, never pauses, not interactive */}
+      <div className="mask-fade-x pointer-events-none select-none space-y-4 md:space-y-5">
+        <Marquee duration={50} pauseOnHover={false}>
+          {topPartners.map((partner) => (
+            <LogoTile key={partner.logo} {...partner} />
+          ))}
+        </Marquee>
+        <Marquee duration={50} reverse pauseOnHover={false}>
+          {bottomPartners.map((partner) => (
+            <LogoTile key={partner.logo} {...partner} />
+          ))}
+        </Marquee>
       </div>
     </section>
   );

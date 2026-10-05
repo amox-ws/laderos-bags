@@ -1,11 +1,10 @@
 import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
-import { ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
+import { Reveal } from '@/components/ui/Reveal';
+import { Applications, ProductHero, ProductIntro, QuoteStage } from '@/components/products/ProductPageParts';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { brandFromSrc } from '@/lib/text';
@@ -24,12 +23,12 @@ const GalleryImage = ({
 }) => {
   const { language } = useLanguage();
   return (
-    <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
+    <div className={`group relative overflow-hidden rounded-media bg-paper-deep shadow-card transition-shadow duration-700 ease-out-expo hover:shadow-card-hover ${className}`}>
       <img
         src={src}
         alt={alt ?? `${language === 'el' ? 'Χάρτινη σακούλα με εκτύπωση λογοτύπου' : 'Custom paper bag with logo printing'} — ${brandFromSrc(src)} | Laderos Bags`}
         /* h-auto keeps the photo's own aspect ratio, so no bag is ever cropped */
-        className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-105"
+        className="block h-auto w-full transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.04]"
         loading="lazy"
       />
     </div>
@@ -111,132 +110,71 @@ const PaperBagsPage = () => {
         ]}
       />
       {/* Hero */}
-      <section className="section-padding main-section">
-        <div className="container-page">
-          <AnimatedSection className="text-center">
-            <Link 
-              to="/products" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors text-sm uppercase tracking-[0.1em]"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              {t('paperBags.backToProducts')}
-            </Link>
-            <h1 className="mb-6">
-              {t('paperBags.title')}
-            </h1>
-            <div className="section-divider mb-8" />
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t('paperBags.subtitle')}
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
+      <ProductHero
+        backLabel={t('paperBags.backToProducts')}
+        title={t('paperBags.title')}
+        subtitle={t('paperBags.subtitle')}
+        strip={[
+          '/paper_product/navy_green.webp',
+          '/paper_product/kostis.webp',
+          '/paper_product/illusions.webp',
+          '/paper_product/morris.webp',
+          '/paper_product/casba.webp',
+          '/paper_product/wine.webp',
+          '/paper_product/dionisos.webp',
+          '/paper_product/benetto.webp',
+          '/paper_product/di_mondo.webp',
+          '/paper_product/bsb.webp',
+        ]}
+      />
 
       {/* Main Content */}
       <section className="main-section">
-        <div className="container-page py-16 md:py-28 lg:py-36">
-          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 xl:gap-20">
-            
+        <div className="container-page py-24 md:py-32 lg:py-40">
+          <div className="flex flex-col gap-14 lg:flex-row lg:gap-16 xl:gap-24">
+
             {/* Left Column - Sticky Text */}
-            <div className="w-full lg:w-[42%] xl:w-[38%]">
+            <div className="w-full lg:w-[40%] xl:w-[36%]">
               <div className={isMobile ? '' : 'lg:sticky lg:top-28 lg:self-start'}>
-                <AnimatedSection>
-                  <h2 className="mb-6">
-                    {t('paperBags.sectionTitle')}
-                  </h2>
-                  <div className="w-12 h-[2px] bg-primary/40 mb-6" />
-                  <div className="space-y-4 text-muted-foreground">
-                    <p className="text-base md:text-lg leading-relaxed">
-                      {t('paperBags.description1')}
-                    </p>
-                    <p className="text-base md:text-lg leading-relaxed">
-                      {t('paperBags.description2')}
-                    </p>
-                  </div>
-
-                  {/* Features */}
-                  <div className="mt-10">
-                    <h3 className="eyebrow block mb-5">
-                      {t('paperBags.featuresTitle')}
-                    </h3>
-                    <ul className="space-y-3">
-                      {features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Check className="h-3 w-3 text-primary" />
-                          </div>
-                          <span className="text-muted-foreground text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-10">
-                    <Button 
-                      variant="default" 
-                      size="lg" 
-                      onClick={() => {
-                        const quoteSection = document.getElementById('quote-section');
-                        scrollToId('quote-section');
-                      }}
-                    >
-                      {t('paperBags.cta')}
-                    </Button>
-                  </div>
-                </AnimatedSection>
+                <ProductIntro
+                  title={t('paperBags.sectionTitle')}
+                  paragraphs={[t('paperBags.description1'), t('paperBags.description2')]}
+                  featuresTitle={t('paperBags.featuresTitle')}
+                  features={features}
+                  cta={t('paperBags.cta')}
+                  onCta={() => scrollToId('quote-section')}
+                />
               </div>
             </div>
 
             {/* Right Column - Gallery */}
-            <div className="w-full lg:w-[58%] xl:w-[62%]">
-              <AnimatedSection delay={0.2}>
-                <div className="columns-1 sm:columns-2 xl:columns-3 gap-4 [column-fill:balance]">
-                  {paperBagImages.map((src) => (
-                    <GalleryImage key={src} src={src} className="mb-4 break-inside-avoid" />
-                  ))}
-                </div>
-              </AnimatedSection>
+            <div className="w-full lg:w-[60%] xl:w-[64%]">
+              <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 [column-fill:balance]">
+                {paperBagImages.map((src, i) => (
+                  <Reveal key={src} delay={(i % 3) * 0.06} y={40} className="mb-4 break-inside-avoid">
+                    <GalleryImage src={src} />
+                  </Reveal>
+                ))}
+              </div>
 
               {/* Ειδικές κατηγορίες — πλήρεις συλλογές σε δικές τους σελίδες */}
-              <SpecialCategoriesTeaser className="mt-16" />
+              <SpecialCategoriesTeaser className="mt-24" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Applications */}
-      <section className="section-padding main-section">
-        <div className="container-page">
-          <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <h2 className="mb-6">
-              {t('paperBags.applicationsTitle')}
-            </h2>
-            <div className="section-divider mb-8" />
-            <p className="text-lg text-muted-foreground mb-10">
-              {t('paperBags.applicationsText')}
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {t('paperBags.industries').split(',').map((industry, index) => (
-                <span 
-                  key={index}
-                  className="px-5 py-2.5 bg-white rounded-full text-sm font-medium shadow-card border border-border/40"
-                >
-                  {industry.trim()}
-                </span>
-              ))}
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
+      <Applications
+        title={t('paperBags.applicationsTitle')}
+        text={t('paperBags.applicationsText')}
+        industries={t('paperBags.industries').split(',').map((s) => s.trim())}
+      />
 
       {/* Quote Form */}
-      <section id="quote-section" className="section-padding ink-section scroll-mt-20">
-        <div className="container-page">
-          <AnimatedSection>
-            <QuoteRequestForm bagType="paper" />
-          </AnimatedSection>
-        </div>
-      </section>
+      <QuoteStage>
+        <QuoteRequestForm bagType="paper" />
+      </QuoteStage>
     </Layout>
   );
 };

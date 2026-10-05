@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
 import ScrollToTop from "@/components/ScrollToTop";
+import SmoothScroll from "@/components/SmoothScroll";
 import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA } from "./content/categories";
 import { lazyPage } from "@/lib/lazyPage";
 import { EN_PREFIX } from "@/lib/i18nPaths";
@@ -76,6 +77,7 @@ export const AppProviders = ({
 
 export const AppRoutes = () => (
   <LanguageProvider>
+    <SmoothScroll />
     <ScrollToTop />
     <Suspense fallback={null}>
       <Routes>

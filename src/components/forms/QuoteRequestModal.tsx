@@ -1,5 +1,7 @@
 // Quote Request Modal Component - Laderos Bags
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+import { lockScroll } from '@/lib/smoothScroll';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowLeft } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -153,7 +155,22 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
     }
   };
 
-  return (
+  // Freeze the page behind the dialog and let Escape close it
+  useEffect(() => {
+    if (!isOpen) return;
+    lockScroll(true);
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', onKey);
+    return () => {
+      lockScroll(false);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [isOpen, onClose]);
+
+  // Rendered into <body>: inside the page it would sit under the sliding footer.
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -162,40 +179,41 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 z-50"
+            className="fixed inset-0 z-[110] bg-ink/70 backdrop-blur-md"
             onClick={onClose}
           />
 
           {/* Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 flex items-start md:items-center justify-center p-4 overflow-y-auto"
+            initial={{ opacity: 0, y: 40, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 30, scale: 0.98 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[110] flex items-start justify-center overflow-y-auto p-3 md:items-center md:p-6"
+            data-lenis-prevent
+            onClick={onClose}
           >
             <div 
-              className="relative w-full max-w-5xl bg-background rounded-xl shadow-2xl overflow-hidden my-8"
+              className="relative my-6 w-full max-w-5xl overflow-hidden rounded-[2rem] bg-paper shadow-[0_60px_120px_-40px_rgba(0,0,0,0.7)]"
               onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
             >
               {/* Close Button - Fixed on mobile for visibility */}
               <button
                 onClick={onClose}
-                className="fixed md:absolute top-4 right-4 md:top-4 md:right-4 z-[60] p-3 md:p-2 rounded-full bg-white shadow-lg md:shadow-md hover:bg-gray-100 transition-colors"
-                style={{ 
-                  paddingTop: 'max(0.75rem, env(safe-area-inset-top))',
-                  paddingRight: 'max(0.75rem, env(safe-area-inset-right))'
-                }}
+                className="fixed right-4 top-4 z-[120] flex h-11 w-11 items-center justify-center rounded-full bg-paper text-ink shadow-lg transition-transform duration-500 ease-out-expo hover:rotate-90 md:absolute md:right-5 md:top-5"
                 aria-label="Close"
               >
-                <X className="h-6 w-6 md:h-5 md:w-5 text-foreground" />
+                <X className="h-5 w-5" strokeWidth={1.5} />
               </button>
 
               <div className="grid grid-cols-1 lg:grid-cols-2">
                 {/* Left Side - Summary */}
-                <div className="bg-card p-6 md:p-8 lg:p-10">
+                <div className="p-7 md:p-10 lg:p-12">
                   <div className="mb-6">
-                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+                    <p className="eyebrow mb-5">{t('quoteForm.title')}</p>
+                    <h3 className="mb-2 text-[clamp(2rem,1.5rem+1.6vw,3rem)] text-ink">
                       {bagType === 'paper' 
                         ? (language === 'el' ? 'Χάρτινες Σακούλες' : 'Paper Bags')
                         : (language === 'el' ? 'Πλαστικές Σακούλες' : 'Plastic Bags')
@@ -205,18 +223,18 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
 
                   <div className="space-y-4">
                     {summary.map((item, index) => (
-                      <div key={index} className="border-b border-border pb-3 last:border-0">
-                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-1">
+                      <div key={index} className="grid grid-cols-[minmax(0,9rem)_1fr] gap-4 border-b border-ink/10 py-3.5 last:border-0">
+                        <p className="pt-0.5 font-mono text-[10px] uppercase tracking-[0.14em] text-ink/45">
                           {item.label}
                         </p>
-                        <p className="text-foreground font-medium">{item.value}</p>
+                        <p className="text-[15px] text-ink">{item.value}</p>
                       </div>
                     ))}
                   </div>
 
                   <button
                     onClick={onClose}
-                    className="mt-8 inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-foreground border border-border rounded-md hover:bg-muted transition-colors"
+                    className="mt-10 inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm text-ink/70 shadow-[inset_0_0_0_1px_hsl(var(--ink)/0.15)] transition-all duration-500 hover:text-ink hover:shadow-[inset_0_0_0_1px_hsl(var(--ink)/0.5)]"
                   >
                     <ArrowLeft className="h-4 w-4" />
                     {t('quoteForm.modal.modify')}
@@ -224,16 +242,17 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                 </div>
 
                 {/* Right Side - Contact Form */}
-                <div className="bg-brand p-6 md:p-8 lg:p-10">
-                  <h3 className="text-2xl md:text-3xl font-bold text-accent-foreground mb-6">
+                <div className="relative overflow-hidden bg-ink p-7 md:p-10 lg:p-12">
+                  <div aria-hidden className="pointer-events-none absolute inset-0" style={{ background: 'radial-gradient(70% 50% at 100% 0%, hsl(213 66% 45% / 0.35), transparent 70%)' }} />
+                  <h3 className="relative mb-8 text-[clamp(1.8rem,1.4rem+1.4vw,2.6rem)] text-paper">
                     {t('quoteForm.modal.title')}
                   </h3>
 
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form onSubmit={handleSubmit} className="relative space-y-5">
                     <div>
                       <Label 
                         htmlFor="fullName" 
-                        className="text-xs font-semibold text-accent-foreground/90 uppercase tracking-wider"
+                        className="font-mono text-[10px] font-normal uppercase tracking-[0.16em] text-paper/55"
                       >
                         {t('quoteForm.modal.fullName')} *
                       </Label>
@@ -244,7 +263,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                         value={contactData.fullName}
                         onChange={handleInputChange}
                         required
-                        className="mt-2 bg-white/90 border-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent-foreground/50"
+                        className="mt-2 h-12 rounded-xl border-0 bg-paper/[0.07] text-paper ring-1 ring-inset ring-paper/15 placeholder:text-paper/30 focus-visible:ring-2 focus-visible:ring-brand-light focus-visible:ring-offset-0"
                         placeholder={language === 'el' ? 'Εισάγετε το όνομά σας' : 'Enter your name'}
                       />
                     </div>
@@ -252,7 +271,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                     <div>
                       <Label 
                         htmlFor="email" 
-                        className="text-xs font-semibold text-accent-foreground/90 uppercase tracking-wider"
+                        className="font-mono text-[10px] font-normal uppercase tracking-[0.16em] text-paper/55"
                       >
                         {t('quoteForm.modal.email')} *
                       </Label>
@@ -263,7 +282,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                         value={contactData.email}
                         onChange={handleInputChange}
                         required
-                        className="mt-2 bg-white/90 border-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent-foreground/50"
+                        className="mt-2 h-12 rounded-xl border-0 bg-paper/[0.07] text-paper ring-1 ring-inset ring-paper/15 placeholder:text-paper/30 focus-visible:ring-2 focus-visible:ring-brand-light focus-visible:ring-offset-0"
                         placeholder={language === 'el' ? 'email@example.com' : 'email@example.com'}
                       />
                     </div>
@@ -271,7 +290,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                     <div>
                       <Label 
                         htmlFor="phone" 
-                        className="text-xs font-semibold text-accent-foreground/90 uppercase tracking-wider"
+                        className="font-mono text-[10px] font-normal uppercase tracking-[0.16em] text-paper/55"
                       >
                         {t('quoteForm.modal.phone')} *
                       </Label>
@@ -282,7 +301,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                         value={contactData.phone}
                         onChange={handleInputChange}
                         required
-                        className="mt-2 bg-white/90 border-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent-foreground/50"
+                        className="mt-2 h-12 rounded-xl border-0 bg-paper/[0.07] text-paper ring-1 ring-inset ring-paper/15 placeholder:text-paper/30 focus-visible:ring-2 focus-visible:ring-brand-light focus-visible:ring-offset-0"
                         placeholder={language === 'el' ? '+30 210 1234567' : '+30 210 1234567'}
                       />
                     </div>
@@ -290,7 +309,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                     <div>
                       <Label 
                         htmlFor="message" 
-                        className="text-xs font-semibold text-accent-foreground/90 uppercase tracking-wider"
+                        className="font-mono text-[10px] font-normal uppercase tracking-[0.16em] text-paper/55"
                       >
                         {t('quoteForm.modal.message')}
                       </Label>
@@ -300,7 +319,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                         value={contactData.message}
                         onChange={handleInputChange}
                         rows={4}
-                        className="mt-2 bg-white/90 border-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-accent-foreground/50 resize-none"
+                        className="mt-2 resize-none rounded-xl border-0 bg-paper/[0.07] text-paper ring-1 ring-inset ring-paper/15 placeholder:text-paper/30 focus-visible:ring-2 focus-visible:ring-brand-light focus-visible:ring-offset-0"
                         placeholder={language === 'el' ? 'Πρόσθετες πληροφορίες (προαιρετικό)' : 'Additional information (optional)'}
                       />
                     </div>
@@ -308,7 +327,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                     <Button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full py-6 text-base font-semibold border border-white/30 bg-transparent text-white hover:bg-white/10 transition-colors"
+                      className="!mt-8 h-14 w-full bg-paper text-base text-ink hover:bg-white"
                     >
                       {isSubmitting 
                         ? (language === 'el' ? 'Υποβολή...' : 'Submitting...') 
@@ -321,7 +340,7 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
                       type="button"
                       variant="outline"
                       onClick={onClose}
-                      className="w-full md:hidden mt-3 py-5 text-base font-medium border-white/30 text-white hover:bg-white/10"
+                      className="mt-3 h-12 w-full text-base text-paper shadow-[inset_0_0_0_1px_hsl(var(--paper)/0.25)] hover:bg-paper/10 hover:text-paper md:hidden"
                     >
                       {language === 'el' ? 'Ακύρωση' : 'Cancel'}
                     </Button>
@@ -332,7 +351,8 @@ const QuoteRequestModal: React.FC<QuoteRequestModalProps> = ({
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

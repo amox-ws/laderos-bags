@@ -1,10 +1,10 @@
 import { Link } from '@/components/LocalizedLink';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Mail, Phone, MapPin, ArrowUp, ArrowRight, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUp, Facebook, Instagram, Linkedin, Youtube } from 'lucide-react';
 import type { ComponentType, SVGProps } from 'react';
 import { ADDRESS_LINE, SOCIAL_PROFILES, type SOCIAL_LINKS } from '@/lib/seo';
-
-const ink = 'hsl(220 55% 8%)';
+import ArrowButton from '@/components/ui/ArrowButton';
+import { scrollWindowTo } from '@/lib/smoothScroll';
 
 const TikTok = (props: SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...props}>
@@ -37,70 +37,58 @@ const Footer = () => {
     { href: '/contact', label: t('nav.contact') },
   ];
 
-  const scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const scrollTop = () => scrollWindowTo(0, 'smooth');
+
+  const linkClass = 'link-underline text-[15px] text-paper/70 transition-colors duration-300 hover:text-paper';
+  const labelClass = 'mb-6 font-mono text-[11px] uppercase tracking-[0.16em] text-paper/40';
 
   return (
     <footer
-      className="footer-section relative overflow-hidden"
-      style={{ boxShadow: '0 -36px 70px -36px rgba(0, 0, 0, 0.55)' }}
+      className="footer-section relative overflow-hidden rounded-t-panel"
+      style={{ boxShadow: '0 -40px 80px -40px hsl(224 44% 9% / 0.55)' }}
     >
-      <div className="container-page pt-10 md:pt-12 pb-6 relative">
+      {/* Soft blue light from the top edge */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-[28rem] opacity-70"
+        style={{ background: 'radial-gradient(60% 100% at 50% 0%, hsl(213 66% 45% / 0.22), transparent 70%)' }}
+      />
 
-        {/* Giant wordmark — the reveal leads with this */}
-        <div
-          aria-hidden
-          className="select-none leading-[0.85] font-extrabold uppercase tracking-[-0.03em] whitespace-nowrap text-[11vw] lg:text-[8.5rem]"
-          style={{ color: ink }}
-        >
-          Laderos Bags
-        </div>
-
+      <div className="container-page relative pt-20 md:pt-28">
         {/* CTA row */}
-        <div
-          className="mt-6 md:mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5 border-y-2 py-5"
-          style={{ borderColor: 'hsl(220 55% 8% / 0.3)' }}
-        >
-          <h4 className="text-xl md:text-2xl max-w-xl">
+        <div className="flex flex-col gap-10 border-b border-paper/10 pb-16 md:flex-row md:items-end md:justify-between md:pb-20">
+          <h4 className="max-w-3xl text-[clamp(2.4rem,1.4rem+4vw,5.5rem)] leading-[0.98] tracking-[-0.03em] text-paper">
             {t('cta.title')}
           </h4>
-          <Link
-            to="/contact#quote"
-            className="group inline-flex items-center gap-3.5 font-extrabold uppercase tracking-[0.05em] text-sm flex-shrink-0"
-          >
+          <ArrowButton to="/contact#quote" variant="paper" size="lg" className="self-start md:self-auto">
             {language === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
-            <span
-              className="w-12 h-12 rounded-full border-2 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5"
-              style={{ borderColor: ink }}
-            >
-              <ArrowRight className="h-4 w-4" />
-            </span>
-          </Link>
+          </ArrowButton>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-6 pt-8">
+        <div className="grid gap-12 pt-14 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8 md:pt-16">
           {/* Description + contact */}
-          <div className="lg:col-span-5 space-y-4">
-            <p className="max-w-sm leading-relaxed text-sm font-medium opacity-90">
+          <div className="space-y-7 lg:col-span-5">
+            <p className="max-w-sm font-display text-2xl leading-snug tracking-[-0.015em] text-paper/90">
               {t('footer.description')}
             </p>
-            <ul className="space-y-2">
-              <li className="flex items-start gap-2.5">
-                <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <span className="text-sm font-semibold">{ADDRESS_LINE[language === 'en' ? 'en' : 'el']}</span>
+            <ul className="space-y-3.5">
+              <li className="flex items-start gap-3.5">
+                <MapPin className="mt-1 h-4 w-4 flex-shrink-0 text-brand-light" strokeWidth={1.5} />
+                <span className="text-[15px] text-paper/70">{ADDRESS_LINE[language === 'en' ? 'en' : 'el']}</span>
               </li>
-              <li className="flex items-start gap-2.5">
-                <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <span className="text-sm font-semibold">
-                  <a href="tel:+306972661870" className="hover:opacity-70 transition-opacity">697 266 1870</a>
-                  {' · '}
-                  <a href="tel:+302102443550" className="hover:opacity-70 transition-opacity">210 244 3550</a>
-                  {' · '}
-                  <a href="tel:+302102443800" className="hover:opacity-70 transition-opacity">210 244 3800</a>
+              <li className="flex items-start gap-3.5">
+                <Phone className="mt-1 h-4 w-4 flex-shrink-0 text-brand-light" strokeWidth={1.5} />
+                <span className="text-[15px] text-paper/70 tabular">
+                  <a href="tel:+306972661870" className="transition-colors hover:text-paper">697 266 1870</a>
+                  <span className="px-2 text-paper/25">·</span>
+                  <a href="tel:+302102443550" className="transition-colors hover:text-paper">210 244 3550</a>
+                  <span className="px-2 text-paper/25">·</span>
+                  <a href="tel:+302102443800" className="transition-colors hover:text-paper">210 244 3800</a>
                 </span>
               </li>
-              <li className="flex items-start gap-2.5">
-                <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                <a href="mailto:laderosbags@gmail.com" className="text-sm font-semibold hover:opacity-70 transition-opacity break-all">
+              <li className="flex items-start gap-3.5">
+                <Mail className="mt-1 h-4 w-4 flex-shrink-0 text-brand-light" strokeWidth={1.5} />
+                <a href="mailto:laderosbags@gmail.com" className="break-all text-[15px] text-paper/70 transition-colors hover:text-paper">
                   laderosbags@gmail.com
                 </a>
               </li>
@@ -117,8 +105,7 @@ const Footer = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label={`Laderos Bags — ${label}`}
-                        className="w-9 h-9 rounded-full border-2 flex items-center justify-center hover:opacity-70 transition-opacity"
-                        style={{ borderColor: ink }}
+                        className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/15 text-paper/70 transition-all duration-300 hover:border-paper hover:text-paper"
                       >
                         <Icon className="h-4 w-4" />
                       </a>
@@ -131,19 +118,11 @@ const Footer = () => {
 
           {/* Navigation */}
           <div className="lg:col-span-4 lg:col-start-7">
-            <h4
-              className="text-base mb-4 inline-block pb-1 border-b-4"
-              style={{ borderColor: ink }}
-            >
-              {language === 'el' ? 'Πλοήγηση' : 'Navigation'}
-            </h4>
-            <ul className="space-y-1.5">
+            <h4 className={labelClass}>{language === 'el' ? 'Πλοήγηση' : 'Navigation'}</h4>
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-3">
               {navCol.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="link-underline text-[13px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
-                  >
+                  <Link to={link.href} className={linkClass}>
                     {link.label}
                   </Link>
                 </li>
@@ -152,27 +131,16 @@ const Footer = () => {
           </div>
 
           {/* General + back to top */}
-          <div className="lg:col-span-3">
-            <h4
-              className="text-base mb-4 inline-block pb-1 border-b-4"
-              style={{ borderColor: ink }}
-            >
-              {language === 'el' ? 'Γενικά' : 'General'}
-            </h4>
-            <ul className="space-y-1.5">
+          <div className="flex flex-col lg:col-span-2 lg:col-start-11">
+            <h4 className={labelClass}>{language === 'el' ? 'Γενικά' : 'General'}</h4>
+            <ul className="space-y-3">
               <li>
-                <Link
-                  to="/privacy-policy"
-                  className="link-underline text-[13px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
-                >
+                <Link to="/privacy-policy" className={linkClass}>
                   {language === 'el' ? 'Πολιτική Απορρήτου' : 'Privacy Policy'}
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/contact#quote"
-                  className="link-underline text-[13px] font-extrabold uppercase tracking-[0.04em] hover:opacity-80 transition-opacity"
-                >
+                <Link to="/contact#quote" className={linkClass}>
                   {language === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
                 </Link>
               </li>
@@ -181,25 +149,38 @@ const Footer = () => {
             <button
               onClick={scrollTop}
               aria-label={language === 'el' ? 'Επιστροφή στην κορυφή' : 'Back to top'}
-              className="mt-6 w-11 h-11 rounded-full border-2 flex items-center justify-center hover:-translate-y-1 active:translate-y-0 transition-transform duration-300"
-              style={{ borderColor: ink }}
+              className="group mt-8 flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border border-paper/20 transition-colors duration-500 hover:border-paper hover:bg-paper hover:text-ink"
             >
-              <ArrowUp className="h-5 w-5" />
+              <span className="relative block h-4 w-4 overflow-hidden">
+                <ArrowUp className="absolute inset-0 h-4 w-4 transition-transform duration-500 ease-out-expo group-hover:-translate-y-[180%]" strokeWidth={1.75} />
+                <ArrowUp className="absolute inset-0 h-4 w-4 translate-y-[180%] transition-transform duration-500 ease-out-expo group-hover:translate-y-0" strokeWidth={1.75} />
+              </span>
             </button>
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Giant wordmark — set like the bag print, fading into the ink */}
         <div
-          className="mt-8 pt-4 flex flex-col md:flex-row items-center justify-between gap-2 border-t-2"
-          style={{ borderColor: 'hsl(220 55% 8% / 0.25)' }}
+          aria-hidden
+          className="footer-wordmark pointer-events-none mt-16 select-none whitespace-nowrap text-center font-display leading-[0.78] tracking-[-0.045em] md:mt-20"
+          style={{
+            backgroundImage: 'linear-gradient(180deg, hsl(40 20% 95% / 0.95) 10%, hsl(40 20% 95% / 0.08) 95%)',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            color: 'transparent',
+          }}
         >
-          <p className="text-xs font-bold tracking-wide">
+          Laderos Bags
+        </div>
+
+        {/* Bottom bar */}
+        <div className="flex flex-col items-center justify-between gap-2 border-t border-paper/10 py-6 md:flex-row">
+          <p className="font-mono text-[11px] tracking-[0.06em] text-paper/45">
             © {currentYear} Laderos Bags. {t('footer.rights')}.
           </p>
-          <span className="text-xs font-bold tracking-wide opacity-80">
+          <span className="font-mono text-[11px] tracking-[0.06em] text-paper/45">
             Powered by{' '}
-            <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 hover:opacity-70 transition-opacity">
+            <a href="https://www.amox.gr" target="_blank" rel="noopener noreferrer" className="text-paper/70 underline underline-offset-4 transition-colors hover:text-paper">
               Amox
             </a>
           </span>

@@ -1,25 +1,27 @@
 // About Page - Laderos Bags
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import LazyVideo from '@/components/ui/LazyVideo';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd } from '@/lib/seo';
-import { Factory, Package, Award, Users, ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
-import { Link } from '@/components/LocalizedLink';
+import { Factory, Package, Award, Users } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import AnimatedSection from '@/components/ui/AnimatedSection';
 import SectionHeading from '@/components/ui/SectionHeading';
 import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
 import TrustedBySection from '@/components/home/TrustedBySection';
 import Layout from '@/components/layout/Layout';
-import { Button } from '@/components/ui/button';
-import { useEffect, useRef, type CSSProperties } from 'react';
+import CtaPanel from '@/components/CtaPanel';
+import { Reveal, RevealHeading, RevealMedia } from '@/components/ui/Reveal';
+import { Fragment, useEffect, useRef, type CSSProperties } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 const AboutPage = () => {
   const { t, language } = useLanguage();
+  const reduced = useReducedMotion();
 
   const services = [
     { key: 'customManufacturing', icon: Factory },
@@ -51,7 +53,7 @@ const AboutPage = () => {
       },
     });
 
-    tl.to(heroEl, { opacity: 0, duration: 1, ease: 'power1.inOut' });
+    tl.to(heroEl, { opacity: 0, scale: 0.96, duration: 1, ease: 'power1.inOut' });
 
     return () => {
       tl.kill();
@@ -59,81 +61,95 @@ const AboutPage = () => {
     };
   }, []);
 
+  const heroWords = t('about.hero.title').split(' ');
+
   return (
     <Layout>
       <SEO routeKey="/about" jsonLd={makeBreadcrumbLd([[t('nav.home'), '/'], [t('nav.about'), '/about']])} />
-      {/* Hero Section — cinematic navy overlay */}
-      <section ref={heroRef} className="relative h-[100dvh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
-        <div className="absolute inset-0 w-full h-full z-0">
-          <video autoPlay loop muted playsInline poster="/videos/posters/aboutherolb.webp" className="w-full h-full object-cover">
-            <source src="/videos/aboutherolb.mp4" type="video/mp4" />
-          </video>
+      {/* Hero Section — the press at work behind an ink veil */}
+      <section ref={heroRef} className="relative -mt-16 flex h-[100dvh] items-end overflow-hidden bg-ink md:-mt-20">
+        <div className="absolute inset-0 z-0 h-full w-full">
+          <motion.div
+            className="h-full w-full"
+            initial={reduced ? false : { scale: 1.15 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 2.4, ease: EASE }}
+          >
+            <video autoPlay loop muted playsInline poster="/videos/posters/aboutherolb.webp" className="h-full w-full object-cover">
+              <source src="/videos/aboutherolb.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(180deg, hsl(219 56% 9% / 0.82) 0%, hsl(218 52% 12% / 0.66) 45%, hsl(219 58% 7% / 0.9) 100%)',
+                'linear-gradient(180deg, hsl(224 44% 9% / 0.55) 0%, hsl(224 44% 9% / 0.35) 40%, hsl(224 44% 9% / 0.92) 100%)',
             }}
           />
         </div>
 
-        <div className="container-page relative z-10 text-center py-24">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col items-center"
-          >
+        <div className="container-page relative z-10 pb-16 md:pb-20">
+          <div className="grid items-end gap-8 lg:grid-cols-12">
             <h1
-              className={`mb-8 text-white max-w-4xl${language === 'en' ? ' fit-heading' : ''}`}
-              // "MANUFACTURING" is 8.44× the font size — too wide for phones at 48px.
-              style={language === 'en' ? ({ '--fit': 8.61 } as CSSProperties) : undefined}
+              className={`mb-0 text-[clamp(2.8rem,1.2rem+5.6vw,7.75rem)] leading-[0.95] tracking-[-0.035em] text-paper lg:col-span-9${language === 'en' ? ' fit-heading' : ''}`}
+              // "MANUFACTURING" is wide — keep it on the screen on phones.
+              style={language === 'en' ? ({ '--fit': 9.2, '--fit-max': '2.8rem' } as CSSProperties) : undefined}
             >
-              {t('about.hero.title')}
+              {heroWords.map((word, i) => (
+                <Fragment key={i}>
+                  <span className="inline-block overflow-hidden pb-[0.12em] pt-[0.08em] -mb-[0.12em] -mt-[0.08em] align-bottom">
+                    <motion.span
+                      className="inline-block"
+                      initial={reduced ? false : { y: '115%' }}
+                      animate={{ y: '0%' }}
+                      transition={{ duration: 1.2, ease: EASE, delay: 0.2 + i * 0.07 }}
+                    >
+                      {word}
+                    </motion.span>
+                  </span>
+                  {i < heroWords.length - 1 && ' '}
+                </Fragment>
+              ))}
             </h1>
-            <p className="text-lg md:text-xl text-white/75 max-w-2xl mx-auto">
-              {t('about.hero.subtitle')}
-            </p>
-          </motion.div>
+            <motion.div
+              className="lg:col-span-3 lg:pb-3"
+              initial={reduced ? false : { opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: EASE, delay: 0.7 }}
+            >
+              <span className="mb-4 block h-px w-12 bg-brand-light" />
+              <p className="text-lg text-paper/75 md:text-xl">{t('about.hero.subtitle')}</p>
+            </motion.div>
+          </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-white/50">
-          <ChevronsDown className="h-6 w-6 animate-bounce" />
+        <div className="absolute bottom-6 right-6 z-10 hidden items-center gap-3 md:flex lg:right-12">
+          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/60">Scroll</span>
+          <span className="relative h-10 w-px overflow-hidden bg-paper/20">
+            <span className="absolute inset-0 animate-scroll-line bg-paper" />
+          </span>
         </div>
       </section>
 
       {/* Who We Are Section */}
-      <section className="section-padding main-section overflow-hidden relative z-10 -mt-[100dvh]">
+      <section className="main-section section-padding relative z-10 -mt-[100dvh] overflow-hidden">
         <div className="container-page">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-16">
+            <RevealMedia className="aspect-[4/3] shadow-elevated lg:col-span-7">
+              <img
+                className="h-full w-full object-cover"
+                src="/gallery/production_image.jpg"
+                alt={language === 'el' ? 'Οι εγκαταστάσεις μας' : 'Our facilities'}
+                loading="lazy"
+              />
+            </RevealMedia>
 
-            <motion.div
-              initial={{ x: -80, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="relative aspect-[4/3] bg-muted rounded-2xl overflow-hidden shadow-elevated">
-                <img
-                  className="w-full h-full object-cover"
-                  src="/gallery/production_image.jpg"
-                  alt={language === 'el' ? 'Οι εγκαταστάσεις μας' : 'Our facilities'}
-                  loading="lazy"
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ x: 80, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div>
-                <h2 className="mb-6">{t('about.whoWeAre.title')}</h2>
-                <p className="leading-relaxed text-lg text-muted-foreground measure">{t('about.whoWeAre.text')}</p>
-              </div>
-            </motion.div>
+            <div className="lg:col-span-5">
+              <RevealHeading text={t('about.whoWeAre.title')} className="mb-8" />
+              <Reveal delay={0.15}>
+                <p className="measure text-lg leading-relaxed text-ink/70">{t('about.whoWeAre.text')}</p>
+              </Reveal>
+            </div>
           </div>
         </div>
       </section>
@@ -141,24 +157,33 @@ const AboutPage = () => {
       {/* What We Do Section */}
       <section className="section-padding section-depth-2">
         <div className="container-page">
-          <SectionHeading
-            title={t('about.whatWeDo.title')}
-            className="mb-16"
-          />
+          <SectionHeading title={t('about.whatWeDo.title')} align="left" className="mb-14 md:mb-20" />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {services.map((service, index) => (
-              <AnimatedSection key={service.key} delay={index * 0.1}>
-                <div className="card-editorial rounded-xl p-8 text-center h-full">
-                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-5">
-                    <service.icon className="h-7 w-7 text-primary" />
+              <Reveal key={service.key} delay={index * 0.08} y={50}>
+                <div className="group relative flex h-full min-h-[22rem] flex-col overflow-hidden rounded-media bg-white p-7 shadow-[inset_0_0_0_1px_hsl(var(--ink)/0.06)] transition-colors duration-700 ease-out-expo hover:bg-ink md:p-8">
+                  {/* Blue light that rises on hover */}
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 translate-y-full opacity-0 transition-all duration-700 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100"
+                    style={{ background: 'radial-gradient(80% 100% at 50% 100%, hsl(213 66% 45% / 0.45), transparent 70%)' }}
+                  />
+                  <div className="relative flex items-start">
+                    <span className="flex h-12 w-12 items-center justify-center rounded-full bg-paper text-ink transition-all duration-700 ease-out-expo group-hover:rotate-[-8deg] group-hover:bg-brand group-hover:text-white">
+                      <service.icon className="h-5 w-5" strokeWidth={1.5} />
+                    </span>
                   </div>
-                  <h3 className="text-lg font-semibold mb-3 font-sans normal-case tracking-normal" style={{ letterSpacing: '0' }}>
-                    {t(`about.services.${service.key}.title`)}
-                  </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{t(`about.services.${service.key}.desc`)}</p>
+                  <div className="relative mt-auto pt-16">
+                    <h3 className="mb-3 text-[1.65rem] leading-[1.08] tracking-[-0.02em] text-ink transition-colors duration-700 group-hover:text-paper">
+                      {t(`about.services.${service.key}.title`)}
+                    </h3>
+                    <p className="text-[15px] leading-relaxed text-ink/60 transition-colors duration-700 group-hover:text-paper/70">
+                      {t(`about.services.${service.key}.desc`)}
+                    </p>
+                  </div>
                 </div>
-              </AnimatedSection>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -175,107 +200,69 @@ const AboutPage = () => {
           <SectionHeading
             title={t('about.production.title')}
             description={t('about.production.text')}
-            className="mb-14"
+            className="mb-16 md:mb-20"
           />
 
-          <AnimatedSection delay={0.2}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
-              {/* Photo */}
-              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated bg-muted">
-                <img
-                  className="absolute inset-0 w-full h-full object-cover"
-                  src="/gallery/our_production_2.jpg"
-                  alt={language === 'el' ? 'Η παραγωγή μας' : 'Our production'}
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/30 via-transparent to-transparent pointer-events-none" />
-              </div>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 gap-5 md:grid-cols-2 md:gap-8">
+            {/* Photo */}
+            <RevealMedia className="aspect-[4/5] shadow-elevated">
+              <img
+                className="h-full w-full object-cover"
+                src="/gallery/our_production_2.jpg"
+                alt={language === 'el' ? 'Η παραγωγή μας' : 'Our production'}
+                loading="lazy"
+              />
+            </RevealMedia>
 
-              {/* Video */}
-              <div className="relative aspect-[3/4] sm:aspect-[4/5] rounded-2xl overflow-hidden shadow-elevated bg-muted">
-                <LazyVideo
-                  className="absolute inset-0 w-full h-full object-cover"
-                  src="/videos/ourprodction.mp4"
-                  poster="/videos/posters/ourprodction.webp"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-navy/30 via-transparent to-transparent pointer-events-none" />
-              </div>
-            </div>
-          </AnimatedSection>
+            {/* Video */}
+            <RevealMedia className="aspect-[4/5] shadow-elevated md:mt-24" delay={0.15}>
+              <LazyVideo
+                className="h-full w-full object-cover"
+                src="/videos/ourprodction.mp4"
+                poster="/videos/posters/ourprodction.webp"
+              />
+            </RevealMedia>
+          </div>
         </div>
       </section>
 
       {/* Statistics */}
-      <div className="accent-section">
+      <div className="py-[var(--panel-gutter)]">
         <AnimatedStatsSection />
       </div>
 
       {/* Why Work With Us */}
       <section className="section-padding main-section">
         <div className="container-page">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-            <AnimatedSection className="lg:sticky lg:top-28">
-              <h2 className="mb-6">{t('about.whyWork.title')}</h2>
-              <p className="leading-relaxed mb-8 text-muted-foreground text-lg measure">{t('about.whyWork.text')}</p>
-            </AnimatedSection>
+          <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:sticky lg:top-32 lg:col-span-5">
+              <RevealHeading text={t('about.whyWork.title')} className="mb-8" />
+              <Reveal delay={0.15}>
+                <p className="measure text-lg leading-relaxed text-ink/70">{t('about.whyWork.text')}</p>
+              </Reveal>
+            </div>
 
-            <AnimatedSection delay={0.2}>
-              <div className="space-y-4">
-                {whyWorkWithUs.map((key, index) => (
-                  <motion.div
-                    key={key}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    className="flex items-start gap-5 p-6 card-editorial rounded-xl"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-5 w-5 text-primary" />
-                    </div>
+            <ol className="border-t border-ink/10 lg:col-span-6 lg:col-start-7">
+              {whyWorkWithUs.map((key, index) => (
+                <Reveal as="li" key={key} delay={index * 0.08}>
+                  <div className="group flex gap-5 border-b border-ink/10 py-8 md:gap-6 md:py-10">
+                    <span className="mt-[0.9rem] h-px w-6 flex-shrink-0 bg-brand transition-all duration-700 ease-out-expo group-hover:w-10 md:w-8" />
                     <div>
-                      <h4 className="font-semibold mb-1.5 text-base font-sans normal-case" style={{ letterSpacing: '0' }}>
+                      <h4 className="mb-2.5 text-[1.6rem] leading-tight tracking-[-0.02em] transition-transform duration-700 ease-out-expo group-hover:translate-x-1.5 md:text-[1.85rem]">
                         {t(`about.${key}.title`)}
                       </h4>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{t(`about.${key}.desc`)}</p>
+                      <p className="text-[15px] leading-relaxed text-ink/60 md:text-base">{t(`about.${key}.desc`)}</p>
                     </div>
-                  </motion.div>
-                ))}
-              </div>
-            </AnimatedSection>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding ink-section overflow-hidden relative grain-overlay">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 50% at 50% 0%, hsl(210 90% 62% / 0.4), transparent 60%), radial-gradient(ellipse 60% 60% at 50% 120%, hsl(218 60% 14% / 0.5), transparent 60%)',
-          }}
-          aria-hidden
-        />
-        <div className="container-page text-center relative">
-          <motion.div
-            className="max-w-3xl mx-auto flex flex-col items-center"
-            initial={{ y: 60, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h2 className="mb-6 max-w-2xl">{t('cta.title')}</h2>
-            <p className="opacity-80 mb-10 max-w-2xl mx-auto text-lg">{t('cta.subtitle')}</p>
-            <Button asChild variant="heroOutline" size="xl" className="group">
-              <Link to="/contact#quote" className="inline-flex items-center gap-2">
-                {t('cta.button')}
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
+      <CtaPanel leftImage="/paper_product/andrika/sakoula-kingsman.webp" rightImage="/paper_product/woman/sakoula-annas-secret.webp" />
     </Layout>
   );
 };

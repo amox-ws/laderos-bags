@@ -1,16 +1,21 @@
-import { Link } from '@/components/LocalizedLink';
 import LazyVideo from '@/components/ui/LazyVideo';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
+import ArrowButton from '@/components/ui/ArrowButton';
+import { Reveal, RevealHeading, RevealMedia } from '@/components/ui/Reveal';
 
 const AboutPreviewSection = () => {
-  const { t, language } = useLanguage();
-  
+  const { t } = useLanguage();
+  const reduced = useReducedMotion();
+
+  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // The smaller film drifts against the larger one as the section passes.
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const drift = useTransform(scrollYProgress, [0, 1], [70, -70]);
 
   useEffect(() => {
     const videoEl = videoRef.current;
@@ -37,7 +42,7 @@ const AboutPreviewSection = () => {
       timeoutRef.current = setTimeout(() => {
         videoEl.currentTime = 0;
         videoEl.play().catch(() => {});
-      }, 2000); 
+      }, 2000);
     };
 
     videoEl.addEventListener('ended', handleVideoEnd);
@@ -51,79 +56,73 @@ const AboutPreviewSection = () => {
   }, []);
 
   return (
-    <section className="py-20 md:py-32 lg:py-40 overflow-hidden">
-      <div className="container-page">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 xl:gap-20 items-center">
-          
-          {/* New Video (Arxiki) */}
-          <motion.div 
-            initial={{ x: -100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="order-1 lg:order-none lg:col-start-1 lg:row-start-1"
-          >
-            <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden shadow-elevated">
+    <section ref={sectionRef} className="panel ink-section overflow-hidden py-24 md:py-36 lg:py-44">
+      {/* Ambient light */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            'radial-gradient(50% 60% at 15% 20%, hsl(213 66% 45% / 0.22), transparent 70%), radial-gradient(40% 50% at 95% 90%, hsl(213 66% 45% / 0.14), transparent 70%)',
+        }}
+      />
+
+      <div className="container-page relative">
+        <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-12">
+          {/* Two films, layered: the landscape press shot, the upright delivery clip over its corner */}
+          <div className="relative pb-24 lg:col-span-7 lg:pb-32 lg:pr-10">
+            <RevealMedia className="aspect-[16/10] shadow-[0_40px_80px_-40px_rgba(0,0,0,0.8)]">
               <LazyVideo
                 src="/videos/arxikivid.mp4"
                 poster="/videos/posters/arxikivid.webp"
-                className="w-full h-full object-cover"
+                className="h-full w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
-            </div>
-          </motion.div>
+            </RevealMedia>
 
-          {/* TEXT CONTENT (Middle in Mobile, Right Col in Desktop) */}
-          <motion.div 
-            initial={{ x: 100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="order-2 lg:order-none lg:col-start-2 lg:row-start-1 lg:row-span-2 space-y-6 lg:space-y-8"
-          >
-            <div>
-              <h3 className="mb-0 text-3xl md:text-4xl lg:text-5xl">
-                {t('aboutPreview.title')}
-              </h3>
-            </div>
-            <p className="text-white/85 text-base md:text-lg leading-relaxed">
-              {t('aboutPreview.text')}
-            </p>
-            <Button 
-              asChild 
-              variant="default" 
-              size="lg"
-              className="group mt-2"
+            <motion.div
+              style={reduced ? undefined : { y: drift }}
+              className="absolute bottom-0 right-0 z-10 w-[40%] rounded-[calc(var(--radius-media)+8px)] bg-ink p-[6px] shadow-[0_40px_80px_-30px_rgba(0,0,0,0.9)] md:p-2 lg:w-[36%]"
             >
-              <Link to="/about" className="inline-flex items-center gap-2">
+              {/* Plain frame (no clip/scale reveal): this upright clip is the
+                  one some browsers stop painting inside an animated clip. */}
+              <Reveal delay={0.15} y={60} className="media-frame aspect-[4/5]">
+                {/* Poster underneath, so a frame that is still decoding never shows a blank box */}
+                <img
+                  src="/videos/posters/experience.webp"
+                  alt=""
+                  aria-hidden
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                />
+                <video
+                  ref={videoRef}
+                  src="/videos/experience.mp4"
+                  poster="/videos/posters/experience.webp"
+                  className="relative h-full w-full object-cover"
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+              </Reveal>
+            </motion.div>
+          </div>
+
+          {/* Copy */}
+          <div className="space-y-8 lg:col-span-5 lg:pl-6">
+            <RevealHeading
+              as="h3"
+              text={t('aboutPreview.title')}
+              className="mb-0 text-[clamp(2.4rem,1.5rem+3vw,4.5rem)] leading-[1] tracking-[-0.03em] text-paper"
+            />
+            <Reveal delay={0.15}>
+              <p className="text-base leading-relaxed text-paper/65 md:text-[17px]">{t('aboutPreview.text')}</p>
+            </Reveal>
+            <Reveal delay={0.25}>
+              <ArrowButton to="/about" variant="paper">
                 {t('aboutPreview.button')}
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </motion.div>
-
-          {/* Existing Video (Experience) */}
-          <motion.div 
-            initial={{ x: -100, opacity: 0 }}
-            whileInView={{ x: 0, opacity: 1 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 1.2, ease: "easeOut", delay: 0.1 }}
-            className="order-3 lg:order-none lg:col-start-1 lg:row-start-2"
-          >
-            <div className="relative aspect-video bg-muted rounded-2xl overflow-hidden shadow-elevated">
-              <video
-                ref={videoRef}
-                src="/videos/experience.mp4"
-                poster="/videos/posters/experience.webp"
-                className="w-full h-full object-cover"
-                muted
-                playsInline
-                preload="metadata"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent pointer-events-none" />
-            </div>
-          </motion.div>
-
+              </ArrowButton>
+            </Reveal>
+          </div>
         </div>
       </div>
     </section>

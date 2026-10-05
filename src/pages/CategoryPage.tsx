@@ -1,10 +1,9 @@
-import { Link } from '@/components/LocalizedLink';
-import { ArrowLeft, Check, ArrowRight } from 'lucide-react';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd, makeFaqLd } from '@/lib/seo';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import AnimatedSection from '@/components/ui/AnimatedSection';
+import ArrowButton from '@/components/ui/ArrowButton';
+import { Reveal, RevealHeading } from '@/components/ui/Reveal';
+import { BackLink, QuoteStage } from '@/components/products/ProductPageParts';
 import Layout from '@/components/layout/Layout';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import type { CategoryContent } from '@/content/categories';
@@ -42,90 +41,89 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
       />
 
       {/* Hero */}
-      <section className="section-padding main-section">
+      <section className="main-section pb-24 pt-10 md:pb-32 md:pt-16">
         <div className="container-page">
-          <AnimatedSection>
-            <div className="mb-8">
-              <Link
-                to="/products"
-                className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm uppercase tracking-[0.1em] font-bold"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                {lang === 'el' ? 'Πίσω στα προϊόντα' : 'Back to products'}
-              </Link>
+          <Reveal y={10}>
+            <BackLink>{lang === 'el' ? 'Πίσω στα προϊόντα' : 'Back to products'}</BackLink>
+          </Reveal>
+
+          <div className="mt-12 grid items-center gap-14 md:mt-16 lg:grid-cols-12 lg:gap-12">
+            {/* Copy */}
+            <div className="lg:col-span-7">
+              <RevealHeading
+                as="h1"
+                text={content.h1[lang]}
+                className="mb-10 text-[clamp(2.7rem,1.3rem+4.6vw,6.5rem)] leading-[0.96] tracking-[-0.04em]"
+              />
+
+              <Reveal delay={0.15} className="space-y-5">
+                {content.intro[lang].map((p, i) => (
+                  <p key={i} className={i === 0 ? 'text-lg leading-relaxed text-ink/80 md:text-xl' : 'text-base leading-relaxed text-ink/65 md:text-lg'}>
+                    {p}
+                  </p>
+                ))}
+              </Reveal>
+
+              <Reveal delay={0.25} className="mt-12 flex flex-wrap gap-3">
+                <ArrowButton onClick={scrollToQuote}>
+                  {lang === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
+                </ArrowButton>
+                <ArrowButton to="/products/paper-bags" variant="ghost-dark">
+                  {lang === 'el' ? 'Όλες οι χάρτινες σακούλες' : 'All paper bags'}
+                </ArrowButton>
+              </Reveal>
             </div>
 
-            <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
-              {/* Copy */}
-              <div className="lg:col-span-7">
-                <h1 className="mb-8">{content.h1[lang]}</h1>
-
-                <div className="space-y-5">
-                  {content.intro[lang].map((p, i) => (
-                    <p key={i} className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                      {p}
-                    </p>
-                  ))}
-                </div>
-
-                <div className="mt-10 flex flex-wrap gap-4">
-                  <Button variant="default" size="lg" onClick={scrollToQuote}>
-                    {lang === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote'}
-                  </Button>
-                  <Button variant="outline" size="lg" asChild>
-                    <Link to="/products/paper-bags">
-                      {lang === 'el' ? 'Όλες οι χάρτινες σακούλες' : 'All paper bags'}
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
-              </div>
-
-              {/* Auto-playing carousel filling the space beside the copy */}
-              <div className="lg:col-span-5">
-                <CategoryCarousel images={content.images} altPrefix={content.altPrefix[lang]} />
-              </div>
-            </div>
-          </AnimatedSection>
+            {/* Auto-playing carousel filling the space beside the copy */}
+            <Reveal delay={0.2} y={60} className="lg:col-span-5">
+              <CategoryCarousel images={content.images} altPrefix={content.altPrefix[lang]} />
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* Editorial sections + highlights */}
-      <section className="section-padding ink-section">
-        <div className="container-page">
-          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
-            <div className="lg:col-span-7 space-y-14">
+      <section className="panel ink-section section-padding">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'radial-gradient(45% 45% at 100% 0%, hsl(213 66% 45% / 0.22), transparent 70%)' }}
+        />
+        <div className="container-page relative">
+          <div className="grid gap-16 lg:grid-cols-12 lg:gap-16">
+            <div className="space-y-20 lg:col-span-7">
               {content.sections.map((sec) => (
-                <AnimatedSection key={sec.heading.el}>
-                  <h2 className="mb-6 text-3xl md:text-4xl lg:text-5xl">{sec.heading[lang]}</h2>
-                  <div className="space-y-4">
+                <div key={sec.heading.el}>
+                  <RevealHeading
+                    text={sec.heading[lang]}
+                    className="mb-7 text-[clamp(2rem,1.3rem+2.4vw,3.5rem)] text-paper"
+                  />
+                  <Reveal delay={0.1} className="space-y-4">
                     {sec.body[lang].map((p, i) => (
-                      <p key={i} className="text-base md:text-lg leading-relaxed text-white/85">
+                      <p key={i} className="text-base leading-relaxed text-paper/70 md:text-[17px]">
                         {p}
                       </p>
                     ))}
-                  </div>
-                </AnimatedSection>
+                  </Reveal>
+                </div>
               ))}
             </div>
 
-            <AnimatedSection delay={0.15} className="lg:col-span-5">
-              <div className="lg:sticky lg:top-28">
-                <h3 className="eyebrow block mb-6">
+            <Reveal delay={0.15} className="lg:col-span-4 lg:col-start-9">
+              <div className="rounded-media bg-paper/[0.05] p-7 ring-1 ring-inset ring-paper/10 lg:sticky lg:top-28 md:p-8">
+                <h3 className="eyebrow mb-7">
                   {lang === 'el' ? 'Τι περιλαμβάνει' : 'What you get'}
                 </h3>
-                <ul className="space-y-4">
+                <ul className="space-y-0">
                   {content.highlights[lang].map((h) => (
-                    <li key={h} className="flex items-start gap-3.5">
-                      <span className="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-                        <Check className="h-3.5 w-3.5 text-brand-light" />
-                      </span>
-                      <span className="text-white/85 text-base">{h}</span>
+                    <li key={h} className="flex items-start gap-4 border-b border-paper/10 py-4 last:border-b-0">
+                      <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand-light" />
+                      <span className="text-[15px] leading-relaxed text-paper/80">{h}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            </AnimatedSection>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -133,63 +131,63 @@ const CategoryPage = ({ content }: CategoryPageProps) => {
       {/* Gallery */}
       <section className="section-padding main-section">
         <div className="container-page">
-          <AnimatedSection className="mb-12">
-            <h2 className="mb-4">{content.galleryHeading[lang]}</h2>
-            <p className="text-muted-foreground text-lg measure">{content.galleryNote[lang]}</p>
-          </AnimatedSection>
+          <div className="mb-14 grid gap-8 md:mb-20 lg:grid-cols-12 lg:items-end">
+            <RevealHeading text={content.galleryHeading[lang]} className="mb-0 lg:col-span-7" />
+            <Reveal delay={0.1} className="lg:col-span-5">
+              <p className="text-lg text-ink/65">{content.galleryNote[lang]}</p>
+            </Reveal>
+          </div>
 
-          <AnimatedSection delay={0.1}>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {content.images.map((src, i) => (
-                <div
-                  key={src}
-                  className="group relative aspect-square rounded-2xl overflow-hidden bg-muted shadow-card hover:shadow-card-hover transition-all duration-500"
-                >
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-4">
+            {content.images.map((src, i) => (
+              <Reveal key={src} delay={(i % 4) * 0.06} y={40}>
+                <div className="group relative aspect-square overflow-hidden rounded-media bg-paper-deep shadow-card transition-shadow duration-700 ease-out-expo hover:shadow-card-hover">
                   <img
                     src={src}
                     alt={`${content.altPrefix[lang]} — ${brandFromSrc(src)} | Laderos Bags`}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.06]"
                     loading={i < 4 ? 'eager' : 'lazy'}
                   />
                 </div>
-              ))}
-            </div>
-          </AnimatedSection>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* FAQ */}
       <section className="section-padding section-depth-2">
         <div className="container-page">
-          <AnimatedSection className="mb-12">
-            <h2 className="mb-0">
-              {lang === 'el' ? 'Συχνές ερωτήσεις' : 'Frequently asked questions'}
-            </h2>
-          </AnimatedSection>
+          <div className="grid gap-12 lg:grid-cols-12">
+            <div className="lg:col-span-4">
+              <RevealHeading
+                text={lang === 'el' ? 'Συχνές ερωτήσεις' : 'Frequently asked questions'}
+                className="mb-0 lg:sticky lg:top-28"
+              />
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
-            {content.faq.map((f, i) => (
-              <AnimatedSection key={f.q.el} delay={i * 0.08}>
-                <div className="card-editorial rounded-xl p-7 h-full">
-                  <h3 className="text-lg md:text-xl font-sans font-extrabold normal-case mb-3" style={{ letterSpacing: '0' }}>
-                    {f.q[lang]}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">{f.a[lang]}</p>
-                </div>
-              </AnimatedSection>
-            ))}
+            <div className="border-t border-ink/10 lg:col-span-8">
+              {content.faq.map((f, i) => (
+                <Reveal key={f.q.el} delay={i * 0.05}>
+                  <div className="border-b border-ink/10 py-8 md:py-10">
+                    <div>
+                      <h3 className="mb-3 text-[1.45rem] leading-snug tracking-[-0.015em] md:text-[1.7rem]">
+                        {f.q[lang]}
+                      </h3>
+                      <p className="leading-relaxed text-ink/65">{f.a[lang]}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Quote form */}
-      <section id="quote-section" className="section-padding ink-section scroll-mt-20">
-        <div className="container-page">
-          <AnimatedSection>
-            <QuoteRequestForm bagType="paper" />
-          </AnimatedSection>
-        </div>
-      </section>
+      <QuoteStage>
+        <QuoteRequestForm bagType="paper" />
+      </QuoteStage>
     </Layout>
   );
 };

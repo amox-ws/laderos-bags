@@ -1,24 +1,23 @@
 import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd } from '@/lib/seo';
-import { ArrowLeft, Check } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
+import { Reveal } from '@/components/ui/Reveal';
+import { Applications, ProductHero, ProductIntro, QuoteStage } from '@/components/products/ProductPageParts';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { SpecialCategoriesTeaser } from '@/components/products/SpecialCategories';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { scrollToId } from '@/lib/scrollToTarget';
 
 const GalleryImage = ({ src, className = '', index, scale = 1 }: { src: string; className?: string; index: number; scale?: number }) => (
-  <div className={`group relative rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-500 ${className}`}>
-    <div className="w-full h-full bg-muted overflow-hidden">
-      <img 
-        src={src} 
+  <div className={`group relative overflow-hidden rounded-media bg-paper-deep shadow-card transition-shadow duration-700 ease-out-expo hover:shadow-card-hover ${className}`}>
+    <div className="h-full w-full overflow-hidden transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.04]">
+      <img
+        src={src}
         alt={`Plastic Bag Application ${index + 1}`}
         style={{ transform: `scale(${scale})` }}
-        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 origin-center"
+        className="h-full w-full origin-center object-cover"
         loading="lazy"
       />
     </div>
@@ -54,85 +53,35 @@ const PlasticBagsPage = () => {
     <Layout>
       <SEO routeKey="/products/plastic-bags" jsonLd={makeBreadcrumbLd([[t('nav.home'), '/'], [t('nav.products'), '/products'], [t('nav.products.plastic'), '/products/plastic-bags']])} />
       {/* Hero */}
-      <section className="section-padding main-section">
-        <div className="container-page">
-          <AnimatedSection className="text-center">
-            <Link 
-              to="/products" 
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors text-sm uppercase tracking-[0.1em]"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              {t('plasticBags.backToProducts')}
-            </Link>
-            <h1 className="mb-6">
-              {t('plasticBags.title')}
-            </h1>
-            <div className="section-divider mb-8" />
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t('plasticBags.subtitle')}
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
+      <ProductHero
+        backLabel={t('plasticBags.backToProducts')}
+        title={t('plasticBags.title')}
+        subtitle={t('plasticBags.subtitle')}
+        strip={[...plasticBagImages, '/product_bags/black_pink.webp', '/product_bags/ygeia.webp', '/product_bags/oasisbnb.webp']}
+      />
 
       {/* Main Content */}
       <section className="main-section">
-        <div className="container-page py-16 md:py-28 lg:py-36">
-          <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 xl:gap-20">
-            
+        <div className="container-page py-24 md:py-32 lg:py-40">
+          <div className="flex flex-col gap-14 lg:flex-row lg:gap-16 xl:gap-24">
+
             {/* Left Column - Sticky Text */}
-            <div className="w-full lg:w-[42%] xl:w-[38%]">
+            <div className="w-full lg:w-[40%] xl:w-[36%]">
               <div className={isMobile ? '' : 'lg:sticky lg:top-28 lg:self-start'}>
-                <AnimatedSection>
-                  <h2 className="mb-6">
-                    {t('plasticBags.sectionTitle')}
-                  </h2>
-                  <div className="w-12 h-[2px] bg-primary/40 mb-6" />
-                  <div className="space-y-4 text-muted-foreground">
-                    <p className="text-base md:text-lg leading-relaxed">
-                      {t('plasticBags.description1')}
-                    </p>
-                    <p className="text-base md:text-lg leading-relaxed">
-                      {t('plasticBags.description2')}
-                    </p>
-                  </div>
-
-                  {/* Features */}
-                  <div className="mt-10">
-                    <h3 className="eyebrow block mb-5">
-                      {t('plasticBags.featuresTitle')}
-                    </h3>
-                    <ul className="space-y-3">
-                      {features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-3">
-                          <div className="mt-1 flex-shrink-0 w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Check className="h-3 w-3 text-primary" />
-                          </div>
-                          <span className="text-muted-foreground text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="mt-10">
-                    <Button 
-                      variant="default" 
-                      size="lg" 
-                      onClick={() => {
-                        const quoteSection = document.getElementById('quote-section');
-                        scrollToId('quote-section');
-                      }}
-                    >
-                      {t('plasticBags.cta')}
-                    </Button>
-                  </div>
-                </AnimatedSection>
+                <ProductIntro
+                  title={t('plasticBags.sectionTitle')}
+                  paragraphs={[t('plasticBags.description1'), t('plasticBags.description2')]}
+                  featuresTitle={t('plasticBags.featuresTitle')}
+                  features={features}
+                  cta={t('plasticBags.cta')}
+                  onCta={() => scrollToId('quote-section')}
+                />
               </div>
             </div>
 
             {/* Right Column - Gallery */}
-            <div className="w-full lg:w-[58%] xl:w-[62%]">
-              <AnimatedSection delay={0.2}>
+            <div className="w-full lg:w-[60%] xl:w-[64%]">
+              <Reveal y={50}>
                 <div className="flex flex-col gap-4">
                   <div className="w-full">
                     <GalleryImage src={plasticBagImages[0]} index={0} className="w-full aspect-[16/9]" scale={1.5} />
@@ -154,48 +103,26 @@ const PlasticBagsPage = () => {
                     <GalleryImage src={plasticBagImages[8]} index={8} className="w-[48%] aspect-[4/5]" />
                   </div>
                 </div>
-              </AnimatedSection>
+              </Reveal>
 
               {/* Ειδικές κατηγορίες — πλήρεις συλλογές σε δικές τους σελίδες */}
-              <SpecialCategoriesTeaser className="mt-16" />
+              <SpecialCategoriesTeaser className="mt-24" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Applications */}
-      <section className="section-padding main-section">
-        <div className="container-page">
-          <AnimatedSection className="text-center max-w-3xl mx-auto">
-            <h2 className="mb-6">
-              {t('plasticBags.applicationsTitle')}
-            </h2>
-            <div className="section-divider mb-8" />
-            <p className="text-lg text-muted-foreground mb-10">
-              {t('plasticBags.applicationsText')}
-            </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              {t('plasticBags.industries').split(',').map((industry, index) => (
-                <span 
-                  key={index}
-                  className="px-5 py-2.5 bg-white rounded-full text-sm font-medium shadow-card border border-border/40"
-                >
-                  {industry.trim()}
-                </span>
-              ))}
-            </div>
-          </AnimatedSection>
-        </div>
-      </section>
+      <Applications
+        title={t('plasticBags.applicationsTitle')}
+        text={t('plasticBags.applicationsText')}
+        industries={t('plasticBags.industries').split(',').map((s) => s.trim())}
+      />
 
       {/* Quote Form */}
-      <section id="quote-section" className="section-padding ink-section scroll-mt-20">
-        <div className="container-page">
-          <AnimatedSection>
-            <QuoteRequestForm bagType="plastic" />
-          </AnimatedSection>
-        </div>
-      </section>
+      <QuoteStage>
+        <QuoteRequestForm bagType="plastic" />
+      </QuoteStage>
     </Layout>
   );
 };

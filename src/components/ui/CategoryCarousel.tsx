@@ -27,8 +27,8 @@ interface CategoryCarouselProps {
 /** How far each neighbouring card sits from the centre, and how it is dimmed. */
 const LAYER = [
   { x: 0, scale: 1, opacity: 1, z: 30 },
-  { x: 48, scale: 0.8, opacity: 0.62, z: 20 },
-  { x: 82, scale: 0.62, opacity: 0.3, z: 10 },
+  { x: 48, scale: 0.8, opacity: 0.8, z: 20 },
+  { x: 82, scale: 0.62, opacity: 0.45, z: 10 },
 ];
 /** Cards further out than this are parked off-stage, invisible. */
 const VISIBLE = LAYER.length - 1;
@@ -109,7 +109,7 @@ const CategoryCarousel = ({
             <div
               key={src}
               aria-hidden={offset !== 0}
-              className={`absolute inset-0 m-auto aspect-square ${cardHeight} rounded-2xl overflow-hidden bg-muted shadow-card transition-all duration-700 ease-out`}
+              className={`absolute inset-0 m-auto aspect-square ${cardHeight} overflow-hidden rounded-media bg-paper-deep transition-[transform,opacity,box-shadow] duration-[1.1s] ease-out-expo ${offset === 0 ? 'shadow-[0_40px_80px_-35px_hsl(var(--ink)/0.55)]' : 'shadow-[0_20px_40px_-25px_hsl(var(--ink)/0.4)]'}`}
               style={{
                 transform: `translateX(${dir * layer.x * spread}%) scale(${layer.scale})`,
                 opacity: beyond ? 0 : layer.opacity,
@@ -140,8 +140,8 @@ const CategoryCarousel = ({
             return (
               <span
                 key={src}
-                className={`h-1.5 rounded-full transition-all duration-500 ${
-                  isActive ? 'w-5 bg-primary' : 'w-1.5 bg-foreground/20'
+                className={`h-[3px] rounded-full transition-all duration-700 ease-out-expo ${
+                  isActive ? 'w-7 bg-ink' : 'w-2 bg-ink/15'
                 }`}
               />
             );
@@ -149,19 +149,10 @@ const CategoryCarousel = ({
         </div>
       )}
 
-      {/* Control bar — arrows plus jump-to dots */}
+      {/* Control bar — counter, jump-to segments, arrows */}
       {showControls && count > 1 && (
-        <div className="mt-8 flex items-center justify-center gap-5 md:gap-7">
-          <button
-            type="button"
-            onClick={() => go(-1)}
-            aria-label={ariaPrev}
-            className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-foreground/20 text-foreground transition-all duration-300 hover:border-foreground hover:-translate-x-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </button>
-
-          <div className="flex items-center gap-1.5">
+        <div className="container-page mt-10 flex items-center gap-5 md:gap-8">
+          <div className="flex flex-1 items-center gap-1.5">
             {images.map((src, i) => (
               <button
                 key={src}
@@ -169,21 +160,35 @@ const CategoryCarousel = ({
                 onClick={() => setActive(i)}
                 aria-label={`${ariaGoTo} ${i + 1}`}
                 aria-current={i === active}
-                className={`h-1.5 rounded-full transition-all duration-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
-                  i === active ? 'w-7 bg-primary' : 'w-1.5 bg-foreground/25 hover:bg-foreground/50'
-                }`}
-              />
+                className="group relative h-6 flex-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+              >
+                <span
+                  className={`absolute inset-x-0 top-1/2 h-[2px] -translate-y-1/2 rounded-full transition-colors duration-500 ${
+                    i === active ? 'bg-ink' : 'bg-ink/15 group-hover:bg-ink/40'
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
-          <button
-            type="button"
-            onClick={() => go(1)}
-            aria-label={ariaNext}
-            className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full border-2 border-foreground/20 text-foreground transition-all duration-300 hover:border-foreground hover:translate-x-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-          >
-            <ArrowRight className="h-5 w-5" />
-          </button>
+          <div className="flex flex-shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label={ariaPrev}
+              className="group flex h-12 w-12 items-center justify-center rounded-full text-ink shadow-[inset_0_0_0_1px_hsl(var(--ink)/0.18)] transition-all duration-500 ease-out-expo hover:bg-ink hover:text-paper active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              <ArrowLeft className="h-[18px] w-[18px] transition-transform duration-500 ease-out-expo group-hover:-translate-x-0.5" strokeWidth={1.5} />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label={ariaNext}
+              className="group flex h-12 w-12 items-center justify-center rounded-full text-ink shadow-[inset_0_0_0_1px_hsl(var(--ink)/0.18)] transition-all duration-500 ease-out-expo hover:bg-ink hover:text-paper active:scale-95 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+            >
+              <ArrowRight className="h-[18px] w-[18px] transition-transform duration-500 ease-out-expo group-hover:translate-x-0.5" strokeWidth={1.5} />
+            </button>
+          </div>
         </div>
       )}
     </div>

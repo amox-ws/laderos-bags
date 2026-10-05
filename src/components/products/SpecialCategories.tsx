@@ -1,8 +1,9 @@
 import { Link } from '@/components/LocalizedLink';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import AnimatedSection from '@/components/ui/AnimatedSection';
+import { Reveal, RevealHeading } from '@/components/ui/Reveal';
 import { SPECIAL_CATEGORIES, type CategoryContent } from '@/content/categories';
+import { cn } from '@/lib/utils';
 
 type Lang = 'el' | 'en';
 
@@ -14,43 +15,41 @@ const cardImageOf = (cat: CategoryContent) => cat.cardImage ?? cat.images[0];
 const CategoryLink = ({ cat, lang, boxed }: { cat: CategoryContent; lang: Lang; boxed: boolean }) => (
   <Link
     to={`/products/${cat.slug}`}
-    className={
-      boxed
-        ? 'group flex h-full flex-col overflow-hidden rounded-2xl bg-white/[0.04] ring-1 ring-white/10 transition-all duration-500 hover:bg-white/[0.07] hover:ring-white/25 hover:-translate-y-1'
-        : 'group block'
-    }
+    className={cn(
+      'group flex h-full flex-col',
+      boxed &&
+        'overflow-hidden rounded-media bg-paper/[0.04] p-2 ring-1 ring-inset ring-paper/10 transition-all duration-700 ease-out-expo hover:bg-paper/[0.08] hover:ring-paper/25'
+    )}
   >
     <div
-      className={`relative aspect-square overflow-hidden bg-muted ${
-        boxed ? '' : 'rounded-2xl shadow-card group-hover:shadow-card-hover transition-all duration-500'
-      }`}
+      className={cn(
+        'relative aspect-square overflow-hidden bg-white',
+        boxed ? 'rounded-[calc(var(--radius-media)-0.4rem)]' : 'rounded-media shadow-card transition-shadow duration-700 group-hover:shadow-card-hover'
+      )}
     >
       <img
         src={cardImageOf(cat)}
         alt={`${cat.altPrefix[lang]} | Laderos Bags`}
         /* contain: the bag is shown whole, never cropped */
-        className="h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-105"
+        className="h-full w-full object-contain transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.06]"
         loading="lazy"
       />
+      <span className="absolute right-3 top-3 flex h-10 w-10 scale-90 items-center justify-center rounded-full bg-ink text-paper opacity-0 transition-all duration-700 ease-out-expo group-hover:scale-100 group-hover:opacity-100">
+        <ArrowUpRight className="h-4 w-4 transition-transform duration-700 ease-out-expo group-hover:rotate-45" strokeWidth={1.5} />
+      </span>
     </div>
 
-    {boxed ? (
-      <div className="flex flex-1 flex-col p-6">
-        <h3 className="mb-2.5 flex items-center gap-2.5 text-xl md:text-2xl">
-          {cat.navLabel[lang]}
-          <ArrowRight className="h-5 w-5 flex-shrink-0 transition-transform duration-300 group-hover:translate-x-1.5" />
-        </h3>
-        <p className="text-sm leading-relaxed text-white/70">{cat.teaser[lang]}</p>
-      </div>
-    ) : (
-      <>
-        <div className="media-label group-hover:gap-3.5 transition-all duration-300">
-          {cat.navLabel[lang]}
-          <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-        </div>
-        <p className="text-sm text-muted-foreground mt-1">{cat.teaser[lang]}</p>
-      </>
-    )}
+    <div className={cn('flex flex-1 flex-col', boxed ? 'p-5 pt-6 md:p-6' : 'pt-5')}>
+      <h3
+        className={cn(
+          'mb-2 text-[1.7rem] leading-none tracking-[-0.025em] transition-colors duration-500 md:text-[1.9rem]',
+          boxed ? 'text-paper group-hover:text-brand-light' : 'text-ink group-hover:text-brand'
+        )}
+      >
+        {cat.navLabel[lang]}
+      </h3>
+      <p className={cn('text-sm leading-relaxed', boxed ? 'text-paper/60' : 'text-ink/60')}>{cat.teaser[lang]}</p>
+    </div>
   </Link>
 );
 
@@ -63,14 +62,16 @@ export const SpecialCategoriesTeaser = ({ className = '' }: { className?: string
   const lang: Lang = language === 'en' ? 'en' : 'el';
 
   return (
-    <AnimatedSection className={className}>
-      <h3 className="mb-6">{headingFor(lang)}</h3>
-      <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-        {SPECIAL_CATEGORIES.map((cat) => (
-          <CategoryLink key={cat.slug} cat={cat} lang={lang} boxed={false} />
+    <div className={className}>
+      <RevealHeading as="h3" text={headingFor(lang)} className="mb-8 text-[clamp(1.9rem,1.4rem+1.6vw,2.8rem)]" />
+      <div className="grid gap-x-5 gap-y-10 sm:grid-cols-2 xl:grid-cols-3">
+        {SPECIAL_CATEGORIES.map((cat, i) => (
+          <Reveal key={cat.slug} delay={(i % 3) * 0.08}>
+            <CategoryLink cat={cat} lang={lang} boxed={false} />
+          </Reveal>
         ))}
       </div>
-    </AnimatedSection>
+    </div>
   );
 };
 
@@ -80,22 +81,29 @@ const SpecialCategories = ({ className = '' }: { className?: string }) => {
   const lang: Lang = language === 'en' ? 'en' : 'el';
 
   return (
-    <section className={`section-padding ink-section overflow-hidden ${className}`}>
-      <div className="container-page">
-        <AnimatedSection className="max-w-2xl mb-14 md:mb-16">
-          <h2 className="mb-5">{headingFor(lang)}</h2>
-          <p className="text-base md:text-lg leading-relaxed text-white/80">
-            {lang === 'el'
-              ? 'Κάθε κλάδος έχει τις δικές του απαιτήσεις σε μέγεθος, αντοχή και εμφάνιση. Δείτε τις συλλογές που έχουμε κατασκευάσει ανά κατηγορία καταστήματος.'
-              : 'Every sector has its own demands in size, strength and appearance. Browse the collections we have produced for each type of store.'}
-          </p>
-        </AnimatedSection>
+    <section className={`panel ink-section section-padding overflow-hidden ${className}`}>
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: 'radial-gradient(45% 50% at 85% 0%, hsl(213 66% 45% / 0.25), transparent 70%)' }}
+      />
+      <div className="container-page relative">
+        <div className="mb-14 grid gap-8 md:mb-20 lg:grid-cols-12 lg:items-end">
+          <RevealHeading text={headingFor(lang)} className="mb-0 text-paper lg:col-span-6" />
+          <Reveal delay={0.15} className="lg:col-span-5 lg:col-start-8">
+            <p className="text-base leading-relaxed text-paper/65 md:text-lg">
+              {lang === 'el'
+                ? 'Κάθε κλάδος έχει τις δικές του απαιτήσεις σε μέγεθος, αντοχή και εμφάνιση. Δείτε τις συλλογές που έχουμε κατασκευάσει ανά κατηγορία καταστήματος.'
+                : 'Every sector has its own demands in size, strength and appearance. Browse the collections we have produced for each type of store.'}
+            </p>
+          </Reveal>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5">
           {SPECIAL_CATEGORIES.map((cat, i) => (
-            <AnimatedSection key={cat.slug} delay={i * 0.08}>
+            <Reveal key={cat.slug} delay={(i % 3) * 0.08} y={50}>
               <CategoryLink cat={cat} lang={lang} boxed />
-            </AnimatedSection>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { stripLang } from '@/lib/i18nPaths';
 import { scrollToTarget } from '@/lib/scrollToTarget';
+import { scrollWindowTo } from '@/lib/smoothScroll';
 
 /**
  * Resets scroll position on navigation.
@@ -79,7 +80,7 @@ const ScrollToTop = () => {
     }
 
     // Plain navigation → snap to the top immediately, no animation.
-    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    scrollWindowTo(0);
   }, [pathname, hash]);
 
   return null;

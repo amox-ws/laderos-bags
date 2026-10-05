@@ -5,7 +5,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
+import { SlidingArrow } from '@/components/ui/ArrowButton';
 import QuoteRequestModal from './QuoteRequestModal';
 
 type BagType = 'paper' | 'plastic' | null;
@@ -227,17 +227,17 @@ const ContactQuoteForm: React.FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mb-12"
+          className="mb-14 border-b border-paper/10 pb-12"
         >
-          <h2 className="mb-3">
+          <h2 className="mb-5 text-paper">
             {t('quoteForm.title')}
           </h2>
-          <p className="text-lg opacity-80 measure">
+          <p className="measure text-lg text-paper/60">
             {t('quoteForm.subtitle')}
           </p>
         </motion.div>
 
-        <div className="space-y-10">
+        <div className="space-y-11">
           {/* Bag Type Selection */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -245,31 +245,23 @@ const ContactQuoteForm: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h3 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+            <h3 className="mb-4 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-paper/50">
               {t('quoteForm.bagType')}
             </h3>
             <div className="flex flex-wrap gap-3">
               <button
                 type="button"
                 onClick={() => handleBagTypeSelect('paper')}
-                className={cn(
-                  'px-6 py-3 text-sm font-medium rounded-md border transition-all duration-200',
-                  selectedBagType === 'paper'
-                    ? 'bg-primary text-white border-primary shadow-md'
-                    : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
-                )}
+                className="chip"
+                data-active={selectedBagType === 'paper'}
               >
                 {language === 'el' ? 'Χάρτινη Σακούλα' : 'Paper Bag'}
               </button>
               <button
                 type="button"
                 onClick={() => handleBagTypeSelect('plastic')}
-                className={cn(
-                  'px-6 py-3 text-sm font-medium rounded-md border transition-all duration-200',
-                  selectedBagType === 'plastic'
-                    ? 'bg-primary text-white border-primary shadow-md'
-                    : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
-                )}
+                className="chip"
+                data-active={selectedBagType === 'plastic'}
               >
                 {language === 'el' ? 'Πλαστική Σακούλα' : 'Plastic Bag'}
               </button>
@@ -292,7 +284,7 @@ const ContactQuoteForm: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
+                  <h3 className="mb-4 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-paper/50">
                     {t('quoteForm.size')}
                   </h3>
                   <div className="flex flex-wrap gap-3">
@@ -301,12 +293,8 @@ const ContactQuoteForm: React.FC = () => {
                         key={size}
                         type="button"
                         onClick={() => handleSizeSelect(size)}
-                        className={cn(
-                          'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
-                          formData.size === size
-                            ? 'bg-primary text-white border-primary shadow-md'
-                            : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
-                        )}
+                        className="chip"
+                        data-active={formData.size === size}
                       >
                         {size === 'custom' ? t('quoteForm.customSize') : size}
                       </button>
@@ -321,16 +309,16 @@ const ContactQuoteForm: React.FC = () => {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="mt-6 p-4 bg-muted/50 rounded-lg border border-border"
+                        className="mt-6 rounded-2xl bg-paper/[0.04] p-5 ring-1 ring-inset ring-paper/10"
                       >
-                        <p className="text-sm text-muted-foreground mb-4">
+                        <p className="mb-4 text-sm text-paper/55">
                           {t('quoteForm.customSizeHint')}
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                           <div>
                             <Label 
                               htmlFor="customHeight" 
-                              className="text-xs font-semibold text-foreground uppercase tracking-wider"
+                              className="font-mono text-[10px] font-normal uppercase tracking-[0.16em] text-paper/50"
                             >
                               {t('quoteForm.height')} (cm)
                             </Label>
@@ -342,13 +330,13 @@ const ContactQuoteForm: React.FC = () => {
                               value={formData.customSize.height}
                               onChange={(e) => handleCustomSizeChange('height', e.target.value)}
                               placeholder="0"
-                              className="mt-2"
+                              className="mt-2 h-11 rounded-xl border-0 bg-paper/10 text-paper ring-1 ring-inset ring-paper/15 placeholder:text-paper/30 focus-visible:ring-2 focus-visible:ring-brand-light focus-visible:ring-offset-0"
                             />
                           </div>
                           <div>
                             <Label 
                               htmlFor="customWidth" 
-                              className="text-xs font-semibold text-foreground uppercase tracking-wider"
+                              className="font-mono text-[10px] font-normal uppercase tracking-[0.16em] text-paper/50"
                             >
                               {t('quoteForm.width')} (cm)
                             </Label>
@@ -360,13 +348,13 @@ const ContactQuoteForm: React.FC = () => {
                               value={formData.customSize.width}
                               onChange={(e) => handleCustomSizeChange('width', e.target.value)}
                               placeholder="0"
-                              className="mt-2"
+                              className="mt-2 h-11 rounded-xl border-0 bg-paper/10 text-paper ring-1 ring-inset ring-paper/15 placeholder:text-paper/30 focus-visible:ring-2 focus-visible:ring-brand-light focus-visible:ring-offset-0"
                             />
                           </div>
                           <div>
                             <Label 
                               htmlFor="customGusset" 
-                              className="text-xs font-semibold text-foreground uppercase tracking-wider"
+                              className="font-mono text-[10px] font-normal uppercase tracking-[0.16em] text-paper/50"
                             >
                               {t('quoteForm.gusset')} (cm)
                             </Label>
@@ -378,7 +366,7 @@ const ContactQuoteForm: React.FC = () => {
                               value={formData.customSize.gusset}
                               onChange={(e) => handleCustomSizeChange('gusset', e.target.value)}
                               placeholder="0"
-                              className="mt-2"
+                              className="mt-2 h-11 rounded-xl border-0 bg-paper/10 text-paper ring-1 ring-inset ring-paper/15 placeholder:text-paper/30 focus-visible:ring-2 focus-visible:ring-brand-light focus-visible:ring-offset-0"
                             />
                           </div>
                         </div>
@@ -393,7 +381,7 @@ const ContactQuoteForm: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.15 }}
                 >
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
+                  <h3 className="mb-4 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-paper/50">
                     {t('quoteForm.handles')}
                   </h3>
                   <div className="flex flex-wrap gap-3">
@@ -402,12 +390,8 @@ const ContactQuoteForm: React.FC = () => {
                         key={handle.id}
                         type="button"
                         onClick={() => handleHandleSelect(handle.id)}
-                        className={cn(
-                          'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
-                          formData.handle === handle.id
-                            ? 'bg-primary text-white border-primary shadow-md'
-                            : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
-                        )}
+                        className="chip"
+                        data-active={formData.handle === handle.id}
                       >
                         {language === 'el' ? handle.el : handle.en}
                       </button>
@@ -422,7 +406,7 @@ const ContactQuoteForm: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.2 }}
                   >
-                    <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
+                    <h3 className="mb-4 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-paper/50">
                       {t('quoteForm.finishing')}
                     </h3>
                     <div className="flex flex-wrap gap-3">
@@ -431,12 +415,8 @@ const ContactQuoteForm: React.FC = () => {
                           key={option.id}
                           type="button"
                           onClick={() => handleFinishingToggle(option.id)}
-                          className={cn(
-                            'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
-                            formData.finishing.includes(option.id)
-                              ? 'bg-primary text-white border-primary shadow-md'
-                              : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
-                          )}
+                          className="chip"
+                          data-active={formData.finishing.includes(option.id)}
                         >
                           {language === 'el' ? option.el : option.en}
                         </button>
@@ -451,7 +431,7 @@ const ContactQuoteForm: React.FC = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.25 }}
                 >
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
+                  <h3 className="mb-4 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-paper/50">
                     {t('quoteForm.printing')}
                   </h3>
                   <div className="flex flex-wrap gap-3">
@@ -460,12 +440,8 @@ const ContactQuoteForm: React.FC = () => {
                         key={option.id}
                         type="button"
                         onClick={() => handlePrintingSelect(option.id)}
-                        className={cn(
-                          'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
-                          formData.printing === option.id
-                            ? 'bg-primary text-white border-primary shadow-md'
-                            : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
-                        )}
+                        className="chip"
+                        data-active={formData.printing === option.id}
                       >
                         {language === 'el' ? option.el : option.en}
                       </button>
@@ -480,7 +456,7 @@ const ContactQuoteForm: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                   >
-                    <h3 className="text-xs font-semibold uppercase tracking-[0.2em] mb-4 text-white/85 font-sans">
+                    <h3 className="mb-4 font-mono text-[11px] font-normal uppercase tracking-[0.16em] text-paper/50">
                       {t('quoteForm.extraProcessing')}
                     </h3>
                     <div className="flex flex-wrap gap-3">
@@ -489,12 +465,8 @@ const ContactQuoteForm: React.FC = () => {
                           key={option.id}
                           type="button"
                           onClick={() => handleExtraProcessingToggle(option.id)}
-                          className={cn(
-                            'px-4 py-2 text-sm font-medium rounded-md border transition-all duration-200',
-                            formData.extraProcessing.includes(option.id)
-                              ? 'bg-primary text-white border-primary shadow-md'
-                              : 'bg-background text-foreground border-border hover:border-brand/50 hover:bg-muted'
-                          )}
+                          className="chip"
+                          data-active={formData.extraProcessing.includes(option.id)}
                         >
                           {language === 'el' ? option.el : option.en}
                         </button>
@@ -514,9 +486,12 @@ const ContactQuoteForm: React.FC = () => {
                     type="button"
                     size="lg"
                     onClick={handleSubmitClick}
-                    className="w-full md:w-auto min-w-[200px] bg-white text-primary font-bold hover:bg-gray-100 shadow-lg"
+                    className="group h-14 w-full min-w-[220px] gap-4 bg-paper pl-7 pr-2 text-base text-ink hover:bg-white md:w-auto"
                   >
                     {t('quoteForm.submit')}
+                    <span className="flex h-10 w-10 items-center justify-center rounded-full bg-ink text-paper transition-colors duration-500 group-hover:bg-brand">
+                      <SlidingArrow />
+                    </span>
                   </Button>
                 </motion.div>
               </motion.div>

@@ -43,17 +43,17 @@ const ProductionGallery = ({ images }: ProductionGalleryProps) => {
   ];
 
   return (
-    <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
+    <div ref={ref} className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5 lg:grid-cols-3">
       {columns.map((column, colIndex) => (
         <motion.div
           key={colIndex}
-          className="flex flex-col gap-3 md:gap-4"
+          className="flex flex-col gap-4 md:gap-5"
           style={still ? undefined : { y: drifts[colIndex] }}
         >
           {column.map((src, i) => (
             <motion.figure
               key={src}
-              className="group relative overflow-hidden rounded-[var(--radius)] bg-muted ring-2 ring-transparent transition-shadow duration-300 hover:ring-[hsl(var(--brand-blue-light))]"
+              className="group relative overflow-hidden rounded-media bg-paper-deep shadow-card transition-shadow duration-700 ease-out-expo hover:shadow-card-hover"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
@@ -63,7 +63,7 @@ const ProductionGallery = ({ images }: ProductionGalleryProps) => {
                 src={src}
                 alt={`${el ? 'Δείγμα παραγωγής' : 'Production sample'} — Laderos Bags`}
                 /* h-auto keeps the photo's own proportions, so nothing is cropped */
-                className="w-full h-auto block transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                className="block h-auto w-full transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.04]"
                 loading="lazy"
               />
             </motion.figure>

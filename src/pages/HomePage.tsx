@@ -1,11 +1,6 @@
-import { useEffect, useRef, useState, useMemo } from 'react';
+import { Fragment, useEffect, useRef, useState, useMemo } from 'react';
 import SEO from '@/components/SEO';
-import { useLocation } from 'react-router-dom';
-import { Link } from '@/components/LocalizedLink';
-import { ArrowRight, ChevronsDown } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import ProductsSection from '@/components/home/ProductsSection';
 import TrustedBySection from '@/components/home/TrustedBySection';
@@ -13,10 +8,12 @@ import AboutPreviewSection from '@/components/home/AboutPreviewSection';
 import AnimatedStatsSection from '@/components/home/AnimatedStatsSection';
 import ShowcaseCarouselSection from '@/components/home/ShowcaseCarouselSection';
 import WhereToFindUsSection from '@/components/home/WhereToFindUsSection';
+import Marquee from '@/components/ui/Marquee';
+import CtaPanel from '@/components/CtaPanel';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,7 +22,7 @@ let animationHasPlayed = false;
 
 const HomePage = () => {
   const { t, language } = useLanguage();
-  const location = useLocation();
+  const reduced = useReducedMotion();
 
   // Skip animation if it already played in this app session (module lifetime)
   const skipAnimation = useMemo(() => {
@@ -35,6 +32,7 @@ const HomePage = () => {
   // Refs
   const pinnedSectionRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const progressRef = useRef<HTMLSpanElement>(null);
 
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showIndicator, setShowIndicator] = useState(true);
@@ -109,10 +107,10 @@ const HomePage = () => {
     window.addEventListener('resize', resize);
 
     // --- 3) RENDER FUNCTION ---
-    const yOffset = 80;         
-    const zoomMin = 1.0;        
-    const zoomMax = 1.22;       
-    const zoomEase = (p: number) => p * p; 
+    const yOffset = 80;
+    const zoomMin = 1.0;
+    const zoomMax = 1.22;
+    const zoomEase = (p: number) => p * p;
 
     const render = (progress: number) => {
       const img = images[bag.frame];
@@ -143,6 +141,12 @@ const HomePage = () => {
       const offsetX = (cw - renderWidth) / 2;
       const offsetY = (ch - renderHeight) / 2 + yOffset;
 
+      // The frame sits a little low; fill the strip above it with the frame's
+      // own top row so there is never a band of flat colour under the header.
+      if (offsetY > 0) {
+        ctx.drawImage(img, 0, 0, img.naturalWidth, 1, offsetX, 0, renderWidth, offsetY + 1);
+      }
+
       ctx.drawImage(
         img,
         0,
@@ -172,6 +176,7 @@ const HomePage = () => {
         onUpdate: (self) => {
           render(self.progress);
           setShowIndicator(self.progress <= 0.05);
+          if (progressRef.current) progressRef.current.style.transform = `scaleX(${self.progress})`;
           if (self.progress >= 0.95) {
             animationHasPlayed = true;
           }
@@ -190,10 +195,10 @@ const HomePage = () => {
     });
 
     // B) Entire pinned section fades out, revealing products behind
-    tl.to(pinnedEl, { 
-        opacity: 0, 
-        duration: 0.8, 
-        ease: 'power1.inOut' 
+    tl.to(pinnedEl, {
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power1.inOut'
     });
 
     // Start
@@ -207,93 +212,149 @@ const HomePage = () => {
     };
   }, []);
 
+  const h1Brand = 'Laderos Bags —';
+  const h1Rest =
+    language === 'el'
+      ? 'Χάρτινες & Πλαστικές Σακούλες με Εκτύπωση Λογοτύπου για Επιχειρήσεις'
+      : 'Custom Printed Paper & Plastic Bags for Businesses';
+
+  // Two halves of the heading flank the bag on wider screens
+  const heroWords = h1Rest.split(' ');
+  const splitAt = language === 'el' ? 4 : 6;
+  const heroLines = [heroWords.slice(0, splitAt), heroWords.slice(splitAt)];
+
+  const marqueeItems = [
+    t('nav.products.paper'),
+    t('nav.products.plastic'),
+    language === 'el' ? 'Οπτικά' : 'Optical',
+    language === 'el' ? 'Παιδικά' : 'Kids',
+    language === 'el' ? 'Ανδρικά' : 'Menswear',
+    language === 'el' ? 'Γυναικεία' : 'Womenswear',
+    language === 'el' ? 'Οικολογικά' : 'Eco-Friendly',
+  ];
+
   return (
     <Layout>
       <SEO routeKey="/" />
-      {/* Primary page heading — visually hidden, present for SEO & screen readers */}
-      <h1 className="sr-only">
-        {language === 'el'
-          ? 'Laderos Bags — Χάρτινες & Πλαστικές Σακούλες με Εκτύπωση Λογοτύπου για Επιχειρήσεις'
-          : 'Laderos Bags — Custom Printed Paper & Plastic Bags for Businesses'}
-      </h1>
+
+      {/* Primary page heading — set over the opening film; screen-reader only when the film is skipped */}
+      {skipAnimation && (
+        <h1 className="sr-only">
+          {h1Brand} {h1Rest}
+        </h1>
+      )}
+
       {/* SECTION 1: ANIMATION WRAPPER - Only on first visit */}
       {!skipAnimation && (
         <div
           ref={pinnedSectionRef}
-          className="relative w-full h-screen bg-background -mt-16 md:-mt-20"
+          className="relative -mt-16 h-screen w-full bg-[#d4d7dd] md:-mt-20"
         >
           <canvas
             ref={canvasRef}
-            className="absolute inset-0 w-full h-full z-20 pointer-events-none"
+            className="pointer-events-none absolute inset-0 z-20 h-full w-full"
           />
-          <div className="absolute inset-0 z-20 pointer-events-none bg-gradient-to-b from-black/10 via-transparent to-transparent" />
-          <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center transition-opacity duration-500 ${showIndicator ? 'opacity-100' : 'opacity-0'}`}>
-            <span className="text-white/70 text-sm tracking-widest uppercase mb-2">Scroll</span>
-            <ChevronsDown className="text-white/70 w-6 h-6 animate-bounce" />
+
+          {/* Phones: the bag fills the screen, so the type sits on a navy veil that melts into it */}
+          <div
+            className={`pointer-events-none absolute inset-0 z-[25] transition-opacity duration-700 md:hidden ${showIndicator ? 'opacity-100' : 'opacity-0'}`}
+            style={{ background: 'linear-gradient(0deg, hsl(224 44% 9% / 0.9) 0%, hsl(224 44% 9% / 0.55) 30%, transparent 58%)' }}
+          />
+
+          <div className="pointer-events-none absolute inset-0 z-30">
+            <div className="container-page flex h-full flex-col justify-end pb-28 md:pb-16 lg:pb-20">
+              <h1
+                className={`grid gap-1 text-[clamp(2rem,0.9rem+2.3vw,3.6rem)] leading-[1.02] tracking-[-0.03em] text-paper transition-[opacity,transform] duration-700 ease-out-expo md:grid-cols-2 md:items-end md:gap-[34vw] md:text-ink ${
+                  showIndicator ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'
+                }`}
+              >
+                {heroLines.map((line, li) => (
+                  <span key={li} className={`block md:max-w-[13ch] ${li === 1 ? 'md:justify-self-end md:text-right' : ''}`}>
+                    {li === 0 && (
+                      <motion.span
+                        className="mb-4 block font-mono text-[11px] uppercase tracking-[0.18em] text-paper/60 md:mb-6 md:text-ink/55"
+                        initial={reduced ? false : { opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                      >
+                        {h1Brand}
+                      </motion.span>
+                    )}
+                    {li === 0 && ' '}
+                    {line.map((word, i) => (
+                      <Fragment key={i}>
+                        <span className="inline-block overflow-hidden pb-[0.14em] pt-[0.1em] -mb-[0.14em] -mt-[0.1em] align-bottom">
+                          <motion.span
+                            className={`inline-block ${word === '&' ? 'amp' : ''}`}
+                            initial={reduced ? false : { y: '115%' }}
+                            animate={{ y: '0%' }}
+                            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.35 + (li * 4 + i) * 0.05 }}
+                          >
+                            {word}
+                          </motion.span>
+                        </span>
+                        {(i < line.length - 1 || li === 0) && ' '}
+                      </Fragment>
+                    ))}
+                  </span>
+                ))}
+              </h1>
+            </div>
+          </div>
+
+          {/* Scroll cue — difference blend keeps it visible on grey and on navy */}
+          <div
+            className={`pointer-events-none absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 flex-col items-center gap-2.5 text-white mix-blend-difference transition-opacity duration-500 ${showIndicator ? 'opacity-100' : 'opacity-0'}`}
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.24em]">Scroll</span>
+            <span className="relative h-10 w-px overflow-hidden bg-white/25">
+              <span className="absolute inset-0 animate-scroll-line bg-white" />
+            </span>
+          </div>
+
+          {/* Film progress */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 h-[2px] bg-ink/10">
+            <span ref={progressRef} className="block h-full origin-left scale-x-0 bg-brand" />
           </div>
         </div>
       )}
 
       {/* Products section - pulled up behind canvas when animation is active */}
-      <div className={`ink-section pt-12 ${!skipAnimation ? 'relative z-10 -mt-[100dvh]' : ''}`}>
+      <div className={`main-section ${!skipAnimation ? 'relative z-10 -mt-[100dvh]' : ''}`}>
         <ProductsSection />
       </div>
 
       {/* REMAINING SECTIONS - always rendered normally below */}
       <div>
-        <div className="stripe-divider" aria-hidden />
-
-        <div className="main-section">
-          <TrustedBySection />
+        {/* Category ribbon */}
+        <div className="border-y border-ink/10 py-6 md:py-8" aria-hidden>
+          <Marquee duration={38} pauseOnHover={false}>
+            {marqueeItems.map((item) => (
+              <span key={item} className="flex items-center">
+                <span className="whitespace-nowrap px-6 font-display text-[clamp(2rem,1.4rem+2.6vw,4rem)] italic font-light tracking-[-0.03em] text-ink md:px-10">
+                  {item}
+                </span>
+                <span className="text-brand">
+                  <svg viewBox="0 0 24 24" className="h-5 w-5 md:h-7 md:w-7" fill="currentColor">
+                    <path d="M12 0c.6 6.2 5.8 11.4 12 12-6.2.6-11.4 5.8-12 12-.6-6.2-5.8-11.4-12-12C6.2 11.4 11.4 6.2 12 0z" />
+                  </svg>
+                </span>
+              </span>
+            ))}
+          </Marquee>
         </div>
 
-        <div className="ink-section">
-          <AboutPreviewSection />
-        </div>
+        <TrustedBySection />
+
+        <AboutPreviewSection />
 
         <ShowcaseCarouselSection />
 
-        <div className="accent-section">
-          <AnimatedStatsSection />
-        </div>
+        <AnimatedStatsSection />
 
-        <div className="main-section">
-          <WhereToFindUsSection />
-        </div>
+        <WhereToFindUsSection />
 
-        {/* CTA Section */}
-        <section className="section-padding ink-section overflow-hidden relative grain-overlay">
-          <div
-            className="pointer-events-none absolute inset-0 opacity-60"
-            style={{
-              background:
-                'radial-gradient(ellipse 60% 55% at 50% 0%, hsl(214 80% 47% / 0.28), transparent 60%)',
-            }}
-            aria-hidden
-          />
-          <div className="container-page relative">
-            <motion.div
-              className="text-center max-w-4xl mx-auto flex flex-col items-center"
-              initial={{ y: 60, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <h2 className="mb-6 max-w-3xl">
-                {t('cta.title')}
-              </h2>
-              <p className="text-lg opacity-85 mb-10 max-w-xl mx-auto text-white">
-                {t('cta.subtitle')}
-              </p>
-              <Button variant="heroOutline" size="xl" asChild className="group rounded-[var(--radius)] font-extrabold uppercase tracking-[0.06em]">
-                <Link to="/contact#quote">
-                  {t('cta.button')}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Link>
-              </Button>
-            </motion.div>
-          </div>
-        </section>
+        <CtaPanel />
       </div>
     </Layout>
   );

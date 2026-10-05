@@ -1,3 +1,5 @@
+import { scrollWindowTo } from '@/lib/smoothScroll';
+
 /** Layout position of an element, unaffected by any sticky offset applied to it. */
 const pageOffsetTop = (el: HTMLElement) => {
   let y = 0;
@@ -33,7 +35,7 @@ export const scrollToTarget = (
     y = Math.min(y, pinStart);
   }
 
-  window.scrollTo({ top: Math.max(0, y), left: 0, behavior });
+  scrollWindowTo(Math.max(0, y), behavior);
 };
 
 /** Same, addressed by element id. Does nothing if the element is not there. */

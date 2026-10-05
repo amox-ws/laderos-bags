@@ -1,19 +1,24 @@
+import { Fragment } from 'react';
 import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
 import { OPTIKA, PAIDIKA } from '@/content/categories';
 import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
-import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, ChevronsDown } from 'lucide-react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import AnimatedSection from '@/components/ui/AnimatedSection';
 import Layout from '@/components/layout/Layout';
 import TrustedBySection from '@/components/home/TrustedBySection';
 import SpecialCategories from '@/components/products/SpecialCategories';
 import ProductionGallery from '@/components/products/ProductionGallery';
+import CtaPanel from '@/components/CtaPanel';
+import ArrowButton from '@/components/ui/ArrowButton';
+import { Reveal, RevealHeading, RevealMedia } from '@/components/ui/Reveal';
+import { cn } from '@/lib/utils';
 
 const paperThumbnail = '/paper_product/paper_thumbnail.webp';
 const plasticThumbnail = '/plastic_product/plastic_thumbnail.webp';
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const galleryImages = [
   '/gallery/gallery9.webp',
@@ -29,6 +34,7 @@ const galleryImages = [
 
 const ProductsPage = () => {
   const { t, language } = useLanguage();
+  const reduced = useReducedMotion();
 
   const products = [
     {
@@ -53,6 +59,8 @@ const ProductsPage = () => {
     },
   ];
 
+  const heroWords = t('products.page.heroTitle').split(' ');
+
   return (
     <Layout>
       <SEO
@@ -70,120 +78,125 @@ const ProductsPage = () => {
           ]),
         ]}
       />
-      {/* Hero — cinematic navy overlay over production video */}
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden -mt-16 md:-mt-20">
-        <div className="absolute inset-0 w-full h-full z-0">
-          <video autoPlay loop muted playsInline poster="/videos/posters/productshero.webp" className="w-full h-full object-cover">
-            <source src="/videos/productshero.mp4" type="video/mp4" />
-          </video>
+      {/* Hero — production film under an ink veil */}
+      <section className="relative -mt-16 flex min-h-[92dvh] items-end overflow-hidden bg-ink md:-mt-20">
+        <div className="absolute inset-0 z-0 h-full w-full">
+          <motion.div
+            className="h-full w-full"
+            initial={reduced ? false : { scale: 1.15 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 2.4, ease: EASE }}
+          >
+            <video autoPlay loop muted playsInline poster="/videos/posters/productshero.webp" className="h-full w-full object-cover">
+              <source src="/videos/productshero.mp4" type="video/mp4" />
+            </video>
+          </motion.div>
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(180deg, hsl(219 56% 9% / 0.82) 0%, hsl(218 52% 12% / 0.68) 45%, hsl(219 58% 7% / 0.9) 100%)',
+                'linear-gradient(180deg, hsl(224 44% 9% / 0.5) 0%, hsl(224 44% 9% / 0.3) 40%, hsl(224 44% 9% / 0.92) 100%)',
             }}
           />
         </div>
 
-        <div className="container-page relative z-10 text-center py-28">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-4xl mx-auto flex flex-col items-center"
-          >
-            <h1 className="text-white text-center mb-0">
-              {t('products.page.heroTitle')}
-            </h1>
-          </motion.div>
+        <div className="container-page relative z-10 pb-16 pt-40 md:pb-20">
+          <h1 className="mb-0 max-w-[14ch] text-[clamp(2.8rem,1.2rem+5.6vw,7.75rem)] leading-[0.95] tracking-[-0.035em] text-paper">
+            {heroWords.map((word, i) => (
+              <Fragment key={i}>
+                <span className="inline-block overflow-hidden pb-[0.12em] pt-[0.08em] -mb-[0.12em] -mt-[0.08em] align-bottom">
+                  <motion.span
+                    className="inline-block"
+                    initial={reduced ? false : { y: '115%' }}
+                    animate={{ y: '0%' }}
+                    transition={{ duration: 1.2, ease: EASE, delay: 0.2 + i * 0.07 }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+                {i < heroWords.length - 1 && ' '}
+              </Fragment>
+            ))}
+          </h1>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 text-white/50">
-          <ChevronsDown className="h-6 w-6 animate-bounce" />
+        <div className="absolute bottom-6 right-6 z-10 hidden items-center gap-3 md:flex lg:right-12">
+          <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-paper/60">Scroll</span>
+          <span className="relative h-10 w-px overflow-hidden bg-paper/20">
+            <span className="absolute inset-0 animate-scroll-line bg-paper" />
+          </span>
         </div>
       </section>
 
       {/* Products — editorial alternating rows */}
-      <section className="section-padding section-depth-2 overflow-hidden">
+      <section className="section-padding main-section overflow-hidden">
         <div className="container-page">
-          <div className="space-y-28 md:space-y-40">
+          <div className="space-y-28 md:space-y-44">
             {products.map((product, index) => {
               const isEven = index % 2 === 0;
 
               return (
                 <div
                   key={product.id}
-                  className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center"
+                  className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16"
                 >
                   {/* Product Image */}
-                  <motion.div
-                    className={!isEven ? 'lg:order-2' : ''}
-                    initial={{ x: isEven ? -80 : 80, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <Link
-                      to={product.linkTo}
-                      className="block rounded-2xl overflow-hidden shadow-elevated group cursor-pointer"
-                    >
-                      <div className="relative aspect-[4/5] sm:aspect-square overflow-hidden bg-muted">
+                  <div className={cn('lg:col-span-6', !isEven && 'lg:order-2 lg:col-start-7')}>
+                    <Link to={product.linkTo} className="group block cursor-pointer">
+                      <RevealMedia className="aspect-[4/5] shadow-elevated sm:aspect-square">
                         <img
                           src={product.image}
                           alt={product.title}
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                          className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out-expo group-hover:scale-[1.05]"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-navy/40 via-transparent to-transparent" />
-                        <div className="absolute inset-0 bg-navy/0 group-hover:bg-navy/25 transition-colors duration-500 flex items-center justify-center">
-                          <div className="opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-4 group-hover:translate-y-0">
-                            <span className="glass-panel text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 text-sm">
-                              {t('products.viewMore')} <ArrowRight className="h-4 w-4" />
-                            </span>
-                          </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
+                        <div className="absolute inset-0 flex items-end justify-end p-6 md:p-8">
+                          <span className="glass-panel flex translate-y-3 items-center gap-2 rounded-full px-5 py-3 text-sm text-ink opacity-0 transition-all duration-700 ease-out-expo group-hover:translate-y-0 group-hover:opacity-100">
+                            {t('products.viewMore')} <ArrowUpRight className="h-4 w-4" strokeWidth={1.5} />
+                          </span>
                         </div>
-                      </div>
+                      </RevealMedia>
                     </Link>
-                  </motion.div>
+                  </div>
 
                   {/* Content */}
-                  <motion.div
-                    className={!isEven ? 'lg:order-1' : ''}
-                    initial={{ x: isEven ? 80 : -80, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    viewport={{ once: true, margin: '-50px' }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <span className="eyebrow mb-4 block">
-                      {language === 'el' ? `0${index + 1} — Προϊόν` : `0${index + 1} — Product`}
-                    </span>
-                    <h2 className="mb-5">
-                      {product.title}
-                    </h2>
-                    <p className="leading-relaxed mb-8 text-muted-foreground text-lg measure">
-                      {product.description}
-                    </p>
+                  <div className={cn('lg:col-span-5', isEven ? 'lg:col-start-8' : 'lg:order-1 lg:col-start-1')}>
+                    <Reveal>
+                      <span className="eyebrow mb-7">
+                        {language === 'el' ? `0${index + 1} — Προϊόν` : `0${index + 1} — Product`}
+                      </span>
+                    </Reveal>
+                    <RevealHeading text={product.title} className="mb-7" />
+                    <Reveal delay={0.12}>
+                      <p className="measure mb-10 text-lg leading-relaxed text-ink/70">
+                        {product.description}
+                      </p>
+                    </Reveal>
 
-                    <div className="mb-10">
-                      <h3 className="eyebrow mb-5 block">
+                    <Reveal delay={0.2} className="mb-11">
+                      <h3 className="mb-5 font-mono text-[11px] uppercase tracking-[0.16em] text-ink/45">
                         {t('products.features')}
                       </h3>
-                      <ul className="grid grid-cols-2 gap-4">
+                      <ul className="grid grid-cols-2 border-t border-ink/10">
                         {product.features.map((feature, i) => (
-                          <li key={i} className="flex items-center gap-3 text-muted-foreground">
-                            <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0" />
-                            <span className="text-sm">{feature}</span>
+                          <li
+                            key={i}
+                            className={cn(
+                              'flex items-center gap-3 border-b border-ink/10 py-4 text-[15px] text-ink/80',
+                              i % 2 === 0 && 'pr-4'
+                            )}
+                          >
+                            <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-brand" />
+                            {feature}
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </Reveal>
 
-                    <Button variant="brand" size="lg" asChild className="group">
-                      <Link to={product.linkTo}>
-                        {t('products.viewMore')}
-                        <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </Button>
-                  </motion.div>
+                    <Reveal delay={0.28}>
+                      <ArrowButton to={product.linkTo}>{t('products.viewMore')}</ArrowButton>
+                    </Reveal>
+                  </div>
                 </div>
               );
             })}
@@ -191,57 +204,26 @@ const ProductsPage = () => {
         </div>
       </section>
 
-      <SpecialCategories tone="dark" />
+      <SpecialCategories />
 
       {/* Who Trusts Us */}
-      <div className="section-depth-3">
+      <div className="main-section">
         <TrustedBySection showTitle={false} />
       </div>
 
       {/* Gallery */}
       <section className="main-section w-full overflow-hidden">
-        <div className="container-page py-20 md:py-28">
-          <AnimatedSection className="text-center flex flex-col items-center mb-14 md:mb-16">
-            <h2 className="mb-0">{language === 'el' ? 'Δείγματα παραγωγής' : 'Production gallery'}</h2>
-          </AnimatedSection>
+        <div className="container-page pb-24 pt-10 md:pb-32">
+          <div className="mb-14 flex flex-col items-center text-center md:mb-20">
+            <RevealHeading text={language === 'el' ? 'Δείγματα παραγωγής' : 'Production gallery'} className="mb-0" />
+          </div>
 
           <ProductionGallery images={galleryImages} />
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-padding section-depth-6 overflow-hidden relative grain-overlay">
-        <div
-          className="pointer-events-none absolute inset-0 opacity-60"
-          style={{
-            background:
-              'radial-gradient(ellipse 60% 50% at 50% 0%, hsl(214 80% 47% / 0.35), transparent 60%)',
-          }}
-          aria-hidden
-        />
-        <div className="container-page relative">
-          <motion.div
-            className="text-center max-w-3xl mx-auto flex flex-col items-center"
-            initial={{ y: 60, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <h2 className="mb-6 max-w-2xl">
-              {t('cta.title')}
-            </h2>
-            <p className="text-lg opacity-70 mb-10 max-w-xl mx-auto">
-              {t('cta.subtitle')}
-            </p>
-            <Button variant="heroOutline" size="xl" asChild className="group">
-              <Link to="/contact#quote">
-                {t('cta.button')}
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-          </motion.div>
-        </div>
-      </section>
+      <CtaPanel leftImage="/product_bags/cashew.webp" rightImage="/product_bags/pink.webp" />
     </Layout>
   );
 };
