@@ -1,8 +1,5 @@
 import { Suspense, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -51,8 +48,6 @@ export const ROUTES = [
   { path: "*", page: NotFound, element: <NotFound /> },
 ];
 
-const queryClient = new QueryClient();
-
 /** Everything except the router, so the server can supply its own. */
 export const AppProviders = ({
   children,
@@ -62,16 +57,11 @@ export const AppProviders = ({
   helmetContext?: object;
 }) => (
   <HelmetProvider context={helmetContext}>
-  <QueryClientProvider client={queryClient}>
-      <CookieConsentProvider>
-      <TooltipProvider>
-        <Analytics />
-        <Toaster />
-        <Sonner />
-        {children}
-      </TooltipProvider>
-      </CookieConsentProvider>
-  </QueryClientProvider>
+    <CookieConsentProvider>
+      <Analytics />
+      <Toaster />
+      {children}
+    </CookieConsentProvider>
   </HelmetProvider>
 );
 

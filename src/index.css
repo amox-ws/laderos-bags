@@ -556,3 +556,15 @@ body::after {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Hero headline entrance — pure CSS so it plays on first paint, before any JS runs. */
+@keyframes hero-rise {
+  from { opacity: var(--rise-opacity, 1); transform: translateY(var(--rise-from)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-rise {
+  animation: hero-rise var(--rise-dur, 1s) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise { animation: none; }
+}
