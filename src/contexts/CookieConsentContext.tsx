@@ -14,13 +14,16 @@ const STORAGE_KEY = 'laderos_cookie_consent';
 const CookieConsentContext = createContext<CookieConsentContextType | undefined>(undefined);
 
 export const CookieConsentProvider = ({ children }: { children: ReactNode }) => {
-  const [consent, setConsent] = useState<ConsentState>(() => {
+  // Always 'pending' on the first render so the client matches the prerendered
+  // HTML; the stored choice is applied right after mount.
+  const [consent, setConsent] = useState<ConsentState>('pending');
+
+  useEffect(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === 'accepted' || stored === 'declined') return stored;
+      if (stored === 'accepted' || stored === 'declined') setConsent(stored);
     } catch {}
-    return 'pending';
-  });
+  }, []);
 
   const acceptCookies = () => {
     setConsent('accepted');

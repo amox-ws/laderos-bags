@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useRef, useState, useMemo } from 'react';
+import { Fragment, useEffect, type CSSProperties, useRef, useState, useMemo } from 'react';
 import SEO from '@/components/SEO';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Layout from '@/components/layout/Layout';
@@ -13,7 +13,6 @@ import CtaPanel from '@/components/CtaPanel';
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { motion, useReducedMotion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,7 +21,6 @@ let animationHasPlayed = false;
 
 const HomePage = () => {
   const { t, language } = useLanguage();
-  const reduced = useReducedMotion();
 
   // Skip animation if it already played in this app session (module lifetime)
   const skipAnimation = useMemo(() => {
@@ -57,10 +55,12 @@ const HomePage = () => {
       '/product_bags/butcher.webp'
     ];
 
-    productImages.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    // Warmed once the film has loaded (see preload below), so they never compete with it.
+    const warmCarousel = () =>
+      productImages.forEach((src) => {
+        const img = new Image();
+        img.src = src;
+      });
     // ---------------------------------------------------
 
     // --- 1) FRAMES SETUP ---
@@ -71,26 +71,42 @@ const HomePage = () => {
     const bag = { frame: 0 };
     let loadedCount = 0;
     let firstFrameReady = false;
+    let cancelled = false;
 
-    const preload = () => {
-      for (let i = 0; i < frameCount; i++) {
-        const img = new Image();
-        img.decoding = 'async';
-        img.loading = 'eager';
-        img.src = frameSrc(i);
-
-        img.onload = () => {
+    // Frame 1 first (it is the poster), then the rest in scroll order, a few at a time.
+    const BATCH = 12;
+    const loadFrame = (i: number, done: () => void) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.onload = img.onerror = () => {
+        if (img.naturalWidth > 0) {
           loadedCount++;
           if (!firstFrameReady && i === 0) {
             firstFrameReady = true;
             resize();
             render(0);
           }
-          if (loadedCount === frameCount) setImagesLoaded(true);
-        };
+          if (loadedCount === frameCount) {
+            setImagesLoaded(true);
+            warmCarousel();
+          }
+        }
+        done();
+      };
+      img.src = frameSrc(i);
+      images[i] = img;
+    };
 
-        images[i] = img;
-      }
+    let next = 1;
+    const pump = () => {
+      if (cancelled || next >= frameCount) return;
+      loadFrame(next++, pump);
+    };
+
+    const preload = () => {
+      loadFrame(0, () => {
+        for (let k = 0; k < BATCH; k++) pump();
+      });
     };
 
     // --- 2) CANVAS RESIZE ---
@@ -206,6 +222,7 @@ const HomePage = () => {
     resize();
 
     return () => {
+      cancelled = true;
       window.removeEventListener('resize', resize);
       tl.kill();
       st?.kill();
@@ -271,27 +288,23 @@ const HomePage = () => {
                 {heroLines.map((line, li) => (
                   <span key={li} className={`block md:max-w-[13ch] ${li === 1 ? 'md:justify-self-end md:text-right' : ''}`}>
                     {li === 0 && (
-                      <motion.span
-                        className="mb-4 block font-mono text-[11px] uppercase tracking-[0.18em] text-paper/60 md:mb-6 md:text-ink/55"
-                        initial={reduced ? false : { opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+                      <span
+                        className="hero-rise mb-4 block font-mono text-[11px] uppercase tracking-[0.18em] text-paper/60 md:mb-6 md:text-ink/55"
+                        style={{ '--rise-from': '12px', '--rise-opacity': 0, '--rise-dur': '1s', animationDelay: '0.2s' } as CSSProperties}
                       >
                         {h1Brand}
-                      </motion.span>
+                      </span>
                     )}
                     {li === 0 && ' '}
                     {line.map((word, i) => (
                       <Fragment key={i}>
                         <span className="inline-block overflow-hidden pb-[0.14em] pt-[0.1em] -mb-[0.14em] -mt-[0.1em] align-bottom">
-                          <motion.span
-                            className={`inline-block ${word === '&' ? 'amp' : ''}`}
-                            initial={reduced ? false : { y: '115%' }}
-                            animate={{ y: '0%' }}
-                            transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.35 + (li * 4 + i) * 0.05 }}
+                          <span
+                            className={`hero-rise inline-block ${word === '&' ? 'amp' : ''}`}
+                            style={{ '--rise-from': '115%', '--rise-dur': '1.1s', animationDelay: `${0.35 + (li * 4 + i) * 0.05}s` } as CSSProperties}
                           >
                             {word}
-                          </motion.span>
+                          </span>
                         </span>
                         {(i < line.length - 1 || li === 0) && ' '}
                       </Fragment>
