@@ -104,8 +104,16 @@ const HomePage = () => {
     };
 
     const preload = () => {
-      loadFrame(0, () => {
+      // The rest of the film waits until the page itself has finished loading,
+      // so 140 frames never compete with the headline and first screen.
+      const startRest = () => {
+        if (cancelled) return;
         for (let k = 0; k < BATCH; k++) pump();
+      };
+      const afterLoad = () => ('requestIdleCallback' in window ? window.requestIdleCallback(startRest, { timeout: 1500 }) : setTimeout(startRest, 500));
+      loadFrame(0, () => {
+        if (document.readyState === 'complete') afterLoad();
+        else window.addEventListener('load', afterLoad, { once: true });
       });
     };
 
@@ -290,7 +298,7 @@ const HomePage = () => {
                     {li === 0 && (
                       <span
                         className="hero-rise mb-4 block font-mono text-[11px] uppercase tracking-[0.18em] text-paper/60 md:mb-6 md:text-ink/55"
-                        style={{ '--rise-from': '12px', '--rise-opacity': 0, '--rise-dur': '1s', animationDelay: '0.2s' } as CSSProperties}
+                        style={{ '--rise-from': '12px', '--rise-opacity': 0, '--rise-dur': '1s', animationDelay: '0.05s' } as CSSProperties}
                       >
                         {h1Brand}
                       </span>
@@ -301,7 +309,7 @@ const HomePage = () => {
                         <span className="inline-block overflow-hidden pb-[0.14em] pt-[0.1em] -mb-[0.14em] -mt-[0.1em] align-bottom">
                           <span
                             className={`hero-rise inline-block ${word === '&' ? 'amp' : ''}`}
-                            style={{ '--rise-from': '115%', '--rise-dur': '1.1s', animationDelay: `${0.35 + (li * 4 + i) * 0.05}s` } as CSSProperties}
+                            style={{ '--rise-from': '115%', '--rise-dur': '0.9s', animationDelay: `${0.1 + (li * 4 + i) * 0.03}s` } as CSSProperties}
                           >
                             {word}
                           </span>
