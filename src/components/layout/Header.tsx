@@ -122,7 +122,7 @@ const Header = () => {
       to={href}
       onMouseEnter={() => setHovered(href)}
       className={cn(
-        'relative z-10 flex h-10 items-center rounded-full px-4 text-[14px] transition-colors duration-300',
+        'relative z-10 flex h-10 items-center whitespace-nowrap rounded-full px-3 text-[14px] transition-colors duration-300 lg:px-4',
         active ? 'text-ink' : 'text-ink/60 hover:text-ink'
       )}
     >
@@ -194,7 +194,7 @@ const Header = () => {
                   <Link
                     to="/products"
                     className={cn(
-                      'relative z-10 flex h-10 items-center pl-4 pr-1 text-[14px] transition-colors duration-300',
+                      'relative z-10 flex h-10 items-center whitespace-nowrap pl-3 pr-1 text-[14px] transition-colors duration-300 lg:pl-4',
                       isProductsActive ? 'text-ink' : 'text-ink/60 hover:text-ink'
                     )}
                   >
@@ -327,7 +327,7 @@ const Header = () => {
 
               <Link
                 to="/contact#quote"
-                className="group hidden h-11 items-center gap-3 rounded-full bg-ink pl-5 pr-1.5 text-[14px] text-paper transition-colors duration-500 ease-out-expo hover:bg-brand lg:inline-flex"
+                className="group hidden h-11 items-center gap-3 rounded-full bg-ink pl-5 pr-1.5 text-[14px] text-paper transition-colors duration-500 ease-out-expo hover:bg-brand xl:inline-flex"
               >
                 {quoteLabel}
                 <span className="flex h-8 w-8 items-center justify-center rounded-full bg-paper text-ink">

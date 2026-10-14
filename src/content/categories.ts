@@ -282,12 +282,8 @@ export const PAIDIKA: CategoryContent = {
   ],
   altPrefix: { el: 'Χάρτινη σακούλα για παιδικά', en: 'Paper bag for kids store' },
   images: [
-    '/paper_product/paidika/sakoula-kid-club.webp',
     '/paper_product/paidika/sakoula-kid-club-4.webp',
-    '/paper_product/paidika/sakoula-oneiropagida.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-4.webp',
     '/paper_product/paidika/sakoula-oneiropagida-6.webp',
-    '/paper_product/paidika/sakoula-oneiropagida-7.webp',
     '/paper_product/paidika/sakoula-capolino.webp',
     '/paper_product/paidika/sakoula-lilipoupoli-3.webp',
     '/paper_product/paidika/sakoula-sash-club.webp',
@@ -304,7 +300,6 @@ export const PAIDIKA: CategoryContent = {
     '/paper_product/paidika/sakoula-sole-kids-footwear.webp',
     '/paper_product/paidika/sakoula-this-is-my-smile.webp',
     '/paper_product/paidika/sakoula-babys-smile.webp',
-    '/paper_product/paidika/sakoula-lina-liri.webp',
     '/paper_product/paidika/sakoula-margerita.webp',
     '/paper_product/paidika/sakoula-mia-fora-ki-enan-kairo.webp',
     '/paper_product/paidika/sakoula-skertso-kids-fashion-2.webp',
@@ -576,6 +571,7 @@ export const GYNAIKEIA: CategoryContent = {
     '/paper_product/woman/sakoula-andrei.webp',
     '/paper_product/woman/sakoula-kostis-shop.webp',
     '/paper_product/woman/sakoula-ola-se-1.webp',
+    '/paper_product/woman/sakoula-lina-liri.webp',
   ],
   altPrefix: { el: 'Χάρτινη σακούλα για γυναικείο κατάστημα', en: 'Paper bag for womenswear store' },
 };
