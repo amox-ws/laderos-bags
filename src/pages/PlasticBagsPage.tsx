@@ -30,12 +30,9 @@ const PlasticBagsPage = () => {
 
   const plasticBagImages = [
     '/plastic_product/sporthero.webp',
-    '/plastic_product/annette.webp',
-    '/plastic_product/beauty.webp',
     '/plastic_product/butchery.webp',
     '/plastic_product/casba.webp',
     '/plastic_product/navy_green.webp',
-    '/plastic_product/oasis.webp',
     '/plastic_product/proton.webp',
     '/plastic_product/sport_jean.webp',
   ];
@@ -57,7 +54,7 @@ const PlasticBagsPage = () => {
         backLabel={t('plasticBags.backToProducts')}
         title={t('plasticBags.title')}
         subtitle={t('plasticBags.subtitle')}
-        strip={[...plasticBagImages, '/product_bags/black_pink.webp', '/product_bags/ygeia.webp', '/product_bags/oasisbnb.webp']}
+        strip={[...plasticBagImages, '/product_bags/black_pink.webp', '/product_bags/ygeia.webp']}
       />
 
       {/* Main Content */}
@@ -83,24 +80,16 @@ const PlasticBagsPage = () => {
             <div className="w-full lg:w-[60%] xl:w-[64%]">
               <Reveal y={50}>
                 <div className="flex flex-col gap-4">
-                  <div className="w-full">
-                    <GalleryImage src={plasticBagImages[0]} index={0} className="w-full aspect-[16/9]" scale={1.5} />
+                  <GalleryImage src={plasticBagImages[0]} index={0} className="w-full aspect-[16/9]" scale={1.5} />
+                  <div className="grid grid-cols-2 gap-4">
+                    {plasticBagImages.slice(1, 3).map((src, i) => (
+                      <GalleryImage key={src} src={src} index={i + 1} className="aspect-[3/4]" />
+                    ))}
                   </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[1]} index={1} className="w-[55%] aspect-[3/4]" />
-                    <GalleryImage src={plasticBagImages[2]} index={2} className="w-[45%] aspect-square" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[3]} index={3} className="w-[45%] aspect-[4/5]" />
-                    <GalleryImage src={plasticBagImages[4]} index={4} className="w-[55%] aspect-[3/4]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[5]} index={5} className="w-[45%] aspect-[4/5]" />
-                    <GalleryImage src={plasticBagImages[6]} index={6} className="w-[55%] aspect-[4/5]" />
-                  </div>
-                  <div className="flex gap-4">
-                    <GalleryImage src={plasticBagImages[7]} index={7} className="w-[52%] aspect-[3/4]" />
-                    <GalleryImage src={plasticBagImages[8]} index={8} className="w-[48%] aspect-[4/5]" />
+                  <div className="grid grid-cols-3 gap-4">
+                    {plasticBagImages.slice(3).map((src, i) => (
+                      <GalleryImage key={src} src={src} index={i + 3} className="aspect-[3/4]" />
+                    ))}
                   </div>
                 </div>
               </Reveal>

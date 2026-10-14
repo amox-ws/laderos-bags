@@ -26,8 +26,6 @@ const galleryImages = [
   '/gallery/gallery3.webp',
   '/gallery/gallery4.webp',
   '/gallery/gallery2.webp',
-  '/gallery/gallery6.webp',
-  '/gallery/gallery7.webp',
   '/gallery/gallery5.webp',
   '/gallery/gallery1.webp',
 ];
