@@ -3,32 +3,19 @@ import SEO from '@/components/SEO';
 import { makeBreadcrumbLd } from '@/lib/seo';
 import { useLanguage } from '@/contexts/LanguageContext';
 import Layout from '@/components/layout/Layout';
-import { Reveal } from '@/components/ui/Reveal';
 import { Applications, ProductHero, ProductIntro, QuoteStage } from '@/components/products/ProductPageParts';
 import QuoteRequestForm from '@/components/forms/QuoteRequestForm';
 import { SpecialCategoriesTeaser } from '@/components/products/SpecialCategories';
+import PlasticGallery, { PlasticCategoryNav } from '@/components/products/PlasticGallery';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { scrollToId } from '@/lib/scrollToTarget';
-
-const GalleryImage = ({ src, className = '', index, scale = 1 }: { src: string; className?: string; index: number; scale?: number }) => (
-  <div className={`group relative overflow-hidden rounded-media bg-paper-deep shadow-card transition-shadow duration-700 ease-out-expo hover:shadow-card-hover ${className}`}>
-    <div className="h-full w-full overflow-hidden transition-transform duration-[1.2s] ease-out-expo group-hover:scale-[1.04]">
-      <img
-        src={src}
-        alt={`Plastic Bag Application ${index + 1}`}
-        style={{ transform: `scale(${scale})` }}
-        className="h-full w-full origin-center object-cover"
-        loading="lazy"
-      />
-    </div>
-  </div>
-);
 
 const PlasticBagsPage = () => {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
 
-  const plasticBagImages = [
+  /** Styled photos for the film-strip at the top of the page. */
+  const stripImages = [
     '/plastic_product/sporthero.webp',
     '/plastic_product/butchery.webp',
     '/plastic_product/casba.webp',
@@ -54,7 +41,8 @@ const PlasticBagsPage = () => {
         backLabel={t('plasticBags.backToProducts')}
         title={t('plasticBags.title')}
         subtitle={t('plasticBags.subtitle')}
-        strip={[...plasticBagImages, '/product_bags/black_pink.webp', '/product_bags/ygeia.webp']}
+        strip={[...stripImages, '/product_bags/black_pink.webp', '/product_bags/ygeia.webp']}
+        nav={<PlasticCategoryNav />}
       />
 
       {/* Main Content */}
@@ -78,21 +66,8 @@ const PlasticBagsPage = () => {
 
             {/* Right Column - Gallery */}
             <div className="w-full lg:w-[60%] xl:w-[64%]">
-              <Reveal y={50}>
-                <div className="flex flex-col gap-4">
-                  <GalleryImage src={plasticBagImages[0]} index={0} className="w-full aspect-[16/9]" scale={1.5} />
-                  <div className="grid grid-cols-2 gap-4">
-                    {plasticBagImages.slice(1, 3).map((src, i) => (
-                      <GalleryImage key={src} src={src} index={i + 1} className="aspect-[3/4]" />
-                    ))}
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    {plasticBagImages.slice(3).map((src, i) => (
-                      <GalleryImage key={src} src={src} index={i + 3} className="aspect-[3/4]" />
-                    ))}
-                  </div>
-                </div>
-              </Reveal>
+              {/* Every photo, grouped by bag type; the hero navigation jumps here */}
+              <PlasticGallery />
 
               {/* Ειδικές κατηγορίες — πλήρεις συλλογές σε δικές τους σελίδες */}
               <SpecialCategoriesTeaser className="mt-24" />

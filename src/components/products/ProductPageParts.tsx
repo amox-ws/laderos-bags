@@ -27,11 +27,14 @@ export const ProductHero = ({
   title,
   subtitle,
   strip,
+  nav,
 }: {
   backLabel: string;
   title: string;
   subtitle: string;
   strip: string[];
+  /** Optional row under the title, e.g. quick links to the page's categories. */
+  nav?: ReactNode;
 }) => {
   const reduced = useReducedMotion();
   return (
@@ -56,6 +59,12 @@ export const ProductHero = ({
             <p className="text-lg leading-relaxed text-ink/70 md:text-xl">{subtitle}</p>
           </Reveal>
         </div>
+
+        {nav && (
+          <Reveal delay={0.3} className="mt-10 md:mt-12">
+            {nav}
+          </Reveal>
+        )}
       </div>
 
       {/* Film-strip of finished bags */}
