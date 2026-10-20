@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from '@/components/LocalizedLink';
 import SEO from '@/components/SEO';
 import { makeBreadcrumbLd, makeItemListLd } from '@/lib/seo';
@@ -11,6 +12,27 @@ import { brandFromSrc } from '@/lib/text';
 import { OPTIKA, PAIDIKA, ANDRIKA, GYNAIKEIA, OIKOLOGIKA } from '@/content/categories';
 import { SpecialCategoriesTeaser } from '@/components/products/SpecialCategories';
 import { scrollToId } from '@/lib/scrollToTarget';
+
+/** 1 column on phones, 2 from 640px, 3 from 1280px — tracks the window. */
+const useColumnCount = () => {
+  const read = () =>
+    typeof window === 'undefined'
+      ? 3
+      : window.matchMedia('(min-width: 1280px)').matches
+        ? 3
+        : window.matchMedia('(min-width: 640px)').matches
+          ? 2
+          : 1;
+  const [count, setCount] = useState(read);
+  useEffect(() => {
+    const queries = ['(min-width: 640px)', '(min-width: 1280px)'].map((q) => window.matchMedia(q));
+    const update = () => setCount(read());
+    queries.forEach((mq) => mq.addEventListener('change', update));
+    update();
+    return () => queries.forEach((mq) => mq.removeEventListener('change', update));
+  }, []);
+  return count;
+};
 
 const GalleryImage = ({
   src,
@@ -38,9 +60,15 @@ const GalleryImage = ({
 const PaperBagsPage = () => {
   const { t, language } = useLanguage();
   const isMobile = useIsMobile();
+  const columnCount = useColumnCount();
 
   const paperBagImages = [
     '/paper_product/navygreen.webp',
+    '/paper_product/benetto.webp',
+    '/paper_product/bsb.webp',
+    '/paper_product/asteras_tripolis.webp',
+    '/paper_product/loipa/sakoula-georgios-galifianakis.webp',
+    '/paper_product/sagiakos.webp',
     '/paper_product/loipa/sakoula-studio-ioannidis.webp',
     '/paper_product/loipa/sakoula-cashew.webp',
     '/paper_product/kostis.webp',
@@ -54,7 +82,6 @@ const PaperBagsPage = () => {
     '/paper_product/loipa/sakoula-le-shop.webp',
     '/paper_product/loipa/sakoula-endeavor-lines.webp',
     '/paper_product/morris.webp',
-    '/paper_product/asteras_tripolis.webp',
     '/paper_product/loipa/sakoula-oida-vivliopoleio-2.webp',
     '/paper_product/loipa/sakoula-posto.webp',
     '/paper_product/loipa/sakoula-yournuts.webp',
@@ -64,20 +91,16 @@ const PaperBagsPage = () => {
     '/paper_product/navy_green.webp',
     '/paper_product/loipa/sakoula-seneca-medical-group.webp',
     '/paper_product/loipa/sakoula-ladybird-deco.webp',
-    '/paper_product/benetto.webp',
     '/paper_product/loipa/sakoula-afoi-iosifidi.webp',
     '/paper_product/di_mondo.webp',
     '/paper_product/wine.webp',
     '/paper_product/loipa/sakoula-le-shop-3.webp',
-    '/paper_product/loipa/sakoula-georgios-galifianakis.webp',
     '/paper_product/dionisos.webp',
-    '/paper_product/sagiakos.webp',
     '/paper_product/loipa/sakoula-seneca-2.webp',
     '/paper_product/loipa/sakoula-le-shop-2.webp',
     '/paper_product/anastasia.webp',
     '/paper_product/loipa/sakoula-atmoulis.webp',
     '/paper_product/loipa/sakoula-boxbox.webp',
-    '/paper_product/bsb.webp',
   ];
 
   const features = [
@@ -149,11 +172,19 @@ const PaperBagsPage = () => {
 
             {/* Right Column - Gallery */}
             <div className="w-full lg:w-[60%] xl:w-[64%]">
-              <div className="columns-1 gap-4 sm:columns-2 xl:columns-3 [column-fill:balance]">
-                {paperBagImages.map((src, i) => (
-                  <Reveal key={src} delay={(i % 3) * 0.06} y={40} className="mb-4 break-inside-avoid">
-                    <GalleryImage src={src} />
-                  </Reveal>
+              {/* Photos are dealt across the columns in turn, so the gallery reads
+                  left to right (1-2-3 on the first row) while each keeps its own shape */}
+              <div className="flex gap-4">
+                {Array.from({ length: columnCount }, (_, c) =>
+                  paperBagImages.filter((_, i) => i % columnCount === c)
+                ).map((column, c) => (
+                  <div key={c} className="flex min-w-0 flex-1 flex-col gap-4">
+                    {column.map((src) => (
+                      <Reveal key={src} delay={c * 0.06} y={40}>
+                        <GalleryImage src={src} />
+                      </Reveal>
+                    ))}
+                  </div>
                 ))}
               </div>
 
