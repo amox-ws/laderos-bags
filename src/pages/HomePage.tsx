@@ -371,7 +371,13 @@ const HomePage = () => {
 
         <ShowcaseCarouselSection />
 
-        <AnimatedStatsSection />
+        <AnimatedStatsSection
+          video={{
+            src: '/videos/apothiki-video.mp4',
+            poster: '/videos/posters/apothiki-video.webp',
+            label: language === 'el' ? 'Η αποθήκη της Laderos Bags' : 'The Laderos Bags warehouse',
+          }}
+        />
 
         <WhereToFindUsSection />
 

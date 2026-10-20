@@ -40,6 +40,7 @@ const PaperBagsPage = () => {
   const isMobile = useIsMobile();
 
   const paperBagImages = [
+    '/paper_product/navygreen.webp',
     '/paper_product/loipa/sakoula-studio-ioannidis.webp',
     '/paper_product/loipa/sakoula-cashew.webp',
     '/paper_product/kostis.webp',
@@ -59,7 +60,6 @@ const PaperBagsPage = () => {
     '/paper_product/loipa/sakoula-yournuts.webp',
     '/paper_product/mts.webp',
     '/paper_product/loipa/sakoula-ygeia-diagnostika-kentra.webp',
-    '/paper_product/loipa/sakoula-seneca.webp',
     '/paper_product/loipa/sakoula-mole.webp',
     '/paper_product/navy_green.webp',
     '/paper_product/loipa/sakoula-seneca-medical-group.webp',
@@ -115,7 +115,7 @@ const PaperBagsPage = () => {
         title={t('paperBags.title')}
         subtitle={t('paperBags.subtitle')}
         strip={[
-          '/paper_product/navy_green.webp',
+          '/paper_product/navygreen.webp',
           '/paper_product/kostis.webp',
           '/paper_product/illusions.webp',
           '/paper_product/morris.webp',

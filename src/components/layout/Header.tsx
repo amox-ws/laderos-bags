@@ -14,7 +14,7 @@ const EASE = [0.16, 1, 0.3, 1] as const;
 
 /** Preview photo shown in the products menu for each category. */
 const PREVIEW: Record<string, string> = {
-  '/products/paper-bags': '/paper_product/paper_thumbnail.webp',
+  '/products/paper-bags': '/paper_product/navygreen.webp',
   '/products/plastic-bags': '/laderosfoto14-10_studio_smooth_webp/navygreen-plastiki-xirolavi.webp',
   '/products/optika': '/product_bags/optolux.webp',
   '/products/paidika': '/product_bags/capolino.webp',

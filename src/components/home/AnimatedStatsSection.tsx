@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useInView, motion } from 'framer-motion';
-import { RevealHeading } from '@/components/ui/Reveal';
+import { Reveal, RevealHeading } from '@/components/ui/Reveal';
+import LazyVideo from '@/components/ui/LazyVideo';
 
 interface StatItemProps {
   endValue: number;
@@ -67,7 +68,12 @@ const StatItem = ({ endValue, suffix, label, isInView, duration = 2000, index }:
   );
 };
 
-const AnimatedStatsSection = () => {
+interface AnimatedStatsSectionProps {
+  /** Optional upright film shown beside the figures (home page). */
+  video?: { src: string; poster: string; label: string };
+}
+
+const AnimatedStatsSection = ({ video }: AnimatedStatsSectionProps = {}) => {
   const { t, language } = useLanguage();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-150px' });
@@ -92,25 +98,44 @@ const AnimatedStatsSection = () => {
       />
 
       <div className="container-page relative z-[2]">
-        <div className="mb-16 md:mb-24">
-          <RevealHeading
-            text={language === 'el' ? 'Συνέπεια που μετριέται σε χρόνια' : 'Consistency measured in years'}
-            className="max-w-[16ch] text-[clamp(2.4rem,1.4rem+3.6vw,5.5rem)] tracking-[-0.03em] text-white"
-          />
-        </div>
+        <div className={video ? 'grid gap-16 lg:grid-cols-12 lg:items-center lg:gap-12' : ''}>
+          <div className={video ? 'lg:col-span-7' : ''}>
+            <div className="mb-16 md:mb-24">
+              <RevealHeading
+                text={language === 'el' ? 'Συνέπεια που μετριέται σε χρόνια' : 'Consistency measured in years'}
+                className="max-w-[16ch] text-[clamp(2.4rem,1.4rem+3.6vw,5.5rem)] tracking-[-0.03em] text-white"
+              />
+            </div>
 
-        <div className="grid grid-cols-2 gap-x-6 gap-y-14 md:gap-x-10 lg:grid-cols-4">
-          {stats.map((stat, index) => (
-            <StatItem
-              key={index}
-              index={index}
-              endValue={stat.endValue}
-              suffix={stat.suffix}
-              label={t(stat.labelKey)}
-              isInView={isInView}
-              duration={2000 + index * 200}
-            />
-          ))}
+            <div className={`grid grid-cols-2 gap-x-6 gap-y-14 md:gap-x-10 ${video ? '' : 'lg:grid-cols-4'}`}>
+              {stats.map((stat, index) => (
+                <StatItem
+                  key={index}
+                  index={index}
+                  endValue={stat.endValue}
+                  suffix={stat.suffix}
+                  label={t(stat.labelKey)}
+                  isInView={isInView}
+                  duration={2000 + index * 200}
+                />
+              ))}
+            </div>
+          </div>
+
+          {video && (
+            <Reveal delay={0.15} y={60} className="lg:col-span-4 lg:col-start-9">
+              {/* Plain frame (no clip/scale reveal) — upright clips can stop painting inside an animated clip */}
+              <div className="media-frame aspect-[4/5] bg-ink/30 shadow-[0_50px_90px_-40px_hsl(224_60%_10%/0.9)] ring-1 ring-white/15 lg:aspect-[9/16]">
+                <img src={video.poster} alt="" aria-hidden className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+                <LazyVideo
+                  src={video.src}
+                  poster={video.poster}
+                  aria-label={video.label}
+                  className="relative h-full w-full object-cover"
+                />
+              </div>
+            </Reveal>
+          )}
         </div>
       </div>
     </section>
