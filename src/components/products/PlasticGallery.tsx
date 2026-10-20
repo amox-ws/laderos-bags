@@ -65,12 +65,11 @@ const PLASTIC_GROUPS: PlasticGroup[] = [
     id: 'fakeloi',
     label: { el: 'Φάκελοι', en: 'Mailer bags' },
     photos: [
-      { src: STUDIO + 'navygreen-fakelos.webp', brand: 'Navy & Green' },
+      { src: '/plastic_product/navy_green.webp', brand: 'Navy & Green' },
       { src: STUDIO + '3guys-fakelos.webp', brand: '3Guys' },
       { src: STUDIO + 'dur-fakelos.webp', brand: 'Dur' },
       { src: STUDIO + 'loveshoes-fakelos.webp', brand: 'Love Shoes' },
       { src: STUDIO + 'migato-fakelos.webp', brand: 'Migato' },
-      { src: '/plastic_product/navy_green.webp', brand: 'Navy & Green' },
     ],
   },
 ];

@@ -49,9 +49,9 @@ const HomePage = () => {
       '/product_bags/pink.webp',
       '/product_bags/redbull.webp',
       '/product_bags/cashew.webp',
+      '/laderosfoto14-10_studio_smooth_webp/navygreen-plastiki-xirolavi.webp',
       '/product_bags/black_pink.webp',
       '/product_bags/ygeia.webp',
-      '/product_bags/oasisbnb.webp',
       '/product_bags/butcher.webp'
     ];
 

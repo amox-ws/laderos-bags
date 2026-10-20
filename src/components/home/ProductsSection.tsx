@@ -39,9 +39,9 @@ const ProductsSection = () => {
       title: t('products.plastic.title'),
       linkTo: '/products/plastic-bags',
       images: [
+        '/laderosfoto14-10_studio_smooth_webp/navygreen-plastiki-xirolavi.webp',
         '/product_bags/black_pink.webp',
         '/product_bags/ygeia.webp',
-        '/product_bags/oasisbnb.webp',
         '/product_bags/butcher.webp',
       ],
     },

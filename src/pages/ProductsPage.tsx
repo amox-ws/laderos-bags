@@ -16,7 +16,7 @@ import { Reveal, RevealHeading, RevealMedia } from '@/components/ui/Reveal';
 import { cn } from '@/lib/utils';
 
 const paperThumbnail = '/paper_product/paper_thumbnail.webp';
-const plasticThumbnail = '/plastic_product/plastic_thumbnail.webp';
+const plasticThumbnail = '/laderosfoto14-10_studio_smooth_webp/navygreen-plastiki-xirolavi.webp';
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
