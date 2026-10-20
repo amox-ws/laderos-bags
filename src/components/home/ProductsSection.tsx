@@ -40,9 +40,9 @@ const ProductsSection = () => {
       linkTo: '/products/plastic-bags',
       images: [
         '/laderosfoto14-10_studio_smooth_webp/navygreen-plastiki-xirolavi.webp',
-        '/product_bags/black_pink.webp',
-        '/product_bags/ygeia.webp',
-        '/product_bags/butcher.webp',
+        '/laderosfoto14-10_studio_smooth_webp/underarmour-xoufta.webp',
+        '/laderosfoto14-10_studio_smooth_webp/alphabank-plastiki-xirolavi.webp',
+        '/laderosfoto14-10_studio_smooth_webp/migato-fakelos.webp',
       ],
     },
     {
