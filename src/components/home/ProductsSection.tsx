@@ -4,8 +4,8 @@ import ProductCarousel from './ProductCarousel';
 import { Reveal, RevealHeading } from '@/components/ui/Reveal';
 
 /**
- * Bento layout on a 12-column grid: the two core ranges lead large, the
- * five special categories follow in a row of three and a row of two.
+ * Bento layout on a 12-column grid: the two core ranges lead large, then
+ * two rows of three — the five special categories and tissue paper.
  */
 const LAYOUT = [
   { span: 'lg:col-span-7', frame: 'aspect-[4/3] lg:aspect-auto lg:h-[clamp(24rem,40vw,40rem)]' },
@@ -13,8 +13,9 @@ const LAYOUT = [
   { span: 'lg:col-span-4', frame: 'aspect-[4/3] lg:aspect-[4/5]' },
   { span: 'lg:col-span-4', frame: 'aspect-[4/3] lg:aspect-[4/5]' },
   { span: 'lg:col-span-4', frame: 'aspect-[4/3] lg:aspect-[4/5]' },
-  { span: 'lg:col-span-6', frame: 'aspect-[4/3] lg:aspect-[16/11]' },
-  { span: 'lg:col-span-6', frame: 'aspect-[4/3] lg:aspect-[16/11]' },
+  { span: 'lg:col-span-4', frame: 'aspect-[4/3] lg:aspect-[4/5]' },
+  { span: 'lg:col-span-4', frame: 'aspect-[4/3] lg:aspect-[4/5]' },
+  { span: 'lg:col-span-4', frame: 'aspect-[4/3] lg:aspect-[4/5]' },
 ];
 
 const ProductsSection = () => {
@@ -90,6 +91,13 @@ const ProductsSection = () => {
         '/paper_product/oikologika/sakoula-ikorganic.webp',
         '/paper_product/oikologika/sakoula-privee-lingerie.webp',
       ],
+    },
+    {
+      key: 'peritiligmata',
+      title: language === 'el' ? 'Περιτυλίγματα' : 'Tissue Paper',
+      linkTo: '/products/peritiligmata',
+      // one still photo — a single image shows without the carousel controls
+      images: ['/peritiligma/mix-peritiligmata.webp'],
     },
   ];
 

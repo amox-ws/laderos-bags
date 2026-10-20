@@ -20,6 +20,7 @@ const ProductsPage = lazyPage(() => import("./pages/ProductsPage"));
 const PaperBagsPage = lazyPage(() => import("./pages/PaperBagsPage"));
 const PlasticBagsPage = lazyPage(() => import("./pages/PlasticBagsPage"));
 const CategoryPage = lazyPage(() => import("./pages/CategoryPage"));
+const WrappingPaperPage = lazyPage(() => import("./pages/WrappingPaperPage"));
 const ContactPage = lazyPage(() => import("./pages/ContactPage"));
 const PrivacyPolicyPage = lazyPage(() => import("./pages/PrivacyPolicyPage"));
 const NotFound = lazyPage(() => import("./pages/NotFound"));
@@ -36,6 +37,7 @@ const BASE_ROUTES = [
   { path: "/products/andrika", page: CategoryPage, element: <CategoryPage content={ANDRIKA} /> },
   { path: "/products/gynaikeia", page: CategoryPage, element: <CategoryPage content={GYNAIKEIA} /> },
   { path: "/products/oikologika", page: CategoryPage, element: <CategoryPage content={OIKOLOGIKA} /> },
+  { path: "/products/peritiligmata", page: WrappingPaperPage, element: <WrappingPaperPage /> },
   { path: "/contact", page: ContactPage, element: <ContactPage /> },
   { path: "/privacy-policy", page: PrivacyPolicyPage, element: <PrivacyPolicyPage /> },
   // Add new pages here (Greek path) — the /en version is created automatically below.

@@ -65,6 +65,7 @@ const NAV_LABEL = {
   '/products/andrika': 'Σακούλες για Ανδρικά',
   '/products/gynaikeia': 'Σακούλες για Γυναικεία',
   '/products/oikologika': 'Οικολογικές Σακούλες',
+  '/products/peritiligmata': 'Περιτυλίγματα',
   '/contact': 'Επικοινωνία',
   '/privacy-policy': 'Πολιτική Απορρήτου',
 };
@@ -81,6 +82,7 @@ const NAV_LABEL_EN = {
   '/products/andrika': 'Bags for Menswear Stores',
   '/products/gynaikeia': 'Bags for Womenswear Stores',
   '/products/oikologika': 'Eco-Friendly Paper Bags',
+  '/products/peritiligmata': 'Tissue Paper',
   '/contact': 'Contact',
   '/privacy-policy': 'Privacy Policy',
 };
@@ -176,6 +178,7 @@ const PAGE_SRC = {
   '/products/andrika': 'src/pages/CategoryPage.tsx',
   '/products/gynaikeia': 'src/pages/CategoryPage.tsx',
   '/products/oikologika': 'src/pages/CategoryPage.tsx',
+  '/products/peritiligmata': 'src/pages/WrappingPaperPage.tsx',
   '/contact': 'src/pages/ContactPage.tsx',
   '/privacy-policy': 'src/pages/PrivacyPolicyPage.tsx',
   '/404': 'src/pages/NotFound.tsx',

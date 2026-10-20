@@ -21,6 +21,7 @@ const PREVIEW: Record<string, string> = {
   '/products/andrika': '/paper_product/andrika/sakoula-kingsman.webp',
   '/products/gynaikeia': '/paper_product/woman/sakoula-annas-secret.webp',
   '/products/oikologika': '/paper_product/oikologika/sakoula-ikorganic.webp',
+  '/products/peritiligmata': '/peritiligma/mix-peritiligmata.webp',
 };
 
 const Header = () => {
@@ -49,6 +50,7 @@ const Header = () => {
     { href: '/products/andrika', label: language === 'el' ? 'Ανδρικά' : 'Menswear' },
     { href: '/products/gynaikeia', label: language === 'el' ? 'Γυναικεία' : 'Womenswear' },
     { href: '/products/oikologika', label: language === 'el' ? 'Οικολογικά' : 'Eco-Friendly' },
+    { href: '/products/peritiligmata', label: language === 'el' ? 'Περιτυλίγματα' : 'Tissue Paper' },
   ];
 
   const quoteLabel = language === 'el' ? 'Ζητήστε προσφορά' : 'Request a quote';

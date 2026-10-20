@@ -146,6 +146,17 @@ export const PAGE_SEO: Record<string, PageSeo> = {
     },
     path: '/products/oikologika',
   },
+  '/products/peritiligmata': {
+    title: {
+      el: 'Περιτυλίγματα με Εκτύπωση Λογοτύπου | Laderos Bags',
+      en: 'Custom Printed Tissue Paper | Laderos Bags',
+    },
+    description: {
+      el: 'Χαρτί περιτυλίγματος με εκτύπωση λογοτύπου για καταστήματα και brands. Δείτε δείγματα από περιτυλίγματα που έχουμε κατασκευάσει.',
+      en: 'Tissue wrapping paper printed with your logo for stores and brands. See samples of the tissue paper we have produced.',
+    },
+    path: '/products/peritiligmata',
+  },
   '/products/paidika': {
     title: {
       el: 'Σακούλες για Παιδικά Καταστήματα με Εκτύπωση | Laderos Bags',

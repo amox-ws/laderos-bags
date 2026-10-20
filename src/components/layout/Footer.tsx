@@ -34,6 +34,7 @@ const Footer = () => {
     { href: '/products/andrika', label: language === 'el' ? 'Ανδρικά' : 'Menswear' },
     { href: '/products/gynaikeia', label: language === 'el' ? 'Γυναικεία' : 'Womenswear' },
     { href: '/products/oikologika', label: language === 'el' ? 'Οικολογικά' : 'Eco-Friendly' },
+    { href: '/products/peritiligmata', label: language === 'el' ? 'Περιτυλίγματα' : 'Tissue Paper' },
     { href: '/contact', label: t('nav.contact') },
   ];
 
