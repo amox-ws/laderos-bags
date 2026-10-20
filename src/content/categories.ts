@@ -424,6 +424,7 @@ export const ANDRIKA: CategoryContent = {
     },
   ],
   images: [
+    '/paper_product/navygreen.webp',
     '/paper_product/andrika/sakoula-guy-laroche.webp',
     '/paper_product/andrika/sakoula-lacoste.webp',
     '/paper_product/andrika/sakoula-the-bostonians.webp',
