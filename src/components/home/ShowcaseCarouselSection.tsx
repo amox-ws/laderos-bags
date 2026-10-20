@@ -7,7 +7,7 @@ import CategoryCarousel from '@/components/ui/CategoryCarousel';
  * whole section. Every photo is real work for a named client.
  */
 const SHOWCASE_BAGS = [
-  '/paper_product/asteras_tripolis.webp',
+  '/paper_product/loipa/sakoula-asteras-tripolis.webp',
   '/product_bags/navycarusel.webp',
   '/paper_product/andrika/sakoula-lacoste.webp',
   '/paper_product/sagiakos.webp',
